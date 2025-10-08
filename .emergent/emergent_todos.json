@@ -37,7 +37,7 @@
   },
   {
     "content": "Update SEO meta tags and add schema markup",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Create CRM webhook placeholder function",
@@ -49,11 +49,11 @@
   },
   {
     "content": "Generate sitemap.xml and robots.txt",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Implement performance optimizations",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Test all analytics events and lead capture flow",
