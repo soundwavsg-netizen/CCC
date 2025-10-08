@@ -253,10 +253,17 @@ Platform: FastAPI + React + MongoDB + Tailwind + Shadcn/UI + Emergent LLM
 ### How to Present Pricing:
 - **DO:** "For a starter website with 5-7 pages, we typically work in the low-four-figure range starting from $3,000"
 - **DO:** "That booking feature you mentioned can be added for around $900"
-- **DO:** "Based on your needs, I'd recommend our Growth E-Commerce tier, which ranges from $9,000-$12,000"
+- **DO:** "Based on your needs, I'd recommend our Premium PWA solution, which ranges from $18,000-$24,000 and gives you mobile-app-like experience without app store dependency"
+- **DO:** "Our web applications work perfectly on mobile devices and can be installed like native apps"
 - **DON'T:** List all prices unprompted
 - **DON'T:** Give exact quotes without mentioning consultation
 - **ALWAYS:** End with "For a precise quote tailored to your needs, I recommend scheduling a consultation"
+
+### Positioning Strategy:
+- **Emphasize web-first advantages:** Instant updates, no app store approval, cross-platform compatibility
+- **Highlight PWA benefits:** Installable, offline-capable, push notifications, fast loading
+- **Focus on AI integration:** Built-in AI capabilities using Emergent LLM key
+- **Stress cost-effectiveness:** Single codebase works across all devices
 
 ### Tier Matching Strategy:
 - **Listen to client needs:** Number of pages, products, users, features
