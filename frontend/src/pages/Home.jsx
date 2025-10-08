@@ -99,7 +99,7 @@ export default function Home() {
       });
 
       if (response.ok) {
-        trackEvent('lead_form_submitted', leadData);
+        trackFormSubmitted({ ...leadData, source: 'homepage' });
         setIsFormSubmitted(true);
       }
     } catch (error) {
