@@ -89,7 +89,7 @@ export default function Portfolio() {
       id: 5,
       name: 'Grant Application Platform',
       category: 'Training/Grants',
-      description: 'Streamlined platform for EDG and SFEC grant applications',
+      description: 'Streamlined platform for EDG grant applications',
       longDescription: 'A comprehensive platform that simplifies the grant application process for SMEs. Features include document templates, eligibility checkers, application tracking, and compliance monitoring.',
       image: 'https://images.unsplash.com/photo-1577548696089-f7bcbc22f70e?auto=format&fit=crop&q=85&w=800',
       technologies: ['React', 'FastAPI', 'PostgreSQL', 'AWS S3', 'PDF Generation'],
