@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { ArrowRight, Code, Bot, ShoppingCart, GraduationCap, Award, CheckCircle2 } from 'lucide-react';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Textarea } from '../components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../components/ui/accordion';
+import { 
+  ArrowRight, 
+  MessageCircle, 
+  CheckCircle2, 
+  Globe, 
+  ShoppingCart, 
+  Smartphone, 
+  Bot, 
+  Award,
+  Phone,
+  Mail,
+  Users,
+  Zap,
+  Target
+} from 'lucide-react';
 
 const FadeUp = ({ delay = 0, children }) => (
   <motion.div
@@ -17,49 +36,124 @@ const FadeUp = ({ delay = 0, children }) => (
   </motion.div>
 );
 
+// Analytics helper functions
+const trackEvent = (eventName, eventData = {}) => {
+  if (window.dataLayer) {
+    window.dataLayer.push({
+      event: eventName,
+      ...eventData
+    });
+  }
+};
+
 export default function Home() {
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [isFormLoading, setIsFormLoading] = useState(false);
+
+  // Track hero view on component mount
+  useEffect(() => {
+    trackEvent('view_hero_cta');
+  }, []);
+
+  const handleChatOpen = (source = 'hero') => {
+    trackEvent('click_chat_open', { source });
+    // This will be handled by ChatWidget component
+    const chatWidget = document.querySelector('[data-testid="chat-widget"]');
+    if (chatWidget) {
+      chatWidget.click();
+    }
+  };
+
+  const handleBookConsultClick = () => {
+    trackEvent('book_consult_click');
+    // Scroll to lead form
+    document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setIsFormLoading(true);
+    
+    const formData = new FormData(e.target);
+    const leadData = {
+      name: formData.get('name'),
+      company: formData.get('company'),
+      uen: formData.get('uen'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      projectType: formData.get('projectType'),
+      goal: formData.get('goal')
+    };
+
+    try {
+      // Submit to backend (existing contact form endpoint)
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact-form`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: leadData.name,
+          email: leadData.email,
+          company: `${leadData.company} (UEN: ${leadData.uen || 'N/A'})`,
+          message: `EDG Review Request - Project: ${leadData.projectType}\nGoal: ${leadData.goal}\nPhone: ${leadData.phone}`
+        }),
+      });
+
+      if (response.ok) {
+        trackEvent('lead_form_submitted', leadData);
+        setIsFormSubmitted(true);
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+    }
+    setIsFormLoading(false);
+  };
+
   const services = [
     {
-      icon: Code,
-      title: 'Website & App Development',
-      description: 'Responsive React frontends, FastAPI backends, and performance-first solutions tailored for your business.',
-      link: '/services'
-    },
-    {
-      icon: Bot,
-      title: 'AI Automation',
-      description: 'Workflow automation, chatbots & RAG systems, and operational augmentation to boost efficiency.',
-      link: '/services'
+      icon: Globe,
+      title: 'AI-Powered Websites',
+      description: 'Responsive, fast websites with integrated AI chat and automation capabilities.'
     },
     {
       icon: ShoppingCart,
-      title: 'E-Commerce Solutions',
-      description: 'Complete product catalogs, payment integrations, and analytics to drive your online sales.',
-      link: '/services'
+      title: 'E-commerce & Inventory',
+      description: 'Complete online stores with payment processing and inventory management.'
     },
     {
-      icon: GraduationCap,
-      title: 'Business Training & Grants',
-      description: 'Team upskilling, EDG/SFEC guidance, and documentation support for grant applications.',
-      link: '/grants'
+      icon: Smartphone,
+      title: 'Progressive Web Apps (PWA)',
+      description: 'Mobile-app-like experiences that work across all devices without app stores.'
+    },
+    {
+      icon: Bot,
+      title: 'AI Agents & Automation',
+      description: 'Custom AI assistants and workflow automation to boost productivity.'
+    },
+    {
+      icon: Award,
+      title: 'Grant Advisory & Documentation (EDG)',
+      description: 'Complete support for EDG applications and documentation.'
     }
   ];
 
-  const projects = [
+  const faqItems = [
     {
-      name: 'M-Supplies',
-      description: 'E-commerce platform with inventory management',
-      image: 'https://images.unsplash.com/photo-1537155986727-3c402583a35a?auto=format&fit=crop&q=85&w=800'
+      question: 'Am I eligible for EDG?',
+      answer: 'If you\'re a Singapore-registered company planning a project that improves business capability, you likely qualify.'
     },
     {
-      name: 'VocaFlow',
-      description: 'AI-powered workflow automation system',
-      image: 'https://images.unsplash.com/photo-1551395722-0ac9e89cee11?auto=format&fit=crop&q=85&w=800'
+      question: 'What projects are supported?',
+      answer: 'Custom websites, e-commerce, AI-powered web apps (PWAs), and digital transformation initiatives.'
     },
     {
-      name: 'AISY Math',
-      description: 'Educational AI assistant for mathematics',
-      image: 'https://images.pexels.com/photos/14321795/pexels-photo-14321795.jpeg?auto=compress&w=800'
+      question: 'How long is approval?',
+      answer: 'Typically 3–6 weeks after submission.'
+    },
+    {
+      question: 'How much will I pay?',
+      answer: 'EDG may support up to ~50% of qualifying costs. We\'ll estimate your net after a quick eligibility check.'
     }
   ];
 
@@ -72,30 +166,34 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <FadeUp>
               <div>
-                <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="hero-badge">
-                  Singapore's Digital Transformation Partner
+                <Badge className="mb-4 bg-[#12B76A] text-white hover:bg-[#12B76A]" data-testid="hero-badge">
+                  <Award className="mr-1 h-3 w-3" /> EDG Funding Available
                 </Badge>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))]">
-                  Empowering SMEs with Smart Digital Solutions
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
+                  Build Your Website or App with up to 50% EDG Funding
                 </h1>
-                <p className="mt-6 text-base text-[#1F2A37] max-w-prose leading-relaxed">
-                  Websites, Apps & AI that Work. CCC delivers AI implementation, modern websites/apps, e-commerce, and grants support (EDG/SFEC) for Singapore SMEs.
+                <p className="text-base text-[#1F2A37] max-w-prose leading-relaxed mb-8">
+                  We design, build, and handle the EDG paperwork—so you get results in weeks, not months.
                 </p>
-                <div className="mt-8 flex flex-wrap gap-3">
+                <p className="text-sm text-[#475467] mb-8">
+                  EDG supports custom web/app projects that improve your business capability. We handle scope, paperwork, and development.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button 
-                    asChild
+                    onClick={() => handleChatOpen('hero')}
                     className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
                     data-testid="hero-primary-cta-button"
                   >
-                    <Link to="/contact">Book a Consultation</Link>
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Check EDG Eligibility — Chat Now
                   </Button>
                   <Button 
-                    asChild
+                    onClick={handleBookConsultClick}
                     variant="outline"
                     className="border-[hsl(var(--border))]"
                     data-testid="hero-secondary-cta-button"
                   >
-                    <Link to="/portfolio">View Portfolio <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                    Book a Free Consult <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </div>
@@ -104,7 +202,7 @@ export default function Home() {
             <FadeUp delay={0.1}>
               <Card className="rounded-xl overflow-hidden shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
                 <img 
-                  alt="Singapore Marina Bay skyline" 
+                  alt="Singapore business technology and EDG funding" 
                   src="https://images.unsplash.com/photo-1577548696089-f7bcbc22f70e?auto=format&fit=crop&q=85&w=800&h=600" 
                   className="w-full h-[360px] object-cover" 
                   data-testid="hero-image"
