@@ -274,7 +274,8 @@ async def capture_chat_lead(input: ChatLeadCreate):
         
         logger.info(f"Chat lead captured: {lead_obj.name} ({lead_obj.email}) - Mode: {lead_obj.agent_mode}")
         
-        # Send WhatsApp notification
+        # Send both email and WhatsApp notifications
+        await send_email_notification(lead_obj)
         await send_whatsapp_notification(lead_obj)
         
         return lead_obj
