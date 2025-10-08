@@ -22,7 +22,7 @@ export const getOrganizationSchema = () => ({
   "sameAs": [
     // Add LinkedIn, Facebook etc when available
   ],
-  "description": "Singapore's leading digital transformation consultancy specializing in AI-powered websites, web applications, e-commerce solutions, and government grant support (EDG/SFEC).",
+  "description": "Singapore's leading digital transformation consultancy specializing in AI-powered websites, web applications, e-commerce solutions, and government grant support (EDG).",
   "founders": [
     {
       "@type": "Person",
