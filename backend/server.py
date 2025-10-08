@@ -239,6 +239,7 @@ async def chat_with_ai(request: ChatRequest):
     """
     AI chat endpoint for CCC AI Consultant.
     Routes to different agent modes based on page context.
+    Maintains full conversation history for context-aware responses.
     """
     try:
         # Get the appropriate system prompt
@@ -247,11 +248,23 @@ async def chat_with_ai(request: ChatRequest):
         # Create a unique session ID for this conversation
         session_id = f"ccc-chat-{uuid.uuid4()}"
         
-        # Initialize LlmChat with the system prompt
+        # Build conversation context by combining system message with history
+        # This ensures the AI remembers the full conversation
+        conversation_context = system_prompt + "\n\n=== Conversation History ===\n"
+        
+        for msg in request.messages[:-1]:  # All messages except the last one
+            if msg.role == "user":
+                conversation_context += f"\nUser: {msg.content}"
+            else:
+                conversation_context += f"\nAssistant: {msg.content}"
+        
+        conversation_context += "\n\n=== Current Question ===\n"
+        
+        # Initialize LlmChat with enhanced context
         chat = LlmChat(
             api_key=EMERGENT_API_KEY,
             session_id=session_id,
-            system_message=system_prompt
+            system_message=conversation_context
         )
         
         # Use gpt-4o-mini model
@@ -271,7 +284,7 @@ async def chat_with_ai(request: ChatRequest):
         user_message = UserMessage(text=last_user_message)
         assistant_response = await chat.send_message(user_message)
         
-        logger.info(f"Chat request processed - Mode: {request.agent_mode}")
+        logger.info(f"Chat request processed - Mode: {request.agent_mode}, Messages: {len(request.messages)}")
         
         return ChatResponse(
             message=assistant_response,
