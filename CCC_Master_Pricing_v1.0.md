@@ -99,9 +99,9 @@ Platform: FastAPI + React + MongoDB + Tailwind + Shadcn/UI + Emergent LLM
 - Multi-channel management
 
 **Available Add-ons:**
-- POS System Sync: +$1,500
-- Auto Delivery Labeling: +$700
-- Custom API Hooks: +$1,000
+- Inventory Management Tools: +$1,000
+- Auto Delivery Label Generation: +$700
+- Custom API Integrations: +$1,000
 
 ---
 
