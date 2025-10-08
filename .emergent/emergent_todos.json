@@ -1,6 +1,18 @@
 [
   {
-    "content": "Add automatic chat summary to lead form for email notifications",
-    "status": "completed"
+    "content": "Create new Services & Solutions page with 5 color-coded tiers",
+    "status": "in_progress"
+  },
+  {
+    "content": "Update Services Expert AI agent with internal pricing tiers",
+    "status": "pending"
+  },
+  {
+    "content": "Update navigation and routing for new page",
+    "status": "pending"
+  },
+  {
+    "content": "Test AI pricing responses and page functionality",
+    "status": "pending"
   }
 ]
