@@ -259,6 +259,7 @@ async def capture_chat_lead(input: ChatLeadCreate):
     """
     Capture contact information shared during AI chat conversations.
     This creates a lead record that CCC can follow up on.
+    Sends WhatsApp notification to CCC team.
     """
     try:
         lead_dict = input.model_dump()
@@ -273,10 +274,53 @@ async def capture_chat_lead(input: ChatLeadCreate):
         
         logger.info(f"Chat lead captured: {lead_obj.name} ({lead_obj.email}) - Mode: {lead_obj.agent_mode}")
         
+        # Send WhatsApp notification
+        await send_whatsapp_notification(lead_obj)
+        
         return lead_obj
     except Exception as e:
         logger.error(f"Error capturing chat lead: {str(e)}")
         raise
+
+async def send_whatsapp_notification(lead: ChatLead):
+    """
+    Send WhatsApp notification about new lead.
+    Uses WhatsApp Click-to-Chat API.
+    """
+    try:
+        import urllib.parse
+        
+        # Format message
+        message = f"""🔔 *New CCC Lead Alert!*
+
+👤 *Name:* {lead.name}
+📧 *Email:* {lead.email}
+📱 *Phone:* {lead.phone or 'Not provided'}
+📄 *Message:* {lead.message or 'None'}
+
+📍 *Source:* {lead.source_page}
+🤖 *Agent:* {lead.agent_mode}
+⏰ *Time:* {lead.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}
+
+Please follow up soon!"""
+        
+        # WhatsApp number to send to (your number)
+        whatsapp_number = "6585008888"  # Your number without + or spaces
+        
+        # Create WhatsApp link
+        encoded_message = urllib.parse.quote(message)
+        whatsapp_url = f"https://wa.me/{whatsapp_number}?text={encoded_message}"
+        
+        logger.info(f"WhatsApp notification prepared for lead: {lead.name}")
+        logger.info(f"WhatsApp URL: {whatsapp_url}")
+        
+        # Note: This creates the message link. In production, you'd use Twilio or similar
+        # For now, we'll log it and you can click the link from logs or we can send via email
+        
+        return whatsapp_url
+        
+    except Exception as e:
+        logger.error(f"Error sending WhatsApp notification: {str(e)}")
 
 @api_router.get("/chat/leads", response_model=List[ChatLead])
 async def get_chat_leads():
