@@ -13,11 +13,11 @@
   },
   {
     "content": "Update AI agent main mode with EDG qualification flow",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Add sticky chat launcher with EDG eligibility check label",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Implement GA4 and Meta Pixel tracking events",
