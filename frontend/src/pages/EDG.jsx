@@ -47,11 +47,11 @@ export default function EDG() {
 
   // Track hero view on component mount
   useEffect(() => {
-    trackEvent('view_hero_cta', { page: 'edg-landing' });
+    trackHeroView('edg-landing');
   }, []);
 
   const handleChatOpen = (source = 'edg-hero') => {
-    trackEvent('click_chat_open', { source, page: 'edg-landing' });
+    trackChatOpen(source);
     // This will be handled by ChatWidget component
     const chatWidget = document.querySelector('[data-testid="chat-widget"]');
     if (chatWidget) {
