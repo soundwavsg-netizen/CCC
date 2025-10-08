@@ -1,50 +1,18 @@
 [
   {
-    "content": "Setup base project structure: Install framer-motion, configure Google Fonts (Chivo + Inter), update index.css with design tokens",
-    "status": "completed"
-  },
-  {
-    "content": "Build shared components: Header with navigation, Footer, and layout wrapper",
-    "status": "completed"
-  },
-  {
-    "content": "Create Home page with hero section, services overview, grants highlight, portfolio carousel, and CTA banner",
-    "status": "completed"
-  },
-  {
-    "content": "Create About Us page with company background, mission/vision, and value props",
-    "status": "completed"
-  },
-  {
-    "content": "Create Services page with 4 service cards (Web/App Dev, AI Automation, E-Commerce, Training/Grants) and feature details",
-    "status": "completed"
-  },
-  {
-    "content": "Create Portfolio page with filterable project grid showcasing M-Supplies, VocaFlow, AISY Math",
-    "status": "completed"
-  },
-  {
-    "content": "Create Grants & Funding page with EDG/SFEC information, eligibility checklist, FAQs, and comparison table",
-    "status": "completed"
-  },
-  {
-    "content": "Create Contact page with form, company details, map embed, and WhatsApp link",
-    "status": "completed"
-  },
-  {
-    "content": "Create Legal pages (PDPA, Terms) with proper content formatting",
-    "status": "completed"
-  },
-  {
-    "content": "Build backend API endpoints: POST /api/contact for form submissions with MongoDB storage",
-    "status": "completed"
-  },
-  {
-    "content": "Test frontend compilation, check all routes, verify responsive design, and take screenshots",
-    "status": "completed"
-  },
-  {
-    "content": "Research and implement Emergent AI agent integration (chat widget with sub-agent routing)",
+    "content": "Create backend chat API endpoint with OpenAI integration and agent prompt routing",
     "status": "in_progress"
+  },
+  {
+    "content": "Create frontend ChatWidget component with floating button and chat UI",
+    "status": "pending"
+  },
+  {
+    "content": "Integrate ChatWidget into App.js with page-based context routing",
+    "status": "pending"
+  },
+  {
+    "content": "Test AI chat functionality on different pages",
+    "status": "pending"
   }
 ]
