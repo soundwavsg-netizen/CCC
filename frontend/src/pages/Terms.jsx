@@ -61,7 +61,7 @@ export default function Terms() {
                   <li>AI automation and implementation</li>
                   <li>E-commerce solutions and platforms</li>
                   <li>Business training and consultancy</li>
-                  <li>Grant application support (EDG, SFEC)</li>
+                  <li>Grant application support (EDG)</li>
                   <li>Digital transformation consultancy</li>
                 </ul>
                 <p className="mt-4">
