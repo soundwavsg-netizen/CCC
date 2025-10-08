@@ -41,10 +41,10 @@
   },
   {
     "content": "Test frontend compilation, check all routes, verify responsive design, and take screenshots",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Research and implement Emergent AI agent integration (chat widget with sub-agent routing)",
-    "status": "pending"
+    "status": "in_progress"
   }
 ]
