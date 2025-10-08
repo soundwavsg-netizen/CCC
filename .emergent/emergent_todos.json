@@ -1,7 +1,7 @@
 [
   {
     "content": "Setup base project structure: Install framer-motion, configure Google Fonts (Chivo + Inter), update index.css with design tokens",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Build shared components: Header with navigation, Footer, and layout wrapper",
