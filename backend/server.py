@@ -339,8 +339,8 @@ async def send_email_notification(lead: ChatLead):
                             <td style="padding: 10px;">{lead.phone or 'Not provided'}</td>
                         </tr>
                         <tr>
-                            <td style="padding: 10px; background: #fff; font-weight: bold;">💬 Message:</td>
-                            <td style="padding: 10px;">{lead.message or 'None'}</td>
+                            <td style="padding: 10px; background: #fff; font-weight: bold; vertical-align: top;">💬 Chat Summary:</td>
+                            <td style="padding: 10px;">{lead.message or 'No conversation recorded'}</td>
                         </tr>
                         <tr>
                             <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">📍 Source Page:</td>
