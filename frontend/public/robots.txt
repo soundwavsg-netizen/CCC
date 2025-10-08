@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Main pages
+Allow: /
+Allow: /about
+Allow: /services-solutions
+Allow: /portfolio
+Allow: /grants
+Allow: /edg
+Allow: /contact
+
+# Legal pages
+Allow: /pdpa
+Allow: /terms
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /backend/
+
+# Allow search engines to access sitemap
+Sitemap: https://smartbiz-portal.preview.emergentagent.com/sitemap.xml
