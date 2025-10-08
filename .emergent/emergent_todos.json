@@ -1,14 +1,14 @@
 [
   {
     "content": "Implement chat lead capture - save contact details to MongoDB when user shares them",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Add frontend form to collect structured contact info from chat",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test lead capture flow end-to-end",
-    "status": "pending"
+    "status": "completed"
   }
 ]
