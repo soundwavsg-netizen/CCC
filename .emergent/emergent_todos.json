@@ -5,11 +5,11 @@
   },
   {
     "content": "Update AI agent knowledge in backend/server.py to use new capability-focused pricing",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Update Services & Solutions page to reflect web-first approach and PWA instead of native apps",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Test updated AI agent with revised pricing knowledge",
