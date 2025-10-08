@@ -1,18 +1,18 @@
 [
   {
-    "content": "Create new Services & Solutions page with 5 color-coded tiers",
-    "status": "completed"
+    "content": "Update AI agents with detailed pricing tables and add-ons",
+    "status": "in_progress"
   },
   {
-    "content": "Update Services Expert AI agent with internal pricing tiers",
-    "status": "completed"
+    "content": "Create internal pricing reference document",
+    "status": "pending"
   },
   {
-    "content": "Update navigation and routing for new page",
-    "status": "completed"
+    "content": "Test AI pricing responses with new structure",
+    "status": "pending"
   },
   {
-    "content": "Test AI pricing responses and page functionality",
-    "status": "completed"
+    "content": "Verify all tiers and add-ons are accessible to AI",
+    "status": "pending"
   }
 ]
