@@ -125,6 +125,57 @@ export const ChatWidget = () => {
     }
   };
 
+  const handleLeadFormChange = (e) => {
+    setLeadFormData({
+      ...leadFormData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const submitLeadForm = async () => {
+    if (!leadFormData.name || !leadFormData.email) {
+      toast.error('Please provide your name and email', {
+        className: 'bg-[hsl(var(--background))] border-[hsl(var(--border))]'
+      });
+      return;
+    }
+
+    try {
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
+      const agentMode = getAgentMode();
+
+      await axios.post(`${backendUrl}/api/chat/lead`, {
+        ...leadFormData,
+        source_page: location.pathname,
+        agent_mode: agentMode
+      });
+
+      toast.success('Thank you! We\'ll contact you soon.', {
+        description: 'Your details have been sent to our team.',
+        className: 'bg-[hsl(var(--background))] border-[hsl(var(--border))]'
+      });
+
+      // Add confirmation message to chat
+      const confirmationMessage = {
+        role: 'assistant',
+        content: `Perfect! I've sent your details to our team. ${leadFormData.name}, we'll reach out to you at ${leadFormData.email} shortly to discuss your project. 📧`,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, confirmationMessage]);
+
+      // Reset form and hide it
+      setLeadFormData({ name: '', email: '', phone: '', message: '' });
+      setShowLeadForm(false);
+
+    } catch (error) {
+      console.error('Lead submission error:', error);
+      toast.error('Failed to submit', {
+        description: 'Please try again or contact us directly.',
+        className: 'bg-[hsl(var(--background))] border-[hsl(var(--border))]'
+      });
+    }
+  };
+
   if (!isOpen) {
     return (
       <button
