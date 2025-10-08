@@ -97,7 +97,6 @@ export default function About() {
                 <div className="border-t pt-6">
                   <h3 className="font-semibold text-xl mb-2">Contact Information</h3>
                   <div className="space-y-2 text-sm text-[#475467]">
-                    <p><span className="font-medium text-[hsl(var(--foreground))]">Address:</span> Blk 347 Woodlands Ave 3 #07-105, Singapore 730347</p>
                     <p><span className="font-medium text-[hsl(var(--foreground))]">Email:</span> glor-yeo@hotmail.com</p>
                     <p><span className="font-medium text-[hsl(var(--foreground))]">Phone:</span> 8500 8888</p>
                   </div>
