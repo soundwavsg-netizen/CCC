@@ -266,6 +266,71 @@ export const ChatWidget = () => {
               <div ref={messagesEndRef} />
             </div>
 
+            {/* Lead Form */}
+            {showLeadForm && (
+              <div className="p-4 border-t bg-gradient-to-br from-[#EAF7F5] to-white">
+                <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-[hsl(var(--secondary))]" />
+                  Share Your Contact Details
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <User className="h-4 w-4 text-[#98A2B3]" />
+                    <Input
+                      name="name"
+                      type="text"
+                      placeholder="Your name *"
+                      value={leadFormData.name}
+                      onChange={handleLeadFormChange}
+                      className="flex-1"
+                      data-testid="lead-form-name"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Mail className="h-4 w-4 text-[#98A2B3]" />
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder="Your email *"
+                      value={leadFormData.email}
+                      onChange={handleLeadFormChange}
+                      className="flex-1"
+                      data-testid="lead-form-email"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4 text-[#98A2B3]" />
+                    <Input
+                      name="phone"
+                      type="tel"
+                      placeholder="Your phone (optional)"
+                      value={leadFormData.phone}
+                      onChange={handleLeadFormChange}
+                      className="flex-1"
+                      data-testid="lead-form-phone"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={submitLeadForm}
+                      className="flex-1 bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white"
+                      data-testid="lead-form-submit"
+                    >
+                      Submit
+                    </Button>
+                    <Button
+                      onClick={() => setShowLeadForm(false)}
+                      variant="outline"
+                      className="border-[hsl(var(--border))]"
+                      data-testid="lead-form-cancel"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Input */}
             <div className="p-4 border-t bg-white">
               <div className="flex gap-2">
@@ -276,24 +341,37 @@ export const ChatWidget = () => {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  disabled={isLoading}
+                  disabled={isLoading || showLeadForm}
                   className="flex-1"
                   data-testid="chat-input"
                 />
-                <Button
-                  onClick={sendMessage}
-                  disabled={!inputValue.trim() || isLoading}
-                  className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white px-4"
-                  data-testid="chat-send-button"
-                >
-                  <Send className="h-4 w-4" />
-                </Button>
+                {!showLeadForm && (
+                  <Button
+                    onClick={sendMessage}
+                    disabled={!inputValue.trim() || isLoading}
+                    className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white px-4"
+                    data-testid="chat-send-button"
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
+                )}
               </div>
-              <p className="text-xs text-[#98A2B3] mt-2 text-center">
-                Powered by CCC AI • {getAgentMode() === 'main' ? 'Main Consultant' : 
-                  getAgentMode() === 'services' ? 'Services Expert' : 
-                  getAgentMode() === 'grants' ? 'Grants Advisor' : 'Support Agent'}
-              </p>
+              {!showLeadForm && (
+                <div className="flex items-center justify-between mt-2">
+                  <p className="text-xs text-[#98A2B3]">
+                    Powered by CCC AI • {getAgentMode() === 'main' ? 'Main Consultant' : 
+                      getAgentMode() === 'services' ? 'Services Expert' : 
+                      getAgentMode() === 'grants' ? 'Grants Advisor' : 'Support Agent'}
+                  </p>
+                  <button
+                    onClick={() => setShowLeadForm(true)}
+                    className="text-xs text-[hsl(var(--secondary))] hover:text-[#0AA099] font-medium"
+                    data-testid="show-lead-form-button"
+                  >
+                    Connect with us →
+                  </button>
+                </div>
+              )}
             </div>
           </>
         )}
