@@ -171,19 +171,19 @@ Platform: FastAPI + React + MongoDB + Tailwind + Shadcn/UI + Emergent LLM
 - API Integration: +$800
 - Web Speech Integration: +$300
 
-### Workflow Automation
+### Custom Workflow Automation
 **Price:** SGD $3,000 - $5,000  
-**Description:** Task automation using Zapier/Make  
+**Description:** Task automation using custom Python scripts & APIs  
 **Key Features:**
-- Email automation
-- CRM synchronization
-- Sheet/database sync
+- Email automation systems
+- Database synchronization
 - Form trigger automation
+- Custom API integrations
 
 **Available Add-ons:**
 - CRM Pipeline Automation: +$600
-- Slack Bot Integration: +$500
-- Notion Sync: +$700
+- Third-party App Integration: +$500
+- Document Generation Automation: +$700
 
 ### AI Dashboard
 **Price:** SGD $6,000 - $8,800  
