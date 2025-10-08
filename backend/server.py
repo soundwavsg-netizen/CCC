@@ -282,10 +282,10 @@ async def capture_chat_lead(input: ChatLeadCreate):
         logger.error(f"Error capturing chat lead: {str(e)}")
         raise
 
-async def send_whatsapp_notification(lead: ChatLead):
+async def send_email_notification(lead: ChatLead):
     """
     Send email notification about new lead.
-    More reliable than WhatsApp for business notifications.
+    Reliable method for detailed lead information.
     """
     try:
         import smtplib
