@@ -186,9 +186,9 @@ export const pageMetaData = {
     ogUrl: "https://smartbiz-portal.preview.emergentagent.com/services-solutions"
   },
   grants: {
-    title: "EDG & SFEC Grant Support | CCC Singapore",
-    description: "Expert guidance for Enterprise Development Grant and SFEC applications. Maximize your funding potential for digital transformation projects.",
-    ogTitle: "EDG & SFEC Grant Support",
+    title: "EDG Grant Support | CCC Singapore",
+    description: "Expert guidance for Enterprise Development Grant applications. Maximize your funding potential for digital transformation projects.",
+    ogTitle: "EDG Grant Support",
     ogDescription: "Access up to 50% funding support from Enterprise Singapore with professional grant application assistance.",
     ogUrl: "https://smartbiz-portal.preview.emergentagent.com/grants"
   },
