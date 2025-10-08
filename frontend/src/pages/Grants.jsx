@@ -74,7 +74,7 @@ export default function Grants() {
 
       {/* Grant Programs Overview */}
       <section className="py-16 sm:py-20 bg-white" data-testid="grant-programs">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
           <FadeUp>
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
@@ -86,83 +86,44 @@ export default function Grants() {
             </div>
           </FadeUp>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8">
             <FadeUp>
               <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 h-full">
-                <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white">EDG</Badge>
+                <Badge className="mb-4 bg-[#12B76A] text-white">EDG</Badge>
                 <h3 className="text-2xl font-semibold mb-4">Enterprise Development Grant</h3>
                 <p className="text-base text-[#475467] mb-6">
-                  Comprehensive support for business transformation and growth projects.
+                  Support for customized solutions to enhance business capabilities and processes.
                 </p>
                 
                 <div className="space-y-4 mb-6">
                   <div className="flex items-start gap-3">
                     <div className="h-10 w-10 rounded-lg bg-[hsl(var(--accent))] flex items-center justify-center shrink-0">
-                      <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
+                      <DollarSign className="h-5 w-5 text-[hsl(var(--primary))]" />
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-1">Up to 50% Funding</h4>
-                      <p className="text-sm text-[#475467]">Maximum support for qualifying costs</p>
+                      <h4 className="font-semibold mb-1">Up to 50% Support</h4>
+                      <p className="text-sm text-[#475467]">Significant cost savings for qualifying projects</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-3">
                     <div className="h-10 w-10 rounded-lg bg-[hsl(var(--accent))] flex items-center justify-center shrink-0">
-                      <FileText className="h-5 w-5 text-[hsl(var(--primary))]" />
+                      <Target className="h-5 w-5 text-[hsl(var(--primary))]" />
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-1">Flexible Project Scope</h4>
-                      <p className="text-sm text-[#475467]">Customizable to your business needs</p>
+                      <h4 className="font-semibold mb-1">Customized Solutions</h4>
+                      <p className="text-sm text-[#475467]">Tailored to your business needs</p>
                     </div>
                   </div>
                 </div>
 
-                <h4 className="font-semibold mb-3">Eligible Projects:</h4>
+                <h4 className="font-semibold mb-3">Supported Projects:</h4>
                 <ul className="space-y-2 text-sm text-[#475467]">
-                  <li>• Core capabilities development</li>
-                  <li>• Innovation and productivity improvement</li>
-                  <li>• Market access and expansion</li>
+                  <li>• Custom website and web application development</li>
+                  <li>• AI automation and workflow optimization</li>
+                  <li>• E-commerce platform implementation</li>
                   <li>• Digital transformation initiatives</li>
-                </ul>
-              </Card>
-            </FadeUp>
-
-            <FadeUp delay={0.1}>
-              <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 h-full">
-                <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white">SFEC</Badge>
-                <h3 className="text-2xl font-semibold mb-4">SMEs Go Digital (SFEC)</h3>
-                <p className="text-base text-[#475467] mb-6">
-                  Quick and easy access to pre-approved digital solutions.
-                </p>
-                
-                <div className="space-y-4 mb-6">
-                  <div className="flex items-start gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-[hsl(var(--accent))] flex items-center justify-center shrink-0">
-                      <Clock className="h-5 w-5 text-[hsl(var(--primary))]" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Fast Approval</h4>
-                      <p className="text-sm text-[#475467]">Streamlined application process</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-[hsl(var(--accent))] flex items-center justify-center shrink-0">
-                      <Award className="h-5 w-5 text-[hsl(var(--primary))]" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-1">Pre-Approved Solutions</h4>
-                      <p className="text-sm text-[#475467]">Vetted digital tools and services</p>
-                    </div>
-                  </div>
-                </div>
-
-                <h4 className="font-semibold mb-3">Eligible Solutions:</h4>
-                <ul className="space-y-2 text-sm text-[#475467]">
-                  <li>• E-commerce platforms</li>
-                  <li>• Customer relationship management</li>
-                  <li>• Digital marketing tools</li>
-                  <li>• Accounting and inventory systems</li>
+                  <li>• Business process improvement solutions</li>
                 </ul>
               </Card>
             </FadeUp>
