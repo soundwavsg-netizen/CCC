@@ -1,35 +1,35 @@
 [
   {
     "content": "Setup base project structure: Install framer-motion, configure Google Fonts (Chivo + Inter), update index.css with design tokens",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Build shared components: Header with navigation, Footer, and layout wrapper",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create Home page with hero section, services overview, grants highlight, portfolio carousel, and CTA banner",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create About Us page with company background, mission/vision, and value props",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create Services page with 4 service cards (Web/App Dev, AI Automation, E-Commerce, Training/Grants) and feature details",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create Portfolio page with filterable project grid showcasing M-Supplies, VocaFlow, AISY Math",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create Grants & Funding page with EDG/SFEC information, eligibility checklist, FAQs, and comparison table",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create Contact page with form, company details, map embed, and WhatsApp link",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Create Legal pages (PDPA, Terms) with proper content formatting",
