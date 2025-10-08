@@ -284,43 +284,58 @@ async def capture_chat_lead(input: ChatLeadCreate):
 
 async def send_whatsapp_notification(lead: ChatLead):
     """
-    Send WhatsApp notification about new lead.
-    Uses WhatsApp Click-to-Chat API.
+    Send WhatsApp notification about new lead using CallMeBot API.
+    This is a free service that sends WhatsApp messages.
+    
+    Setup required (one-time):
+    1. Add +34 644 44 32 85 to your WhatsApp contacts
+    2. Send "I allow callmebot to send me messages" to that number
+    3. You'll receive an API key via WhatsApp
+    4. Set CALLMEBOT_API_KEY environment variable
     """
     try:
+        # Format message (keep it short and simple)
+        message = f"""🔔 NEW LEAD!
+
+Name: {lead.name}
+Email: {lead.email}
+Phone: {lead.phone or 'N/A'}
+Source: {lead.source_page}
+Agent: {lead.agent_mode}
+
+Follow up ASAP!"""
+        
+        # Your WhatsApp number (format: country code + number, no + or spaces)
+        phone_number = "6585008888"
+        
+        # CallMeBot API key (you need to get this via WhatsApp - see docstring)
+        api_key = os.environ.get('CALLMEBOT_API_KEY', '')
+        
+        if not api_key:
+            logger.warning("CALLMEBOT_API_KEY not set. WhatsApp notification skipped.")
+            logger.info(f"Lead details - {lead.name} ({lead.email})")
+            return None
+        
+        # CallMeBot API endpoint
         import urllib.parse
-        
-        # Format message
-        message = f"""🔔 *New CCC Lead Alert!*
-
-👤 *Name:* {lead.name}
-📧 *Email:* {lead.email}
-📱 *Phone:* {lead.phone or 'Not provided'}
-📄 *Message:* {lead.message or 'None'}
-
-📍 *Source:* {lead.source_page}
-🤖 *Agent:* {lead.agent_mode}
-⏰ *Time:* {lead.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}
-
-Please follow up soon!"""
-        
-        # WhatsApp number to send to (your number)
-        whatsapp_number = "6585008888"  # Your number without + or spaces
-        
-        # Create WhatsApp link
         encoded_message = urllib.parse.quote(message)
-        whatsapp_url = f"https://wa.me/{whatsapp_number}?text={encoded_message}"
+        url = f"https://api.callmebot.com/whatsapp.php?phone={phone_number}&text={encoded_message}&apikey={api_key}"
         
-        logger.info(f"WhatsApp notification prepared for lead: {lead.name}")
-        logger.info(f"WhatsApp URL: {whatsapp_url}")
-        
-        # Note: This creates the message link. In production, you'd use Twilio or similar
-        # For now, we'll log it and you can click the link from logs or we can send via email
-        
-        return whatsapp_url
+        # Send request
+        import httpx
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.get(url)
+            
+            if response.status_code == 200:
+                logger.info(f"✅ WhatsApp notification sent for lead: {lead.name}")
+                return True
+            else:
+                logger.error(f"Failed to send WhatsApp: {response.status_code}")
+                return False
         
     except Exception as e:
         logger.error(f"Error sending WhatsApp notification: {str(e)}")
+        return False
 
 @api_router.get("/chat/leads", response_model=List[ChatLead])
 async def get_chat_leads():
