@@ -105,50 +105,53 @@ Platform: FastAPI + React + MongoDB + Tailwind + Shadcn/UI + Emergent LLM
 
 ---
 
-## 🟦 3. App Development
+## 🟦 3. Web Application Development
 
-### Prototype App
+### Prototype Web App
 **Price:** SGD $8,500  
-**Description:** MVP version, Firebase backend, auth & CRUD  
+**Description:** MVP web application, full-stack with auth & CRUD  
 **Key Features:**
-- User login & signup
-- Basic user dashboard
-- Real-time database
+- User login & signup (JWT authentication)
+- Responsive web dashboard
+- MongoDB database integration
 - Essential CRUD operations
+- Mobile-optimized responsive design
 
 **Available Add-ons:**
-- Payment Logic Integration: +$1,000
-- Push Notifications: +$800
+- Payment Integration: +$1,000
+- Web Push Notifications: +$600
 - AI Module Integration: +$1,500
 
-### Full App
+### Full Web Application
 **Price:** SGD $12,000 - $18,000  
-**Description:** Scalable multi-user application  
+**Description:** Scalable multi-user web application  
 **Key Features:**
-- Admin dashboard
-- User analytics
-- Profile management
-- File storage system
-- Advanced user roles
+- Advanced admin dashboard
+- User analytics & reporting
+- Profile management system
+- File upload & storage
+- Advanced user roles & permissions
 
 **Available Add-ons:**
 - AI Chatbot Integration: +$1,000
 - Subscription Tiering System: +$1,500
 - QR Code Features: +$700
 
-### Premium App Suite
-**Price:** SGD $20,000 - $28,000  
-**Description:** Cross-platform app (web + mobile)  
+### Premium Progressive Web App (PWA)
+**Price:** SGD $18,000 - $24,000  
+**Description:** Mobile-app-like web experience with offline capabilities  
 **Key Features:**
-- Flutter + Web integration
-- Push notifications
-- Firebase + Cloud Functions
+- Progressive Web App (installable like mobile app)
+- Offline functionality & data sync
+- Web push notifications
 - Advanced real-time features
 - Enterprise-grade security
+- Mobile-first responsive design
 
 **Available Add-ons:**
-- Enterprise Dashboard: +$2,000
+- Enterprise Analytics Dashboard: +$2,000
 - Real-time Chat System: +$1,200
+- Advanced Offline Sync: +$1,500
 
 ---
 
