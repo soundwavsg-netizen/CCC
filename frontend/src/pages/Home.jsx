@@ -56,9 +56,21 @@ export default function Home() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [isFormLoading, setIsFormLoading] = useState(false);
 
-  // Track hero view on component mount
+  // Track hero view on component mount and set SEO
   useEffect(() => {
     trackHeroView('homepage');
+    
+    // Set page meta tags
+    setPageMeta(pageMetaData.home);
+    
+    // Inject schemas
+    injectSchema(getOrganizationSchema());
+    injectSchema(getWebPageSchema({
+      title: pageMetaData.home.title,
+      description: pageMetaData.home.description,
+      url: pageMetaData.home.ogUrl
+    }));
+    injectSchema(getFAQSchema(faqItems));
   }, []);
 
   const handleChatOpen = (source = 'hero') => {
