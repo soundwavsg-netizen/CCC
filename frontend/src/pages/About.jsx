@@ -268,7 +268,7 @@ export default function About() {
                 <ul className="space-y-3 text-sm text-[#475467]">
                   <li className="flex items-start gap-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--secondary))] mt-2 shrink-0" />
-                    <span>EDG and SFEC eligibility assessment</span>
+                    <span>EDG eligibility assessment and application support</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--secondary))] mt-2 shrink-0" />
