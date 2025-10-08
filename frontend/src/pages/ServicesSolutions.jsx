@@ -123,7 +123,7 @@ export default function ServicesSolutions() {
                 Complete Digital Solutions for Your Business
               </h1>
               <p className="text-lg text-[#475467] leading-relaxed mb-8">
-                From websites to AI automation, CCC delivers tailored solutions that help Singapore SMEs grow and succeed in the digital age.
+                From modern websites and Progressive Web Apps to AI automation, CCC delivers web-first solutions that help Singapore SMEs grow and succeed in the digital age.
               </p>
               <Button 
                 asChild
