@@ -254,6 +254,44 @@ async def get_contact_submissions():
     
     return submissions
 
+@api_router.post("/chat/lead", response_model=ChatLead)
+async def capture_chat_lead(input: ChatLeadCreate):
+    """
+    Capture contact information shared during AI chat conversations.
+    This creates a lead record that CCC can follow up on.
+    """
+    try:
+        lead_dict = input.model_dump()
+        lead_obj = ChatLead(**lead_dict)
+        
+        # Convert to dict and serialize datetime to ISO string for MongoDB
+        doc = lead_obj.model_dump()
+        doc['timestamp'] = doc['timestamp'].isoformat()
+        
+        # Store in MongoDB
+        result = await db.chat_leads.insert_one(doc)
+        
+        logger.info(f"Chat lead captured: {lead_obj.name} ({lead_obj.email}) - Mode: {lead_obj.agent_mode}")
+        
+        return lead_obj
+    except Exception as e:
+        logger.error(f"Error capturing chat lead: {str(e)}")
+        raise
+
+@api_router.get("/chat/leads", response_model=List[ChatLead])
+async def get_chat_leads():
+    """
+    Retrieve all chat leads (admin endpoint).
+    """
+    leads = await db.chat_leads.find({}, {"_id": 0}).sort("timestamp", -1).to_list(1000)
+    
+    # Convert ISO string timestamps back to datetime objects
+    for lead in leads:
+        if isinstance(lead['timestamp'], str):
+            lead['timestamp'] = datetime.fromisoformat(lead['timestamp'])
+    
+    return leads
+
 @api_router.post("/chat", response_model=ChatResponse)
 async def chat_with_ai(request: ChatRequest):
     """
