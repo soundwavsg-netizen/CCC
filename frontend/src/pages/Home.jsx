@@ -24,6 +24,13 @@ import {
   Zap,
   Target
 } from 'lucide-react';
+import { 
+  trackHeroView, 
+  trackChatOpen, 
+  trackFormViewed, 
+  trackFormSubmitted, 
+  trackBookConsultClick 
+} from '../utils/analytics';
 
 const FadeUp = ({ delay = 0, children }) => (
   <motion.div
