@@ -90,7 +90,7 @@ export default function EDG() {
       });
 
       if (response.ok) {
-        trackEvent('lead_form_submitted', { ...leadData, source: 'edg-landing' });
+        trackFormSubmitted({ ...leadData, source: 'edg-landing' });
         setIsFormSubmitted(true);
       }
     } catch (error) {
