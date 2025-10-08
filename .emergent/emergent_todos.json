@@ -1,19 +1,19 @@
 [
   {
     "content": "Search and remove all SFEC mentions from website pages",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Update AI agent system prompt to focus only on EDG",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Remove all addresses from website and AI agent",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Update meta descriptions and structured data",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test AI agent responses for EDG-only focus",
