@@ -244,8 +244,6 @@ export default function Terms() {
                 <div className="mt-4 p-6 bg-[hsl(var(--muted))] rounded-lg">
                   <p><strong>Cognition & Competence Consultancy Pte Ltd</strong></p>
                   <p>UEN: 201208916K</p>
-                  <p>Blk 347 Woodlands Ave 3 #07-105</p>
-                  <p>Singapore 730347</p>
                   <p className="mt-2">
                     Email: <a href="mailto:glor-yeo@hotmail.com" className="text-[hsl(var(--secondary))] hover:underline">glor-yeo@hotmail.com</a>
                   </p>
