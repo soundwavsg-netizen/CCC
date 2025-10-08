@@ -96,10 +96,10 @@ export default function ServicesSolutions() {
       title: 'Consultancy & Grant Support',
       color: '#EF4444', // Red
       bgColor: '#FEE2E2',
-      description: 'Expert guidance for EDG and SFEC grant applications. We help you secure government funding and manage the entire application process.',
+      description: 'Expert guidance for EDG grant applications. We help you secure government funding and manage the entire application process.',
       details: 'CCC provides end-to-end support for Enterprise Singapore grant applications. From eligibility assessment to claim submission, we guide you through every step to maximize your chances of approval.',
       features: [
-        'EDG & SFEC eligibility assessment',
+        'EDG eligibility assessment',
         'Proposal documentation and writing',
         'Project scope justification',
         'Budget preparation and validation',
