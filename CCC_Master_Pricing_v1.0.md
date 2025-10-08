@@ -72,7 +72,7 @@ Platform: FastAPI + React + MongoDB + Tailwind + Shadcn/UI + Emergent LLM
 **Available Add-ons:**
 - Subscription System: +$1,200
 - AI Product Recommender: +$900
-- Marketplace Sync (Shopee/Lazada): +$1,100
+- Inventory Export/Import Tools: +$800
 
 ### Growth E-Commerce
 **Price:** SGD $9,000 - $12,000  
