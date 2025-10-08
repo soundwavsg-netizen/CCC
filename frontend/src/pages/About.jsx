@@ -77,7 +77,7 @@ export default function About() {
                     We design and build websites, mobile apps, and intelligent systems — from e-commerce and booking platforms to AI-driven customer support. Our team combines technical expertise with business acumen to deliver solutions that truly make a difference.
                   </p>
                   <p>
-                    CCC also assists clients in applying for Enterprise Singapore's EDG and SFEC support, guiding them from consultation to deployment. Whether you're launching a new site, upgrading your digital infrastructure, or implementing AI automation, CCC delivers end-to-end digital solutions built for results.
+                    CCC also assists clients in applying for Enterprise Singapore's EDG support, guiding them from consultation to deployment. Whether you're launching a new site, upgrading your digital infrastructure, or implementing AI automation, CCC delivers end-to-end digital solutions built for results.
                   </p>
                 </div>
               </div>
