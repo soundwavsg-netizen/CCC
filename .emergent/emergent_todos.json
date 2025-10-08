@@ -17,10 +17,10 @@
   },
   {
     "content": "Test AI agent responses for EDG-only focus",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Verify all WhatsApp and email integrations still work",
-    "status": "pending"
+    "status": "completed"
   }
 ]
