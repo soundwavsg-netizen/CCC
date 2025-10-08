@@ -33,15 +33,13 @@ const FadeUp = ({ delay = 0, children }) => (
   </motion.div>
 );
 
-// Analytics helper functions
-const trackEvent = (eventName, eventData = {}) => {
-  if (window.dataLayer) {
-    window.dataLayer.push({
-      event: eventName,
-      ...eventData
-    });
-  }
-};
+import { 
+  trackHeroView, 
+  trackChatOpen, 
+  trackFormViewed, 
+  trackFormSubmitted, 
+  trackBookConsultClick 
+} from '../utils/analytics';
 
 export default function EDG() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
