@@ -39,7 +39,7 @@ export const ChatWidget = () => {
     const greetings = {
       main: "👋 Hi! I'm the CCC consultant bot. Want to check if your project can qualify for up to 50% EDG funding for a new website or app?",
       services: "Hello! I'm here to explain CCC's technical services and EDG eligibility. What kind of project are you looking to build?",
-      grants: "Hi! I can help you understand EDG and SFEC grant opportunities. Would you like to know more about funding options?",
+      grants: "Hi! I can help you understand EDG grant opportunities for your digital transformation project. Would you like to know more about funding options?",
       support: "Hi there! 👋 Welcome to Cognition & Competence Consultancy. How can we support your business today?"
     };
     return greetings[mode] || greetings.main;
