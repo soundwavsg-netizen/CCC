@@ -199,21 +199,18 @@ export default function Contact() {
                 </Card>
               </FadeUp>
 
-              <FadeUp delay={0.2}>
-                <Card className="p-6 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
+              <FadeUp delay={0.1}>
+                <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
                   <div className="flex items-start gap-4">
-                    <div className="h-12 w-12 rounded-lg bg-[hsl(var(--accent))] flex items-center justify-center shrink-0">
-                      <Phone className="h-6 w-6 text-[hsl(var(--primary))]" />
+                    <div className="h-12 w-12 rounded-lg bg-[hsl(var(--secondary))] flex items-center justify-center text-white shrink-0">
+                      <Phone className="h-6 w-6" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg mb-2">Call Us</h3>
-                      <p className="text-sm text-[#475467] mb-2">
-                        Mon-Fri from 9am to 6pm SGT
-                      </p>
+                      <p className="text-sm text-[#475467] mb-2">Let's discuss your project over a quick call</p>
                       <a 
-                        href="tel:+6585008888"
-                        className="text-[hsl(var(--secondary))] hover:text-[#0AA099] font-medium"
-                        data-testid="contact-phone-link"
+                        href="tel:+6585008888" 
+                        className="text-[hsl(var(--secondary))] hover:text-[#0AA099] font-medium transition-colors"
                       >
                         +65 8500 8888
                       </a>
@@ -221,74 +218,28 @@ export default function Contact() {
                   </div>
                 </Card>
               </FadeUp>
-
-              <FadeUp delay={0.3}>
-                <Card className="p-6 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
+              
+              <FadeUp delay={0.2}>
+                <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
                   <div className="flex items-start gap-4">
-                    <div className="h-12 w-12 rounded-lg bg-[hsl(var(--accent))] flex items-center justify-center shrink-0">
-                      <MessageSquare className="h-6 w-6 text-[hsl(var(--primary))]" />
+                    <div className="h-12 w-12 rounded-lg bg-[hsl(var(--secondary))] flex items-center justify-center text-white shrink-0">
+                      <MessageSquare className="h-6 w-6" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-lg mb-2">WhatsApp</h3>
-                      <p className="text-sm text-[#475467] mb-2">
-                        Message us on WhatsApp for quick response
-                      </p>
+                      <h3 className="font-semibold text-lg mb-2">WhatsApp Chat</h3>
+                      <p className="text-sm text-[#475467] mb-2">Get instant responses to your questions</p>
                       <a 
-                        href="https://wa.me/6585008888"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[hsl(var(--secondary))] hover:text-[#0AA099] font-medium"
-                        data-testid="contact-whatsapp-link"
+                        href="https://wa.me/6585008888" 
+                        className="text-[hsl(var(--secondary))] hover:text-[#0AA099] font-medium transition-colors"
                       >
-                        Chat on WhatsApp
+                        Start WhatsApp Chat
                       </a>
-                    </div>
-                  </div>
-                </Card>
-              </FadeUp>
-
-              <FadeUp delay={0.4}>
-                <Card className="p-6 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
-                  <div className="flex items-start gap-4">
-                    <div className="h-12 w-12 rounded-lg bg-[hsl(var(--accent))] flex items-center justify-center shrink-0">
-                      <MapPin className="h-6 w-6 text-[hsl(var(--primary))]" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-2">Visit Us</h3>
-                      <p className="text-sm text-[#475467]">
-                        Blk 347 Woodlands Ave 3<br />
-                        #07-105<br />
-                        Singapore 730347
-                      </p>
                     </div>
                   </div>
                 </Card>
               </FadeUp>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Map Section */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#EAF7F5] to-white">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-8 text-center">
-              Our Location
-            </h2>
-            <div className="rounded-xl overflow-hidden border shadow-[0_12px_40px_rgba(16,24,40,0.08)]">
-              <iframe 
-                title="CCC Location" 
-                data-testid="contact-map-iframe"
-                src="https://maps.google.com/maps?q=Blk+347+Woodlands+Ave+3+Singapore+730347&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                width="100%" 
-                height="480" 
-                style={{ border: 0 }} 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </FadeUp>
         </div>
       </section>
     </div>
