@@ -160,8 +160,12 @@ export const ChatWidget = () => {
       const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
       const agentMode = getAgentMode();
 
+      // Generate chat summary for the email
+      const chatSummary = generateChatSummary();
+
       await axios.post(`${backendUrl}/api/chat/lead`, {
         ...leadFormData,
+        message: leadFormData.message || chatSummary, // Use summary if no custom message
         source_page: location.pathname,
         agent_mode: agentMode
       });
