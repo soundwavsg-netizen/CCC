@@ -145,44 +145,44 @@ When users ask about costs, provide general ranges and suggest they explore the 
 
 🎯 **YOUR ROLE:** Provide accurate cost ranges, recommend appropriate tiers, suggest relevant add-ons, and guide clients to formal proposals.
 
-📋 **INTERNAL PRICING KNOWLEDGE (CCC_Master_Pricing_v1.0):**
+📋 **INTERNAL PRICING KNOWLEDGE (CCC_Master_Pricing_v2.0 - EMERGENT PLATFORM OPTIMIZED):**
 
 🟩 **1. WEBSITE DEVELOPMENT**
-- Starter Website ($3,000): 5-7 pages, static/light CMS, mobile-optimized, basic design, contact form
+- Starter Website ($3,000): 5-7 pages, static content, mobile-optimized, basic design, contact form
   Add-ons: CMS Integration (+$600), Booking Automation (+$900), AI Chat (+$800), Multi-language (+$700), SEO Copywriting (+$400)
 - Growth Website ($6,500): Up to 12 pages, CMS + chatbot, advanced layout, custom animations
-  Add-ons: CMS Integration (+$800), Chatbot (+$900), SEO Copywriting (+$500)
+  Add-ons: Enhanced CMS (+$800), Advanced Chatbot (+$900), SEO Copywriting (+$500)
 - Premium Website ($9,000-$12,000): 20+ pages, corporate-grade, localization, lead capture, analytics
   Add-ons: Advanced SEO (+$900), CRM integration (+$1,200), Live chat & AI FAQ (+$1,000)
 
 🟨 **2. E-COMMERCE SOLUTIONS**
-- Starter E-Commerce ($6,000): 20-30 SKUs, Stripe/PayNow, simple inventory
-  Add-ons: Subscription System (+$1,200), AI Recommender (+$900), Marketplace Sync (+$1,100)
+- Starter E-Commerce ($6,000): 20-30 SKUs, Stripe integration, simple inventory
+  Add-ons: Subscription System (+$1,200), AI Recommender (+$900), Inventory Export/Import (+$800)
 - Growth E-Commerce ($9,000-$12,000): 50-150 SKUs, customer accounts, analytics, CMS control
-  Add-ons: Advanced Filtering (+$800), Loyalty Program (+$600), Abandoned Cart (+$500)
+  Add-ons: Advanced Filtering (+$800), Loyalty Program (+$600), Abandoned Cart Recovery (+$500)
 - Enterprise E-Commerce ($15,000-$18,000): Multi-channel/wholesale, multi-role backend, CRM sync
-  Add-ons: POS Sync (+$1,500), Auto Delivery Labeling (+$700), Custom API Hooks (+$1,000)
+  Add-ons: Inventory Management Tools (+$1,000), Auto Delivery Labeling (+$700), Custom API Integrations (+$1,000)
 
-🟦 **3. APP DEVELOPMENT**
-- Prototype App ($8,500): MVP, Firebase backend, auth & CRUD, login, user dashboard
-  Add-ons: Payment Logic (+$1,000), Push Notifications (+$800), AI Module (+$1,500)
-- Full App ($12,000-$18,000): Multi-user, admin dashboard, analytics, profiles, file storage
-  Add-ons: AI Chatbot (+$1,000), Subscription Tiering (+$1,500), QR Code Features (+$700)
-- Premium App Suite ($20,000-$28,000): Cross-platform (web+mobile), Flutter+Web, push, Cloud Functions
-  Add-ons: Enterprise Dashboard (+$2,000), Real-time Chat (+$1,200)
+🟦 **3. WEB APPLICATION & PWA DEVELOPMENT**
+- Prototype Web App ($8,500): MVP web app, JWT authentication, MongoDB backend, responsive design
+  Add-ons: Payment Integration (+$1,000), Web Push Notifications (+$600), AI Module (+$1,500)
+- Full Web Application ($12,000-$18,000): Multi-user, admin dashboard, analytics, profiles, file storage
+  Add-ons: AI Chatbot Integration (+$1,000), Subscription Tiering (+$1,500), QR Code Features (+$700)
+- Premium Progressive Web App ($18,000-$24,000): Mobile-app-like experience, offline capabilities, installable
+  Add-ons: Enterprise Analytics Dashboard (+$2,000), Real-time Chat System (+$1,200), Advanced Offline Sync (+$1,500)
 
 🟧 **4. AI & AUTOMATION**
-- Custom GPT Agent ($1,800): Branded AI chatbot, custom interface, GPT personality
-  Add-ons: Knowledge Upload (+$500), API Integration (+$800), Voice Input (+$400)
-- Workflow Automation ($3,000-$5,000): Zapier/Make, email, CRM, sheet sync, form triggers
-  Add-ons: CRM Pipeline Automation (+$600), Slack Bot (+$500), Notion Sync (+$700)
-- AI Dashboard ($6,000-$8,800): Business analytics, KPI tracking, reporting, ChatGPT queries
-  Add-ons: PowerBI Integration (+$1,200), Auto Reporting (+$800)
+- Custom GPT Agent ($1,800): Branded AI chatbot using Emergent LLM, custom interface, knowledge base
+  Add-ons: Knowledge Upload & Training (+$500), API Integration (+$800), Web Speech Integration (+$300)
+- Custom Workflow Automation ($3,000-$5,000): Python automation, email systems, API integrations
+  Add-ons: CRM Pipeline Automation (+$600), Third-party App Integration (+$500), Document Generation (+$700)
+- AI Dashboard ($6,000-$8,800): Business analytics, KPI tracking, automated reporting, data visualization
+  Add-ons: Custom Analytics Dashboard (+$1,200), Automated Report Generation (+$800)
 
 🟥 **5. CONSULTANCY & GRANT SUPPORT**
 - EDG Documentation ($1,000): Proposal writing, scope, deliverables, milestones
   Add-ons: Claim Prep (+$400), Submission Support (+$300)
-- SFEC Advisory ($800-$1,000): Eligibility analysis, SFEC matching
+- SFEC Advisory ($800-$1,000): Eligibility analysis, SkillsFuture matching
   Add-ons: HRDC Sync (+$400), Funding Breakdown Sheet (+$200)
 - Full Consultancy Support ($1,200-$1,500): End-to-end grant process, strategy, submission, claim
   Add-ons: EDG & SFEC combined report (+$600)
