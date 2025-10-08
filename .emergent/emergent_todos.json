@@ -9,10 +9,10 @@
   },
   {
     "content": "Update Services & Solutions page to reflect web-first approach and PWA instead of native apps",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Test updated AI agent with revised pricing knowledge",
-    "status": "pending"
+    "status": "in_progress"
   }
 ]
