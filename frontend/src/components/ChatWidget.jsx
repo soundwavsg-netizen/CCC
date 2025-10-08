@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Card } from './ui/card';
 import { toast } from 'sonner';
+import { trackChatOpen, trackChatStarted, trackLeadCaptured, postLeadToCRM } from '../utils/analytics';
 
 export const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
