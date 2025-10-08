@@ -31,6 +31,14 @@ import {
   trackFormSubmitted, 
   trackBookConsultClick 
 } from '../utils/analytics';
+import { 
+  getOrganizationSchema, 
+  getFAQSchema, 
+  getWebPageSchema, 
+  injectSchema, 
+  setPageMeta, 
+  pageMetaData 
+} from '../utils/seo';
 
 // Analytics helper functions - use centralized analytics
 const FadeUp = ({ delay = 0, children }) => (
