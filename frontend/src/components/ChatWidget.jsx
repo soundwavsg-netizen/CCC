@@ -33,11 +33,11 @@ export const ChatWidget = () => {
     return 'main';
   };
 
-  // Get greeting message based on agent mode
+  // Update greeting message for EDG focus
   const getGreetingMessage = (mode) => {
     const greetings = {
-      main: "Hi there! 👋 Welcome to CCC. I'm your AI consultant. How can I help you with digital transformation today?",
-      services: "Hello! I'm here to explain CCC's technical services. What kind of project are you looking to build?",
+      main: "👋 Hi! I'm the CCC consultant bot. Want to check if your project can qualify for up to 50% EDG funding for a new website or app?",
+      services: "Hello! I'm here to explain CCC's technical services and EDG eligibility. What kind of project are you looking to build?",
       grants: "Hi! I can help you understand EDG and SFEC grant opportunities. Would you like to know more about funding options?",
       support: "Hi there! 👋 Welcome to Cognition & Competence Consultancy. How can we support your business today?"
     };
