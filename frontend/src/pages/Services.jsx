@@ -80,12 +80,12 @@ export default function Services() {
       features: [
         'Team upskilling workshops and training programs',
         'EDG (Enterprise Development Grant) application support',
-        'SFEC (SMEs Go Digital) grant guidance',
         'Documentation preparation and submission',
         'Post-approval implementation assistance',
-        'Compliance and reporting support'
+        'Compliance and reporting support',
+        'Grant eligibility assessment and consultation'
       ],
-      technologies: ['Enterprise Singapore EDG', 'SFEC Program', 'Custom Training'],
+      technologies: ['Enterprise Singapore EDG', 'Grant Documentation', 'Custom Training'],
       caseStudy: 'Multiple successful grant applications'
     }
   ];
