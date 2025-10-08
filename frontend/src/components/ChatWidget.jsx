@@ -199,13 +199,8 @@ export const ChatWidget = () => {
 
   if (!isOpen) {
     const handleChatOpen = () => {
-      // Track event
-      if (window.dataLayer) {
-        window.dataLayer.push({ 
-          event: 'click_chat_open', 
-          source: 'sticky' 
-        });
-      }
+      // Track event using analytics utility
+      trackChatOpen('sticky');
       setIsOpen(true);
     };
 
