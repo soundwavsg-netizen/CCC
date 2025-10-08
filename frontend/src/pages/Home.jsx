@@ -213,39 +213,218 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Overview */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-white" data-testid="services-section">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Lead Form Section */}
+      <section id="lead-form" className="py-16 sm:py-20 bg-gradient-to-br from-[#F9FAFB] to-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
-            <div className="text-center mb-16">
+            <div className="text-center mb-8">
               <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                Comprehensive Digital Services
+                Request EDG Review
               </h2>
-              <p className="text-base text-[#475467] max-w-2xl mx-auto">
-                From concept to deployment, we provide end-to-end solutions that help your business thrive in the digital age.
+              <p className="text-base text-[#475467]">
+                Get a quick assessment of your project's EDG eligibility and funding potential.
               </p>
             </div>
           </FadeUp>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {services.map((service, index) => (
+          <FadeUp delay={0.1}>
+            <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
+              {isFormSubmitted ? (
+                <div className="text-center py-8">
+                  <div className="h-16 w-16 rounded-full bg-[#12B76A] flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle2 className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">Thanks!</h3>
+                  <p className="text-[#475467]">
+                    We'll review your EDG eligibility and reply within 1 business day via your preferred contact.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleFormSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Name *</Label>
+                      <Input 
+                        id="name" 
+                        name="name" 
+                        required 
+                        placeholder="Your full name"
+                        data-testid="lead-form-name"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="company">Company *</Label>
+                      <Input 
+                        id="company" 
+                        name="company" 
+                        required 
+                        placeholder="Company name"
+                        data-testid="lead-form-company"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="uen">UEN (Optional)</Label>
+                      <Input 
+                        id="uen" 
+                        name="uen" 
+                        placeholder="201234567A"
+                        data-testid="lead-form-uen"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email *</Label>
+                      <Input 
+                        id="email" 
+                        name="email" 
+                        type="email" 
+                        required 
+                        placeholder="you@company.com"
+                        data-testid="lead-form-email"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone (WhatsApp)</Label>
+                      <Input 
+                        id="phone" 
+                        name="phone" 
+                        placeholder="+65 9123 4567"
+                        data-testid="lead-form-phone"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="projectType">Project Type *</Label>
+                      <Select name="projectType" required>
+                        <SelectTrigger data-testid="lead-form-project-type">
+                          <SelectValue placeholder="Select project type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Website">Website</SelectItem>
+                          <SelectItem value="Web App">Web App</SelectItem>
+                          <SelectItem value="E-commerce">E-commerce</SelectItem>
+                          <SelectItem value="Other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="goal">Short Goal *</Label>
+                    <Textarea 
+                      id="goal" 
+                      name="goal" 
+                      required 
+                      placeholder="Briefly describe what you want to achieve with this project..."
+                      className="min-h-[100px]"
+                      data-testid="lead-form-goal"
+                    />
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white"
+                    disabled={isFormLoading}
+                    data-testid="lead-form-submit"
+                  >
+                    {isFormLoading ? 'Submitting...' : 'Request EDG Review'}
+                  </Button>
+                </form>
+              )}
+            </Card>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeUp>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
+                How It Works
+              </h2>
+              <p className="text-base text-[#475467] max-w-2xl mx-auto">
+                Get your digital project built with EDG support in three simple steps.
+              </p>
+            </div>
+          </FadeUp>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                step: '1',
+                icon: MessageCircle,
+                title: 'Chat with our AI to scope your project',
+                description: 'Our AI consultant will help qualify your requirements and assess EDG eligibility.'
+              },
+              {
+                step: '2',
+                icon: CheckCircle2,
+                title: 'Get a quick EDG eligibility review',
+                description: 'Receive a detailed assessment of funding potential and project scope within 1 business day.'
+              },
+              {
+                step: '3',
+                icon: Zap,
+                title: 'We build & submit your project with grant support',
+                description: 'Complete development and EDG documentation handled by our team.'
+              }
+            ].map((item, index) => (
+              <FadeUp key={index} delay={index * 0.1}>
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[hsl(var(--accent))] text-[hsl(var(--primary))] font-semibold text-xl mb-4">
+                    {item.step}
+                  </div>
+                  <div className="h-10 w-10 rounded-lg bg-[hsl(var(--secondary))] flex items-center justify-center text-white mx-auto mb-4">
+                    <item.icon size={20} />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                  <p className="text-sm text-[#475467]">{item.description}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Strip */}
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#F9FAFB] to-white">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeUp>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
+                EDG-Eligible Digital Solutions
+              </h2>
+              <p className="text-base text-[#475467] max-w-2xl mx-auto">
+                Choose from our range of services that qualify for EDG funding support.
+              </p>
+            </div>
+          </FadeUp>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.slice(0, 5).map((service, index) => (
               <FadeUp key={service.title} delay={index * 0.1}>
-                <Card 
-                  className="p-6 rounded-xl hover:shadow-[0_12px_40px_rgba(16,24,40,0.08)] transition-shadow duration-200 border border-[#EAECF0]"
-                  data-testid="service-card"
-                >
-                  <div className="h-10 w-10 rounded-lg bg-[hsl(var(--accent))] flex items-center justify-center text-[hsl(var(--primary))] mb-4">
+                <Card className="p-6 rounded-xl hover:shadow-[0_12px_40px_rgba(16,24,40,0.08)] transition-shadow duration-200 border border-[#EAECF0] h-full">
+                  <div className="h-10 w-10 rounded-lg bg-[hsl(var(--secondary))] flex items-center justify-center text-white mb-4">
                     <service.icon size={20} />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                  <p className="text-sm text-[#475467] mb-4">{service.description}</p>
+                  <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
+                  <p className="text-sm text-[#475467] mb-4 flex-grow">{service.description}</p>
                   <Button 
-                    asChild
+                    onClick={() => {
+                      // Scroll to services section on services-solutions page
+                      window.location.href = '/services-solutions#services';
+                    }}
                     variant="ghost" 
                     className="p-0 h-auto hover:bg-transparent text-[hsl(var(--secondary))] hover:text-[#0AA099]"
                     data-testid={`service-learn-more-${index}`}
                   >
-                    <Link to={service.link}>Learn more <ArrowRight className="ml-1 h-4 w-4" /></Link>
+                    Learn More <ArrowRight className="ml-1 h-4 w-4" />
                   </Button>
                 </Card>
               </FadeUp>
@@ -254,153 +433,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Grants Highlight */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-gradient-to-br from-[#EAF7F5] to-white" data-testid="grants-section">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <FadeUp>
-              <div>
-                <Badge className="mb-4 bg-[#12B76A] text-white hover:bg-[#12B76A]" data-testid="grants-badge">
-                  <Award className="mr-1 h-3 w-3" /> Grant Support Available
-                </Badge>
-                <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                  EDG & SFEC Grant Assistance
-                </h2>
-                <p className="text-base text-[#475467] mb-6">
-                  Access up to 50% funding support from Enterprise Singapore. We guide you through the entire application process for Enterprise Development Grant (EDG) and SFEC programs.
-                </p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-[#12B76A] shrink-0 mt-0.5" />
-                    <span className="text-sm">Eligibility assessment and documentation</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-[#12B76A] shrink-0 mt-0.5" />
-                    <span className="text-sm">Application preparation and submission</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-[#12B76A] shrink-0 mt-0.5" />
-                    <span className="text-sm">Post-approval implementation support</span>
-                  </li>
-                </ul>
-                <Button 
-                  asChild
-                  className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white"
-                  data-testid="grants-cta-button"
-                >
-                  <Link to="/grants">Explore Grant Options <ArrowRight className="ml-2 h-4 w-4" /></Link>
-                </Button>
-              </div>
-            </FadeUp>
-            
-            <FadeUp delay={0.2}>
-              <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 bg-white">
-                <div className="space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="h-16 w-16 rounded-full bg-[hsl(var(--accent))] flex items-center justify-center">
-                      <Award className="h-8 w-8 text-[hsl(var(--secondary))]" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-xl">Up to 50%</h3>
-                      <p className="text-sm text-[#475467]">Funding Support</p>
-                    </div>
-                  </div>
-                  <div className="border-t pt-6">
-                    <h4 className="font-semibold mb-3">Eligible Projects:</h4>
-                    <ul className="space-y-2 text-sm text-[#475467]">
-                      <li>• Digital transformation initiatives</li>
-                      <li>• AI & automation implementation</li>
-                      <li>• Website & app development</li>
-                      <li>• E-commerce platform setup</li>
-                    </ul>
-                  </div>
-                </div>
-              </Card>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
-
-      {/* Portfolio Preview */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-white" data-testid="portfolio-section">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* FAQ Section */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
-            <div className="text-center mb-16">
+            <div className="text-center mb-12">
               <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                Recent Projects
+                Frequently Asked Questions
               </h2>
-              <p className="text-base text-[#475467] max-w-2xl mx-auto">
-                Explore our portfolio of successful digital transformation projects for Singapore SMEs.
+              <p className="text-base text-[#475467]">
+                Common questions about EDG funding and our services.
               </p>
             </div>
           </FadeUp>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <FadeUp key={project.name} delay={index * 0.1}>
-                <Card 
-                  className="group overflow-hidden rounded-xl cursor-pointer border-0 shadow-[0_6px_24px_rgba(16,24,40,0.06)] hover:shadow-[0_12px_40px_rgba(16,24,40,0.10)] transition-all duration-200"
-                  data-testid="portfolio-item"
-                >
-                  <div className="overflow-hidden">
-                    <img 
-                      src={project.image}
-                      alt={project.name}
-                      className="w-full h-56 object-cover group-hover:scale-[1.02] transition-transform duration-300" 
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="font-semibold text-lg mb-2">{project.name}</h3>
-                    <p className="text-sm text-[#475467]">{project.description}</p>
-                  </div>
-                </Card>
-              </FadeUp>
-            ))}
-          </div>
+          <FadeUp delay={0.1}>
+            <Accordion type="single" collapsible className="w-full">
+              {faqItems.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                  <AccordionContent className="text-[#475467]">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </FadeUp>
 
-          <FadeUp delay={0.3}>
-            <div className="mt-12 text-center">
+          <FadeUp delay={0.2}>
+            <div className="text-center mt-8">
               <Button 
-                asChild
-                variant="outline"
-                className="border-[hsl(var(--border))]"
-                data-testid="portfolio-view-all-button"
+                onClick={() => handleChatOpen('faq')}
+                className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white"
+                data-testid="faq-chat-cta"
               >
-                <Link to="/portfolio">View All Projects <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                <MessageCircle className="mr-2 h-4 w-4" />
+                Ask More Questions
               </Button>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* CTA Banner */}
-      <section className="py-16 sm:py-20 bg-[hsl(var(--primary))] text-white" data-testid="cta-banner">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp>
-            <div className="text-center">
-              <h2 className="text-3xl sm:text-4xl font-semibold mb-4">
-                Ready to Transform Your Business?
-              </h2>
-              <p className="text-lg text-[#EAF7F5] mb-8 max-w-2xl mx-auto">
-                Let's discuss how we can help you modernize your operations with technology and AI.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Button 
-                  asChild
-                  className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
-                  data-testid="cta-contact-button"
-                >
-                  <Link to="/contact">Schedule a Consultation</Link>
-                </Button>
-                <Button 
-                  asChild
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[hsl(var(--primary))]"
-                  data-testid="cta-services-button"
-                >
-                  <Link to="/services">Explore Services</Link>
-                </Button>
-              </div>
             </div>
           </FadeUp>
         </div>
