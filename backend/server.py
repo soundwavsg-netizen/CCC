@@ -57,6 +57,26 @@ class ContactFormCreate(BaseModel):
     company: str = ""
     message: str
 
+class ChatLead(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    email: str
+    phone: str = ""
+    message: str = ""
+    source_page: str = "chat"
+    agent_mode: str = "main"
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class ChatLeadCreate(BaseModel):
+    name: str
+    email: str
+    phone: str = ""
+    message: str = ""
+    source_page: str = "chat"
+    agent_mode: str = "main"
+
 class ChatMessage(BaseModel):
     role: str  # 'user' or 'assistant'
     content: str
