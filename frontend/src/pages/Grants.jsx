@@ -6,7 +6,7 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../components/ui/accordion';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
-import { Award, CheckCircle2, FileText, TrendingUp, Clock } from 'lucide-react';
+import { Award, CheckCircle2, FileText, TrendingUp, Clock, DollarSign, Target } from 'lucide-react';
 
 const FadeUp = ({ delay = 0, children }) => (
   <motion.div
