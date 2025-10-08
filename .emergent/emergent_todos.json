@@ -1,18 +1,18 @@
 [
   {
-    "content": "Update AI agents with detailed pricing tables and add-ons",
-    "status": "completed"
+    "content": "Update CCC_Master_Pricing_v1.0.md to reflect Emergent platform capabilities",
+    "status": "in_progress"
   },
   {
-    "content": "Create internal pricing reference document",
-    "status": "completed"
+    "content": "Update AI agent knowledge in backend/server.py to use new capability-focused pricing",
+    "status": "pending"
   },
   {
-    "content": "Test AI pricing responses with new structure",
-    "status": "completed"
+    "content": "Update Services & Solutions page to reflect web-first approach and PWA instead of native apps",
+    "status": "pending"
   },
   {
-    "content": "Verify all tiers and add-ons are accessible to AI",
-    "status": "completed"
+    "content": "Test updated AI agent with revised pricing knowledge",
+    "status": "pending"
   }
 ]
