@@ -244,36 +244,43 @@ async def chat_with_ai(request: ChatRequest):
         # Get the appropriate system prompt
         system_prompt = AGENT_PROMPTS.get(request.agent_mode, AGENT_PROMPTS["main"])
         
-        # Build messages for OpenAI
-        messages = [{"role": "system", "content": system_prompt}]
+        # Create a unique session ID for this conversation
+        session_id = f"ccc-chat-{uuid.uuid4()}"
         
-        # Add conversation history
-        for msg in request.messages:
-            messages.append({
-                "role": msg.role,
-                "content": msg.content
-            })
-        
-        # Call OpenAI API
-        response = await openai_client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=messages,
-            temperature=0.7,
-            max_tokens=500
+        # Initialize LlmChat with the system prompt
+        chat = LlmChat(
+            api_key=EMERGENT_API_KEY,
+            session_id=session_id,
+            system_message=system_prompt
         )
         
-        assistant_message = response.choices[0].message.content
+        # Use gpt-4o-mini model
+        chat.with_model("openai", "gpt-4o-mini")
+        
+        # Get the last user message (most recent)
+        last_user_message = None
+        for msg in reversed(request.messages):
+            if msg.role == "user":
+                last_user_message = msg.content
+                break
+        
+        if not last_user_message:
+            raise HTTPException(status_code=400, detail="No user message found")
+        
+        # Create user message and send
+        user_message = UserMessage(text=last_user_message)
+        assistant_response = await chat.send_message(user_message)
         
         logger.info(f"Chat request processed - Mode: {request.agent_mode}")
         
         return ChatResponse(
-            message=assistant_message,
+            message=assistant_response,
             agent_mode=request.agent_mode
         )
         
     except Exception as e:
         logger.error(f"Error in chat endpoint: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to process chat request")
+        raise HTTPException(status_code=500, detail=f"Failed to process chat request: {str(e)}")
 
 # Include the router in the main app
 app.include_router(api_router)
