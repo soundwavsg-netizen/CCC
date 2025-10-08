@@ -5,7 +5,7 @@
   },
   {
     "content": "Update AI agent system prompt to focus only on EDG",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Remove all addresses from website and AI agent",
@@ -17,7 +17,7 @@
   },
   {
     "content": "Test AI agent responses for EDG-only focus",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Verify all WhatsApp and email integrations still work",
