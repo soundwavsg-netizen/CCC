@@ -195,7 +195,7 @@ Platform: FastAPI + React + MongoDB + Tailwind + Shadcn/UI + Emergent LLM
 - Data visualization
 
 **Available Add-ons:**
-- PowerBI Integration: +$1,200
+- Custom Analytics Dashboard: +$1,200
 - Automated Report Generation: +$800
 
 ---
