@@ -7,6 +7,7 @@ import ChatWidget from './components/ChatWidget';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
+import ServicesSolutions from './pages/ServicesSolutions';
 import Portfolio from './pages/Portfolio';
 import Grants from './pages/Grants';
 import Contact from './pages/Contact';
