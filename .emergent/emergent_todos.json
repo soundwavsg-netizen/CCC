@@ -1,18 +1,62 @@
 [
   {
-    "content": "Update CCC_Master_Pricing_v1.0.md to reflect Emergent platform capabilities",
-    "status": "completed"
+    "content": "Update homepage hero section with EDG-focused messaging and CTAs",
+    "status": "pending"
   },
   {
-    "content": "Update AI agent knowledge in backend/server.py to use new capability-focused pricing",
-    "status": "completed"
+    "content": "Create new /edg landing page with expanded FAQ",
+    "status": "pending"
   },
   {
-    "content": "Update Services & Solutions page to reflect web-first approach and PWA instead of native apps",
-    "status": "completed"
+    "content": "Add lead form below hero with EDG review functionality",
+    "status": "pending"
   },
   {
-    "content": "Test updated AI agent with revised pricing knowledge",
-    "status": "completed"
+    "content": "Update AI agent main mode with EDG qualification flow",
+    "status": "pending"
+  },
+  {
+    "content": "Add sticky chat launcher with EDG eligibility check label",
+    "status": "pending"
+  },
+  {
+    "content": "Implement GA4 and Meta Pixel tracking events",
+    "status": "pending"
+  },
+  {
+    "content": "Add How It Works 3-step section",
+    "status": "pending"
+  },
+  {
+    "content": "Create Services Strip without pricing",
+    "status": "pending"
+  },
+  {
+    "content": "Add FAQ accordion section to homepage",
+    "status": "pending"
+  },
+  {
+    "content": "Update SEO meta tags and add schema markup",
+    "status": "pending"
+  },
+  {
+    "content": "Create CRM webhook placeholder function",
+    "status": "pending"
+  },
+  {
+    "content": "Add environment variables for tracking IDs",
+    "status": "pending"
+  },
+  {
+    "content": "Generate sitemap.xml and robots.txt",
+    "status": "pending"
+  },
+  {
+    "content": "Implement performance optimizations",
+    "status": "pending"
+  },
+  {
+    "content": "Test all analytics events and lead capture flow",
+    "status": "pending"
   }
 ]
