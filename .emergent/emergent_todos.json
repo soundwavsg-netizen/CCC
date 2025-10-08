@@ -1,62 +1,26 @@
 [
   {
-    "content": "Update homepage hero section with EDG-focused messaging and CTAs",
-    "status": "completed"
+    "content": "Search and remove all SFEC mentions from website pages",
+    "status": "in_progress"
   },
   {
-    "content": "Create new /edg landing page with expanded FAQ",
-    "status": "completed"
+    "content": "Update AI agent system prompt to focus only on EDG",
+    "status": "pending"
   },
   {
-    "content": "Add lead form below hero with EDG review functionality",
-    "status": "completed"
+    "content": "Remove all addresses from website and AI agent",
+    "status": "pending"
   },
   {
-    "content": "Update AI agent main mode with EDG qualification flow",
-    "status": "completed"
+    "content": "Update meta descriptions and structured data",
+    "status": "pending"
   },
   {
-    "content": "Add sticky chat launcher with EDG eligibility check label",
-    "status": "completed"
+    "content": "Test AI agent responses for EDG-only focus",
+    "status": "pending"
   },
   {
-    "content": "Implement GA4 and Meta Pixel tracking events",
-    "status": "completed"
-  },
-  {
-    "content": "Add How It Works 3-step section",
-    "status": "completed"
-  },
-  {
-    "content": "Create Services Strip without pricing",
-    "status": "completed"
-  },
-  {
-    "content": "Add FAQ accordion section to homepage",
-    "status": "completed"
-  },
-  {
-    "content": "Update SEO meta tags and add schema markup",
-    "status": "completed"
-  },
-  {
-    "content": "Create CRM webhook placeholder function",
-    "status": "completed"
-  },
-  {
-    "content": "Add environment variables for tracking IDs",
-    "status": "completed"
-  },
-  {
-    "content": "Generate sitemap.xml and robots.txt",
-    "status": "completed"
-  },
-  {
-    "content": "Implement performance optimizations",
-    "status": "completed"
-  },
-  {
-    "content": "Test all analytics events and lead capture flow",
-    "status": "completed"
+    "content": "Verify all WhatsApp and email integrations still work",
+    "status": "pending"
   }
 ]
