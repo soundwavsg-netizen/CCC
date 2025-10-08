@@ -376,7 +376,9 @@ async def send_email_notification(lead: ChatLead):
 👤 Name: {lead.name}
 📧 Email: {lead.email}
 📱 Phone: {lead.phone or 'Not provided'}
-💬 Message: {lead.message or 'None'}
+
+💬 Chat Summary:
+{lead.message or 'No conversation recorded'}
 
 📍 Source Page: {lead.source_page}
 🤖 Agent Mode: {lead.agent_mode}
