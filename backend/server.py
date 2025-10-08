@@ -284,57 +284,116 @@ async def capture_chat_lead(input: ChatLeadCreate):
 
 async def send_whatsapp_notification(lead: ChatLead):
     """
-    Send WhatsApp notification about new lead using CallMeBot API.
-    This is a free service that sends WhatsApp messages.
-    
-    Setup required (one-time):
-    1. Add +34 644 44 32 85 to your WhatsApp contacts
-    2. Send "I allow callmebot to send me messages" to that number
-    3. You'll receive an API key via WhatsApp
-    4. Set CALLMEBOT_API_KEY environment variable
+    Send email notification about new lead.
+    More reliable than WhatsApp for business notifications.
     """
     try:
-        # Format message (keep it short and simple)
-        message = f"""🔔 NEW LEAD!
+        import smtplib
+        from email.mime.text import MIMEText
+        from email.mime.multipart import MIMEMultipart
+        
+        # Email configuration
+        smtp_server = os.environ.get('SMTP_SERVER', 'smtp.gmail.com')
+        smtp_port = int(os.environ.get('SMTP_PORT', '587'))
+        sender_email = os.environ.get('SENDER_EMAIL', '')
+        sender_password = os.environ.get('SENDER_PASSWORD', '')
+        recipient_email = os.environ.get('NOTIFICATION_EMAIL', 'glor-yeo@hotmail.com')
+        
+        if not sender_email or not sender_password:
+            logger.warning("Email credentials not configured. Notification skipped.")
+            logger.info(f"📧 New Lead: {lead.name} ({lead.email}) - Phone: {lead.phone or 'N/A'}")
+            return False
+        
+        # Create email message
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = f'🔔 New CCC Lead: {lead.name}'
+        msg['From'] = sender_email
+        msg['To'] = recipient_email
+        
+        # HTML email body
+        html_body = f"""
+        <html>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
+                    <h2 style="color: #0FB5AE; margin-bottom: 20px;">🔔 New Lead from CCC Website</h2>
+                    
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 10px; background: #f5f5f5; font-weight: bold; width: 120px;">👤 Name:</td>
+                            <td style="padding: 10px;">{lead.name}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; background: #fff; font-weight: bold;">📧 Email:</td>
+                            <td style="padding: 10px;"><a href="mailto:{lead.email}">{lead.email}</a></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">📱 Phone:</td>
+                            <td style="padding: 10px;">{lead.phone or 'Not provided'}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; background: #fff; font-weight: bold;">💬 Message:</td>
+                            <td style="padding: 10px;">{lead.message or 'None'}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">📍 Source Page:</td>
+                            <td style="padding: 10px;">{lead.source_page}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; background: #fff; font-weight: bold;">🤖 Agent Mode:</td>
+                            <td style="padding: 10px;">{lead.agent_mode}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">⏰ Timestamp:</td>
+                            <td style="padding: 10px;">{lead.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}</td>
+                        </tr>
+                    </table>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background: #EAF7F5; border-left: 4px solid #0FB5AE; border-radius: 4px;">
+                        <p style="margin: 0; font-weight: bold;">⚡ Action Required:</p>
+                        <p style="margin: 5px 0 0 0;">Please follow up with this lead as soon as possible!</p>
+                    </div>
+                    
+                    <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #999;">
+                        <p>This notification was sent from your CCC website lead capture system.</p>
+                    </div>
+                </div>
+            </body>
+        </html>
+        """
+        
+        # Plain text fallback
+        text_body = f"""
+🔔 NEW CCC LEAD ALERT!
 
-Name: {lead.name}
-Email: {lead.email}
-Phone: {lead.phone or 'N/A'}
-Source: {lead.source_page}
-Agent: {lead.agent_mode}
+👤 Name: {lead.name}
+📧 Email: {lead.email}
+📱 Phone: {lead.phone or 'Not provided'}
+💬 Message: {lead.message or 'None'}
 
-Follow up ASAP!"""
+📍 Source Page: {lead.source_page}
+🤖 Agent Mode: {lead.agent_mode}
+⏰ Timestamp: {lead.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}
+
+Please follow up with this lead ASAP!
+        """
         
-        # Your WhatsApp number (format: country code + number, no + or spaces)
-        phone_number = "6585008888"
+        # Attach both HTML and plain text versions
+        part1 = MIMEText(text_body, 'plain')
+        part2 = MIMEText(html_body, 'html')
+        msg.attach(part1)
+        msg.attach(part2)
         
-        # CallMeBot API key (you need to get this via WhatsApp - see docstring)
-        api_key = os.environ.get('CALLMEBOT_API_KEY', '')
+        # Send email
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.send_message(msg)
         
-        if not api_key:
-            logger.warning("CALLMEBOT_API_KEY not set. WhatsApp notification skipped.")
-            logger.info(f"Lead details - {lead.name} ({lead.email})")
-            return None
-        
-        # CallMeBot API endpoint
-        import urllib.parse
-        encoded_message = urllib.parse.quote(message)
-        url = f"https://api.callmebot.com/whatsapp.php?phone={phone_number}&text={encoded_message}&apikey={api_key}"
-        
-        # Send request
-        import httpx
-        async with httpx.AsyncClient(timeout=10.0) as client:
-            response = await client.get(url)
-            
-            if response.status_code == 200:
-                logger.info(f"✅ WhatsApp notification sent for lead: {lead.name}")
-                return True
-            else:
-                logger.error(f"Failed to send WhatsApp: {response.status_code}")
-                return False
+        logger.info(f"✅ Email notification sent for lead: {lead.name}")
+        return True
         
     except Exception as e:
-        logger.error(f"Error sending WhatsApp notification: {str(e)}")
+        logger.error(f"Error sending email notification: {str(e)}")
         return False
 
 @api_router.get("/chat/leads", response_model=List[ChatLead])
