@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from './components/ui/sonner';
 import Header from './components/Header';
@@ -14,9 +14,15 @@ import EDG from './pages/EDG';
 import Contact from './pages/Contact';
 import PDPA from './pages/PDPA';
 import Terms from './pages/Terms';
+import { initializeTracking } from './utils/analytics';
 import './App.css';
 
 export default function App() {
+  // Initialize analytics on app load
+  useEffect(() => {
+    initializeTracking();
+  }, []);
+
   return (
     <Router>
       <div className="flex flex-col min-h-screen">
