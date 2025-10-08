@@ -397,6 +397,54 @@ Please follow up with this lead ASAP!
         logger.error(f"Error sending email notification: {str(e)}")
         return False
 
+async def send_whatsapp_notification(lead: ChatLead):
+    """
+    Send WhatsApp notification using CallMeBot API.
+    Provides instant mobile alert.
+    """
+    try:
+        # Your WhatsApp number (format: country code + number, no + or spaces)
+        phone_number = "6585008888"
+        
+        # CallMeBot API key (get it by messaging +34 644 44 32 85)
+        api_key = os.environ.get('CALLMEBOT_API_KEY', '')
+        
+        if not api_key:
+            logger.warning("CALLMEBOT_API_KEY not set. WhatsApp notification skipped.")
+            return False
+        
+        # Format message (keep it short for WhatsApp)
+        message = f"""🔔 NEW LEAD!
+
+Name: {lead.name}
+Email: {lead.email}
+Phone: {lead.phone or 'N/A'}
+Page: {lead.source_page}
+
+Check email for details!"""
+        
+        # CallMeBot API endpoint
+        import urllib.parse
+        import httpx
+        
+        encoded_message = urllib.parse.quote(message)
+        url = f"https://api.callmebot.com/whatsapp.php?phone={phone_number}&text={encoded_message}&apikey={api_key}"
+        
+        # Send request with timeout
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            response = await client.get(url)
+            
+            if response.status_code == 200:
+                logger.info(f"✅ WhatsApp notification sent for lead: {lead.name}")
+                return True
+            else:
+                logger.error(f"WhatsApp notification failed: HTTP {response.status_code}")
+                return False
+        
+    except Exception as e:
+        logger.error(f"Error sending WhatsApp notification: {str(e)}")
+        return False
+
 @api_router.get("/chat/leads", response_model=List[ChatLead])
 async def get_chat_leads():
     """
