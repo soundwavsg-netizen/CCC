@@ -1,14 +1,6 @@
 [
   {
-    "content": "Implement chat lead capture - save contact details to MongoDB when user shares them",
-    "status": "completed"
-  },
-  {
-    "content": "Add frontend form to collect structured contact info from chat",
-    "status": "completed"
-  },
-  {
-    "content": "Test lead capture flow end-to-end",
-    "status": "completed"
+    "content": "Implement email notifications for chat leads using Python smtplib",
+    "status": "in_progress"
   }
 ]
