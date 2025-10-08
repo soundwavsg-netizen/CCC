@@ -1,18 +1,18 @@
 [
   {
     "content": "Create backend chat API endpoint with OpenAI integration and agent prompt routing",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Create frontend ChatWidget component with floating button and chat UI",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Integrate ChatWidget into App.js with page-based context routing",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test AI chat functionality on different pages",
-    "status": "pending"
+    "status": "completed"
   }
 ]
