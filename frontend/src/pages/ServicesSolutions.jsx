@@ -57,20 +57,20 @@ export default function ServicesSolutions() {
       ]
     },
     {
-      id: 'mobile-app',
+      id: 'web-app',
       icon: Smartphone,
-      title: 'Mobile & Web App Development',
+      title: 'Web Applications & Progressive Web Apps',
       color: '#3B82F6', // Blue
       bgColor: '#DBEAFE',
-      description: 'End-to-end full-stack applications using Flutter or Next.js. From startups to enterprise tools, we build apps that solve real business problems.',
-      details: 'CCC delivers complete web and mobile applications with Firebase authentication, real-time data handling, and role-based access. Perfect for business management, customer portals, educational platforms, or custom enterprise tools.',
+      description: 'Full-stack web applications and Progressive Web Apps (PWAs) that work seamlessly across all devices. From business tools to customer portals, we build modern web solutions.',
+      details: 'CCC specializes in Progressive Web Apps that deliver native app-like experiences through web browsers. Our PWAs are installable, work offline, and provide push notifications - all without app store dependencies. Perfect for cross-platform business solutions.',
       features: [
-        'Business management applications',
-        'Customer and vendor portals',
-        'Educational and booking platforms',
-        'AI-powered mobile assistants',
-        'Push notifications and real-time updates',
-        'Role-based dashboards and analytics'
+        'Progressive Web Apps (installable like mobile apps)',
+        'Cross-platform compatibility (iOS, Android, Desktop)',
+        'Offline functionality and data synchronization',
+        'Web push notifications across devices',
+        'Fast loading and app-like performance',
+        'Role-based dashboards and real-time features'
       ]
     },
     {
