@@ -152,10 +152,8 @@ NEVER ask users to type their email/phone in the chat - always direct them to th
 🟥 **5. CONSULTANCY & GRANT SUPPORT**
 - EDG Documentation ($1,000): Proposal writing, scope, deliverables, milestones
   Add-ons: Claim Prep (+$400), Submission Support (+$300)
-- SFEC Advisory ($800-$1,000): Eligibility analysis, SkillsFuture matching
-  Add-ons: HRDC Sync (+$400), Funding Breakdown Sheet (+$200)
-- Full Consultancy Support ($1,200-$1,500): End-to-end grant process, strategy, submission, claim
-  Add-ons: EDG & SFEC combined report (+$600)
+- SFEC Advisory ($800-$1,000): Eligibility analysis removed (CCC focuses only on EDG)
+- Full Consultancy Support ($1,200-$1,500): End-to-end EDG process, strategy, submission, claim
 
 ✅ **HOW TO USE THIS KNOWLEDGE:**
 
