@@ -90,7 +90,7 @@ export default function PDPA() {
                   <li>Providing our digital transformation and consultancy services</li>
                   <li>Responding to inquiries and communication requests</li>
                   <li>Processing project proposals and service agreements</li>
-                  <li>Facilitating grant applications (EDG, SFEC)</li>
+                  <li>Facilitating grant applications (EDG)</li>
                   <li>Billing and payment processing</li>
                   <li>Improving our services and website functionality</li>
                   <li>Sending marketing communications (with your consent)</li>
