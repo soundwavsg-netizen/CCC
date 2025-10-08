@@ -84,10 +84,6 @@ export const Footer = () => {
           <div>
             <h3 className="font-semibold text-[hsl(var(--foreground))] mb-4">Contact</h3>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-                <span className="text-sm">Blk 347 Woodlands Ave 3 #07-105, Singapore 730347</span>
-              </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 shrink-0" />
                 <a 
