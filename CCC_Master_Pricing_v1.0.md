@@ -169,7 +169,7 @@ Platform: FastAPI + React + MongoDB + Tailwind + Shadcn/UI + Emergent LLM
 **Available Add-ons:**
 - Knowledge Upload & Training: +$500
 - API Integration: +$800
-- Voice Input Capability: +$400
+- Web Speech Integration: +$300
 
 ### Workflow Automation
 **Price:** SGD $3,000 - $5,000  
