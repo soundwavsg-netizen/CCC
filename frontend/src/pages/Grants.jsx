@@ -34,10 +34,6 @@ export default function Grants() {
       answer: 'EDG supports projects that help companies upgrade and transform their business. It covers up to 50% of qualifying project costs for productivity improvement, market access, and innovation development initiatives.'
     },
     {
-      question: 'What is SFEC (SMEs Go Digital)?',
-      answer: 'SFEC helps SMEs adopt digital solutions quickly and affordably. It provides funding support for pre-approved digital solutions and services, making it easier for businesses to start their digital transformation journey.'
-    },
-    {
       question: 'What costs are covered under EDG?',
       answer: 'EDG covers costs including third-party consultancy fees, software/equipment, training and certification, and internal manpower costs. The maximum support level is 50% of qualifying costs.'
     },
@@ -46,12 +42,12 @@ export default function Grants() {
       answer: 'The typical application process takes 6-8 weeks from submission to approval. CCC can help expedite this by ensuring all documentation is complete and accurate from the start.'
     },
     {
-      question: 'Can I apply for both EDG and SFEC?',
-      answer: 'Generally, a project cannot be supported under both schemes simultaneously. However, you may apply for different projects under different schemes. We can help you determine which grant is most suitable for your needs.'
-    },
-    {
       question: 'What happens after grant approval?',
       answer: 'Once approved, you can begin project implementation. CCC provides ongoing support throughout the project lifecycle, including vendor management, milestone reporting, and claims submission.'
+    },
+    {
+      question: 'Do I need to repay EDG funding?',
+      answer: 'No, EDG is a grant, not a loan. You do not need to repay the approved funding amount. However, you must comply with the terms and conditions of the grant throughout the project period.'
     }
   ];
 
