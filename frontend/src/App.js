@@ -10,6 +10,7 @@ import Services from './pages/Services';
 import ServicesSolutions from './pages/ServicesSolutions';
 import Portfolio from './pages/Portfolio';
 import Grants from './pages/Grants';
+import EDG from './pages/EDG';
 import Contact from './pages/Contact';
 import PDPA from './pages/PDPA';
 import Terms from './pages/Terms';
