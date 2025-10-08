@@ -197,15 +197,34 @@ export const ChatWidget = () => {
   };
 
   if (!isOpen) {
+    const handleChatOpen = () => {
+      // Track event
+      if (window.dataLayer) {
+        window.dataLayer.push({ 
+          event: 'click_chat_open', 
+          source: 'sticky' 
+        });
+      }
+      setIsOpen(true);
+    };
+
     return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-[hsl(var(--secondary))] text-white shadow-[0_8px_24px_rgba(15,181,174,0.3)] hover:bg-[#0AA099] transition-all duration-200 flex items-center justify-center hover:scale-110"
-        data-testid="chat-widget-button"
-        aria-label="Open chat"
-      >
-        <MessageCircle className="h-6 w-6" />
-      </button>
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+        {/* Label */}
+        <div className="bg-white px-3 py-2 rounded-lg shadow-lg border border-[#EAECF0] text-sm font-medium text-[#1F2A37] animate-pulse">
+          💬 EDG Eligibility Check
+        </div>
+        
+        {/* Chat Button */}
+        <button
+          onClick={handleChatOpen}
+          className="h-14 w-14 rounded-full bg-[hsl(var(--secondary))] text-white shadow-[0_8px_24px_rgba(15,181,174,0.3)] hover:bg-[#0AA099] transition-all duration-200 flex items-center justify-center hover:scale-110"
+          data-testid="chat-widget-button"
+          aria-label="Open EDG eligibility check chat"
+        >
+          <MessageCircle className="h-6 w-6" />
+        </button>
+      </div>
     );
   }
 
