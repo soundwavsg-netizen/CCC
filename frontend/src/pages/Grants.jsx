@@ -131,63 +131,6 @@ export default function Grants() {
         </div>
       </section>
 
-      {/* Comparison Table */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#EAF7F5] to-white">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                Grant Comparison
-              </h2>
-              <p className="text-base text-[#475467]">
-                Compare key features to choose the right grant for your business
-              </p>
-            </div>
-          </FadeUp>
-
-          <FadeUp delay={0.1}>
-            <Card className="rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow className="bg-[hsl(var(--muted))]">
-                    <TableHead className="font-semibold">Feature</TableHead>
-                    <TableHead className="font-semibold">EDG</TableHead>
-                    <TableHead className="font-semibold">SFEC</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell className="font-medium">Funding Support</TableCell>
-                    <TableCell>Up to 50%</TableCell>
-                    <TableCell>Up to 50%</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Application Time</TableCell>
-                    <TableCell>6-8 weeks</TableCell>
-                    <TableCell>2-4 weeks</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Project Flexibility</TableCell>
-                    <TableCell>Highly customizable</TableCell>
-                    <TableCell>Pre-approved solutions</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Best For</TableCell>
-                    <TableCell>Large transformations</TableCell>
-                    <TableCell>Quick digital adoption</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Project Duration</TableCell>
-                    <TableCell>Up to 24 months</TableCell>
-                    <TableCell>Up to 12 months</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </Card>
-          </FadeUp>
-        </div>
-      </section>
-
       {/* Eligibility Section */}
       <section className="py-16 sm:py-20 bg-white">
         <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8">
