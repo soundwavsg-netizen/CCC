@@ -1,7 +1,7 @@
 [
   {
     "content": "Update homepage hero section with EDG-focused messaging and CTAs",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Create new /edg landing page with expanded FAQ",
@@ -9,7 +9,7 @@
   },
   {
     "content": "Add lead form below hero with EDG review functionality",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Update AI agent main mode with EDG qualification flow",
@@ -17,7 +17,7 @@
   },
   {
     "content": "Add sticky chat launcher with EDG eligibility check label",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Implement GA4 and Meta Pixel tracking events",
@@ -25,15 +25,15 @@
   },
   {
     "content": "Add How It Works 3-step section",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create Services Strip without pricing",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add FAQ accordion section to homepage",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Update SEO meta tags and add schema markup",
@@ -45,7 +45,7 @@
   },
   {
     "content": "Add environment variables for tracking IDs",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Generate sitemap.xml and robots.txt",
