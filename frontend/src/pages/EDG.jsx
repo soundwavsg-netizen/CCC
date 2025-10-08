@@ -40,14 +40,6 @@ const FadeUp = ({ delay = 0, children }) => (
   </motion.div>
 );
 
-import { 
-  trackHeroView, 
-  trackChatOpen, 
-  trackFormViewed, 
-  trackFormSubmitted, 
-  trackBookConsultClick 
-} from '../utils/analytics';
-
 export default function EDG() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [isFormLoading, setIsFormLoading] = useState(false);
