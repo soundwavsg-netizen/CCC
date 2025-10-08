@@ -29,6 +29,7 @@ export default function App() {
             <Route path="/services-solutions" element={<ServicesSolutions />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/grants" element={<Grants />} />
+            <Route path="/edg" element={<EDG />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/pdpa" element={<PDPA />} />
             <Route path="/terms" element={<Terms />} />
