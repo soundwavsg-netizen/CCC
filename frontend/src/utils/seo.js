@@ -34,7 +34,7 @@ export const getOrganizationSchema = () => ({
     "AI Automation",
     "E-commerce Solutions", 
     "Enterprise Development Grant",
-    "SFEC",
+    "EDG",
     "Digital Transformation",
     "Progressive Web Apps"
   ],
