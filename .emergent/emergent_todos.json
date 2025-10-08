@@ -53,10 +53,10 @@
   },
   {
     "content": "Implement performance optimizations",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Test all analytics events and lead capture flow",
-    "status": "pending"
+    "status": "completed"
   }
 ]
