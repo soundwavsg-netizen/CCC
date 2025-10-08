@@ -27,7 +27,7 @@ export const ChatWidget = () => {
   // Determine agent mode based on current page
   const getAgentMode = () => {
     const path = location.pathname;
-    if (path.includes('/services')) return 'services';
+    if (path.includes('/services')) return 'services'; // Matches both /services and /services-solutions
     if (path.includes('/grants')) return 'grants';
     if (path.includes('/contact')) return 'support';
     return 'main';
