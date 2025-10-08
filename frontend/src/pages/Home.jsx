@@ -50,11 +50,11 @@ export default function Home() {
 
   // Track hero view on component mount
   useEffect(() => {
-    trackEvent('view_hero_cta');
+    trackHeroView('homepage');
   }, []);
 
   const handleChatOpen = (source = 'hero') => {
-    trackEvent('click_chat_open', { source });
+    trackChatOpen(source);
     // This will be handled by ChatWidget component
     const chatWidget = document.querySelector('[data-testid="chat-widget"]');
     if (chatWidget) {
@@ -63,7 +63,7 @@ export default function Home() {
   };
 
   const handleBookConsultClick = () => {
-    trackEvent('book_consult_click');
+    trackBookConsultClick('hero');
     // Scroll to lead form
     document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
   };
