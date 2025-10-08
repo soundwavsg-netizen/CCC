@@ -32,6 +32,7 @@ import {
   trackBookConsultClick 
 } from '../utils/analytics';
 
+// Analytics helper functions - use centralized analytics
 const FadeUp = ({ delay = 0, children }) => (
   <motion.div
     initial={{ opacity: 0, y: 16 }}
@@ -42,16 +43,6 @@ const FadeUp = ({ delay = 0, children }) => (
     {children}
   </motion.div>
 );
-
-// Analytics helper functions
-const trackEvent = (eventName, eventData = {}) => {
-  if (window.dataLayer) {
-    window.dataLayer.push({
-      event: eventName,
-      ...eventData
-    });
-  }
-};
 
 export default function Home() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
