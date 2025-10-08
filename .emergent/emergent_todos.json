@@ -1,0 +1,50 @@
+[
+  {
+    "content": "Setup base project structure: Install framer-motion, configure Google Fonts (Chivo + Inter), update index.css with design tokens",
+    "status": "pending"
+  },
+  {
+    "content": "Build shared components: Header with navigation, Footer, and layout wrapper",
+    "status": "pending"
+  },
+  {
+    "content": "Create Home page with hero section, services overview, grants highlight, portfolio carousel, and CTA banner",
+    "status": "pending"
+  },
+  {
+    "content": "Create About Us page with company background, mission/vision, and value props",
+    "status": "pending"
+  },
+  {
+    "content": "Create Services page with 4 service cards (Web/App Dev, AI Automation, E-Commerce, Training/Grants) and feature details",
+    "status": "pending"
+  },
+  {
+    "content": "Create Portfolio page with filterable project grid showcasing M-Supplies, VocaFlow, AISY Math",
+    "status": "pending"
+  },
+  {
+    "content": "Create Grants & Funding page with EDG/SFEC information, eligibility checklist, FAQs, and comparison table",
+    "status": "pending"
+  },
+  {
+    "content": "Create Contact page with form, company details, map embed, and WhatsApp link",
+    "status": "pending"
+  },
+  {
+    "content": "Create Legal pages (PDPA, Terms) with proper content formatting",
+    "status": "pending"
+  },
+  {
+    "content": "Build backend API endpoints: POST /api/contact for form submissions with MongoDB storage",
+    "status": "pending"
+  },
+  {
+    "content": "Test frontend compilation, check all routes, verify responsive design, and take screenshots",
+    "status": "pending"
+  },
+  {
+    "content": "Research and implement Emergent AI agent integration (chat widget with sub-agent routing)",
+    "status": "pending"
+  }
+]
