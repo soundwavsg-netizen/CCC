@@ -1,15 +1,15 @@
 [
   {
     "content": "Update AI agents with detailed pricing tables and add-ons",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Create internal pricing reference document",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Test AI pricing responses with new structure",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Verify all tiers and add-ons are accessible to AI",
