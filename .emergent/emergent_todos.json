@@ -21,7 +21,7 @@
   },
   {
     "content": "Implement GA4 and Meta Pixel tracking events",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Add How It Works 3-step section",
@@ -37,11 +37,11 @@
   },
   {
     "content": "Update SEO meta tags and add schema markup",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Create CRM webhook placeholder function",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add environment variables for tracking IDs",
