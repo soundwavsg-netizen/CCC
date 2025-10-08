@@ -56,6 +56,26 @@ export default function Home() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [isFormLoading, setIsFormLoading] = useState(false);
 
+  // Define FAQ items for schema
+  const faqItems = [
+    {
+      question: 'Am I eligible for EDG?',
+      answer: 'If you\'re a Singapore-registered company planning a project that improves business capability, you likely qualify.'
+    },
+    {
+      question: 'What projects are supported?',
+      answer: 'Custom websites, e-commerce, AI-powered web apps (PWAs), and digital transformation initiatives.'
+    },
+    {
+      question: 'How long is approval?',
+      answer: 'Typically 3–6 weeks after submission.'
+    },
+    {
+      question: 'How much will I pay?',
+      answer: 'EDG may support up to ~50% of qualifying costs. We\'ll estimate your net after a quick eligibility check.'
+    }
+  ];
+
   // Track hero view on component mount and set SEO
   useEffect(() => {
     trackHeroView('homepage');
