@@ -237,6 +237,47 @@ async def get_contact_submissions():
     
     return submissions
 
+@api_router.post("/chat", response_model=ChatResponse)
+async def chat_with_ai(request: ChatRequest):
+    """
+    AI chat endpoint for CCC AI Consultant.
+    Routes to different agent modes based on page context.
+    """
+    try:
+        # Get the appropriate system prompt
+        system_prompt = AGENT_PROMPTS.get(request.agent_mode, AGENT_PROMPTS["main"])
+        
+        # Build messages for OpenAI
+        messages = [{"role": "system", "content": system_prompt}]
+        
+        # Add conversation history
+        for msg in request.messages:
+            messages.append({
+                "role": msg.role,
+                "content": msg.content
+            })
+        
+        # Call OpenAI API
+        response = await openai_client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=messages,
+            temperature=0.7,
+            max_tokens=500
+        )
+        
+        assistant_message = response.choices[0].message.content
+        
+        logger.info(f"Chat request processed - Mode: {request.agent_mode}")
+        
+        return ChatResponse(
+            message=assistant_message,
+            agent_mode=request.agent_mode
+        )
+        
+    except Exception as e:
+        logger.error(f"Error in chat endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to process chat request")
+
 # Include the router in the main app
 app.include_router(api_router)
 
