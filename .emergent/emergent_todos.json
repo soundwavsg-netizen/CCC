@@ -1,11 +1,11 @@
 [
   {
     "content": "Update CCC_Master_Pricing_v1.0.md to reflect Emergent platform capabilities",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Update AI agent knowledge in backend/server.py to use new capability-focused pricing",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Update Services & Solutions page to reflect web-first approach and PWA instead of native apps",
