@@ -14,6 +14,7 @@ export const Header = () => {
     { path: '/services-solutions', label: 'Services & Solutions' },
     { path: '/portfolio', label: 'Portfolio' },
     { path: '/grants', label: 'Grants & Funding' },
+    { path: '/edg', label: 'EDG Funding' },
     { path: '/contact', label: 'Contact' },
   ];
 
