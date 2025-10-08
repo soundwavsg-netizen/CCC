@@ -1,6 +1,14 @@
 [
   {
-    "content": "Fix chat conversation history - AI repeating itself when user says yes",
-    "status": "completed"
+    "content": "Implement chat lead capture - save contact details to MongoDB when user shares them",
+    "status": "in_progress"
+  },
+  {
+    "content": "Add frontend form to collect structured contact info from chat",
+    "status": "pending"
+  },
+  {
+    "content": "Test lead capture flow end-to-end",
+    "status": "pending"
   }
 ]
