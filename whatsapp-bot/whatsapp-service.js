@@ -140,11 +140,11 @@ Thank you for choosing CCC Digital! 🚀`
     if (text.includes('quote')) {
         return `✅ **Quote Request Received!**
 
-Our team will prepare a customized proposal and contact you within 2 business hours.
+Our team will prepare a customized proposal and contact you within 1 business day and may contact you for more details to furnish a detailed quote.
 
 **Business hours:** Mon-Fri 9AM-6PM SGT
 
-⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
+⏳ **Our consultant will get back to you within 1 business day.**
 Thank you for choosing CCC Digital! 🚀`
     }
 
