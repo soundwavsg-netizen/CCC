@@ -130,6 +130,22 @@ export default function Contact() {
                   </div>
 
                   <div>
+                    <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                      Phone Number (WhatsApp)
+                    </label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      placeholder="+65 9123 4567"
+                      value={formData.phone || ''}
+                      onChange={handleChange}
+                      className="w-full"
+                      data-testid="contact-phone-input"
+                    />
+                  </div>
+
+                  <div>
                     <label htmlFor="company" className="block text-sm font-medium mb-2">
                       Company
                     </label>
