@@ -154,7 +154,8 @@ What interests you? Type a number (1-5) or ask about:
 
 *With EDG: Pay $3,000 - $9,000*
 
-Interested? Type "quote ecommerce" or call +65 8982 1301`
+Interested? Type "quote ecommerce" or call +65 8982 1301
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
     if (text.includes('web app') || text.includes('pwa') || text.includes('progressive') || text === '3') {
