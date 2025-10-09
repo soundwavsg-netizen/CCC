@@ -54,6 +54,7 @@ class ContactFormSubmission(BaseModel):
 class ContactFormCreate(BaseModel):
     name: str
     email: str
+    phone: str = ""
     company: str = ""
     message: str
 
