@@ -217,11 +217,11 @@ export const ChatWidget = () => {
       const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
       const agentMode = getAgentMode();
 
-      // Generate comprehensive message with chat transcript + additional details
-      const chatSummary = generateChatSummary();
+      // Generate comprehensive message with chat summary + transcript + additional details
+      const chatData = generateChatSummary();
       const fullMessage = leadFormData.message 
-        ? `${chatSummary}\n\n=== ADDITIONAL CUSTOMER DETAILS ===\n${leadFormData.message}`
-        : chatSummary;
+        ? `${chatData.summary}${chatData.fullTranscript}\n\n=== ADDITIONAL CUSTOMER DETAILS ===\n${leadFormData.message}`
+        : `${chatData.summary}${chatData.fullTranscript}`;
 
       await axios.post(`${backendUrl}/api/chat/lead`, {
         ...leadFormData,
