@@ -1,38 +1,22 @@
 [
   {
-    "content": "Fix 'Check EDG Eligibility - Chat Now' button functionality",
-    "status": "completed"
+    "content": "Fix confusing AI chat message about sharing company details",
+    "status": "in_progress"
   },
   {
-    "content": "Fix lead form submission on homepage (Request EDG Review button)",
-    "status": "completed"
+    "content": "Update connect button to mention chat summary forwarding + add details field",
+    "status": "pending"
   },
   {
-    "content": "Fix 'Learn More' buttons to link to specific services sections",
-    "status": "completed"
+    "content": "Update email format to include company name and all form fields properly",
+    "status": "pending"
   },
   {
-    "content": "Fix quick links to jump to top of pages",
-    "status": "completed"
+    "content": "Add phone number field to contact form",
+    "status": "pending"
   },
   {
-    "content": "Fix FAQ 'Ask More Questions' button",
-    "status": "completed"
-  },
-  {
-    "content": "Fix 'Check Eligibility' buttons navigation",
-    "status": "completed"
-  },
-  {
-    "content": "Debug WhatsApp and email notifications from contact form",
-    "status": "completed"
-  },
-  {
-    "content": "Fix EDG page button functionality",
-    "status": "completed"
-  },
-  {
-    "content": "Debug email notifications from chat bot - need to check spam folder",
-    "status": "completed"
+    "content": "Fix EDG form phone number display in notifications",
+    "status": "pending"
   }
 ]
