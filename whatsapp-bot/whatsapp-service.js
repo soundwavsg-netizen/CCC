@@ -329,6 +329,7 @@ Which service interests you? Type the service name for details!
 • Company name  
 • Best time to call you
 
+⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
 Or call directly: +65 8982 1301`
     }
 
@@ -348,6 +349,7 @@ Or call directly: +65 8982 1301`
 **Business hours:** Mon-Fri 9AM-6PM SGT
 **After hours:** We'll respond first thing next business day
 
+⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
 Thank you for your patience! 🙏`
     }
 
