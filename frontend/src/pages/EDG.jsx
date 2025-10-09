@@ -74,8 +74,8 @@ export default function EDG() {
     };
 
     try {
-      // Submit to backend (existing contact form endpoint)
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact-form`, {
+      // Submit to backend (existing contact endpoint)
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
