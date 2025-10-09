@@ -1,22 +1,10 @@
 [
   {
-    "content": "Fix confusing AI chat message about sharing company details",
-    "status": "completed"
+    "content": "Change chat bubble label from EDG-specific to generic",
+    "status": "in_progress"
   },
   {
-    "content": "Update connect button to mention chat summary forwarding + add details field",
-    "status": "completed"
-  },
-  {
-    "content": "Update email format to include company name and all form fields properly",
-    "status": "completed"
-  },
-  {
-    "content": "Add phone number field to contact form",
-    "status": "completed"
-  },
-  {
-    "content": "Fix EDG form phone number display in notifications",
-    "status": "completed"
+    "content": "Update AI agent to provide helpful information before directing to contact form",
+    "status": "pending"
   }
 ]
