@@ -34,13 +34,13 @@ export const ChatWidget = () => {
     return 'main';
   };
 
-  // Update greeting message for EDG focus
+  // Update greeting message to be more helpful and less sales-focused
   const getGreetingMessage = (mode) => {
     const greetings = {
-      main: "👋 Hi! I'm the CCC consultant bot. Want to check if your project can qualify for up to 50% EDG funding for a new website or app?",
-      services: "Hello! I'm here to explain CCC's technical services and EDG eligibility. What kind of project are you looking to build?",
-      grants: "Hi! I can help you understand EDG grant opportunities for your digital transformation project. Would you like to know more about funding options?",
-      support: "Hi there! 👋 Welcome to Cognition & Competence Consultancy. How can we support your business today?"
+      main: "👋 Hi! I'm the CCC AI consultant. I can help you with project planning, pricing, technology choices, and EDG funding information. What would you like to know about?",
+      services: "Hello! I'm here to explain CCC's technical services and help you choose the right solution for your business. What kind of project are you considering?",
+      grants: "Hi! I can help you understand EDG funding opportunities and eligibility requirements. What questions do you have about government support for your project?",
+      support: "Hi there! 👋 Welcome to CCC Digital. I can answer questions about our services, pricing, and EDG funding. How can I help you today?"
     };
     return greetings[mode] || greetings.main;
   };
