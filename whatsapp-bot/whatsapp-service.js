@@ -314,7 +314,8 @@ What's your business type and project goal?`
 
 **Typical approval:** 3-6 weeks
 
-Want eligibility check? Type "eligible" or call +65 8982 1301`
+Want eligibility check? Type "eligible" or call +65 8982 1301
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
     // Quote requests - Enhanced with immediate acknowledgment
