@@ -83,8 +83,9 @@ export default function EDG() {
         body: JSON.stringify({
           name: leadData.name,
           email: leadData.email,
+          phone: leadData.phone,
           company: `${leadData.company} (UEN: ${leadData.uen || 'N/A'})`,
-          message: `EDG Landing Page Lead - Project: ${leadData.projectType}\nGoal: ${leadData.goal}\nPhone: ${leadData.phone}`
+          message: `EDG Landing Page Lead - Project: ${leadData.projectType}\nGoal: ${leadData.goal}`
         }),
       });
 
