@@ -176,7 +176,8 @@ Interested? Type "quote ecommerce" or call +65 8982 1301
 
 *With EDG: Pay $4,250 - $12,000*
 
-Ready to build? Type "quote pwa" or call +65 8982 1301`
+Ready to build? Type "quote pwa" or call +65 8982 1301
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
     if (text.includes('ai') || text.includes('automation') || text.includes('chatbot') || text === '4') {
