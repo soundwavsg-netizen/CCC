@@ -1,14 +1,14 @@
 [
   {
     "content": "Investigate email truncation issue in chat notifications",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Implement full chat transcript in email notifications",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add comprehensive summary for better follow-up context",
-    "status": "pending"
+    "status": "completed"
   }
 ]
