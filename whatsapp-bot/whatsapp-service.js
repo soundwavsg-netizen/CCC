@@ -273,21 +273,66 @@ For full assessment:
 What's your business type and project goal?`
     }
 
-    // Default response for unrecognized messages
-    return `🤔 I didn't quite understand that. Here's how I can help:
+    // EDG Information - Updated
+    if (text.includes('edg') || text.includes('funding') || text.includes('grant') || text === '5') {
+        return `💰 **Enterprise Development Grant (EDG):**
 
-1️⃣ EDG funding info
-2️⃣ Service pricing
-3️⃣ Schedule consultation  
-4️⃣ Speak with human
+**Covers up to 50% of costs for:**
+• Custom websites & web applications  
+• E-commerce platforms
+• AI automation systems
+• Digital transformation projects
 
-Type a number (1-4) or ask about:
-• Website development
-• E-commerce setup
-• EDG eligibility
-• Project quotes
+**Requirements:**
+• Singapore-registered company (UEN)
+• Project improves business capability  
+• Reasonable scope & timeline
 
-Or call us directly: +65 8982 1301`
+**Process with CCC:**
+1. Free eligibility assessment
+2. Project scope & quotation  
+3. EDG application preparation
+4. Implementation & documentation
+
+**Typical approval:** 3-6 weeks
+
+Want eligibility check? Type "eligible" or call +65 8982 1301`
+    }
+
+    // Quote requests - Enhanced
+    if (text.includes('quote') || text.includes('proposal') || text.includes('estimate')) {
+        return `📋 **Get Accurate Quote:**
+
+For detailed proposal, I need:
+1. **Service type?** (Website/E-commerce/Web App/AI/Combination)
+2. **Business name & industry?**
+3. **Key features needed?**
+4. **Timeline?**
+5. **Budget range?**
+
+**Fast Quote Options:**
+• Call directly: +65 8982 1301
+• Website form: cccdigital.sg/edg
+• Continue here with details above
+
+Our team prepares EDG-supported proposals within 24 hours!`
+    }
+
+    // Default response - Updated with full service list
+    return `🤔 Not sure what you meant. Here's how CCC Digital can help:
+
+**🚀 Our Complete Services:**
+1️⃣ AI-Powered Websites ($3K-$12K)
+2️⃣ E-commerce & Inventory ($6K-$18K)
+3️⃣ Progressive Web Apps/PWA ($8.5K-$24K)  
+4️⃣ AI Agents & Automation ($1.8K-$8.8K)
+5️⃣ EDG Grant Support
+
+💡 **Popular questions:**
+• "website" • "ecommerce" • "web app" • "ai automation"  
+• "edg funding" • "pricing" • "quote" • "consultation"
+
+Or call directly: +65 8982 1301`
 }
 
 async function sendMessage(phoneNumber, text) {
