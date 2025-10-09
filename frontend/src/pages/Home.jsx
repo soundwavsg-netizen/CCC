@@ -95,10 +95,10 @@ export default function Home() {
 
   const handleChatOpen = (source = 'hero') => {
     trackChatOpen(source);
-    // This will be handled by ChatWidget component
-    const chatWidget = document.querySelector('[data-testid="chat-widget"]');
-    if (chatWidget) {
-      chatWidget.click();
+    // Find and click the chat widget button
+    const chatButton = document.querySelector('[data-testid="chat-widget-button"]');
+    if (chatButton) {
+      chatButton.click();
     }
   };
 
