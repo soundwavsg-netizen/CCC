@@ -1,0 +1,21 @@
+{
+  "name": "ccc-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "WhatsApp bot for CCC Digital consultancy",
+  "main": "whatsapp-service.js",
+  "scripts": {
+    "start": "node whatsapp-service.js",
+    "dev": "nodemon whatsapp-service.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.5",
+    "qrcode-terminal": "^0.12.0",
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "axios": "^1.6.0",
+    "redis": "^4.6.0"
+  },
+  "keywords": ["whatsapp", "bot", "ccc", "digital", "consultancy"],
+  "author": "CCC Digital",
+  "license": "ISC"
+}
