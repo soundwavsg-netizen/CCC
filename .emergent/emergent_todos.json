@@ -1,22 +1,22 @@
 [
   {
     "content": "Fix confusing AI chat message about sharing company details",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Update connect button to mention chat summary forwarding + add details field",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Update email format to include company name and all form fields properly",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add phone number field to contact form",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Fix EDG form phone number display in notifications",
-    "status": "pending"
+    "status": "completed"
   }
 ]
