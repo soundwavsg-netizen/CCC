@@ -341,19 +341,6 @@ Or call directly: +65 8982 1301`
 Thank you for your patience! 🙏`
     }
 
-    // Quote Request
-    if (text.includes('quote') || text.includes('proposal') || text.includes('estimate')) {
-        return `📋 To prepare an accurate quote, I need:
-
-1. Project type? (Website/E-commerce/Web App/AI)
-2. Business name?
-3. Key features needed?
-4. Timeline?
-5. Rough budget range?
-
-Our team will prepare a detailed EDG-supported proposal for you.`
-    }
-
     // Eligibility Check
     if (text.includes('eligibility') || text.includes('eligible') || text.includes('qualify')) {
         return `✅ EDG Eligibility Quick Check:
@@ -368,7 +355,8 @@ For full assessment:
 2. Call: +65 8982 1301  
 3. Or share your company details here
 
-What's your business type and project goal?`
+What's your business type and project goal?
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
     // EDG Information - Updated
