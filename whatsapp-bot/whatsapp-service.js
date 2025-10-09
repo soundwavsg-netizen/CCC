@@ -133,8 +133,7 @@ Our team will prepare a detailed chatbot proposal and contact you within 1 busin
 
 **Business hours:** Mon-Fri 9AM-6PM SGT
 
-⏳ **Our consultant will get back to you within 1 business day.**
-Thank you for choosing CCC Digital! 🚀`
+Thank you for choosing CCC! 🚀`
     }
 
     if (text.includes('quote')) {
