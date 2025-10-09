@@ -208,7 +208,7 @@ export const ChatWidget = () => {
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
         {/* Label */}
         <div className="bg-white px-3 py-2 rounded-lg shadow-lg border border-[#EAECF0] text-sm font-medium text-[#1F2A37] animate-pulse">
-          💬 EDG Eligibility Check
+          💬 Chat with AI Consultant
         </div>
         
         {/* Chat Button */}
