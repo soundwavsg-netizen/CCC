@@ -50,6 +50,7 @@ export default function App() {
             <Route path="/grants" element={<Grants />} />
             <Route path="/edg" element={<EDG />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/whatsapp-setup" element={<WhatsAppSetup />} />
             <Route path="/pdpa" element={<PDPA />} />
             <Route path="/terms" element={<Terms />} />
           </Routes>
