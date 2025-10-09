@@ -1,10 +1,14 @@
 [
   {
-    "content": "Change chat bubble label from EDG-specific to generic",
-    "status": "completed"
+    "content": "Investigate email truncation issue in chat notifications",
+    "status": "in_progress"
   },
   {
-    "content": "Update AI agent to provide helpful information before directing to contact form",
-    "status": "completed"
+    "content": "Implement full chat transcript in email notifications",
+    "status": "pending"
+  },
+  {
+    "content": "Add comprehensive summary for better follow-up context",
+    "status": "pending"
   }
 ]
