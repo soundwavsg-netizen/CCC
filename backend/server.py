@@ -268,7 +268,7 @@ async def get_status_checks():
 async def submit_contact_form(input: ContactFormCreate):
     """
     Handle contact form submissions from the CCC website.
-    Stores inquiries in MongoDB for follow-up.
+    Stores inquiries in MongoDB and sends notifications.
     """
     try:
         contact_dict = input.model_dump()
@@ -282,6 +282,24 @@ async def submit_contact_form(input: ContactFormCreate):
         result = await db.contact_submissions.insert_one(doc)
         
         logger.info(f"Contact form submitted: {contact_obj.name} ({contact_obj.email})")
+        
+        # Create a ChatLead object for notifications (convert from ContactFormSubmission)
+        lead_for_notifications = ChatLead(
+            name=contact_obj.name,
+            email=contact_obj.email,
+            phone="",  # Contact form doesn't have phone
+            message=contact_obj.message,
+            source_page="contact-form",
+            agent_mode="main"
+        )
+        
+        # Send notifications
+        try:
+            await send_email_notification(lead_for_notifications)
+            await send_whatsapp_notification(lead_for_notifications)
+        except Exception as e:
+            logger.error(f"Error sending contact form notifications: {str(e)}")
+            # Don't fail the entire request if notifications fail
         
         return contact_obj
     except Exception as e:
