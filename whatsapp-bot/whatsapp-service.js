@@ -219,8 +219,46 @@ What interests you? Type a number (1-5) or ask about:
 **Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
-    // 4. SERVICE DESCRIPTIONS
-    if (text.includes('website') || text === '1') {
+    // SPECIFIC AI CHATBOT QUESTIONS - Handle directly  
+    if (text.includes('ai chatbot') || text.includes('chatbot like') || text.includes('whatsapp chatbot') || 
+        text.includes('chatbot cost') || text.includes('just chatbot') || text.includes('chatbot price')) {
+        return `🤖 **AI Chatbot Specifically (like this one):**
+
+**WhatsApp AI Chatbot:** $1,800 - $3,500
+• Basic responses & menu system: $1,800
+• Advanced with lead capture: $2,500  
+• Full business integration: $3,500
+
+**Features included:**
+• Automated customer support 24/7
+• Lead qualification & capture
+• Business hours management
+• Integration with your CRM/email
+• Custom responses for your business
+
+**With EDG support:** Pay only $900 - $1,750
+
+**Development time:** 2-3 weeks
+
+Want this for your business? Type "quote chatbot"
+**Or feel free to ask me more specific questions! 😊**`
+    }
+
+    // FOLLOW-UP QUESTIONS - Prevent repetition
+    if (text.includes('how much') || text.includes('cost') || text.includes('price')) {
+        // If they've asked about cost before, provide more specific breakdown
+        return `💰 **Let me be more specific about costs:**
+
+**What exactly do you need?**
+• Basic website? → $3,000 (EDG: $1,500)
+• Online store? → $6K-$18K (EDG: $3K-$9K)
+• Mobile web app? → $8.5K-$24K (EDG: $4.25K-$12K)
+• AI chatbot only? → $1,800-$3,500 (EDG: $900-$1,750)
+• Complete digital transformation? → $15K-$25K (EDG: $7.5K-$12.5K)
+
+**Tell me your business type and main goal** - I'll give you an exact cost estimate!
+**Or feel free to ask me more specific questions! 😊**`
+    }
         return `🌐 **AI-Powered Websites** ($3,000 - $12,000):
 
 **Features:**
