@@ -111,6 +111,8 @@ Our team will prepare a detailed website proposal and contact you within 2 busin
 • Total cost breakdown
 
 **Business hours:** Mon-Fri 9AM-6PM SGT
+
+⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
 Thank you for choosing CCC Digital! 🚀`
         }
         
@@ -126,6 +128,8 @@ Our team will prepare a detailed e-commerce proposal and contact you within 2 bu
 • Payment setup & logistics
 
 **Business hours:** Mon-Fri 9AM-6PM SGT
+
+⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
 Thank you for choosing CCC Digital! 🚀`
         }
         
@@ -141,6 +145,8 @@ Our team will prepare a detailed PWA proposal and contact you within 2 business 
 • Development timeline
 
 **Business hours:** Mon-Fri 9AM-6PM SGT
+
+⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
 Thank you for choosing CCC Digital! 🚀`
         }
         
@@ -156,6 +162,8 @@ Our team will prepare a detailed AI solution proposal and contact you within 2 b
 • Implementation roadmap
 
 **Business hours:** Mon-Fri 9AM-6PM SGT
+
+⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
 Thank you for choosing CCC Digital! 🚀`
         }
         
@@ -171,6 +179,8 @@ Our team will prepare a customized proposal and contact you within 2 business ho
 • Preferred timeline
 
 **Business hours:** Mon-Fri 9AM-6PM SGT
+
+⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
 Thank you for choosing CCC Digital! 🚀`
     }
 
