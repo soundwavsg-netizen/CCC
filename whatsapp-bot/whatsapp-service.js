@@ -319,11 +319,71 @@ Want eligibility check? Type "eligible" or call +65 8982 1301
 **Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
-    // Quote requests - Enhanced with immediate acknowledgment
-    if (text === 'quote' || text.includes('quote') || text.includes('proposal') || text.includes('estimate')) {
-        // Handle generic "quote" request
-        if (text === 'quote') {
-            return `✅ **Quote Request Received!**
+    // Quote requests - Handle FIRST before service-specific responses
+    if (text.includes('quote')) {
+        // Handle specific service quotes with immediate acknowledgment
+        if (text.includes('quote website') || text.includes('quote site')) {
+            return `✅ **Website Quote Request Received!**
+
+Our team will prepare a detailed website proposal and contact you within 2 business hours.
+
+**We'll include:**
+• Custom design & features
+• EDG funding calculation
+• Timeline & milestones
+• Total cost breakdown
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        if (text.includes('quote ecommerce') || text.includes('quote e-commerce') || text.includes('quote store')) {
+            return `✅ **E-commerce Quote Request Received!**
+
+Our team will prepare a detailed e-commerce proposal and contact you within 2 business hours.
+
+**We'll include:**
+• Platform features & integrations
+• Product management capabilities
+• EDG funding calculation
+• Payment setup & logistics
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        if (text.includes('quote pwa') || text.includes('quote app') || text.includes('quote web app')) {
+            return `✅ **Web App Quote Request Received!**
+
+Our team will prepare a detailed PWA proposal and contact you within 2 business hours.
+
+**We'll include:**
+• App features & functionality
+• Cross-platform capabilities
+• EDG funding calculation
+• Development timeline
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        if (text.includes('quote ai') || text.includes('quote automation') || text.includes('quote chatbot')) {
+            return `✅ **AI & Automation Quote Request Received!**
+
+Our team will prepare a detailed AI solution proposal and contact you within 2 business hours.
+
+**We'll include:**
+• AI capabilities & features
+• Integration requirements
+• EDG funding calculation
+• Implementation roadmap
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        // Generic quote request
+        return `✅ **Quote Request Received!**
 
 Our team will prepare a customized proposal and contact you within 2 business hours.
 
@@ -334,26 +394,7 @@ Our team will prepare a customized proposal and contact you within 2 business ho
 • Preferred timeline
 
 **Business hours:** Mon-Fri 9AM-6PM SGT
-
 Thank you for choosing CCC Digital! 🚀`
-        }
-        
-        // Handle specific quote requests (quote website, quote ecommerce, etc.)
-        return `📋 **Get Accurate Quote:**
-
-For detailed proposal, I need:
-1. **Service type?** (Website/E-commerce/Web App/AI/Combination)
-2. **Business name & industry?**
-3. **Key features needed?**
-4. **Timeline?**
-5. **Budget range?**
-
-**Fast Quote Options:**
-• Call directly: +65 8982 1301
-• Website form: cccdigital.sg/edg
-• Continue here with details above
-
-Our team prepares EDG-supported proposals within 24 hours!`
     }
 
     // Default response - Updated with full service list
