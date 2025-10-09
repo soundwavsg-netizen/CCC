@@ -289,8 +289,8 @@ async def submit_contact_form(input: ContactFormCreate):
         lead_for_notifications = ChatLead(
             name=contact_obj.name,
             email=contact_obj.email,
-            phone="",  # Contact form doesn't have phone
-            message=contact_obj.message,
+            phone=contact_obj.phone,  # Now includes phone from contact form
+            message=f"Company: {contact_obj.company}\n\nMessage: {contact_obj.message}",
             source_page="contact-form",
             agent_mode="main"
         )
