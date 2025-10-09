@@ -198,7 +198,8 @@ Ready to build? Type "quote pwa" or call +65 8982 1301
 
 *With EDG: Pay $900 - $4,400*
 
-Want AI for your business? Type "quote ai" or call +65 8982 1301`
+Want AI for your business? Type "quote ai" or call +65 8982 1301
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
     // Pricing Information - Updated with full services
