@@ -227,10 +227,10 @@ export default function Contact() {
                       <h3 className="font-semibold text-lg mb-2">Call Us</h3>
                       <p className="text-sm text-[#475467] mb-2">Let's discuss your project over a quick call</p>
                       <a 
-                        href="tel:+6585008888" 
+                        href="tel:+6589821301" 
                         className="text-[hsl(var(--secondary))] hover:text-[#0AA099] font-medium transition-colors"
                       >
-                        +65 8500 8888
+                        +65 8982 1301
                       </a>
                     </div>
                   </div>
@@ -247,7 +247,7 @@ export default function Contact() {
                       <h3 className="font-semibold text-lg mb-2">WhatsApp Chat</h3>
                       <p className="text-sm text-[#475467] mb-2">Get instant responses to your questions</p>
                       <a 
-                        href="https://wa.me/6585008888" 
+                        href="https://wa.me/6589821301" 
                         className="text-[hsl(var(--secondary))] hover:text-[#0AA099] font-medium transition-colors"
                       >
                         Start WhatsApp Chat
