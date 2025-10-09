@@ -111,17 +111,19 @@ async function processCCCMessage(phoneNumber, messageText) {
 • Customized for your industry
 
 **With EDG support:** Pay only $900 - $1,750
+
 **Timeline:** 2-3 weeks to build & deploy
 
-Want this for your business? Type "quote chatbot"
+Want this for your business? Type "quote chatbot" 
 ⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
 
 **Or call directly: +65 8982 1301**`
     }
 
-    // 2. QUOTE ACKNOWLEDGMENTS
-    if (text.includes('quote chatbot')) {
-        return `✅ **AI Chatbot Quote Request Received!**
+    // 2. QUOTE REQUESTS - Handle acknowledgments
+    if (text.includes('quote')) {
+        if (text.includes('quote chatbot')) {
+            return `✅ **AI Chatbot Quote Request Received!**
 
 Our team will prepare a detailed chatbot proposal and contact you within 2 business hours.
 
@@ -135,9 +137,8 @@ Our team will prepare a detailed chatbot proposal and contact you within 2 busin
 
 ⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
 Thank you for choosing CCC Digital! 🚀`
-    }
-
-    if (text.includes('quote')) {
+        }
+        
         return `✅ **Quote Request Received!**
 
 Our team will prepare a customized proposal and contact you within 2 business hours.
@@ -148,7 +149,7 @@ Our team will prepare a customized proposal and contact you within 2 business ho
 Thank you for choosing CCC Digital! 🚀`
     }
 
-    // 3. WELCOME
+    // 3. WELCOME/HELP
     if (text === 'hi' || text === 'hello' || text === 'start' || text === 'help') {
         return `👋 Hi! Welcome to CCC Digital!
 
@@ -161,22 +162,43 @@ Thank you for choosing CCC Digital! 🚀`
 
 💰 *All projects eligible for EDG support (pay ~50% less)*
 
-What interests you? Ask about specific services!
+What interests you? Type a number (1-5) or ask about specific services!
 **Or feel free to ask me questions and I will do my best to help! 😊**`
     }
 
-    // 4. CONVERSATIONAL CLARIFICATION - For unclear messages
+    // 4. GENERAL AI (not chatbot specific)
+    if (text.includes('ai automation') || text.includes('ai integration') || text === '4') {
+        return `🤖 **AI Agents & Automation** ($1,800 - $8,800):
+
+**Solutions:**
+• Custom AI chatbots
+• Workflow automation
+• Document processing
+• Data analytics dashboards
+• CRM automation
+
+**Tiers:**
+• Custom GPT Agent: $1,800
+• Workflow Automation: $3K-$5K
+• AI Analytics Dashboard: $6K-$8.8K
+
+*With EDG: Pay $900 - $4,400*
+
+What specific AI solution interests you?
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+    }
+
+    // 5. CONVERSATION CONTINUATION - For unclear messages
     return `🤔 I want to help you better! Could you be more specific?
 
 **For example:**
 • "I need a website for my restaurant"
 • "How much for an online store?"
 • "Can you build a mobile app?"
-• "Tell me about AI chatbots"
-• "What is EDG funding?"
+• "Tell me about EDG funding"
 
-**Quick options:**
-💻 Website  🛒 E-commerce  📱 Web App  🤖 AI Solutions  💰 EDG Info
+**Or choose:**
+1️⃣ Websites  2️⃣ E-commerce  3️⃣ Web Apps  4️⃣ AI Solutions  5️⃣ EDG Info
 
 **Direct contact:** +65 8982 1301
 **Or feel free to ask me more questions and I will do my best to help! 😊**`
