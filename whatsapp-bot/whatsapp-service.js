@@ -114,7 +114,7 @@ async function processCCCMessage(phoneNumber, messageText) {
 **Timeline:** 2-3 weeks to build & deploy
 
 Want this for your business? Type "quote chatbot"
-⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
+⏳ **Please wait for our consultant to get back to you within 1 business day.**
 
 **Or call directly: +65 8982 1301**`
     }
