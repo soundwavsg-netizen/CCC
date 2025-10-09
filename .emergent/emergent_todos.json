@@ -1,11 +1,11 @@
 [
   {
     "content": "Update backend with new CallMeBot API key and phone number",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Test WhatsApp notifications with new number",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Implement WhatsApp bot integration with new number",
