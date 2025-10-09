@@ -77,31 +77,31 @@ export default function WhatsAppSetup() {
             </p>
           </div>
 
-          {/* Status Alert */}
+          {/* Status Display */}
           {status === 'connected' && (
-            <Alert className="mb-8 border-green-200 bg-green-50">
-              <CheckCircle2 className="h-4 w-4 text-green-600" />
-              <AlertDescription className="text-green-800">
-                ✅ WhatsApp bot is connected and active on +65 8982 1301
-              </AlertDescription>
-            </Alert>
+            <Card className="mb-8 p-4 border-green-200 bg-green-50">
+              <div className="flex items-center gap-2 text-green-800">
+                <CheckCircle2 className="h-4 w-4 text-green-600" />
+                <span>✅ WhatsApp bot is connected and active on +65 8982 1301</span>
+              </div>
+            </Card>
           )}
 
           {status === 'disconnected' && (
-            <Alert className="mb-8 border-orange-200 bg-orange-50">
-              <Smartphone className="h-4 w-4 text-orange-600" />
-              <AlertDescription className="text-orange-800">
-                ⏳ WhatsApp bot is not connected. Please scan the QR code below.
-              </AlertDescription>
-            </Alert>
+            <Card className="mb-8 p-4 border-orange-200 bg-orange-50">
+              <div className="flex items-center gap-2 text-orange-800">
+                <Smartphone className="h-4 w-4 text-orange-600" />
+                <span>⏳ WhatsApp bot is not connected. Please scan the QR code below.</span>
+              </div>
+            </Card>
           )}
 
           {status === 'error' && (
-            <Alert className="mb-8 border-red-200 bg-red-50">
-              <AlertDescription className="text-red-800">
-                ❌ Connection error. Please check if the WhatsApp service is running.
-              </AlertDescription>
-            </Alert>
+            <Card className="mb-8 p-4 border-red-200 bg-red-50">
+              <div className="text-red-800">
+                <span>❌ Connection error. Please check if the WhatsApp service is running.</span>
+              </div>
+            </Card>
           )}
 
           {/* QR Code Display */}
