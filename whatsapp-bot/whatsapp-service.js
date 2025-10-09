@@ -217,7 +217,8 @@ Want AI for your business? Type "quote ai" or call +65 8982 1301
 • Growth E-commerce + EDG: ~$4,500 total cost
 • Premium PWA + EDG: ~$9,000 total cost
 
-Which service interests you? Type the service name for details!`
+Which service interests you? Type the service name for details!
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
     // Schedule Consultation - Enhanced with immediate acknowledgment
