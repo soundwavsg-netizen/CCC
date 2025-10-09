@@ -1,14 +1,22 @@
 [
   {
-    "content": "Update backend with new CallMeBot API key and phone number",
+    "content": "Update all website phone numbers to +65 8982 1301",
+    "status": "completed"
+  },
+  {
+    "content": "Update CallMeBot configuration to new business number",
     "status": "completed"
   },
   {
     "content": "Test WhatsApp notifications with new number",
-    "status": "completed"
+    "status": "in_progress"
   },
   {
     "content": "Implement WhatsApp bot integration with new number",
-    "status": "in_progress"
+    "status": "completed"
+  },
+  {
+    "content": "Update all WhatsApp links and contact information",
+    "status": "completed"
   }
 ]
