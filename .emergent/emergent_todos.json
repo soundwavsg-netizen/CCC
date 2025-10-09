@@ -1,14 +1,18 @@
 [
   {
-    "content": "Investigate email truncation issue in chat notifications",
-    "status": "completed"
+    "content": "Fix AI bot asking for email in chat instead of directing to Connect button",
+    "status": "in_progress"
   },
   {
-    "content": "Implement full chat transcript in email notifications",
-    "status": "completed"
+    "content": "Fix AI memory/context issues in conversation flow",
+    "status": "pending"
   },
   {
-    "content": "Add comprehensive summary for better follow-up context",
-    "status": "completed"
+    "content": "Ensure lead capture triggers properly so conversations aren't lost",
+    "status": "pending"
+  },
+  {
+    "content": "Test AI consistency in following contact form directions",
+    "status": "pending"
   }
 ]
