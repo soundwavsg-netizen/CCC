@@ -1,10 +1,10 @@
 [
   {
     "content": "Change chat bubble label from EDG-specific to generic",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Update AI agent to provide helpful information before directing to contact form",
-    "status": "pending"
+    "status": "completed"
   }
 ]
