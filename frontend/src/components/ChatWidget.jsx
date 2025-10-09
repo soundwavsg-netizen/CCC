@@ -306,8 +306,11 @@ export const ChatWidget = () => {
               <div className="p-4 border-t bg-gradient-to-br from-[#EAF7F5] to-white">
                 <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
                   <Mail className="h-4 w-4 text-[hsl(var(--secondary))]" />
-                  Share Your Contact Details
+                  Connect with Our Team
                 </h3>
+                <p className="text-xs text-[#475467] mb-4">
+                  Your chat conversation will be included in the summary sent to our team.
+                </p>
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4 text-[#98A2B3]" />
@@ -338,11 +341,25 @@ export const ChatWidget = () => {
                     <Input
                       name="phone"
                       type="tel"
-                      placeholder="Your phone (optional)"
+                      placeholder="Your phone/WhatsApp *"
                       value={leadFormData.phone}
                       onChange={handleLeadFormChange}
                       className="flex-1"
                       data-testid="lead-form-phone"
+                    />
+                  </div>
+                  <p className="text-xs text-[#6B7280]">
+                    💬 Our team will receive this chat conversation plus your contact details.
+                  </p>
+                  <div className="space-y-2">
+                    <Input
+                      name="message"
+                      type="text"
+                      placeholder="Additional details or questions (optional)"
+                      value={leadFormData.message}
+                      onChange={handleLeadFormChange}
+                      className="flex-1"
+                      data-testid="lead-form-message"
                     />
                   </div>
                   <div className="flex gap-2">
