@@ -53,6 +53,7 @@ export default function Contact() {
       setFormData({
         name: '',
         email: '',
+        phone: '',
         company: '',
         message: ''
       });
