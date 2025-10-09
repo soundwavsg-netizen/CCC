@@ -216,31 +216,45 @@ Want AI for your business? Type "quote ai" or call +65 8982 1301`
 Which service interests you? Type the service name for details!`
     }
 
-    // Schedule Consultation
+    // Schedule Consultation - Enhanced with immediate acknowledgment
     if (text.includes('consultation') || text.includes('schedule') || text.includes('meet') || text === '3') {
-        return `📅 Schedule Free Consultation:
+        return `📅 **Consultation Request Received!**
 
-Option 1: Call directly +65 8982 1301
-Option 2: Visit our website: cccdigital.sg
-Option 3: Share your details and we'll call you back
+✅ Our team will call you back within 2 business hours to schedule your FREE consultation.
 
-Please share:
-- Your name
-- Company name  
-- Project type (website/app/etc)
-- Preferred contact time`
+**What we'll discuss:**
+• Your project requirements
+• EDG funding eligibility  
+• Detailed cost breakdown
+• Timeline & next steps
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+
+**To confirm your request, please share:**
+• Your name
+• Company name  
+• Best time to call you
+
+Or call directly: +65 8982 1301`
     }
 
-    // Human Agent
+    // Human Agent - Enhanced with immediate response
     if (text.includes('human') || text.includes('agent') || text.includes('person') || text === '4') {
-        return `👨‍💼 Connecting you with our team...
+        return `👨‍💼 **Human Agent Request Received!**
 
-Our consultant will call you back within 2 business hours.
-Business hours: Mon-Fri 9AM-6PM SGT
+✅ Our consultant will prioritize your inquiry and call you back within 2 business hours.
 
-For urgent matters: +65 8982 1301
+**For immediate assistance:** +65 8982 1301
 
-Please share your name and best time to call.`
+**To help our team prepare:**
+• Share your name & company
+• Brief description of your needs
+• Preferred callback time
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+**After hours:** We'll respond first thing next business day
+
+Thank you for your patience! 🙏`
     }
 
     // Quote Request
