@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from './components/ui/sonner';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -17,6 +17,17 @@ import Terms from './pages/Terms';
 import { initializeTracking } from './utils/analytics';
 import './App.css';
 
+// Component to handle scroll to top on route change
+const ScrollToTop = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+  
+  return null;
+};
+
 export default function App() {
   // Initialize analytics on app load
   useEffect(() => {
@@ -25,6 +36,7 @@ export default function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-1">
