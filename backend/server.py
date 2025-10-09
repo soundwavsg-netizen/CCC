@@ -664,6 +664,88 @@ async def chat_with_ai(request: ChatRequest):
         logger.error(f"Error in chat endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to process chat request: {str(e)}")
 
+# WhatsApp Bot Routes
+@api_router.post("/whatsapp/message", response_model=WhatsAppResponse)
+async def handle_whatsapp_message(message_data: WhatsAppMessage):
+    """
+    Process incoming WhatsApp messages from the bot service.
+    This endpoint receives messages and generates appropriate responses.
+    """
+    try:
+        phone_number = message_data.phone_number
+        message_text = message_data.message.strip()
+
+        logger.info(f"WhatsApp message from {phone_number}: {message_text}")
+
+        # For now, return a simple acknowledgment
+        # Future: Integrate with AI for more sophisticated responses
+        response_text = "Thank you for contacting CCC Digital! Our team will respond shortly. For immediate assistance, please call +65 8982 1301."
+
+        return WhatsAppResponse(reply=response_text, success=True)
+
+    except Exception as e:
+        logger.error(f"Error processing WhatsApp message: {str(e)}")
+        return WhatsAppResponse(
+            reply="Sorry, I encountered an error. Please call us at +65 8982 1301.",
+            success=False
+        )
+
+@api_router.post("/whatsapp/send")
+async def send_whatsapp_message(message: WhatsAppSend):
+    """
+    Send WhatsApp message via the bot service.
+    """
+    try:
+        WHATSAPP_SERVICE_URL = "http://localhost:3001"
+        
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                f"{WHATSAPP_SERVICE_URL}/send",
+                json={
+                    "phone_number": message.phone_number,
+                    "message": message.message
+                },
+                timeout=10.0
+            )
+            return response.json()
+    except Exception as e:
+        logger.error(f"Error sending WhatsApp message: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/whatsapp/status")
+async def get_whatsapp_status():
+    """
+    Get WhatsApp bot connection status.
+    """
+    try:
+        WHATSAPP_SERVICE_URL = "http://localhost:3001"
+        
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                f"{WHATSAPP_SERVICE_URL}/status", 
+                timeout=5.0
+            )
+            return response.json()
+    except Exception as e:
+        return {"connected": False, "error": str(e)}
+
+@api_router.get("/whatsapp/qr")
+async def get_whatsapp_qr():
+    """
+    Get QR code for WhatsApp authentication.
+    """
+    try:
+        WHATSAPP_SERVICE_URL = "http://localhost:3001"
+        
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                f"{WHATSAPP_SERVICE_URL}/qr",
+                timeout=5.0
+            )
+            return response.json()
+    except Exception as e:
+        return {"qr": None, "error": str(e)}
+
 # Include the router in the main app
 app.include_router(api_router)
 
