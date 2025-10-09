@@ -1,6 +1,18 @@
 [
   {
-    "content": "Add AI-generated chat summary to email notifications alongside full transcript",
-    "status": "completed"
+    "content": "Update all website phone numbers to +65 8982 1301",
+    "status": "in_progress"
+  },
+  {
+    "content": "Update CallMeBot configuration to new business number",
+    "status": "pending"
+  },
+  {
+    "content": "Implement WhatsApp bot integration with new business number",
+    "status": "pending"
+  },
+  {
+    "content": "Update all WhatsApp links and contact information",
+    "status": "pending"
   }
 ]
