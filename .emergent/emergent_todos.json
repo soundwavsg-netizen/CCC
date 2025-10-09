@@ -5,14 +5,14 @@
   },
   {
     "content": "Keep old CallMeBot configuration temporarily",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Prepare WhatsApp bot setup for when new number is activated",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create activation checklist for new number",
-    "status": "pending"
+    "status": "completed"
   }
 ]
