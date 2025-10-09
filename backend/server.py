@@ -477,7 +477,11 @@ async def send_email_notification(lead: ChatLead):
         </html>
         """
         
-        # Plain text fallback with complete conversation
+        # Plain text fallback with summary + complete conversation
+        summary_part = lead.message.split('=== COMPLETE CHAT TRANSCRIPT ===')[0] if '=== COMPLETE CHAT TRANSCRIPT ===' in lead.message else 'Summary not available'
+        transcript_part = lead.message.split('=== COMPLETE CHAT TRANSCRIPT ===')[1].split('=== ADDITIONAL CUSTOMER DETAILS ===')[0] if '=== COMPLETE CHAT TRANSCRIPT ===' in lead.message else lead.message
+        additional_part = lead.message.split('=== ADDITIONAL CUSTOMER DETAILS ===')[1] if '=== ADDITIONAL CUSTOMER DETAILS ===' in lead.message else ''
+        
         text_body = f"""
 🔔 NEW CCC LEAD ALERT!
 
@@ -488,11 +492,17 @@ async def send_email_notification(lead: ChatLead):
 📍 Source: {lead.source_page} ({lead.agent_mode} mode)
 ⏰ Time: {lead.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}
 
-=== COMPLETE CONVERSATION & DETAILS ===
-{lead.message or 'No conversation recorded'}
+💡 QUICK SUMMARY FOR FOLLOW-UP:
+{summary_part}
 
-=== FOLLOW-UP RECOMMENDATION ===
-Review the conversation above for context and respond with relevant project information or EDG guidance.
+💬 COMPLETE CONVERSATION TRANSCRIPT:
+{transcript_part}
+
+{f'''📝 ADDITIONAL CUSTOMER DETAILS:
+{additional_part}
+
+''' if additional_part else ''}=== FOLLOW-UP RECOMMENDATION ===
+Review the summary above for key points, then reference the full transcript for detailed context.
         """
         
         # Attach both HTML and plain text versions
