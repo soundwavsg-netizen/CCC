@@ -132,7 +132,8 @@ What interests you? Type a number (1-5) or ask about:
 
 *With EDG: Pay $1,500 - $6,000*
 
-Need a quote? Type "quote website" or call +65 8982 1301`
+**Need a quote? Type "quote website" or call +65 8982 1301**
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
     if (text.includes('ecommerce') || text.includes('e-commerce') || text.includes('online store') || text === '2') {
