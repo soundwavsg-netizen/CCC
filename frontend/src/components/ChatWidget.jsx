@@ -134,17 +134,20 @@ export const ChatWidget = () => {
   };
 
   const generateChatSummary = () => {
-    // Generate a brief summary of the conversation
-    const userMessages = messages.filter(msg => msg.role === 'user').slice(0, -1); // Exclude greeting
-    const assistantMessages = messages.filter(msg => msg.role === 'assistant').slice(1); // Exclude greeting
-    
-    if (userMessages.length === 0) {
-      return "Customer opened chat but did not ask any questions.";
+    if (messages.length === 0) {
+      return "Customer opened chat but did not engage in conversation.";
     }
 
-    // Create a concise summary
-    const topics = userMessages.map(msg => msg.content).join(' | ');
-    const summary = `Customer inquired about: ${topics.length > 200 ? topics.substring(0, 200) + '...' : topics}`;
+    let summary = "=== COMPLETE CHAT TRANSCRIPT ===\n\n";
+    
+    messages.forEach((msg, index) => {
+      const time = msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const sender = msg.role === 'user' ? '👤 Customer' : '🤖 CCC AI';
+      summary += `[${time}] ${sender}: ${msg.content}\n\n`;
+    });
+    
+    summary += "=== END OF TRANSCRIPT ===\n";
+    summary += `\nConversation Summary: Customer engaged in ${messages.filter(m => m.role === 'user').length} exchanges about ${location.pathname.includes('services') ? 'technical services' : location.pathname.includes('grants') ? 'grant funding' : 'general business needs'}.`;
     
     return summary;
   };
