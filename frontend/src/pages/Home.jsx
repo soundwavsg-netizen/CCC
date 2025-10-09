@@ -133,8 +133,9 @@ export default function Home() {
         body: JSON.stringify({
           name: leadData.name,
           email: leadData.email,
+          phone: leadData.phone,
           company: `${leadData.company} (UEN: ${leadData.uen || 'N/A'})`,
-          message: `EDG Review Request - Project: ${leadData.projectType}\nGoal: ${leadData.goal}\nPhone: ${leadData.phone}`
+          message: `EDG Review Request - Project: ${leadData.projectType}\nGoal: ${leadData.goal}`
         }),
       });
 
