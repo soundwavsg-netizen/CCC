@@ -187,7 +187,7 @@ export default function PDPA() {
                   <p className="mt-2">
                     Email: <a href="mailto:glor-yeo@hotmail.com" className="text-[hsl(var(--secondary))] hover:underline">glor-yeo@hotmail.com</a>
                   </p>
-                  <p>Phone: <a href="tel:+6585008888" className="text-[hsl(var(--secondary))] hover:underline">+65 8500 8888</a></p>
+                  <p>Phone: <a href="tel:+6589821301" className="text-[hsl(var(--secondary))] hover:underline">+65 8982 1301</a></p>
                 </div>
               </section>
 
