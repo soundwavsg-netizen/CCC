@@ -1,11 +1,11 @@
 [
   {
     "content": "Update all website phone numbers to +65 8982 1301",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Update CallMeBot configuration to new business number",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Implement WhatsApp bot integration with new business number",
@@ -13,6 +13,6 @@
   },
   {
     "content": "Update all WhatsApp links and contact information",
-    "status": "pending"
+    "status": "completed"
   }
 ]
