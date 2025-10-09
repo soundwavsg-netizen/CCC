@@ -98,7 +98,7 @@ export default function About() {
                   <h3 className="font-semibold text-xl mb-2">Contact Information</h3>
                   <div className="space-y-2 text-sm text-[#475467]">
                     <p><span className="font-medium text-[hsl(var(--foreground))]">Email:</span> glor-yeo@hotmail.com</p>
-                    <p><span className="font-medium text-[hsl(var(--foreground))]">Phone:</span> 8500 8888</p>
+                    <p><span className="font-medium text-[hsl(var(--foreground))]">Phone:</span> 8982 1301</p>
                   </div>
                 </div>
               </Card>
