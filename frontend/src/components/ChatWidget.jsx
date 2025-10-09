@@ -135,21 +135,74 @@ export const ChatWidget = () => {
 
   const generateChatSummary = () => {
     if (messages.length === 0) {
-      return "Customer opened chat but did not engage in conversation.";
+      return {
+        fullTranscript: "Customer opened chat but did not engage in conversation.",
+        summary: "No meaningful conversation occurred."
+      };
     }
 
-    let summary = "=== COMPLETE CHAT TRANSCRIPT ===\n\n";
+    // Generate full transcript
+    let fullTranscript = "=== COMPLETE CHAT TRANSCRIPT ===\n\n";
     
     messages.forEach((msg, index) => {
       const time = msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       const sender = msg.role === 'user' ? '👤 Customer' : '🤖 CCC AI';
-      summary += `[${time}] ${sender}: ${msg.content}\n\n`;
+      fullTranscript += `[${time}] ${sender}: ${msg.content}\n\n`;
     });
     
-    summary += "=== END OF TRANSCRIPT ===\n";
-    summary += `\nConversation Summary: Customer engaged in ${messages.filter(m => m.role === 'user').length} exchanges about ${location.pathname.includes('services') ? 'technical services' : location.pathname.includes('grants') ? 'grant funding' : 'general business needs'}.`;
+    fullTranscript += "=== END OF TRANSCRIPT ===\n";
     
-    return summary;
+    // Generate intelligent summary
+    const userMessages = messages.filter(msg => msg.role === 'user');
+    const aiMessages = messages.filter(msg => msg.role === 'assistant');
+    
+    let summary = "=== CONVERSATION SUMMARY ===\n\n";
+    
+    // Analyze conversation topics
+    const topics = [];
+    const keywords = {
+      'pricing': ['cost', 'price', 'budget', 'expensive', 'cheap', '$'],
+      'website': ['website', 'site', 'web'],
+      'ecommerce': ['ecommerce', 'e-commerce', 'online store', 'shop', 'product'],
+      'webapp': ['web app', 'application', 'pwa', 'progressive'],
+      'ai': ['ai', 'artificial intelligence', 'automation', 'chatbot', 'bot'],
+      'edg': ['edg', 'grant', 'funding', 'government support'],
+      'timeline': ['when', 'timeline', 'deadline', 'urgent', 'asap', 'quickly']
+    };
+    
+    const allUserText = userMessages.map(m => m.content.toLowerCase()).join(' ');
+    
+    Object.entries(keywords).forEach(([topic, words]) => {
+      if (words.some(word => allUserText.includes(word))) {
+        topics.push(topic);
+      }
+    });
+    
+    // Customer interest analysis
+    summary += `**Customer Interest:** ${topics.length > 0 ? topics.join(', ') : 'general inquiry'}\n`;
+    summary += `**Conversation Length:** ${userMessages.length} customer messages, ${aiMessages.length} AI responses\n`;
+    summary += `**Page Context:** ${location.pathname.includes('services') ? 'Services page' : location.pathname.includes('grants') ? 'Grants page' : 'Homepage'}\n\n`;
+    
+    // Key points from conversation
+    summary += `**Key Discussion Points:**\n`;
+    userMessages.slice(0, 5).forEach((msg, i) => {
+      summary += `${i + 1}. Customer: ${msg.content.substring(0, 100)}${msg.content.length > 100 ? '...' : ''}\n`;
+    });
+    
+    summary += `\n**Recommended Follow-up:**\n`;
+    if (topics.includes('pricing')) summary += '• Provide detailed pricing proposal\n';
+    if (topics.includes('edg')) summary += '• Assess EDG eligibility and prepare application support\n';
+    if (topics.includes('timeline')) summary += '• Address timeline requirements and project scheduling\n';
+    if (topics.includes('website') || topics.includes('ecommerce') || topics.includes('webapp')) {
+      summary += '• Prepare technical specification and project scope\n';
+    }
+    
+    summary += `\n=== END OF SUMMARY ===\n\n`;
+    
+    return {
+      fullTranscript,
+      summary
+    };
   };
 
   const submitLeadForm = async () => {
