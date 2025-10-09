@@ -280,7 +280,8 @@ Need a quote? Type "quote website" or call +65 8982 1301
 **Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
-    if (text.includes('ai') || text.includes('automation') || text.includes('chatbot') || text === '4') {
+    // 4. SERVICE DESCRIPTIONS (only if not handled above)
+    if (text.includes('website') || text === '1') {
         return `🤖 **AI Agents & Automation** ($1,800 - $8,800):
 
 **Solutions:**
