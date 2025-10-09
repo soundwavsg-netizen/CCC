@@ -400,14 +400,14 @@ async def send_email_notification(lead: ChatLead):
         msg['From'] = sender_email
         msg['To'] = recipient_email
         
-        # HTML email body
+        # HTML email body with improved formatting for long conversations
         html_body = f"""
         <html>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-                <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
+                <div style="max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
                     <h2 style="color: #0FB5AE; margin-bottom: 20px;">🔔 New Lead from CCC Website</h2>
                     
-                    <table style="width: 100%; border-collapse: collapse;">
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
                         <tr>
                             <td style="padding: 10px; background: #f5f5f5; font-weight: bold; width: 120px;">👤 Name:</td>
                             <td style="padding: 10px;">{lead.name}</td>
@@ -418,33 +418,32 @@ async def send_email_notification(lead: ChatLead):
                         </tr>
                         <tr>
                             <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">📱 Phone:</td>
-                            <td style="padding: 10px;">{lead.phone or 'Not provided'}</td>
+                            <td style="padding: 10px;"><a href="tel:{lead.phone}">{lead.phone or 'Not provided'}</a></td>
                         </tr>
                         <tr>
-                            <td style="padding: 10px; background: #fff; font-weight: bold; vertical-align: top;">💬 Chat Summary:</td>
-                            <td style="padding: 10px;">{lead.message or 'No conversation recorded'}</td>
+                            <td style="padding: 10px; background: #fff; font-weight: bold;">📍 Source:</td>
+                            <td style="padding: 10px;">{lead.source_page} ({lead.agent_mode} mode)</td>
                         </tr>
                         <tr>
-                            <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">📍 Source Page:</td>
-                            <td style="padding: 10px;">{lead.source_page}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px; background: #fff; font-weight: bold;">🤖 Agent Mode:</td>
-                            <td style="padding: 10px;">{lead.agent_mode}</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">⏰ Timestamp:</td>
+                            <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">⏰ Time:</td>
                             <td style="padding: 10px;">{lead.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}</td>
                         </tr>
                     </table>
                     
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <h3 style="color: #0FB5AE; margin-top: 0;">💬 Complete Conversation & Details</h3>
+                        <div style="background: white; padding: 15px; border-radius: 4px; max-height: none; overflow: visible;">
+                            <pre style="white-space: pre-wrap; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 13px; line-height: 1.4; margin: 0;">{lead.message or 'No conversation recorded'}</pre>
+                        </div>
+                    </div>
+                    
                     <div style="margin-top: 20px; padding: 15px; background: #EAF7F5; border-left: 4px solid #0FB5AE; border-radius: 4px;">
-                        <p style="margin: 0; font-weight: bold;">⚡ Action Required:</p>
-                        <p style="margin: 5px 0 0 0;">Please follow up with this lead as soon as possible!</p>
+                        <p style="margin: 0; font-weight: bold;">⚡ Follow-up Recommendation:</p>
+                        <p style="margin: 5px 0 0 0;">Review the conversation above for context and respond with relevant project information or EDG guidance.</p>
                     </div>
                     
                     <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #999;">
-                        <p>This notification was sent from your CCC website lead capture system.</p>
+                        <p>CCC Digital Lead Capture System | {lead.timestamp.strftime('%Y-%m-%d')}</p>
                     </div>
                 </div>
             </body>
