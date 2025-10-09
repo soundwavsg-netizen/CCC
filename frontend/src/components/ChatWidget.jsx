@@ -164,12 +164,15 @@ export const ChatWidget = () => {
       const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
       const agentMode = getAgentMode();
 
-      // Generate chat summary for the email
+      // Generate comprehensive message with chat transcript + additional details
       const chatSummary = generateChatSummary();
+      const fullMessage = leadFormData.message 
+        ? `${chatSummary}\n\n=== ADDITIONAL CUSTOMER DETAILS ===\n${leadFormData.message}`
+        : chatSummary;
 
       await axios.post(`${backendUrl}/api/chat/lead`, {
         ...leadFormData,
-        message: leadFormData.message || chatSummary, // Use summary if no custom message
+        message: fullMessage,
         source_page: location.pathname,
         agent_mode: agentMode
       });
