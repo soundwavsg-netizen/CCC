@@ -96,7 +96,85 @@ async function handleIncomingMessage(message) {
 async function processCCCMessage(phoneNumber, messageText) {
     const text = messageText.toLowerCase().trim()
 
-    // Welcome/Help responses
+    // 1. QUOTE REQUESTS - Handle FIRST to prevent loops
+    if (text.includes('quote')) {
+        // Handle specific service quotes with immediate acknowledgment
+        if (text.includes('quote website') || text.includes('quote site')) {
+            return `✅ **Website Quote Request Received!**
+
+Our team will prepare a detailed website proposal and contact you within 2 business hours.
+
+**We'll include:**
+• Custom design & features
+• EDG funding calculation
+• Timeline & milestones
+• Total cost breakdown
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        if (text.includes('quote ecommerce') || text.includes('quote e-commerce') || text.includes('quote store')) {
+            return `✅ **E-commerce Quote Request Received!**
+
+Our team will prepare a detailed e-commerce proposal and contact you within 2 business hours.
+
+**We'll include:**
+• Platform features & integrations
+• Product management capabilities
+• EDG funding calculation
+• Payment setup & logistics
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        if (text.includes('quote pwa') || text.includes('quote app') || text.includes('quote web app')) {
+            return `✅ **Web App Quote Request Received!**
+
+Our team will prepare a detailed PWA proposal and contact you within 2 business hours.
+
+**We'll include:**
+• App features & functionality
+• Cross-platform capabilities
+• EDG funding calculation
+• Development timeline
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        if (text.includes('quote ai') || text.includes('quote automation') || text.includes('quote chatbot')) {
+            return `✅ **AI & Automation Quote Request Received!**
+
+Our team will prepare a detailed AI solution proposal and contact you within 2 business hours.
+
+**We'll include:**
+• AI capabilities & features
+• Integration requirements
+• EDG funding calculation
+• Implementation roadmap
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        // Generic quote request
+        return `✅ **Quote Request Received!**
+
+Our team will prepare a customized proposal and contact you within 2 business hours.
+
+**To speed up the process, please share:**
+• Your business name
+• Project type needed
+• Key features required
+• Preferred timeline
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+Thank you for choosing CCC Digital! 🚀`
+    }
+
+    // 2. WELCOME/HELP responses
     if (text === 'hi' || text === 'hello' || text === 'start' || text === 'help') {
         return `👋 Hi! Welcome to CCC Digital!
 
@@ -110,7 +188,8 @@ async function processCCCMessage(phoneNumber, messageText) {
 💰 *All projects eligible for EDG support (pay ~50% less)*
 
 What interests you? Type a number (1-5) or ask about:
-• EDG eligibility • Pricing • Timeline • Features`
+• EDG eligibility • Pricing • Timeline • Features
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
     }
 
     // Service-specific responses
