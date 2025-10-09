@@ -100,41 +100,120 @@ async function processCCCMessage(phoneNumber, messageText) {
     if (text === 'hi' || text === 'hello' || text === 'start' || text === 'help') {
         return `👋 Hi! Welcome to CCC Digital!
 
-I'm your AI assistant for:
-1️⃣ EDG funding information
-2️⃣ Website & app pricing  
-3️⃣ Schedule consultation
-4️⃣ Connect with human agent
+🚀 **Complete Digital Solutions:**
+1️⃣ AI-Powered Websites ($3K-$12K)
+2️⃣ E-commerce & Inventory ($6K-$18K)  
+3️⃣ Progressive Web Apps/PWA ($8.5K-$24K)
+4️⃣ AI Agents & Automation ($1.8K-$8.8K)
+5️⃣ EDG Grant Advisory & Documentation
 
-What would you like to know about? Or type a number (1-4)`
+💰 *All projects eligible for EDG support (pay ~50% less)*
+
+What interests you? Type a number (1-5) or ask about:
+• EDG eligibility • Pricing • Timeline • Features`
     }
 
-    // EDG Information
-    if (text.includes('edg') || text.includes('funding') || text.includes('grant') || text === '1') {
-        return `💰 Enterprise Development Grant (EDG) Info:
+    // Service-specific responses
+    if (text.includes('website') || text === '1') {
+        return `🌐 **AI-Powered Websites** ($3,000 - $12,000):
 
-• Covers up to 50% of digital project costs
-• For websites, e-commerce, web apps, AI integration
-• Singapore companies with UEN eligible
-• Typical approval: 3-6 weeks
+**Features:**
+• Responsive design (mobile-friendly)
+• AI chat integration
+• Content management system  
+• SEO optimization
+• Analytics integration
+• Lead capture forms
 
-Example: $10,000 project = ~$5,000 after EDG support
+**Tiers:**
+• Starter (5-7 pages): $3,000
+• Growth (12+ pages): $6,500
+• Premium (20+ pages): $9K-$12K
 
-Need eligibility check? Type "eligibility" or call us at +65 8982 1301`
+*With EDG: Pay $1,500 - $6,000*
+
+Need a quote? Type "quote website" or call +65 8982 1301`
     }
 
-    // Pricing Information
-    if (text.includes('price') || text.includes('cost') || text.includes('how much') || text === '2') {
-        return `💻 CCC Digital Services & Pricing:
+    if (text.includes('ecommerce') || text.includes('e-commerce') || text.includes('online store') || text === '2') {
+        return `🛒 **E-commerce & Inventory** ($6,000 - $18,000):
 
-🌐 **Websites:** $3,000 - $12,000
-🛒 **E-commerce:** $6,000 - $18,000  
-📱 **Web Apps (PWA):** $8,500 - $24,000
-🤖 **AI Integration:** $1,800 - $8,800
+**Features:**
+• Product catalog & management
+• Stripe payment processing
+• Customer accounts & profiles
+• Inventory tracking
+• Sales analytics dashboard
+• Mobile-optimized checkout
 
-*With EDG: Pay ~50% less*
+**Tiers:**
+• Starter (20-30 products): $6,000
+• Growth (50-150 products): $9K-$12K
+• Enterprise (multi-channel): $15K-$18K
 
-Need specific quote? Type "quote" or schedule consultation`
+*With EDG: Pay $3,000 - $9,000*
+
+Interested? Type "quote ecommerce" or call +65 8982 1301`
+    }
+
+    if (text.includes('web app') || text.includes('pwa') || text.includes('progressive') || text === '3') {
+        return `📱 **Progressive Web Apps (PWA)** ($8,500 - $24,000):
+
+**Benefits vs Native Apps:**
+• Works on all devices (iOS/Android/Desktop)
+• No app store approval needed
+• Instant updates
+• Offline functionality
+• Push notifications
+• 50% faster development
+
+**Tiers:**
+• Prototype: $8,500
+• Full Web App: $12K-$18K  
+• Premium PWA: $18K-$24K
+
+*With EDG: Pay $4,250 - $12,000*
+
+Ready to build? Type "quote pwa" or call +65 8982 1301`
+    }
+
+    if (text.includes('ai') || text.includes('automation') || text.includes('chatbot') || text === '4') {
+        return `🤖 **AI Agents & Automation** ($1,800 - $8,800):
+
+**Solutions:**
+• Custom AI chatbots (like this one!)
+• Workflow automation
+• Document processing
+• Customer service AI
+• Data analytics dashboards
+• CRM automation
+
+**Tiers:**
+• Custom GPT Agent: $1,800
+• Workflow Automation: $3K-$5K
+• AI Analytics Dashboard: $6K-$8.8K
+
+*With EDG: Pay $900 - $4,400*
+
+Want AI for your business? Type "quote ai" or call +65 8982 1301`
+    }
+
+    // Pricing Information - Updated with full services
+    if (text.includes('price') || text.includes('cost') || text.includes('how much') || text === '2' || text === 'pricing') {
+        return `💻 **CCC Digital Complete Services:**
+
+🌐 **Websites:** $3K-$12K *(EDG: $1.5K-$6K)*
+🛒 **E-commerce:** $6K-$18K *(EDG: $3K-$9K)*  
+📱 **Web Apps (PWA):** $8.5K-$24K *(EDG: $4.25K-$12K)*
+🤖 **AI & Automation:** $1.8K-$8.8K *(EDG: $0.9K-$4.4K)*
+📋 **EDG Documentation:** $800-$1,500
+
+**Popular Packages:**
+• Basic Website + EDG: ~$1,500 total cost
+• Growth E-commerce + EDG: ~$4,500 total cost
+• Premium PWA + EDG: ~$9,000 total cost
+
+Which service interests you? Type the service name for details!`
     }
 
     // Schedule Consultation
