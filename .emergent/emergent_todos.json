@@ -1,27 +1,27 @@
 [
   {
     "content": "Fix 'Check EDG Eligibility - Chat Now' button functionality",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Fix lead form submission on homepage (Request EDG Review button)",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Fix 'Learn More' buttons to link to specific services sections",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Fix quick links to jump to top of pages",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Fix FAQ 'Ask More Questions' button",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Fix 'Check Eligibility' buttons navigation",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Debug WhatsApp and email notifications from contact form",
