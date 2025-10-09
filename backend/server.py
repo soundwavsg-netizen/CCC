@@ -531,7 +531,7 @@ async def send_whatsapp_notification(lead: ChatLead):
     """
     try:
         # Your WhatsApp number (format: country code + number, no + or spaces)
-        phone_number = "6585008888"
+        phone_number = "6589821301"
         
         # CallMeBot API key (get it by messaging +34 644 44 32 85)
         api_key = os.environ.get('CALLMEBOT_API_KEY', '')
