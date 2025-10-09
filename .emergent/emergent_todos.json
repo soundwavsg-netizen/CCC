@@ -1,18 +1,6 @@
 [
   {
-    "content": "Fix AI bot asking for email in chat instead of directing to Connect button",
-    "status": "completed"
-  },
-  {
-    "content": "Fix AI memory/context issues in conversation flow",
-    "status": "completed"
-  },
-  {
-    "content": "Ensure lead capture triggers properly so conversations aren't lost",
-    "status": "completed"
-  },
-  {
-    "content": "Test AI consistency in following contact form directions",
-    "status": "completed"
+    "content": "Add AI-generated chat summary to email notifications alongside full transcript",
+    "status": "in_progress"
   }
 ]
