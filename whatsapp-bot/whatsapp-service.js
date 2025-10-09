@@ -153,3 +153,184 @@ Growth E-commerce + AI chatbot = $10K-$15K
 Want a detailed proposal for your music shop? Type "quote music shop" 
 **Or feel free to ask me more questions about features! 😊**`
     }
+
+    // 2. QUOTE REQUESTS - Handle before service descriptions
+    if (text.includes('quote')) {
+        if (text.includes('quote ai') || text.includes('quote automation') || text.includes('quote chatbot')) {
+            return `✅ **AI & Automation Quote Request Received!**
+
+Our team will prepare a detailed AI solution proposal and contact you within 2 business hours.
+
+**We'll include:**
+• AI capabilities & features
+• Integration requirements
+• EDG funding calculation
+• Implementation roadmap
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+
+⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        if (text.includes('quote website') || text.includes('quote site')) {
+            return `✅ **Website Quote Request Received!**
+
+Our team will prepare a detailed website proposal and contact you within 2 business hours.
+
+**We'll include:**
+• Custom design & features
+• EDG funding calculation
+• Timeline & milestones
+• Total cost breakdown
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+
+⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        // Generic quote
+        return `✅ **Quote Request Received!**
+
+Our team will prepare a customized proposal and contact you within 2 business hours.
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+
+⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
+Thank you for choosing CCC Digital! 🚀`
+    }
+
+    // 3. WELCOME/HELP responses
+    if (text === 'hi' || text === 'hello' || text === 'start' || text === 'help') {
+        return `👋 Hi! Welcome to CCC Digital!
+
+🚀 **Complete Digital Solutions:**
+1️⃣ AI-Powered Websites ($3K-$12K)
+2️⃣ E-commerce & Inventory ($6K-$18K)  
+3️⃣ Progressive Web Apps/PWA ($8.5K-$24K)
+4️⃣ AI Agents & Automation ($1.8K-$8.8K)
+5️⃣ EDG Grant Advisory & Documentation
+
+💰 *All projects eligible for EDG support (pay ~50% less)*
+
+What interests you? Type a number (1-5) or ask about:
+• EDG eligibility • Pricing • Timeline • Features
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+    }
+
+    // 4. SERVICE DESCRIPTIONS
+    if (text.includes('website') || text === '1') {
+        return `🌐 **AI-Powered Websites** ($3,000 - $12,000):
+
+**Features:**
+• Responsive design (mobile-friendly)
+• AI chat integration
+• Content management system  
+• SEO optimization
+• Analytics integration
+• Lead capture forms
+
+**Tiers:**
+• Starter (5-7 pages): $3,000
+• Growth (12+ pages): $6,500
+• Premium (20+ pages): $9K-$12K
+
+*With EDG: Pay $1,500 - $6,000*
+
+Need a quote? Type "quote website" or call +65 8982 1301
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+    }
+
+    if (text.includes('ai') || text.includes('automation') || text.includes('chatbot') || text === '4') {
+        return `🤖 **AI Agents & Automation** ($1,800 - $8,800):
+
+**Solutions:**
+• Custom AI chatbots (like this one!)
+• Workflow automation
+• Document processing
+• Customer service AI
+• Data analytics dashboards
+• CRM automation
+
+**Tiers:**
+• Custom GPT Agent: $1,800
+• Workflow Automation: $3K-$5K
+• AI Analytics Dashboard: $6K-$8.8K
+
+*With EDG: Pay $900 - $4,400*
+
+Want AI for your business? Type "quote ai" or call +65 8982 1301
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+    }
+
+    // Default response for unrecognized messages
+    return `🤔 Not sure what you meant. Here's how CCC Digital can help:
+
+**🚀 Our Complete Services:**
+1️⃣ AI-Powered Websites ($3K-$12K)
+2️⃣ E-commerce & Inventory ($6K-$18K)
+3️⃣ Progressive Web Apps/PWA ($8.5K-$24K)  
+4️⃣ AI Agents & Automation ($1.8K-$8.8K)
+5️⃣ EDG Grant Support
+
+💡 **Popular questions:**
+• "website" • "ecommerce" • "web app" • "ai automation"  
+• "edg funding" • "pricing" • "quote" • "consultation"
+
+Or call directly: +65 8982 1301
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+}
+
+async function sendMessage(phoneNumber, text) {
+    try {
+        if (!sock) {
+            throw new Error('WhatsApp not connected')
+        }
+
+        const jid = phoneNumber.includes('@') ? phoneNumber : `${phoneNumber}@s.whatsapp.net`
+        await sock.sendMessage(jid, { text })
+        console.log(`✅ Message sent to ${phoneNumber}`)
+        return { success: true }
+
+    } catch (error) {
+        console.error('❌ Error sending message:', error)
+        return { success: false, error: error.message }
+    }
+}
+
+// REST API endpoints for integration
+app.get('/qr', (req, res) => {
+    res.json({ qr: qrCode })
+})
+
+app.post('/send', async (req, res) => {
+    const { phone_number, message } = req.body
+    const result = await sendMessage(phone_number, message)
+    res.json(result)
+})
+
+app.get('/status', (req, res) => {
+    res.json({
+        connected: connectionStatus === 'connected',
+        status: connectionStatus,
+        user: sock?.user || null,
+        business_number: '+65 8982 1301'
+    })
+})
+
+app.get('/health', (req, res) => {
+    res.json({ 
+        status: 'healthy', 
+        whatsapp_status: connectionStatus,
+        timestamp: new Date().toISOString()
+    })
+})
+
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+    console.log(`🤖 CCC Digital WhatsApp Bot running on port ${PORT}`)
+    console.log(`📞 Business number: +65 8982 1301`)
+    console.log(`📧 FastAPI backend: ${FASTAPI_URL}`)
+    initWhatsApp()
+})
