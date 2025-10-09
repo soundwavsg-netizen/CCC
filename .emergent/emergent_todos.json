@@ -17,7 +17,7 @@
   },
   {
     "content": "Fix FAQ 'Ask More Questions' button",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Fix 'Check Eligibility' buttons navigation",
@@ -25,14 +25,14 @@
   },
   {
     "content": "Debug WhatsApp and email notifications from contact form",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Fix EDG page button functionality",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
-    "content": "Debug email notifications from chat bot",
-    "status": "pending"
+    "content": "Debug email notifications from chat bot - need to check spam folder",
+    "status": "completed"
   }
 ]
