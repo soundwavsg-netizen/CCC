@@ -282,6 +282,49 @@ Need a quote? Type "quote website" or call +65 8982 1301
 
     // 4. SERVICE DESCRIPTIONS (only if not handled above)
     if (text.includes('website') || text === '1') {
+        return `🌐 **AI-Powered Websites** ($3,000 - $12,000):
+
+**Features:**
+• Responsive design (mobile-friendly)
+• AI chat integration
+• Content management system  
+• SEO optimization
+• Analytics integration
+• Lead capture forms
+
+**Tiers:**
+• Starter (5-7 pages): $3,000
+• Growth (12+ pages): $6,500
+• Premium (20+ pages): $9K-$12K
+
+*With EDG: Pay $1,500 - $6,000*
+
+Need a quote? Type "quote website" or call +65 8982 1301
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+    }
+
+    // AI & Automation (general, not specific chatbot)
+    if ((text.includes('ai') && !text.includes('chatbot')) || text.includes('automation') || text === '4') {
+        return `🤖 **AI Agents & Automation** ($1,800 - $8,800):
+
+**Solutions:**
+• Custom AI chatbots (like this one!)
+• Workflow automation
+• Document processing
+• Customer service AI
+• Data analytics dashboards
+• CRM automation
+
+**Tiers:**
+• Custom GPT Agent: $1,800
+• Workflow Automation: $3K-$5K
+• AI Analytics Dashboard: $6K-$8.8K
+
+*With EDG: Pay $900 - $4,400*
+
+Want AI for your business? Type "quote ai" or call +65 8982 1301
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+    }
         return `🤖 **AI Agents & Automation** ($1,800 - $8,800):
 
 **Solutions:**
