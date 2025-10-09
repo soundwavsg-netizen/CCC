@@ -1,18 +1,18 @@
 [
   {
-    "content": "Update all website phone numbers to +65 8982 1301",
+    "content": "Update website to show new business number (not yet active)",
     "status": "completed"
   },
   {
-    "content": "Update CallMeBot configuration to new business number",
+    "content": "Keep old CallMeBot configuration temporarily",
     "status": "in_progress"
   },
   {
-    "content": "Implement WhatsApp bot integration with new business number",
+    "content": "Prepare WhatsApp bot setup for when new number is activated",
     "status": "pending"
   },
   {
-    "content": "Update all WhatsApp links and contact information",
-    "status": "completed"
+    "content": "Create activation checklist for new number",
+    "status": "pending"
   }
 ]
