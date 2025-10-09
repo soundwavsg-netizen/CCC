@@ -150,26 +150,31 @@ export default function Home() {
 
   const services = [
     {
+      id: 'website',
       icon: Globe,
       title: 'AI-Powered Websites',
       description: 'Responsive, fast websites with integrated AI chat and automation capabilities.'
     },
     {
+      id: 'e-commerce',
       icon: ShoppingCart,
       title: 'E-commerce & Inventory',
       description: 'Complete online stores with payment processing and inventory management.'
     },
     {
+      id: 'web-app',
       icon: Smartphone,
       title: 'Progressive Web Apps (PWA)',
       description: 'Mobile-app-like experiences that work across all devices without app stores.'
     },
     {
+      id: 'ai-automation',
       icon: Bot,
       title: 'AI Agents & Automation',
       description: 'Custom AI assistants and workflow automation to boost productivity.'
     },
     {
+      id: 'consultancy',
       icon: Award,
       title: 'Grant Advisory & Documentation (EDG)',
       description: 'Complete support for EDG applications and documentation.'
