@@ -164,7 +164,7 @@ export default function Grants() {
                   className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white"
                   data-testid="eligibility-check-button"
                 >
-                  <Link to="/contact">Check Eligibility</Link>
+                  <Link to="/edg#lead-form">Check Eligibility</Link>
                 </Button>
               </div>
             </Card>
