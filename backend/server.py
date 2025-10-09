@@ -441,10 +441,27 @@ async def send_email_notification(lead: ChatLead):
                     </table>
                     
                     <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                        <h3 style="color: #0FB5AE; margin-top: 0;">💬 Complete Conversation & Details</h3>
-                        <div style="background: white; padding: 15px; border-radius: 4px; max-height: none; overflow: visible;">
-                            <pre style="white-space: pre-wrap; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 13px; line-height: 1.4; margin: 0;">{lead.message or 'No conversation recorded'}</pre>
+                        <h3 style="color: #0FB5AE; margin-top: 0;">📋 Quick Summary & Complete Transcript</h3>
+                        <div style="background: #e3f2fd; padding: 12px; border-radius: 4px; margin-bottom: 15px; border-left: 4px solid #2196f3;">
+                            <h4 style="margin: 0 0 8px 0; color: #1976d2; font-size: 14px;">💡 QUICK SUMMARY FOR FOLLOW-UP</h4>
+                            <div style="font-size: 13px; line-height: 1.4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                <pre style="white-space: pre-wrap; margin: 0; font-family: inherit;">{lead.message.split('=== COMPLETE CHAT TRANSCRIPT ===')[0] if '=== COMPLETE CHAT TRANSCRIPT ===' in lead.message else 'Summary not available'}</pre>
+                            </div>
                         </div>
+                        <div style="background: white; padding: 15px; border-radius: 4px; border: 1px solid #e0e0e0;">
+                            <h4 style="margin: 0 0 10px 0; color: #0FB5AE; font-size: 14px;">💬 COMPLETE CONVERSATION TRANSCRIPT</h4>
+                            <div style="max-height: 400px; overflow-y: auto; font-size: 12px; line-height: 1.4;">
+                                <pre style="white-space: pre-wrap; font-family: 'Courier New', monospace; margin: 0;">{lead.message.split('=== COMPLETE CHAT TRANSCRIPT ===')[1].split('=== ADDITIONAL CUSTOMER DETAILS ===')[0] if '=== COMPLETE CHAT TRANSCRIPT ===' in lead.message else lead.message}</pre>
+                            </div>
+                        </div>
+                        {('=== ADDITIONAL CUSTOMER DETAILS ===' in lead.message) and f'''
+                        <div style="background: #fff3cd; padding: 12px; border-radius: 4px; margin-top: 15px; border-left: 4px solid #ffc107;">
+                            <h4 style="margin: 0 0 8px 0; color: #856404; font-size: 14px;">📝 ADDITIONAL DETAILS FROM CUSTOMER</h4>
+                            <div style="font-size: 13px; line-height: 1.4;">
+                                <pre style="white-space: pre-wrap; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{lead.message.split('=== ADDITIONAL CUSTOMER DETAILS ===')[1] if '=== ADDITIONAL CUSTOMER DETAILS ===' in lead.message else ''}</pre>
+                            </div>
+                        </div>
+                        ''' or ''}
                     </div>
                     
                     <div style="margin-top: 20px; padding: 15px; background: #EAF7F5; border-left: 4px solid #0FB5AE; border-radius: 4px;">
