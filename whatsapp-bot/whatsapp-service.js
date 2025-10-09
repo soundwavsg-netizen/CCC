@@ -123,7 +123,7 @@ Want this for your business? Type "quote chatbot"
     if (text.includes('quote chatbot')) {
         return `✅ **AI Chatbot Quote Request Received!**
 
-Our team will prepare a detailed chatbot proposal and contact you within 2 business hours.
+Our team will prepare a detailed chatbot proposal and contact you within 1 business day and may contact you for more details to furnish a detailed quote.
 
 **We'll include:**
 • Custom chatbot features for your business
@@ -133,7 +133,7 @@ Our team will prepare a detailed chatbot proposal and contact you within 2 busin
 
 **Business hours:** Mon-Fri 9AM-6PM SGT
 
-⏳ **Please wait for our consultant to get back to you at the shortest possible time.**
+⏳ **Our consultant will get back to you within 1 business day.**
 Thank you for choosing CCC Digital! 🚀`
     }
 
