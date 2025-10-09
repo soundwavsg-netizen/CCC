@@ -1,18 +1,14 @@
 [
   {
-    "content": "Update website to show new business number (not yet active)",
-    "status": "completed"
+    "content": "Update backend with new CallMeBot API key and phone number",
+    "status": "in_progress"
   },
   {
-    "content": "Keep old CallMeBot configuration temporarily",
-    "status": "completed"
+    "content": "Test WhatsApp notifications with new number",
+    "status": "pending"
   },
   {
-    "content": "Prepare WhatsApp bot setup for when new number is activated",
-    "status": "completed"
-  },
-  {
-    "content": "Create activation checklist for new number",
-    "status": "completed"
+    "content": "Implement WhatsApp bot integration with new number",
+    "status": "pending"
   }
 ]
