@@ -441,8 +441,8 @@ export default function Home() {
                   <p className="text-sm text-[#475467] mb-4 flex-grow">{service.description}</p>
                   <Button 
                     onClick={() => {
-                      // Scroll to services section on services-solutions page
-                      window.location.href = '/services-solutions#services';
+                      // Navigate to specific service section
+                      window.location.href = `/services-solutions#service-section-${service.id}`;
                     }}
                     variant="ghost" 
                     className="p-0 h-auto hover:bg-transparent text-[hsl(var(--secondary))] hover:text-[#0AA099]"
