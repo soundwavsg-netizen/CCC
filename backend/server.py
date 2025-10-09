@@ -450,22 +450,22 @@ async def send_email_notification(lead: ChatLead):
         </html>
         """
         
-        # Plain text fallback
+        # Plain text fallback with complete conversation
         text_body = f"""
 🔔 NEW CCC LEAD ALERT!
 
+=== CONTACT DETAILS ===
 👤 Name: {lead.name}
 📧 Email: {lead.email}
 📱 Phone: {lead.phone or 'Not provided'}
+📍 Source: {lead.source_page} ({lead.agent_mode} mode)
+⏰ Time: {lead.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}
 
-💬 Chat Summary:
+=== COMPLETE CONVERSATION & DETAILS ===
 {lead.message or 'No conversation recorded'}
 
-📍 Source Page: {lead.source_page}
-🤖 Agent Mode: {lead.agent_mode}
-⏰ Timestamp: {lead.timestamp.strftime('%Y-%m-%d %H:%M:%S UTC')}
-
-Please follow up with this lead ASAP!
+=== FOLLOW-UP RECOMMENDATION ===
+Review the conversation above for context and respond with relevant project information or EDG guidance.
         """
         
         # Attach both HTML and plain text versions
