@@ -92,6 +92,21 @@ class ChatResponse(BaseModel):
     message: str
     agent_mode: str
 
+# WhatsApp Bot Models
+class WhatsAppMessage(BaseModel):
+    phone_number: str
+    message: str
+    message_id: str
+    timestamp: int
+
+class WhatsAppResponse(BaseModel):
+    reply: Optional[str] = None
+    success: bool = True
+
+class WhatsAppSend(BaseModel):
+    phone_number: str
+    message: str
+
 # Agent System Prompts
 AGENT_PROMPTS = {
     "main": """You are CCC AI Consultant, representing Cognition & Competence Consultancy Pte Ltd (CCC Digital) — a Singapore-based digital consultancy specializing in website and web app development, AI integration, and Enterprise Development Grant (EDG) advisory.
