@@ -299,8 +299,26 @@ What's your business type and project goal?`
 Want eligibility check? Type "eligible" or call +65 8982 1301`
     }
 
-    // Quote requests - Enhanced
-    if (text.includes('quote') || text.includes('proposal') || text.includes('estimate')) {
+    // Quote requests - Enhanced with immediate acknowledgment
+    if (text === 'quote' || text.includes('quote') || text.includes('proposal') || text.includes('estimate')) {
+        // Handle generic "quote" request
+        if (text === 'quote') {
+            return `✅ **Quote Request Received!**
+
+Our team will prepare a customized proposal and contact you within 2 business hours.
+
+**To speed up the process, please share:**
+• Your business name
+• Project type needed
+• Key features required
+• Preferred timeline
+
+**Business hours:** Mon-Fri 9AM-6PM SGT
+
+Thank you for choosing CCC Digital! 🚀`
+        }
+        
+        // Handle specific quote requests (quote website, quote ecommerce, etc.)
         return `📋 **Get Accurate Quote:**
 
 For detailed proposal, I need:
