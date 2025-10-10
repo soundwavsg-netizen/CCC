@@ -155,12 +155,21 @@ Ready for a proposal? Type "quote education website"`
 What type of business is this for?`
     }
 
-    // === WELCOME ===
+    // 2. WELCOME - Commercial positioning
     if (text === 'hi' || text === 'hello' || text === 'start') {
         memory.lastResponse = 'welcome'
-        return `👋 Hi! Welcome to CCC!
+        return `👋 Hi! Welcome to CCC Digital!
 
-What can I help you with today?`
+We help Singapore SMEs build smart websites, AI chatbots, and WhatsApp automation.
+
+**How can we help your business today?**
+• Professional website or online store?
+• AI chatbot for customer service?
+• WhatsApp automation like this?
+• Business process automation?
+• Something else?
+
+Tell me about your business and I'll guide you!`
     }
 
     // === SERVICES INQUIRY ===
