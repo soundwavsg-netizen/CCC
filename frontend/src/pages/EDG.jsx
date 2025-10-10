@@ -252,10 +252,10 @@ export default function EDG() {
           <FadeUp>
             <div className="text-center mb-8">
               <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                Get Your Free EDG Eligibility Assessment
+                Request Project Assessment & EDG Alignment Review
               </h2>
               <p className="text-base text-[#475467]">
-                Complete this form and we'll provide a detailed assessment of your project's EDG funding potential.
+                Share your project details and we'll assess potential EDG alignment and provide recommendations.
               </p>
             </div>
           </FadeUp>
