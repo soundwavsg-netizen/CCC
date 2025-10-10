@@ -12,7 +12,7 @@ const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8001'
 let sock = null
 let qrCode = null
 let connectionStatus = 'disconnected'
-let conversationHistory = {} // Track conversation per phone number
+let conversationMemory = {} // Track what we've told each customer
 
 async function initWhatsApp() {
     try {
@@ -32,21 +32,15 @@ async function initWhatsApp() {
 
             if (qr) {
                 qrCode = qr
-                console.log('📱 QR Code generated - scan with WhatsApp to connect')
+                console.log('📱 QR Code generated')
             }
 
             if (connection === 'close') {
                 const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut
-                console.log('Connection closed:', lastDisconnect?.error, '| Reconnecting:', shouldReconnect)
                 connectionStatus = 'disconnected'
-
-                if (shouldReconnect) {
-                    setTimeout(initWhatsApp, 5000)
-                }
+                if (shouldReconnect) setTimeout(initWhatsApp, 5000)
             } else if (connection === 'open') {
-                console.log('✅ CCC Digital WhatsApp Bot connected successfully!')
-                console.log('📞 Business number: +65 8982 1301')
-                qrCode = null
+                console.log('✅ WhatsApp Bot connected - +65 8982 1301')
                 connectionStatus = 'connected'
             }
         })
@@ -64,8 +58,7 @@ async function initWhatsApp() {
         sock.ev.on('creds.update', saveCreds)
 
     } catch (error) {
-        console.error('❌ WhatsApp initialization error:', error)
-        connectionStatus = 'error'
+        console.error('Error:', error)
         setTimeout(initWhatsApp, 10000)
     }
 }
@@ -73,114 +66,136 @@ async function initWhatsApp() {
 async function handleIncomingMessage(message) {
     try {
         const phoneNumber = message.key.remoteJid.replace('@s.whatsapp.net', '')
-        const messageText = message.message.conversation ||
-                           message.message.extendedTextMessage?.text || ''
-
-        console.log(`📨 Message from ${phoneNumber}: ${messageText}`)
-
-        const response = await processCCCMessage(phoneNumber, messageText)
-
+        const messageText = message.message.conversation || message.message.extendedTextMessage?.text || ''
+        
+        console.log(`Message from ${phoneNumber}: ${messageText}`)
+        
+        const response = await getSmartResponse(phoneNumber, messageText)
+        
         if (response) {
             await sendMessage(phoneNumber, response)
         }
 
     } catch (error) {
-        console.error('❌ Error handling message:', error)
-        await sendMessage(phoneNumber.replace('@s.whatsapp.net', ''), 
-            "Sorry, I encountered a technical issue. Please call us at +65 8982 1301.")
+        console.error('Error handling message:', error)
     }
 }
 
-async function processCCCMessage(phoneNumber, messageText) {
+async function getSmartResponse(phoneNumber, messageText) {
     const text = messageText.toLowerCase().trim()
     
-    // Initialize conversation history for this number
-    if (!conversationHistory[phoneNumber]) {
-        conversationHistory[phoneNumber] = {
-            responses: [],
-            lastResponseType: null,
-            clarificationCount: 0
+    // Initialize memory for this customer
+    if (!conversationMemory[phoneNumber]) {
+        conversationMemory[phoneNumber] = {
+            lastResponse: null,
+            topics: [],
+            businessType: null
         }
     }
     
-    const history = conversationHistory[phoneNumber]
+    const memory = conversationMemory[phoneNumber]
 
-    // 1. QUOTE REQUESTS - Always handle first
+    // === QUOTE REQUESTS (always handle first) ===
     if (text.includes('quote')) {
-        if (text.includes('quote chatbot') || text.includes('quote ai')) {
-            const response = `✅ **AI Chatbot Quote Request Received!**
+        memory.lastResponse = 'quote'
+        if (text.includes('education') || text.includes('school')) {
+            return `✅ **Education Website Quote Request Received!**
 
-Our team will prepare a detailed chatbot proposal and contact you within 1 business day and may contact you for more details to furnish a detailed quote.
+Our team will prepare a detailed proposal for your teaching school within 1 business day and may contact you for more details.
 
-**We'll include:**
-• Custom chatbot features for your business
-• Integration requirements
-• EDG funding calculation
-• Implementation timeline
-
-**Business hours:** Mon-Fri 9AM-6PM SGT
-
+**Business hours:** Mon-Fri 9AM-6PM
 Thank you for choosing CCC! 🚀
 
-**Feel free to ask me more questions while you wait! 😊**`
-            history.responses.push('quote_acknowledgment')
-            return response
+**Feel free to ask more questions while you wait! 😊**`
+        }
+        return `✅ **Quote Request Received!**
+
+Our team will contact you within 1 business day.
+Thank you for choosing CCC! 🚀
+
+**Feel free to ask more questions while you wait! 😊**`
+    }
+
+    // === SPECIFIC COMBINATIONS ===
+    if ((text.includes('website') && text.includes('ai')) || text.includes('website with ai') || text.includes('ai integration')) {
+        memory.lastResponse = 'website_ai'
+        memory.topics.push('website_ai')
+        
+        if (text.includes('school') || text.includes('teaching') || memory.businessType === 'education') {
+            return `🏫 **Website + AI Integration for Teaching Schools:**
+
+**Perfect combination for education:**
+• Professional school website
+• AI chatbot for student/parent inquiries
+• Course information & enrollment
+• Automated FAQ responses
+• Lead capture for new students
+
+**Typical setup:**
+• School website: $6,000-$9,000
+• AI chatbot integration: $2,000-$3,000
+• **Total:** $8,000-$12,000
+• **With EDG:** Pay only $4,000-$6,000!
+
+Ready for a proposal? Type "quote education website"`
         }
         
-        const response = `✅ **Quote Request Received!**
+        return `🤖 **Website + AI Integration:**
 
-Our team will prepare a customized proposal and contact you within 1 business day and may contact you for more details to furnish a detailed quote.
+**Powerful combination:**
+• Professional website
+• AI chatbot (like this one!)
+• Lead capture automation
+• Customer service enhancement
+• 24/7 visitor engagement
 
-**Business hours:** Mon-Fri 9AM-6PM SGT
+**Investment:** $8,000-$15,000
+**With EDG:** Pay only $4,000-$7,500
 
-Thank you for choosing CCC! 🚀
-
-**Feel free to ask me more questions while you wait! 😊**`
-        history.responses.push('quote_acknowledgment')
-        return response
+What type of business is this for?`
     }
 
-    // 2. WELCOME
+    // === WELCOME ===
     if (text === 'hi' || text === 'hello' || text === 'start') {
-        history.responses.push('welcome')
-        return `👋 Hi there! Welcome to CCC!
+        memory.lastResponse = 'welcome'
+        return `👋 Hi! Welcome to CCC!
 
-I'm here to help with your digital business needs.
-
-**What brings you here today?**
-• Looking to build a website?
-• Want to set up online sales?
-• Need business automation?
-• Curious about government grants?
-• Or something else entirely?
-
-Let me know what you're thinking about!`
+What can I help you with today?`
     }
 
-    // 3. SERVICES INQUIRY
-    if (text.includes('tell me about') || text.includes('your services') || text.includes('what do you offer') || 
-        text.includes('what services') || text.includes('what can you do')) {
-        history.responses.push('services_overview')
-        return `🚀 **CCC helps Singapore businesses go digital:**
+    // === SERVICES INQUIRY ===
+    if (text.includes('services') || text.includes('what do you do') || text.includes('tell me about')) {
+        memory.lastResponse = 'services'
+        return `🚀 **CCC helps Singapore businesses:**
 
-**Our specialties:**
-• Professional websites & web apps
-• E-commerce & online stores  
-• Business automation & AI
-• Government grant applications (EDG)
+• Build professional websites
+• Set up online stores
+• Create business automation
+• Apply for EDG funding (50% cost coverage!)
 
-**We help businesses:**
-• Get more customers online
-• Streamline operations
-• Access government funding
-
-What type of business do you run? I can suggest the perfect solution!`
+What type of business do you have?`
     }
 
-    // 4. BUSINESS-SPECIFIC RESPONSES (Handle specific industries)
-    if (text.includes('teaching') || text.includes('school') || text.includes('education') || text.includes('courses') || text.includes('tuition')) {
-        history.responses.push('education_business')
-        return `🏫 **Perfect! For teaching schools & education businesses:**
+    // === EDUCATION/TEACHING BUSINESS ===
+    if (text.includes('teaching') || text.includes('school') || text.includes('education') || text.includes('tuition')) {
+        // Avoid repetition if we already identified them as education
+        if (memory.lastResponse === 'education') {
+            return `📚 **Since you're in education, here are next steps:**
+
+1. **Basic school website:** $3,000-$6,000
+2. **Website + online enrollment:** $6,000-$9,000
+3. **Full platform with AI:** $8,000-$12,000
+
+**All qualify for EDG support (pay 50% less!)**
+
+Which option interests you most?`
+        }
+        
+        memory.lastResponse = 'education'
+        memory.businessType = 'education'
+        memory.topics.push('education')
+        
+        return `🏫 **Perfect! For teaching schools & education:**
 
 **Website + Course Management:**
 • Student registration & course booking
@@ -189,152 +204,76 @@ What type of business do you run? I can suggest the perfect solution!`
 • Schedule management
 • Payment processing for courses
 
-**Popular for:** Tuition centers, training schools, enrichment programs
+**Popular for:** Tuition centers, training schools
 
-**With EDG support, development costs can be 50% lower!**
+**With EDG support, costs can be 50% lower!**
 
-**What subjects do you teach?** This helps me recommend specific features like:
-• Student progress tracking
-• Online assignments & homework
-• Video lesson integration
-• Automated class reminders
-
-Want a detailed proposal? Type "quote education"`
+What subjects do you teach? This helps me recommend specific features.`
     }
 
-    // 5. WEBSITE INQUIRIES
-    if (text.includes('website') || text === '1') {
-        if (history.responses.includes('website_features')) {
-            // Different response if already explained websites
-            return `🌐 **Let me be more specific about websites:**
-
-**What's your main goal?**
-• Get more customers to find you?
-• Showcase your work/products?
-• Accept bookings or appointments?
-• Sell products online?
-• Build trust & credibility?
-
-Knowing your goal helps me recommend the right features and approach.`
-        } else {
-            history.responses.push('website_features')
-            return `🌐 **AI-Powered Websites:**
-
-**Perfect for businesses wanting:**
-• Professional online presence
-• Lead generation from Google
-• Customer contact & trust building
-• Showcase products/services
-
-**Key features:**
-• Mobile-responsive design
-• AI chat integration (like this!)
-• Easy content management
-• SEO optimization
-• Contact forms & analytics
-
-**What industry is your business in?** I can share specific examples.`
-        }
-    }
-
-    // 6. PRICING REQUESTS
-    if (text.includes('pricing') || text.includes('how much') || text.includes('cost')) {
-        history.responses.push('pricing_shown')
+    // === PRICING REQUESTS ===
+    if (text.includes('how much') || text.includes('cost') || text.includes('price')) {
+        memory.lastResponse = 'pricing'
         return `💰 **CCC Investment Guide:**
 
-🌐 **Websites:** $3K-$12K *(with EDG: $1.5K-$6K)*
-🛒 **E-commerce:** $6K-$18K *(with EDG: $3K-$9K)*  
-📱 **Web Apps:** $8.5K-$24K *(with EDG: $4.25K-$12K)*
-🤖 **AI & Automation:** $1.8K-$8.8K *(with EDG: $0.9K-$4.4K)*
+🌐 **Websites:** $3K-$12K *(EDG: $1.5K-$6K)*
+🛒 **E-commerce:** $6K-$18K *(EDG: $3K-$9K)*
+🤖 **AI Integration:** $1.8K-$8.8K *(EDG: $0.9K-$4.4K)*
 
-**EDG funding covers up to 50% for qualifying Singapore companies!**
+**EDG covers up to 50% for Singapore companies!**
 
-Which service fits your business needs?`
+What type of solution interests you?`
     }
 
-    // 7. SMART CLARIFICATION - Different responses based on attempts
-    if (history.clarificationCount >= 2) {
-        // After 2 clarification attempts, offer human help
-        return `👨‍💼 **Let me connect you with our human consultant!**
+    // === SMART DEFAULT (no repetition) ===
+    if (memory.lastResponse === 'unclear') {
+        return `👨‍💼 **Let me connect you with our consultant:**
 
-I want to make sure you get the best help possible.
+For better assistance with your specific needs:
+**Call: +65 8982 1301**
 
-**Our team can discuss:**
-• Your specific business needs
-• Tailored solution recommendations  
-• Exact pricing for your project
-• EDG funding eligibility
+Or share your name & number and we'll call you back today!`
+    }
+    
+    memory.lastResponse = 'unclear'
+    return `🤔 **To help you better, could you tell me:**
 
-**Call directly: +65 8982 1301**
-**Or share your name & number, and we'll call you back today!**`
-    } else if (history.clarificationCount === 1) {
-        // Second clarification - more direct
-        history.clarificationCount++
-        return `💡 **Let me try a different approach:**
-
-**What's your business?** (e.g., restaurant, retail store, consultancy)
-**What's your biggest challenge?** (e.g., need more customers, want online sales)
-
-**Or pick a topic:**
-• Website for my business
-• Online store setup  
-• AI automation
-• Government funding
-
-**Quick call works best: +65 8982 1301**`
-    } else {
-        // First clarification
-        history.clarificationCount++
-        return `🤔 Let me help you find the right solution!
-
-**Could you share more about:**
 • What type of business you have?
-• What challenge you're trying to solve?
-• What you hope to achieve?
+• What you want to achieve?
 
 **Examples:**
-"I run a restaurant and need more online orders"
-"I have a retail store wanting online sales"
-"I need to automate my customer service"
+"Restaurant wanting online orders"
+"Retail store needing website"
+"School wanting student portal"
 
-**For immediate help, call: +65 8982 1301**`
-    }
+**Or call: +65 8982 1301**`
 }
 
 async function sendMessage(phoneNumber, text) {
     try {
-        if (!sock) {
-            throw new Error('WhatsApp not connected')
-        }
-
+        if (!sock) return { success: false }
+        
         const jid = phoneNumber.includes('@') ? phoneNumber : `${phoneNumber}@s.whatsapp.net`
         await sock.sendMessage(jid, { text })
-        console.log(`✅ Message sent to ${phoneNumber}`)
+        console.log(`✅ Sent to ${phoneNumber}`)
         return { success: true }
-
     } catch (error) {
-        console.error('❌ Error sending message:', error)
-        return { success: false, error: error.message }
+        console.error('Send error:', error)
+        return { success: false }
     }
 }
 
-// REST API endpoints
-app.get('/qr', (req, res) => {
-    res.json({ qr: qrCode })
-})
+// API endpoints
+app.get('/qr', (req, res) => res.json({ qr: qrCode }))
+app.get('/status', (req, res) => res.json({
+    connected: connectionStatus === 'connected',
+    status: connectionStatus,
+    user: sock?.user || null,
+    business_number: '+65 8982 1301'
+}))
 
-app.get('/status', (req, res) => {
-    res.json({
-        connected: connectionStatus === 'connected',
-        status: connectionStatus,
-        user: sock?.user || null,
-        business_number: '+65 8982 1301'
-    })
-})
-
-const PORT = process.env.PORT || 3001
+const PORT = 3001
 app.listen(PORT, () => {
-    console.log(`🤖 CCC Digital WhatsApp Bot running on port ${PORT}`)
-    console.log(`📞 Business number: +65 8982 1301`)
+    console.log(`WhatsApp Bot running on port ${PORT}`)
     initWhatsApp()
 })
