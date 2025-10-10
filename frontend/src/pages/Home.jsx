@@ -18,11 +18,14 @@ import {
   Smartphone, 
   Bot, 
   Award,
-  Phone,
-  Mail,
-  Users,
   Zap,
-  Target
+  BarChart3,
+  Settings,
+  Users,
+  Rocket,
+  Search,
+  Target,
+  TrendingUp
 } from 'lucide-react';
 import { 
   trackHeroView, 
@@ -40,7 +43,6 @@ import {
   pageMetaData 
 } from '../utils/seo';
 
-// Analytics helper functions - use centralized analytics
 const FadeUp = ({ delay = 0, children }) => (
   <motion.div
     initial={{ opacity: 0, y: 16 }}
@@ -56,55 +58,38 @@ export default function Home() {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [isFormLoading, setIsFormLoading] = useState(false);
 
-  // Define FAQ items for schema
-  const faqItems = [
-    {
-      question: 'Am I eligible for EDG?',
-      answer: 'If you\'re a Singapore-registered company planning a project that improves business capability, you likely qualify.'
-    },
-    {
-      question: 'What projects are supported?',
-      answer: 'Custom websites, e-commerce, AI-powered web apps (PWAs), and digital transformation initiatives.'
-    },
-    {
-      question: 'How long is approval?',
-      answer: 'Typically 3–6 weeks after submission.'
-    },
-    {
-      question: 'How much will I pay?',
-      answer: 'EDG may support up to ~50% of qualifying costs. We\'ll estimate your net after a quick eligibility check.'
-    }
-  ];
-
   // Track hero view on component mount and set SEO
   useEffect(() => {
     trackHeroView('homepage');
     
-    // Set page meta tags
-    setPageMeta(pageMetaData.home);
+    // Set page meta tags for commercial positioning
+    setPageMeta({
+      title: "CCC Digital - Smart Websites, AI & Automation for Singapore SMEs",
+      description: "We build smart websites, e-commerce platforms, AI chatbots and WhatsApp automation. Singapore digital consultancy helping SMEs grow with modern technology.",
+      ogTitle: "Build Smarter Websites. Automate with AI. Engage Customers Instantly.",
+      ogDescription: "CCC helps Singapore businesses create modern digital experiences — from responsive websites to AI chatbots and WhatsApp automation.",
+      ogUrl: "https://smartbiz-portal.preview.emergentagent.com"
+    });
     
     // Inject schemas
     injectSchema(getOrganizationSchema());
     injectSchema(getWebPageSchema({
-      title: pageMetaData.home.title,
-      description: pageMetaData.home.description,
-      url: pageMetaData.home.ogUrl
+      title: "CCC Digital - Smart Websites, AI & Automation",
+      description: "Singapore digital consultancy specializing in websites, AI chatbots, and WhatsApp automation",
+      url: "https://smartbiz-portal.preview.emergentagent.com"
     }));
-    injectSchema(getFAQSchema(faqItems));
   }, []);
 
   const handleChatOpen = (source = 'hero') => {
     trackChatOpen(source);
-    // Find and click the chat widget button
     const chatButton = document.querySelector('[data-testid="chat-widget-button"]');
     if (chatButton) {
       chatButton.click();
     }
   };
 
-  const handleBookConsultClick = () => {
+  const handleStartProject = () => {
     trackBookConsultClick('hero');
-    // Scroll to lead form
     document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -116,15 +101,14 @@ export default function Home() {
     const leadData = {
       name: formData.get('name'),
       company: formData.get('company'),
-      uen: formData.get('uen'),
       email: formData.get('email'),
       phone: formData.get('phone'),
       projectType: formData.get('projectType'),
-      goal: formData.get('goal')
+      goal: formData.get('goal'),
+      edgInterest: formData.get('edgInterest') || false
     };
 
     try {
-      // Submit to backend (existing contact endpoint)
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact`, {
         method: 'POST',
         headers: {
@@ -134,8 +118,8 @@ export default function Home() {
           name: leadData.name,
           email: leadData.email,
           phone: leadData.phone,
-          company: `${leadData.company} (UEN: ${leadData.uen || 'N/A'})`,
-          message: `EDG Review Request - Project: ${leadData.projectType}\nGoal: ${leadData.goal}`
+          company: leadData.company,
+          message: `Commercial Lead - Project: ${leadData.projectType}\nGoal: ${leadData.goal}\nEDG Interest: ${leadData.edgInterest ? 'Yes' : 'No'}`
         }),
       });
 
@@ -151,34 +135,61 @@ export default function Home() {
 
   const services = [
     {
-      id: 'website',
+      id: 'website-ecommerce',
       icon: Globe,
-      title: 'AI-Powered Websites',
-      description: 'Responsive, fast websites with integrated AI chat and automation capabilities.'
+      title: 'Website & E-Commerce Development',
+      description: 'Fast, mobile-ready, and scalable websites built for growth. Includes integrated payment, inventory tracking, and SEO-optimised design.'
     },
     {
-      id: 'e-commerce',
-      icon: ShoppingCart,
-      title: 'E-commerce & Inventory',
-      description: 'Complete online stores with payment processing and inventory management.'
-    },
-    {
-      id: 'web-app',
-      icon: Smartphone,
-      title: 'Progressive Web Apps (PWA)',
-      description: 'Mobile-app-like experiences that work across all devices without app stores.'
-    },
-    {
-      id: 'ai-automation',
+      id: 'ai-chatbots',
       icon: Bot,
-      title: 'AI Agents & Automation',
-      description: 'Custom AI assistants and workflow automation to boost productivity.'
+      title: 'AI Chatbots & Workflow Automation',
+      description: 'Automate repetitive processes, qualify leads instantly, and save time. Chatbots powered by AI integrated into your website or WhatsApp.'
     },
     {
-      id: 'consultancy',
-      icon: Award,
-      title: 'Grant Advisory & Documentation (EDG)',
-      description: 'Complete support for EDG applications and documentation.'
+      id: 'whatsapp-bot',
+      icon: MessageCircle,
+      title: 'WhatsApp AI Bot Integration',
+      description: 'Engage customers directly on WhatsApp — your most powerful communication channel. Simple setup or Official Business API integration available.'
+    },
+    {
+      id: 'crm-analytics',
+      icon: BarChart3,
+      title: 'CRM & Analytics Integration',
+      description: 'Connect your website or chatbot to HubSpot, Google Sheets, or custom dashboards. Track leads, automate follow-ups, and visualise insights.'
+    },
+    {
+      id: 'custom-systems',
+      icon: Settings,
+      title: 'Custom Web Systems / Portals',
+      description: 'Tailored admin or client portals for booking, order management, analytics, or project tracking. Built to your specific needs.'
+    }
+  ];
+
+  const processSteps = [
+    {
+      step: '1',
+      icon: Search,
+      title: 'Discovery',
+      description: 'Understand your business goals and processes'
+    },
+    {
+      step: '2',
+      icon: Target,
+      title: 'Design',
+      description: 'Develop wireframes and user experience flow'
+    },
+    {
+      step: '3',
+      icon: Settings,
+      title: 'Development',
+      description: 'Build, integrate, and automate'
+    },
+    {
+      step: '4',
+      icon: Rocket,
+      title: 'Launch & Support',
+      description: 'Deploy with testing, handover, and long-term maintenance'
     }
   ];
 
@@ -191,34 +202,37 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <FadeUp>
               <div>
-                <Badge className="mb-4 bg-[#12B76A] text-white hover:bg-[#12B76A]" data-testid="hero-badge">
-                  <Award className="mr-1 h-3 w-3" /> EDG Funding Available
+                <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white hover:bg-[hsl(var(--secondary))]" data-testid="hero-badge">
+                  <Zap className="mr-1 h-3 w-3" /> Smart Digital Solutions
                 </Badge>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
-                  Build Your Website or App with up to 50% EDG Funding
+                  Build Smarter Websites. Automate with AI. Engage Customers Instantly.
                 </h1>
-                <p className="text-base text-[#1F2A37] max-w-prose leading-relaxed mb-8">
-                  We design, build, and handle the EDG paperwork—so you get results in weeks, not months.
+                <p className="text-base text-[#1F2A37] max-w-prose leading-relaxed mb-6">
+                  Cognition & Competence Consultancy (CCC) helps Singapore businesses create modern digital experiences — from responsive websites and e-commerce systems to AI chatbots and WhatsApp automation.
                 </p>
                 <p className="text-sm text-[#475467] mb-8">
-                  EDG supports custom web/app projects that improve your business capability. We handle scope, paperwork, and development.
+                  We build smart websites, apps & AI systems that grow your business.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Button 
-                    onClick={() => handleChatOpen('hero')}
+                    onClick={handleStartProject}
                     className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
                     data-testid="hero-primary-cta-button"
                   >
-                    <MessageCircle className="mr-2 h-4 w-4" />
-                    Check EDG Eligibility — Chat Now
+                    <Rocket className="mr-2 h-4 w-4" />
+                    Start My Project
                   </Button>
                   <Button 
-                    onClick={handleBookConsultClick}
+                    asChild
                     variant="outline"
                     className="border-[hsl(var(--border))]"
                     data-testid="hero-secondary-cta-button"
                   >
-                    Book a Free Consult <ArrowRight className="ml-2 h-4 w-4" />
+                    <Link to="/edg">
+                      <Award className="mr-2 h-4 w-4" />
+                      Check EDG Eligibility (Optional) <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </Button>
                 </div>
               </div>
@@ -227,8 +241,8 @@ export default function Home() {
             <FadeUp delay={0.1}>
               <Card className="rounded-xl overflow-hidden shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
                 <img 
-                  alt="Singapore business technology and EDG funding" 
-                  src="https://images.unsplash.com/photo-1577548696089-f7bcbc22f70e?auto=format&fit=crop&q=85&w=800&h=600" 
+                  alt="Modern Singapore business technology and digital transformation" 
+                  src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=85&w=800&h=600" 
                   className="w-full h-[360px] object-cover" 
                   data-testid="hero-image"
                 />
@@ -238,16 +252,215 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Section */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <FadeUp>
+              <div>
+                <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-6">
+                  Who We Are
+                </h2>
+                <p className="text-base text-[#475467] mb-6 leading-relaxed">
+                  CCC is a Singapore-based digital consultancy specialising in modern web systems, AI-powered automation, and intelligent chat solutions.
+                </p>
+                <p className="text-base text-[#475467] mb-8 leading-relaxed">
+                  We combine creativity with smart technology to help SMEs streamline sales, engage customers, and scale operations efficiently — without complex tech setups.
+                </p>
+                <div className="flex flex-wrap gap-4 mb-8">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-[hsl(var(--secondary))]" />
+                    <span className="text-sm font-medium">Singapore-based with deep SME experience</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-[hsl(var(--secondary))]" />
+                    <span className="text-sm font-medium">Full in-house web, app, and AI expertise</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-[hsl(var(--secondary))]" />
+                    <span className="text-sm font-medium">Real-time lead notifications</span>
+                  </div>
+                </div>
+              </div>
+            </FadeUp>
+            
+            <FadeUp delay={0.1}>
+              <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 bg-gradient-to-br from-[#EAF7F5] to-white">
+                <div className="text-center">
+                  <div className="h-16 w-16 rounded-full bg-[hsl(var(--secondary))] flex items-center justify-center text-white mx-auto mb-4">
+                    <TrendingUp className="h-8 w-8" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">Smart Digital Growth</h3>
+                  <p className="text-[#475467] text-sm leading-relaxed">
+                    From websites and e-commerce stores to WhatsApp automation and AI chat, CCC helps your business go digital fast — with optional EDG support for eligible projects.
+                  </p>
+                </div>
+              </Card>
+            </FadeUp>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Services */}
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#F9FAFB] to-white">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeUp>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
+                Our Services
+              </h2>
+              <p className="text-base text-[#475467] max-w-2xl mx-auto">
+                Complete digital solutions designed to help your business grow and engage customers more effectively.
+              </p>
+            </div>
+          </FadeUp>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <FadeUp key={service.id} delay={index * 0.1}>
+                <Card className="p-8 rounded-xl hover:shadow-[0_12px_40px_rgba(16,24,40,0.08)] transition-shadow duration-200 border border-[#EAECF0] h-full">
+                  <div className="h-12 w-12 rounded-lg bg-[hsl(var(--secondary))] flex items-center justify-center text-white mb-6">
+                    <service.icon size={24} />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
+                  <p className="text-sm text-[#475467] mb-6 leading-relaxed">{service.description}</p>
+                  <Button 
+                    onClick={() => {
+                      window.location.href = `/services-solutions#service-section-${service.id}`;
+                    }}
+                    variant="ghost" 
+                    className="p-0 h-auto hover:bg-transparent text-[hsl(var(--secondary))] hover:text-[#0AA099]"
+                    data-testid={`service-learn-more-${index}`}
+                  >
+                    Learn More <ArrowRight className="ml-1 h-4 w-4" />
+                  </Button>
+                </Card>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Our Process */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeUp>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
+                Our Process
+              </h2>
+              <p className="text-base text-[#475467] max-w-2xl mx-auto">
+                Transparent workflow with milestone-based delivery for your peace of mind.
+              </p>
+            </div>
+          </FadeUp>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {processSteps.map((step, index) => (
+              <FadeUp key={index} delay={index * 0.1}>
+                <div className="text-center">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[hsl(var(--secondary))] text-white font-semibold text-xl mb-4">
+                    {step.step}
+                  </div>
+                  <div className="h-10 w-10 rounded-lg bg-[hsl(var(--accent))] flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
+                    <step.icon size={20} />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
+                  <p className="text-sm text-[#475467]">{step.description}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* AI-Powered Support */}
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#EAF7F5] to-white">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <FadeUp>
+              <div>
+                <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white" data-testid="ai-badge">
+                  <Bot className="mr-1 h-3 w-3" /> AI-Powered
+                </Badge>
+                <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
+                  Smart Digital Assistant
+                </h2>
+                <p className="text-base text-[#475467] mb-6">
+                  Our AI Digital Consultant assists visitors and clients across website chat, WhatsApp automation, and email notifications.
+                </p>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-[hsl(var(--secondary))] shrink-0 mt-0.5" />
+                    <span className="text-sm">Collects project requirements automatically</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-[hsl(var(--secondary))] shrink-0 mt-0.5" />
+                    <span className="text-sm">Provides instant pricing estimates</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-[hsl(var(--secondary))] shrink-0 mt-0.5" />
+                    <span className="text-sm">Directs qualified leads to your team in real-time</span>
+                  </li>
+                </ul>
+                <Button 
+                  onClick={() => handleChatOpen('ai-section')}
+                  className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white"
+                  data-testid="ai-section-cta-button"
+                >
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  Try Our AI Assistant
+                </Button>
+              </div>
+            </FadeUp>
+            
+            <FadeUp delay={0.2}>
+              <Card className="p-6 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 bg-white">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-[hsl(var(--accent))] flex items-center justify-center">
+                      <Globe className="h-6 w-6 text-[hsl(var(--primary))]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">Website Chat</h3>
+                      <p className="text-[#475467] text-sm">Engage visitors instantly</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-[hsl(var(--accent))] flex items-center justify-center">
+                      <MessageCircle className="h-6 w-6 text-[hsl(var(--primary))]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">WhatsApp Automation</h3>
+                      <p className="text-[#475467] text-sm">24/7 customer support</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-full bg-[hsl(var(--accent))] flex items-center justify-center">
+                      <BarChart3 className="h-6 w-6 text-[hsl(var(--primary))]" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">Lead Analytics</h3>
+                      <p className="text-[#475467] text-sm">Real-time notifications</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </FadeUp>
+          </div>
+        </div>
+      </section>
+
       {/* Lead Form Section */}
-      <section id="lead-form" className="py-16 sm:py-20 bg-gradient-to-br from-[#F9FAFB] to-white">
+      <section id="lead-form" className="py-16 sm:py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
             <div className="text-center mb-8">
               <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                Request EDG Review
+                Start Your Digital Project
               </h2>
               <p className="text-base text-[#475467]">
-                Get a quick assessment of your project's EDG eligibility and funding potential.
+                Tell us about your business goals and we'll recommend the perfect digital solution.
               </p>
             </div>
           </FadeUp>
@@ -256,12 +469,12 @@ export default function Home() {
             <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
               {isFormSubmitted ? (
                 <div className="text-center py-8">
-                  <div className="h-16 w-16 rounded-full bg-[#12B76A] flex items-center justify-center mx-auto mb-4">
+                  <div className="h-16 w-16 rounded-full bg-[hsl(var(--secondary))] flex items-center justify-center mx-auto mb-4">
                     <CheckCircle2 className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">Thanks!</h3>
+                  <h3 className="text-xl font-semibold mb-2">Project Request Received!</h3>
                   <p className="text-[#475467]">
-                    We'll review your EDG eligibility and reply within 1 business day via your preferred contact.
+                    Our team will review your requirements and contact you within 1 business day with recommendations and next steps.
                   </p>
                 </div>
               ) : (
@@ -291,15 +504,6 @@ export default function Home() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="uen">UEN (Optional)</Label>
-                      <Input 
-                        id="uen" 
-                        name="uen" 
-                        placeholder="201234567A"
-                        data-testid="lead-form-uen"
-                      />
-                    </div>
-                    <div className="space-y-2">
                       <Label htmlFor="email">Email *</Label>
                       <Input 
                         id="email" 
@@ -310,9 +514,6 @@ export default function Home() {
                         data-testid="lead-form-email"
                       />
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone (WhatsApp)</Label>
                       <Input 
@@ -322,32 +523,50 @@ export default function Home() {
                         data-testid="lead-form-phone"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="projectType">Project Type *</Label>
-                      <Select name="projectType" required>
-                        <SelectTrigger data-testid="lead-form-project-type">
-                          <SelectValue placeholder="Select project type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Website">Website</SelectItem>
-                          <SelectItem value="Web App">Web App</SelectItem>
-                          <SelectItem value="E-commerce">E-commerce</SelectItem>
-                          <SelectItem value="Other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="goal">Short Goal *</Label>
+                    <Label htmlFor="projectType">Project Type *</Label>
+                    <Select name="projectType" required>
+                      <SelectTrigger data-testid="lead-form-project-type">
+                        <SelectValue placeholder="What do you need help with?" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Website Development">Website Development</SelectItem>
+                        <SelectItem value="E-commerce Platform">E-commerce Platform</SelectItem>
+                        <SelectItem value="AI Chatbot">AI Chatbot</SelectItem>
+                        <SelectItem value="WhatsApp Bot">WhatsApp Bot Integration</SelectItem>
+                        <SelectItem value="CRM Integration">CRM & Analytics Integration</SelectItem>
+                        <SelectItem value="Custom Portal">Custom Web Portal</SelectItem>
+                        <SelectItem value="Complete Digital Transformation">Complete Digital Transformation</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="goal">Project Goals & Requirements *</Label>
                     <Textarea 
                       id="goal" 
                       name="goal" 
                       required 
-                      placeholder="Briefly describe what you want to achieve with this project..."
-                      className="min-h-[100px]"
+                      placeholder="Tell us about your business and what you want to achieve with this project..."
+                      className="min-h-[120px]"
                       data-testid="lead-form-goal"
                     />
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <input 
+                      type="checkbox" 
+                      id="edgInterest" 
+                      name="edgInterest" 
+                      className="rounded border-gray-300"
+                      data-testid="lead-form-edg-interest"
+                    />
+                    <Label htmlFor="edgInterest" className="text-sm font-normal">
+                      ✅ I'm interested in learning about EDG funding eligibility (optional)
+                    </Label>
                   </div>
 
                   <Button 
@@ -356,7 +575,7 @@ export default function Home() {
                     disabled={isFormLoading}
                     data-testid="lead-form-submit"
                   >
-                    {isFormLoading ? 'Submitting...' : 'Request EDG Review'}
+                    {isFormLoading ? 'Submitting...' : 'Start My Project Request'}
                   </Button>
                 </form>
               )}
@@ -365,135 +584,87 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="py-16 sm:py-20 bg-white">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                How It Works
-              </h2>
-              <p className="text-base text-[#475467] max-w-2xl mx-auto">
-                Get your digital project built with EDG support in three simple steps.
-              </p>
-            </div>
-          </FadeUp>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                step: '1',
-                icon: MessageCircle,
-                title: 'Chat with our AI to scope your project',
-                description: 'Our AI consultant will help qualify your requirements and assess EDG eligibility.'
-              },
-              {
-                step: '2',
-                icon: CheckCircle2,
-                title: 'Get a quick EDG eligibility review',
-                description: 'Receive a detailed assessment of funding potential and project scope within 1 business day.'
-              },
-              {
-                step: '3',
-                icon: Zap,
-                title: 'We build & submit your project with grant support',
-                description: 'Complete development and EDG documentation handled by our team.'
-              }
-            ].map((item, index) => (
-              <FadeUp key={index} delay={index * 0.1}>
-                <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[hsl(var(--accent))] text-[hsl(var(--primary))] font-semibold text-xl mb-4">
-                    {item.step}
-                  </div>
-                  <div className="h-10 w-10 rounded-lg bg-[hsl(var(--secondary))] flex items-center justify-center text-white mx-auto mb-4">
-                    <item.icon size={20} />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                  <p className="text-sm text-[#475467]">{item.description}</p>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Strip */}
+      {/* Optional EDG Support */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-[#F9FAFB] to-white">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                EDG-Eligible Digital Solutions
-              </h2>
-              <p className="text-base text-[#475467] max-w-2xl mx-auto">
-                Choose from our range of services that qualify for EDG funding support.
-              </p>
-            </div>
-          </FadeUp>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.slice(0, 5).map((service, index) => (
-              <FadeUp key={service.title} delay={index * 0.1}>
-                <Card className="p-6 rounded-xl hover:shadow-[0_12px_40px_rgba(16,24,40,0.08)] transition-shadow duration-200 border border-[#EAECF0] h-full">
-                  <div className="h-10 w-10 rounded-lg bg-[hsl(var(--secondary))] flex items-center justify-center text-white mb-4">
-                    <service.icon size={20} />
+            <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
+              <div className="grid lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <Badge className="mb-4 bg-[#12B76A] text-white" data-testid="edg-support-badge">
+                    <Award className="mr-1 h-3 w-3" /> Optional Funding Support
+                  </Badge>
+                  <h2 className="text-2xl sm:text-3xl font-semibold text-[hsl(var(--foreground))] mb-4">
+                    EDG Support (Optional)
+                  </h2>
+                  <p className="text-base text-[#475467] mb-6">
+                    Eligible Singapore SMEs may qualify for up to 50% support under the Innovation & Productivity pillar of the Enterprise Development Grant (EDG).
+                  </p>
+                  <p className="text-sm text-[#475467] mb-6">
+                    CCC can guide you through the documentation process for qualifying transformation projects.
+                  </p>
+                  <div className="space-y-2 mb-6">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-[#12B76A]" />
+                      <span className="text-sm">Projects involving process automation or AI integration may qualify</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="h-4 w-4 text-red-500 font-bold text-center">✗</span>
+                      <span className="text-sm text-[#6B7280]">Marketing-only websites are not eligible</span>
+                    </div>
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
-                  <p className="text-sm text-[#475467] mb-4 flex-grow">{service.description}</p>
-                  <Button 
-                    onClick={() => {
-                      // Navigate to specific service section
-                      window.location.href = `/services-solutions#service-section-${service.id}`;
-                    }}
-                    variant="ghost" 
-                    className="p-0 h-auto hover:bg-transparent text-[hsl(var(--secondary))] hover:text-[#0AA099]"
-                    data-testid={`service-learn-more-${index}`}
-                  >
-                    Learn More <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </Card>
-              </FadeUp>
-            ))}
-          </div>
+                </div>
+                <div>
+                  <div className="text-center">
+                    <div className="h-20 w-20 rounded-full bg-[#12B76A] flex items-center justify-center text-white mx-auto mb-4">
+                      <Award className="h-10 w-10" />
+                    </div>
+                    <h3 className="text-lg font-semibold mb-2">Up to 50% Funding</h3>
+                    <p className="text-[#475467] text-sm mb-6">
+                      For qualifying automation and AI integration projects
+                    </p>
+                    <Button 
+                      asChild
+                      className="bg-[#12B76A] hover:bg-[#10A561] text-white"
+                      data-testid="edg-eligibility-cta"
+                    >
+                      <Link to="/edg">Check if Eligible</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </FadeUp>
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* CTA Section */}
       <section className="py-16 sm:py-20 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <FadeUp>
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-base text-[#475467]">
-                Common questions about EDG funding and our services.
-              </p>
-            </div>
-          </FadeUp>
-
-          <FadeUp delay={0.1}>
-            <Accordion type="single" collapsible className="w-full">
-              {faqItems.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
-                  <AccordionContent className="text-[#475467]">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </FadeUp>
-
-          <FadeUp delay={0.2}>
-            <div className="text-center mt-8">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
+              Ready to Build Something Intelligent?
+            </h2>
+            <p className="text-base text-[#475467] mb-8">
+              Let's discuss how smart digital systems can help your business grow, engage customers, and streamline operations.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
-                onClick={() => handleChatOpen('faq')}
-                className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white"
-                data-testid="faq-chat-cta"
+                onClick={handleStartProject}
+                className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
+                data-testid="cta-primary-button"
+              >
+                <Rocket className="mr-2 h-4 w-4" />
+                Start My Project
+              </Button>
+              <Button 
+                onClick={() => handleChatOpen('cta')}
+                variant="outline"
+                className="border-[hsl(var(--border))]"
+                data-testid="cta-secondary-button"
               >
                 <MessageCircle className="mr-2 h-4 w-4" />
-                Ask More Questions
+                Chat with AI Consultant <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </FadeUp>
