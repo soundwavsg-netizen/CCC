@@ -40,19 +40,19 @@ export default function Services() {
     {
       id: 'ai',
       icon: Bot,
-      title: 'AI Automation',
-      tagline: 'Intelligent systems that work smarter, not harder',
-      description: 'Leverage the power of AI to automate workflows, enhance customer experiences, and make data-driven decisions. Our AI solutions are practical, scalable, and tailored to your business needs.',
+      title: 'AI Automation & WhatsApp Integration',
+      tagline: 'Intelligent systems for websites AND WhatsApp',
+      description: 'Leverage AI to automate workflows and customer engagement across your website AND WhatsApp. From chatbots to business automation, our AI solutions work 24/7 to grow your business.',
       features: [
-        'Custom AI chatbots and virtual assistants',
-        'Workflow automation and RPA implementation',
-        'Conversational AI with RAG (Retrieval Augmented Generation)',
-        'Operations augmentation and process optimization',
-        'Natural language processing and text analysis',
-        'Machine learning model integration'
+        'Website AI chatbots with smart lead qualification',
+        'WhatsApp AI bot integration (live example: +65 8982 1301)',
+        'Cross-platform customer engagement automation',
+        'Workflow automation and business process optimization',
+        'AI-powered customer service across all channels',
+        'CRM integration and automated follow-ups'
       ],
-      technologies: ['OpenAI GPT', 'LangChain', 'Anthropic Claude', 'Custom ML Models'],
-      caseStudy: 'VocaFlow workflow automation system'
+      technologies: ['OpenAI GPT', 'WhatsApp Business API', 'Baileys Integration', 'Custom Automation'],
+      caseStudy: 'CCC WhatsApp Bot (active on +65 8982 1301)'
     },
     {
       id: 'ecommerce',
