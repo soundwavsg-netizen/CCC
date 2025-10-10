@@ -199,6 +199,73 @@ Let me know what you're thinking about and I'll guide you from there!
 
 **Direct contact:** +65 8982 1301
 **Or feel free to ask me more questions and I will do my best to help! 😊**`
+
+    // 3. PRICING REQUESTS - Only show pricing when specifically asked
+    if (text.includes('pricing') || text.includes('how much') || text.includes('cost') || 
+        text.includes('website pricing') || text.includes('price list')) {
+        return `💰 **CCC Pricing Guide:**
+
+🌐 **Websites:** $3K-$12K *(EDG: $1.5K-$6K)*
+🛒 **E-commerce:** $6K-$18K *(EDG: $3K-$9K)*  
+📱 **Web Apps (PWA):** $8.5K-$24K *(EDG: $4.25K-$12K)*
+🤖 **AI & Automation:** $1.8K-$8.8K *(EDG: $0.9K-$4.4K)*
+
+**EDG funding covers up to 50% of costs!**
+
+**Popular packages:**
+• Basic website + EDG: ~$1,500 total
+• Online store + EDG: ~$4,500 total  
+• Web app + EDG: ~$9,000 total
+
+Which service interests you? I can explain the features and benefits!
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+    }
+
+    // 4. SERVICE DESCRIPTIONS (features only, no pricing)
+    if (text.includes('website') || text === '1') {
+        return `🌐 **AI-Powered Websites:**
+
+**Perfect for:**
+• Professional business presence
+• Lead generation & customer contact
+• Showcase products/services
+• Build trust & credibility
+
+**Features we include:**
+• Mobile-friendly responsive design
+• AI chat integration (like this!)
+• Easy content management
+• SEO optimization for Google
+• Contact forms & analytics
+
+**Great for:** Consultants, service providers, small businesses, agencies
+
+Want to know investment levels? Ask "website pricing"
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+    }
+
+    // 5. E-COMMERCE DESCRIPTIONS (features only, no pricing)
+    if (text.includes('ecommerce') || text.includes('e-commerce') || text.includes('online store') || text === '2') {
+        return `🛒 **E-commerce & Online Stores:**
+
+**Perfect for:**
+• Retail businesses wanting online sales
+• Service businesses with bookings
+• B2B companies with product catalogs
+• Anyone wanting 24/7 sales channel
+
+**Features we include:**
+• Product catalog & inventory management
+• Secure payment processing (Stripe)
+• Customer accounts & order history
+• Mobile shopping experience
+• Sales analytics & reporting
+
+**Great for:** Retail stores, wholesalers, service providers
+
+Want to know investment levels? Ask "ecommerce pricing"
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+    }
 }
 
 async function sendMessage(phoneNumber, text) {
