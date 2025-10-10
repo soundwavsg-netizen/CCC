@@ -146,20 +146,41 @@ Our team will prepare a customized proposal and contact you within 1 business da
 Thank you for choosing CCC! 🚀`
     }
 
-    // 3. WELCOME
+    // 1. SERVICES INQUIRY - Handle first
+    if (text.includes('tell me about') || text.includes('your services') || text.includes('what do you offer') || 
+        text.includes('what services') || text.includes('what can you do')) {
+        return `🚀 **CCC specializes in digital transformation for Singapore businesses:**
+
+**Our main services:**
+• AI-powered websites & web applications
+• E-commerce & online stores  
+• Progressive web apps (mobile-like experience)
+• AI automation & chatbots
+• EDG grant application support
+
+**We help businesses:**
+• Get online presence & more customers
+• Automate processes to save time
+• Qualify for government funding (EDG)
+
+What type of business do you have? I can suggest the best solution for your needs!
+**Or feel free to ask me more questions and I will do my best to help! 😊**`
+    }
+
+    // 2. WELCOME - More casual and consultative
     if (text === 'hi' || text === 'hello' || text === 'start' || text === 'help') {
-        return `👋 Hi! Welcome to CCC Digital!
+        return `👋 Hi there! Welcome to CCC!
 
-🚀 **Complete Digital Solutions:**
-1️⃣ AI-Powered Websites ($3K-$12K)
-2️⃣ E-commerce & Inventory ($6K-$18K)  
-3️⃣ Progressive Web Apps/PWA ($8.5K-$24K)
-4️⃣ AI Agents & Automation ($1.8K-$8.8K)
-5️⃣ EDG Grant Advisory
+I'm here to help with your digital business needs. 
 
-💰 *All projects eligible for EDG support (pay ~50% less)*
+**What brings you here today?**
+• Looking to build a website?
+• Want to set up online sales?
+• Need business automation?
+• Curious about government grants?
+• Or something else entirely?
 
-What interests you? Ask about specific services!
+Let me know what you're thinking about and I'll guide you from there!
 **Or feel free to ask me questions and I will do my best to help! 😊**`
     }
 
