@@ -13,8 +13,7 @@ export const Header = () => {
     { path: '/about', label: 'About Us' },
     { path: '/services-solutions', label: 'Services & Solutions' },
     { path: '/portfolio', label: 'Portfolio' },
-    { path: '/grants', label: 'Grants & Funding' },
-    { path: '/edg', label: 'EDG Funding' },
+    { path: '/edg', label: 'EDG Funding (Optional)' },
     { path: '/contact', label: 'Contact' },
   ];
 
