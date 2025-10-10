@@ -12,6 +12,7 @@ const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8001'
 let sock = null
 let qrCode = null
 let connectionStatus = 'disconnected'
+let conversationHistory = {} // Track conversation per phone number
 
 async function initWhatsApp() {
     try {
@@ -92,74 +93,22 @@ async function handleIncomingMessage(message) {
 
 async function processCCCMessage(phoneNumber, messageText) {
     const text = messageText.toLowerCase().trim()
-
-    // Track conversation context to prevent repetition
-    const conversationKey = `conversation_${phoneNumber}`
     
-    // 1. SERVICES INQUIRY - Handle first
-    if (text.includes('tell me about') || text.includes('your services') || text.includes('what do you offer') || 
-        text.includes('what services') || text.includes('what can you do')) {
-        return `🚀 **CCC specializes in digital transformation for Singapore businesses:**
-
-**Our main services:**
-• AI-powered websites & web applications
-• E-commerce & online stores  
-• Progressive web apps (mobile-like experience)
-• AI automation & chatbots
-• EDG grant application support
-
-**We help businesses:**
-• Get online presence & more customers
-• Automate processes to save time
-• Qualify for government funding (EDG)
-
-What type of business do you have? I can suggest the best solution for your needs!`
+    // Initialize conversation history for this number
+    if (!conversationHistory[phoneNumber]) {
+        conversationHistory[phoneNumber] = {
+            responses: [],
+            lastResponseType: null,
+            clarificationCount: 0
+        }
     }
+    
+    const history = conversationHistory[phoneNumber]
 
-    // 2. WELCOME - More casual and consultative
-    if (text === 'hi' || text === 'hello' || text === 'start' || text === 'help') {
-        return `👋 Hi there! Welcome to CCC!
-
-I'm here to help with your digital business needs. 
-
-**What brings you here today?**
-• Looking to build a website?
-• Want to set up online sales?
-• Need business automation?
-• Curious about government grants?
-• Or something else entirely?
-
-Let me know what you're thinking about and I'll guide you from there!`
-    }
-
-    // 3. SPECIFIC CHATBOT QUESTIONS
-    if (text.includes('ai chatbot') || text.includes('chatbot like') || text.includes('whatsapp chatbot') || 
-        text.includes('chatbot cost') || text.includes('just chatbot') || text.includes('chatbot price') ||
-        (text.includes('how much') && text.includes('chatbot'))) {
-        return `🤖 **WhatsApp AI Chatbot (like this one):**
-
-**Pricing:**
-• Basic chatbot: $1,800
-• Advanced with CRM: $2,500
-• Full business integration: $3,500
-
-**What you get:**
-• 24/7 automated responses
-• Lead capture & qualification
-• Integration with your business
-• Customized for your industry
-
-**With EDG support:** Pay only $900 - $1,750
-**Timeline:** 2-3 weeks to build & deploy
-
-Want this for your business? Type "quote chatbot" and our consultant will get back to you within 1 business day.
-
-**Or call directly for immediate discussion: +65 8982 1301**`
-    }
-
-    // 4. QUOTE ACKNOWLEDGMENTS
-    if (text.includes('quote chatbot')) {
-        return `✅ **AI Chatbot Quote Request Received!**
+    // 1. QUOTE REQUESTS - Always handle first
+    if (text.includes('quote')) {
+        if (text.includes('quote chatbot') || text.includes('quote ai')) {
+            const response = `✅ **AI Chatbot Quote Request Received!**
 
 Our team will prepare a detailed chatbot proposal and contact you within 1 business day and may contact you for more details to furnish a detailed quote.
 
@@ -174,10 +123,11 @@ Our team will prepare a detailed chatbot proposal and contact you within 1 busin
 Thank you for choosing CCC! 🚀
 
 **Feel free to ask me more questions while you wait! 😊**`
-    }
-
-    if (text.includes('quote')) {
-        return `✅ **Quote Request Received!**
+            history.responses.push('quote_acknowledgment')
+            return response
+        }
+        
+        const response = `✅ **Quote Request Received!**
 
 Our team will prepare a customized proposal and contact you within 1 business day and may contact you for more details to furnish a detailed quote.
 
@@ -186,50 +136,110 @@ Our team will prepare a customized proposal and contact you within 1 business da
 Thank you for choosing CCC! 🚀
 
 **Feel free to ask me more questions while you wait! 😊**`
+        history.responses.push('quote_acknowledgment')
+        return response
     }
 
-    // 5. WEBSITE INQUIRIES - Different responses based on specificity
-    if (text.includes('website creation') || text.includes('website development') || text.includes('build website')) {
-        return `🌐 **Website Development Process:**
+    // 2. WELCOME
+    if (text === 'hi' || text === 'hello' || text === 'start') {
+        history.responses.push('welcome')
+        return `👋 Hi there! Welcome to CCC!
 
-**We create custom websites that:**
-• Attract and convert visitors
-• Work perfectly on mobile & desktop
-• Include AI chat (like this conversation!)
-• Get found on Google with SEO
-• Capture leads for your business
+I'm here to help with your digital business needs.
 
-**Popular for:** Consultants, restaurants, retail stores, professional services
+**What brings you here today?**
+• Looking to build a website?
+• Want to set up online sales?
+• Need business automation?
+• Curious about government grants?
+• Or something else entirely?
 
-**What's your business type?** This helps me recommend the right features and approach for you.
-
-Curious about investment? Ask "website pricing"`
+Let me know what you're thinking about!`
     }
 
+    // 3. SERVICES INQUIRY
+    if (text.includes('tell me about') || text.includes('your services') || text.includes('what do you offer') || 
+        text.includes('what services') || text.includes('what can you do')) {
+        history.responses.push('services_overview')
+        return `🚀 **CCC helps Singapore businesses go digital:**
+
+**Our specialties:**
+• Professional websites & web apps
+• E-commerce & online stores  
+• Business automation & AI
+• Government grant applications (EDG)
+
+**We help businesses:**
+• Get more customers online
+• Streamline operations
+• Access government funding
+
+What type of business do you run? I can suggest the perfect solution!`
+    }
+
+    // 4. BUSINESS-SPECIFIC RESPONSES (Handle specific industries)
+    if (text.includes('teaching') || text.includes('school') || text.includes('education') || text.includes('courses') || text.includes('tuition')) {
+        history.responses.push('education_business')
+        return `🏫 **Perfect! For teaching schools & education businesses:**
+
+**Website + Course Management:**
+• Student registration & course booking
+• Online course materials & resources
+• Parent communication portal
+• Schedule management
+• Payment processing for courses
+
+**Popular for:** Tuition centers, training schools, enrichment programs
+
+**With EDG support, development costs can be 50% lower!**
+
+**What subjects do you teach?** This helps me recommend specific features like:
+• Student progress tracking
+• Online assignments & homework
+• Video lesson integration
+• Automated class reminders
+
+Want a detailed proposal? Type "quote education"`
+    }
+
+    // 5. WEBSITE INQUIRIES
     if (text.includes('website') || text === '1') {
-        return `🌐 **AI-Powered Websites:**
+        if (history.responses.includes('website_features')) {
+            // Different response if already explained websites
+            return `🌐 **Let me be more specific about websites:**
+
+**What's your main goal?**
+• Get more customers to find you?
+• Showcase your work/products?
+• Accept bookings or appointments?
+• Sell products online?
+• Build trust & credibility?
+
+Knowing your goal helps me recommend the right features and approach.`
+        } else {
+            history.responses.push('website_features')
+            return `🌐 **AI-Powered Websites:**
 
 **Perfect for businesses wanting:**
 • Professional online presence
 • Lead generation from Google
-• Customer contact & information sharing
-• Credibility & trust building
+• Customer contact & trust building
+• Showcase products/services
 
 **Key features:**
 • Mobile-responsive design
-• AI chat integration
-• Content management system
+• AI chat integration (like this!)
+• Easy content management
 • SEO optimization
 • Contact forms & analytics
 
-**What industry is your business in?** I can share specific examples and recommendations.
-
-Want investment details? Ask "website pricing"`
+**What industry is your business in?** I can share specific examples.`
+        }
     }
 
-    // 6. PRICING REQUESTS - Only show pricing when specifically asked
-    if (text.includes('pricing') || text.includes('how much') || text.includes('cost') || 
-        text.includes('website pricing') || text.includes('price list')) {
+    // 6. PRICING REQUESTS
+    if (text.includes('pricing') || text.includes('how much') || text.includes('cost')) {
+        history.responses.push('pricing_shown')
         return `💰 **CCC Investment Guide:**
 
 🌐 **Websites:** $3K-$12K *(with EDG: $1.5K-$6K)*
@@ -239,16 +249,43 @@ Want investment details? Ask "website pricing"`
 
 **EDG funding covers up to 50% for qualifying Singapore companies!**
 
-**Popular combinations:**
-• Basic website + EDG support = ~$1,500 total
-• Online store + EDG support = ~$4,500 total  
-• Web app + EDG support = ~$9,000 total
-
-Which service matches your business goals?`
+Which service fits your business needs?`
     }
 
-    // 7. CONVERSATIONAL CLARIFICATION - For unclear messages (no repetition)
-    return `🤔 Let me help you find the right solution!
+    // 7. SMART CLARIFICATION - Different responses based on attempts
+    if (history.clarificationCount >= 2) {
+        // After 2 clarification attempts, offer human help
+        return `👨‍💼 **Let me connect you with our human consultant!**
+
+I want to make sure you get the best help possible.
+
+**Our team can discuss:**
+• Your specific business needs
+• Tailored solution recommendations  
+• Exact pricing for your project
+• EDG funding eligibility
+
+**Call directly: +65 8982 1301**
+**Or share your name & number, and we'll call you back today!**`
+    } else if (history.clarificationCount === 1) {
+        // Second clarification - more direct
+        history.clarificationCount++
+        return `💡 **Let me try a different approach:**
+
+**What's your business?** (e.g., restaurant, retail store, consultancy)
+**What's your biggest challenge?** (e.g., need more customers, want online sales)
+
+**Or pick a topic:**
+• Website for my business
+• Online store setup  
+• AI automation
+• Government funding
+
+**Quick call works best: +65 8982 1301**`
+    } else {
+        // First clarification
+        history.clarificationCount++
+        return `🤔 Let me help you find the right solution!
 
 **Could you share more about:**
 • What type of business you have?
@@ -261,6 +298,7 @@ Which service matches your business goals?`
 "I need to automate my customer service"
 
 **For immediate help, call: +65 8982 1301**`
+    }
 }
 
 async function sendMessage(phoneNumber, text) {
