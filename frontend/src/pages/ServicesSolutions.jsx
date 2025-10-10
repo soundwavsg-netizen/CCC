@@ -58,15 +58,15 @@ export default function ServicesSolutions() {
       title: 'AI Chatbots & Workflow Automation',
       color: '#F59E0B', // Amber
       bgColor: '#FEF3C7',
-      description: 'Automate repetitive processes, qualify leads instantly, and save time. Chatbots powered by AI integrated into your website or WhatsApp.',
-      details: 'Your business deserves to work smarter, not harder. Our AI chatbots can qualify leads, respond to customer questions, and streamline operations automatically.',
+      description: 'Automate repetitive processes, qualify leads instantly, and save time. Chatbots powered by AI integrated into your website, WhatsApp, or business systems.',
+      details: 'Your business deserves to work smarter, not harder. Our AI chatbots can qualify leads, respond to customer questions, and streamline operations automatically — whether on your website or through WhatsApp automation.',
       features: [
         'AI chatbot setup for websites & web apps',
+        'WhatsApp AI bot integration (like our business number +65 8982 1301)',
         'Automated lead qualification and data capture',
         'Integration with CRM or email workflows',
-        'AI logic trained to your business tone',
-        'Custom response flows and decision trees',
-        '24/7 customer support automation'
+        'AI logic trained to your business tone and industry',
+        '24/7 customer support automation across platforms'
       ]
     },
     {
