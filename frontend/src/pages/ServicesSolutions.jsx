@@ -225,19 +225,19 @@ export default function ServicesSolutions() {
         </section>
       ))}
 
-      {/* Optional EDG Support Section */}
+      {/* EDG Support Section - Updated for Compliance */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-[#EAF7F5] to-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
             <div className="text-center mb-12">
               <Badge className="mb-4 bg-[#12B76A] text-white">
-                <Award className="mr-1 h-3 w-3" /> Optional Funding Support
+                <Award className="mr-1 h-3 w-3" /> Strategic Guidance
               </Badge>
               <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                EDG Support for Eligible Projects
+                EDG Alignment for Transformation Projects
               </h2>
               <p className="text-base text-[#475467] max-w-2xl mx-auto">
-                Eligible Singapore SMEs may qualify for up to 50% support under the Enterprise Development Grant (EDG) for qualifying transformation projects.
+                CCC assists eligible Singapore SMEs in aligning digital transformation projects with EDG requirements, where applicable.
               </p>
             </div>
           </FadeUp>
@@ -247,44 +247,48 @@ export default function ServicesSolutions() {
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <h3 className="text-xl font-semibold mb-4 text-[#12B76A]">
-                    ✅ Projects That May Qualify:
+                    ✅ Projects That May Align with EDG:
                   </h3>
                   <ul className="space-y-3 text-sm text-[#475467]">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-[#12B76A] shrink-0 mt-0.5" />
-                      <span>Projects involving process automation or AI integration</span>
+                      <span>AI automation and workflow redesign projects</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-[#12B76A] shrink-0 mt-0.5" />
-                      <span>Custom web systems that improve business capability</span>
+                      <span>Custom web systems that transform business processes</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-[#12B76A] shrink-0 mt-0.5" />
-                      <span>WhatsApp automation for customer service improvement</span>
+                      <span>WhatsApp automation for customer service transformation</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-[#12B76A] shrink-0 mt-0.5" />
-                      <span>CRM integration and workflow automation</span>
+                      <span>CRM integration with measurable process improvement</span>
                     </li>
                   </ul>
                 </div>
                 
                 <div>
-                  <h3 className="text-xl font-semibold mb-4 text-red-600">
-                    ❌ Projects That Don't Qualify:
+                  <h3 className="text-xl font-semibold mb-4 text-[#DC2626]">
+                    ❌ Projects That Typically Don't Qualify:
                   </h3>
                   <ul className="space-y-3 text-sm text-[#475467]">
                     <li className="flex items-start gap-2">
                       <span className="h-4 w-4 text-red-500 font-bold text-center flex items-center justify-center mt-0.5">×</span>
-                      <span>Marketing-only websites without automation</span>
+                      <span>Standard website development without transformation elements</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="h-4 w-4 text-red-500 font-bold text-center flex items-center justify-center mt-0.5">×</span>
-                      <span>Basic company profile websites</span>
+                      <span>Basic e-commerce platforms without process innovation</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="h-4 w-4 text-red-500 font-bold text-center flex items-center justify-center mt-0.5">×</span>
-                      <span>Simple brochure sites without business process improvement</span>
+                      <span>Marketing-focused websites or brochure sites</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="h-4 w-4 text-red-500 font-bold text-center flex items-center justify-center mt-0.5">×</span>
+                      <span>Projects without clear business transformation outcomes</span>
                     </li>
                   </ul>
                 </div>
@@ -292,15 +296,18 @@ export default function ServicesSolutions() {
               
               <div className="mt-8 pt-8 border-t text-center">
                 <p className="text-sm text-[#475467] mb-4">
-                  CCC can guide you through the EDG documentation process for qualifying transformation projects.
+                  CCC assists in structuring proposals and documentation to align with EDG requirements. Final funding decisions rest solely with Enterprise Singapore.
                 </p>
                 <Button 
                   asChild
                   className="bg-[#12B76A] hover:bg-[#10A561] text-white"
                   data-testid="edg-eligibility-cta"
                 >
-                  <Link to="/edg">Check EDG Eligibility</Link>
+                  <Link to="/edg">Check EDG Alignment Advisory</Link>
                 </Button>
+                <p className="text-xs text-[#6B7280] mt-3">
+                  ⚠️ EDG approval is not guaranteed. All funding decisions are made by Enterprise Singapore.
+                </p>
               </div>
             </Card>
           </FadeUp>
