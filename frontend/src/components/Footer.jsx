@@ -73,10 +73,11 @@ export const Footer = () => {
           <div>
             <h3 className="font-semibold text-[hsl(var(--foreground))] mb-4">Services</h3>
             <ul className="space-y-3">
-              <li><span className="text-sm">Website & App Development</span></li>
-              <li><span className="text-sm">AI Automation</span></li>
-              <li><span className="text-sm">E-Commerce Solutions</span></li>
-              <li><span className="text-sm">Business Training & Grants</span></li>
+              <li><span className="text-sm">Website & E-Commerce Development</span></li>
+              <li><span className="text-sm">AI Chatbots & Automation</span></li>
+              <li><span className="text-sm">WhatsApp AI Bot Integration</span></li>
+              <li><span className="text-sm">CRM & Analytics Integration</span></li>
+              <li><span className="text-sm">Custom Web Systems</span></li>
             </ul>
           </div>
 
