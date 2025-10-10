@@ -366,7 +366,7 @@ export default function EDG() {
                     disabled={isFormLoading}
                     data-testid="edg-form-submit"
                   >
-                    {isFormLoading ? 'Submitting...' : 'Get Free EDG Assessment'}
+                    {isFormLoading ? 'Submitting...' : 'Request Project Assessment'}
                   </Button>
                 </form>
               )}
