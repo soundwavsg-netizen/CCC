@@ -17,11 +17,11 @@
   },
   {
     "content": "Update AI agent with new commercial positioning and internal pricing",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Update WhatsApp bot with commercial messaging",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add new Our Process section",
@@ -29,6 +29,6 @@
   },
   {
     "content": "Update contact information and remove personal address",
-    "status": "pending"
+    "status": "completed"
   }
 ]
