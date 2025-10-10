@@ -61,12 +61,12 @@ export default function ServicesSolutions() {
       description: 'Automate repetitive processes, qualify leads instantly, and save time. AI chatbots for websites AND WhatsApp automation — your most powerful customer engagement channels.',
       details: 'Your business deserves to work smarter, not harder. Our AI solutions include website chatbots AND WhatsApp automation (like this business number +65 8982 1301) to qualify leads, respond to customer questions, and streamline operations 24/7.',
       features: [
-        'AI chatbot setup for websites & web apps',
-        'WhatsApp AI bot integration (like our business number +65 8982 1301)',
-        'Automated lead qualification and data capture',
-        'Integration with CRM or email workflows',
-        'AI logic trained to your business tone and industry',
-        '24/7 customer support automation across platforms'
+        'Website AI chatbots with smart lead qualification',
+        'WhatsApp AI bot integration (+65 8982 1301 business number example)',
+        'Automated customer service across both platforms', 
+        'Integration with CRM, email, and business workflows',
+        'AI logic trained to your specific business tone and industry',
+        'Complete automation: website visitors AND WhatsApp customers'
       ]
     },
     {
