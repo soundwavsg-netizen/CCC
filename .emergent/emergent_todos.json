@@ -1,10 +1,22 @@
 [
   {
-    "content": "Update Services & Solutions page to include WhatsApp bot integration and match homepage grouping",
-    "status": "completed"
+    "content": "Update EDG hero section with compliant messaging and disclaimers",
+    "status": "in_progress"
   },
   {
-    "content": "Consolidate separate Grants page with main services focus",
-    "status": "completed"
+    "content": "Revise FAQ section with realistic expectations and transparent language",
+    "status": "pending"
+  },
+  {
+    "content": "Update AI agent knowledge for EDG compliance",
+    "status": "pending"
+  },
+  {
+    "content": "Rewrite /edg page with strategic guidance positioning",
+    "status": "pending"
+  },
+  {
+    "content": "Update Services & Solutions EDG section for compliance",
+    "status": "pending"
   }
 ]
