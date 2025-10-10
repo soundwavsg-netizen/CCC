@@ -101,36 +101,36 @@ export default function EDG() {
 
   const expandedFaqItems = [
     {
-      question: 'Am I eligible for EDG?',
-      answer: 'If you\'re a Singapore-registered company planning a project that improves business capability, you likely qualify. Companies must have been registered for at least 6 months and meet certain criteria including local shareholding requirements.'
+      question: 'Can all website or app projects qualify for EDG funding?',
+      answer: 'Not all digital projects are eligible. Enterprise Singapore generally supports projects that demonstrate business transformation — for example, automation, AI integration, workflow redesign, or innovation. Standard website or e-commerce projects typically fall outside the scope unless tied to broader process improvement.'
     },
     {
-      question: 'What projects are supported?',
-      answer: 'Custom websites, e-commerce platforms, AI-powered web apps (PWAs), digital transformation initiatives, workflow automation, and business management systems that enhance operational efficiency.'
+      question: 'Will CCC help with the EDG application process?',
+      answer: 'Yes, we assist in structuring your proposal and documentation to align with EDG\'s requirements. However, all funding decisions rest solely with Enterprise Singapore, and approval is not guaranteed.'
     },
     {
-      question: 'How long is approval?',
-      answer: 'Typically 3–6 weeks after submission. However, the timeline can vary depending on project complexity and current application volumes at Enterprise Singapore.'
+      question: 'What if my business isn\'t eligible for EDG?',
+      answer: 'CCC can still help you achieve your digital goals through flexible, affordable project options — from AI chatbots and automation tools to full website builds and CRM integrations.'
     },
     {
-      question: 'How much will I pay?',
-      answer: 'EDG may support up to ~50% of qualifying costs for SMEs, and up to 70% for startups (less than 5 years old). The final support level depends on your company profile and project scope. We\'ll provide a detailed estimate after your eligibility assessment.'
+      question: 'What types of projects align with EDG transformation requirements?',
+      answer: 'EDG typically supports projects involving AI automation, workflow redesign, process digitization, or measurable productivity improvements. The project must demonstrate clear business transformation beyond basic website development.'
     },
     {
-      question: 'What happens after EDG approval?',
-      answer: 'Once approved, we begin project development according to the agreed timeline. EDG funding is disbursed in milestones, and we handle all documentation and compliance requirements throughout the project.'
+      question: 'How long does the EDG application process take?',
+      answer: 'The typical application process takes 6-8 weeks from submission to approval. CCC helps ensure documentation is complete and aligned with EDG requirements, but approval timelines depend on Enterprise Singapore\'s review process.'
     },
     {
-      question: 'Can I apply for multiple projects?',
-      answer: 'Yes, companies can apply for multiple EDG projects, subject to overall funding caps. Each project is assessed independently, and we can help you prioritize projects for maximum impact.'
+      question: 'What happens if our EDG application is not approved?',
+      answer: 'CCC still delivers your digital transformation project through our commercial packages. We work with you to find alternative funding or payment arrangements to ensure your business goals are achieved.'
     },
     {
-      question: 'What if my application is rejected?',
-      answer: 'We work closely with you to address any concerns and can help resubmit applications with improvements. Our experience helps minimize rejection risks through proper preparation.'
+      question: 'Does CCC guarantee EDG approval?',
+      answer: 'No, CCC cannot guarantee EDG approval as all funding decisions are made independently by Enterprise Singapore. We provide advisory support to align your project with EDG requirements and improve your application\'s prospects.'
     },
     {
-      question: 'Do you handle the entire EDG process?',
-      answer: 'Yes, we manage the complete process: eligibility assessment, application preparation, submission, project execution, milestone documentation, and final claim submission.'
+      question: 'What is CCC\'s role in the EDG process?',
+      answer: 'CCC serves as your digital transformation consultant and project implementer. We help structure proposals, provide technical specifications, and ensure deliverables meet both your business needs and EDG requirements.'
     }
   ];
 
