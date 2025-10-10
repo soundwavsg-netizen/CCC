@@ -172,17 +172,27 @@ We help Singapore SMEs build smart websites, AI chatbots, and WhatsApp automatio
 Tell me about your business and I'll guide you!`
     }
 
-    // === SERVICES INQUIRY ===
+    // 3. SERVICES INQUIRY - Commercial focus
     if (text.includes('services') || text.includes('what do you do') || text.includes('tell me about')) {
         memory.lastResponse = 'services'
-        return `🚀 **CCC helps Singapore businesses:**
+        return `🚀 **CCC Digital builds smart business solutions:**
 
-• Build professional websites
-• Set up online stores
-• Create business automation
-• Apply for EDG funding (50% cost coverage!)
+**Our main services:**
+• Professional websites & e-commerce platforms
+• AI chatbots & workflow automation
+• WhatsApp business integration (like this chat!)
+• CRM & analytics systems
+• Custom web portals
 
-What type of business do you have?`
+**We help businesses:**
+• Get more customers online
+• Automate repetitive tasks
+• Engage customers 24/7
+• Streamline operations
+
+*Plus optional EDG funding support for eligible projects*
+
+What type of business do you run?`
     }
 
     // === PRICING REQUESTS - MUST BE BEFORE EDUCATION SECTION ===
