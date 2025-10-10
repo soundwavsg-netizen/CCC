@@ -584,7 +584,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Optional EDG Support */}
+      {/* Optional EDG Support - Updated for Compliance */}
       <section className="py-16 sm:py-20 bg-gradient-to-br from-[#F9FAFB] to-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
@@ -592,44 +592,51 @@ export default function Home() {
               <div className="grid lg:grid-cols-2 gap-8 items-center">
                 <div>
                   <Badge className="mb-4 bg-[#12B76A] text-white" data-testid="edg-support-badge">
-                    <Award className="mr-1 h-3 w-3" /> Optional Funding Support
+                    <Award className="mr-1 h-3 w-3" /> Potential Funding Support
                   </Badge>
                   <h2 className="text-2xl sm:text-3xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                    EDG Support (Optional)
+                    Potential EDG Support for Eligible Digital Projects
                   </h2>
-                  <p className="text-base text-[#475467] mb-6">
-                    Eligible Singapore SMEs may qualify for up to 50% support under the Innovation & Productivity pillar of the Enterprise Development Grant (EDG).
+                  <p className="text-base text-[#475467] mb-4">
+                    Some companies may qualify for partial funding under Enterprise Singapore's Enterprise Development Grant (EDG).
                   </p>
-                  <p className="text-sm text-[#475467] mb-6">
-                    CCC can guide you through the documentation process for qualifying transformation projects.
+                  <p className="text-base text-[#475467] mb-6">
+                    CCC assists in aligning your digital transformation projects — such as AI automation, web systems, or process redesign — with EDG requirements, where applicable.
                   </p>
                   <div className="space-y-2 mb-6">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-[#12B76A]" />
-                      <span className="text-sm">Projects involving process automation or AI integration may qualify</span>
+                      <span className="text-sm">Transformation-focused project alignment</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="h-4 w-4 text-red-500 font-bold text-center">✗</span>
-                      <span className="text-sm text-[#6B7280]">Marketing-only websites are not eligible</span>
+                      <CheckCircle2 className="h-4 w-4 text-[#12B76A]" />
+                      <span className="text-sm">Proposal documentation assistance</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-[#12B76A]" />
+                      <span className="text-sm">Project scope advisory support</span>
                     </div>
                   </div>
+                  <Button 
+                    asChild
+                    className="bg-[#12B76A] hover:bg-[#10A561] text-white mb-4"
+                    data-testid="edg-eligibility-cta"
+                  >
+                    <Link to="/edg">Check EDG Eligibility (For Singapore SMEs)</Link>
+                  </Button>
+                  <p className="text-xs text-[#6B7280] leading-relaxed">
+                    ⚠️ Note: EDG support is subject to Enterprise Singapore's approval. It generally applies to transformation-focused projects such as automation or AI-enabled workflows. Basic website creation alone typically does not qualify.
+                  </p>
                 </div>
                 <div>
                   <div className="text-center">
                     <div className="h-20 w-20 rounded-full bg-[#12B76A] flex items-center justify-center text-white mx-auto mb-4">
                       <Award className="h-10 w-10" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2">Up to 50% Funding</h3>
+                    <h3 className="text-lg font-semibold mb-2">Strategic Guidance</h3>
                     <p className="text-[#475467] text-sm mb-6">
-                      For qualifying automation and AI integration projects
+                      Professional support for transformation-focused digital projects that may align with EDG requirements
                     </p>
-                    <Button 
-                      asChild
-                      className="bg-[#12B76A] hover:bg-[#10A561] text-white"
-                      data-testid="edg-eligibility-cta"
-                    >
-                      <Link to="/edg">Check if Eligible</Link>
-                    </Button>
                   </div>
                 </div>
               </div>
