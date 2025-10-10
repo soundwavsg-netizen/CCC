@@ -176,6 +176,20 @@ What can I help you with today?`
 What type of business do you have?`
     }
 
+    // === PRICING REQUESTS - MUST BE BEFORE EDUCATION SECTION ===
+    if (text.includes('how much') || text.includes('cost') || text.includes('price') || text.includes('pricing')) {
+        memory.lastResponse = 'pricing'
+        return `💰 **CCC Investment Guide:**
+
+🌐 **Websites:** $3K-$12K *(EDG: $1.5K-$6K)*
+🛒 **E-commerce:** $6K-$18K *(EDG: $3K-$9K)*
+🤖 **AI Integration:** $1.8K-$8.8K *(EDG: $0.9K-$4.4K)*
+
+**EDG covers up to 50% for Singapore companies!**
+
+What type of solution interests you?`
+    }
+
     // === EDUCATION/TEACHING BUSINESS ===
     if (text.includes('teaching') || text.includes('school') || text.includes('education') || text.includes('tuition')) {
         // Avoid repetition if we already identified them as education
