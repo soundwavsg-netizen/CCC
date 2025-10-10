@@ -1,34 +1,10 @@
 [
   {
-    "content": "Transform homepage to commercial-first messaging with new hero section",
-    "status": "completed"
+    "content": "Update Services & Solutions page to include WhatsApp bot integration and match homepage grouping",
+    "status": "in_progress"
   },
   {
-    "content": "Update About section with new commercial positioning",
-    "status": "completed"
-  },
-  {
-    "content": "Create new 5-service structure with WhatsApp bot integration featured",
-    "status": "completed"
-  },
-  {
-    "content": "Move EDG to optional secondary section",
-    "status": "completed"
-  },
-  {
-    "content": "Update AI agent with new commercial positioning and internal pricing",
-    "status": "completed"
-  },
-  {
-    "content": "Update WhatsApp bot with commercial messaging",
-    "status": "completed"
-  },
-  {
-    "content": "Add new Our Process section",
-    "status": "completed"
-  },
-  {
-    "content": "Update contact information and remove personal address",
-    "status": "completed"
+    "content": "Consolidate separate Grants page with main services focus",
+    "status": "pending"
   }
 ]
