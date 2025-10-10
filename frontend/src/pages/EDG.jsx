@@ -159,7 +159,7 @@ export default function EDG() {
 
   return (
     <div className="flex flex-col" data-testid="edg-page">
-      {/* Hero Section */}
+      {/* Hero Section - Updated for Compliance */}
       <section className="relative overflow-hidden bg-white">
         <div className="absolute inset-0 bg-gradient-to-br from-[#EAF7F5] via-white to-[#EAF7F5] opacity-60" />
         <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -167,13 +167,19 @@ export default function EDG() {
             <FadeUp>
               <div>
                 <Badge className="mb-4 bg-[#12B76A] text-white hover:bg-[#12B76A]" data-testid="hero-badge">
-                  <Award className="mr-1 h-3 w-3" /> EDG Funding Available
+                  <Award className="mr-1 h-3 w-3" /> Strategic Guidance
                 </Badge>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
-                  Get Up to 50% EDG Funding for Your Digital Project
+                  Empowering SMEs Through Digital Transformation
                 </h1>
-                <p className="text-base text-[#1F2A37] max-w-prose leading-relaxed mb-8">
-                  Transform your business with a custom website, e-commerce platform, or web app. We handle both the development and the EDG paperwork—so you focus on growing your business.
+                <p className="text-base text-[#1F2A37] max-w-prose leading-relaxed mb-6">
+                  CCC helps Singapore businesses modernize their operations with AI automation, intelligent web systems, and digital workflows.
+                </p>
+                <p className="text-base text-[#475467] max-w-prose leading-relaxed mb-6">
+                  For eligible SMEs, portions of these transformation projects may qualify for support under Enterprise Singapore's Enterprise Development Grant (EDG).
+                </p>
+                <p className="text-sm text-[#6B7280] mb-8">
+                  CCC assists with project documentation and alignment to ensure your proposal meets transformation-focused requirements — but final funding approval is determined solely by Enterprise Singapore.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Button 
@@ -182,7 +188,7 @@ export default function EDG() {
                     data-testid="hero-primary-cta-button"
                   >
                     <MessageCircle className="mr-2 h-4 w-4" />
-                    Check EDG Eligibility Now
+                    Check EDG Alignment Advisory
                   </Button>
                   <Button 
                     onClick={() => document.getElementById('lead-form')?.scrollIntoView({ behavior: 'smooth' })}
@@ -190,7 +196,7 @@ export default function EDG() {
                     className="border-[hsl(var(--border))]"
                     data-testid="hero-secondary-cta-button"
                   >
-                    Request Detailed Review <ArrowRight className="ml-2 h-4 w-4" />
+                    Request Project Assessment <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </div>
@@ -199,7 +205,7 @@ export default function EDG() {
             <FadeUp delay={0.1}>
               <Card className="rounded-xl overflow-hidden shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
                 <img 
-                  alt="Singapore EDG funding for digital transformation" 
+                  alt="Singapore business transformation and digital modernization" 
                   src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=85&w=800&h=600" 
                   className="w-full h-[360px] object-cover" 
                   data-testid="hero-image"
