@@ -212,7 +212,7 @@ What subjects do you teach? This helps me recommend specific features.`
     }
 
     // === PRICING REQUESTS ===
-    if (text.includes('how much') || text.includes('cost') || text.includes('price')) {
+    if (text.includes('how much') || text.includes('cost') || text.includes('price') || text.includes('pricing')) {
         memory.lastResponse = 'pricing'
         return `💰 **CCC Investment Guide:**
 
