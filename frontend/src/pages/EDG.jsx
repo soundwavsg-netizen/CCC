@@ -267,9 +267,9 @@ export default function EDG() {
                   <div className="h-16 w-16 rounded-full bg-[#12B76A] flex items-center justify-center mx-auto mb-4">
                     <CheckCircle2 className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">Assessment Requested!</h3>
+                  <h3 className="text-xl font-semibold mb-2">Assessment Submitted!</h3>
                   <p className="text-[#475467]">
-                    We'll review your EDG eligibility and send a detailed funding assessment within 1 business day.
+                    We'll review your project for potential EDG alignment and contact you within 1 business day with our recommendations and next steps.
                   </p>
                 </div>
               ) : (
