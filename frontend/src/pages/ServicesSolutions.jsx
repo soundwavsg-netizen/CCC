@@ -1,12 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
+import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { 
-  Globe, ShoppingBag, Smartphone, Bot, Award, 
-  CheckCircle2, ArrowRight, MessageSquare 
+  Globe, 
+  ShoppingCart, 
+  MessageCircle, 
+  Bot, 
+  BarChart3, 
+  Settings,
+  CheckCircle2,
+  ArrowRight,
+  Award,
+  Zap,
+  Users,
+  Smartphone,
+  Clock,
+  Target,
+  Rocket
 } from 'lucide-react';
 
 const FadeUp = ({ delay = 0, children }) => (
@@ -23,88 +36,88 @@ const FadeUp = ({ delay = 0, children }) => (
 export default function ServicesSolutions() {
   const services = [
     {
-      id: 'website',
+      id: 'website-ecommerce',
       icon: Globe,
-      title: 'Website Development',
+      title: 'Website & E-Commerce Development',
       color: '#10B981', // Green
       bgColor: '#D1FAE5',
-      description: 'Professional, responsive websites built with Next.js and Firebase. Perfect for businesses, agencies, and consultants who need a modern online presence.',
-      details: 'CCC creates custom websites tailored to your brand and business goals. We handle everything from design and development to content management, SEO optimization, and hosting. Each site is built to be fast, secure, and mobile-friendly.',
+      description: 'Fast, mobile-ready, and scalable websites built for growth. Includes integrated payment, inventory tracking, and SEO-optimised design.',
+      details: 'We build fast, mobile-ready, and scalable websites designed for growth. Whether you\'re creating a corporate site or a full online store, our builds integrate seamlessly with secure payment gateways, inventory systems, and analytics.',
       features: [
-        'Corporate & portfolio websites',
-        'CMS-integrated sites with easy content updates',
-        'AI chat integration for customer engagement',
-        'Booking and appointment automation',
-        'Advanced SEO and branding support',
-        'Secure hosting and maintenance'
+        'Responsive design for all devices',
+        'E-commerce setup with secure checkout',
+        'SEO optimisation & analytics integration',
+        'Content management systems (CMS)',
+        'Payment gateway integration (Stripe, PayNow)',
+        'Inventory management and order tracking'
       ]
     },
     {
-      id: 'ecommerce',
-      icon: ShoppingBag,
-      title: 'E-Commerce Solutions',
-      color: '#F59E0B', // Yellow/Amber
+      id: 'ai-chatbots',
+      icon: Bot,
+      title: 'AI Chatbots & Workflow Automation',
+      color: '#F59E0B', // Amber
       bgColor: '#FEF3C7',
-      description: 'Tailor-made online stores with Stripe or Lemon Squeezy payment integration. Complete solutions for product catalogs, inventory, and multi-channel sales.',
-      details: 'Build a powerful online store that scales with your business. CCC develops custom e-commerce platforms with secure checkout, real-time inventory tracking, and seamless integration with marketplaces like Shopee and Lazada.',
+      description: 'Automate repetitive processes, qualify leads instantly, and save time. Chatbots powered by AI integrated into your website or WhatsApp.',
+      details: 'Your business deserves to work smarter, not harder. Our AI chatbots can qualify leads, respond to customer questions, and streamline operations automatically.',
       features: [
-        'Custom product catalogs with variants',
-        'Inventory & order tracking systems',
-        'Multi-channel sales integration',
-        'Subscription and membership options',
-        'Delivery calculation and tracking',
-        'Customer portals and analytics dashboards'
+        'AI chatbot setup for websites & web apps',
+        'Automated lead qualification and data capture',
+        'Integration with CRM or email workflows',
+        'AI logic trained to your business tone',
+        'Custom response flows and decision trees',
+        '24/7 customer support automation'
       ]
     },
     {
-      id: 'web-app',
-      icon: Smartphone,
-      title: 'Web Applications & Progressive Web Apps',
+      id: 'whatsapp-bot',
+      icon: MessageCircle,
+      title: 'WhatsApp AI Bot Integration',
+      color: '#25D366', // WhatsApp Green
+      bgColor: '#DCFCE7',
+      description: 'Engage customers directly on WhatsApp — your most powerful communication channel. Simple setup or Official Business API integration available.',
+      details: 'Turn your WhatsApp into a 24/7 digital assistant that handles sales and enquiries instantly. We offer flexible integration options to match your scale and needs.',
+      features: [
+        'Simple Setup (Short-Term Connection) – quick deployment for small-scale usage',
+        'Official WhatsApp Business API (Recommended) – verified Meta connection for multi-user operations',
+        'Handles customer enquiries automatically',
+        'Connects to your AI chatbot logic',
+        'Sends instant replies, forms, and lead data to your CRM or email',
+        'Custom business automation workflows'
+      ]
+    },
+    {
+      id: 'crm-analytics',
+      icon: BarChart3,
+      title: 'CRM & Analytics Integration',
       color: '#3B82F6', // Blue
       bgColor: '#DBEAFE',
-      description: 'Full-stack web applications and Progressive Web Apps (PWAs) that work seamlessly across all devices. From business tools to customer portals, we build modern web solutions.',
-      details: 'CCC specializes in Progressive Web Apps that deliver native app-like experiences through web browsers. Our PWAs are installable, work offline, and provide push notifications - all without app store dependencies. Perfect for cross-platform business solutions.',
+      description: 'Connect your website or chatbot to HubSpot, Google Sheets, or custom dashboards. Track leads, automate follow-ups, and visualise insights.',
+      details: 'Connect your website or chatbot to your customer relationship tools for end-to-end visibility. From HubSpot to Google Sheets, we help you automate follow-ups and track your performance with clarity.',
       features: [
-        'Progressive Web Apps (installable like mobile apps)',
-        'Cross-platform compatibility (iOS, Android, Desktop)',
-        'Offline functionality and data synchronization',
-        'Web push notifications across devices',
-        'Fast loading and app-like performance',
-        'Role-based dashboards and real-time features'
+        'Lead tracking and customer database setup',
+        'Workflow automation (email, WhatsApp, notifications)',
+        'Sales funnel and dashboard integration',
+        'Analytics setup for campaign monitoring',
+        'HubSpot, Google Sheets, and CRM connections',
+        'Custom reporting and data visualization'
       ]
     },
     {
-      id: 'ai-automation',
-      icon: Bot,
-      title: 'AI & Automation',
-      color: '#F97316', // Orange
-      bgColor: '#FFEDD5',
-      description: 'Custom AI agents and workflow automation that boost productivity. From chatbots to intelligent process automation, we make AI work for your business.',
-      details: 'CCC builds AI solutions that enhance customer engagement and streamline operations. Our custom AI agents handle customer queries, automate repetitive tasks, and provide data-driven insights to help you work smarter.',
+      id: 'custom-systems',
+      icon: Settings,
+      title: 'Custom Web Systems / Portals',
+      color: '#8B5CF6', // Purple
+      bgColor: '#EDE9FE',
+      description: 'Tailored admin or client portals for booking, order management, analytics, or project tracking. Built to your specific needs.',
+      details: 'We create tailored online portals that manage data, bookings, or client services — all built to your specific needs.',
       features: [
-        'Custom GPT / AI assistants (like CCC AI Consultant)',
-        'Knowledge-based chatbots for websites',
-        'Process automation (CRM, Notion, Google Sheets)',
-        'AI workflow automation for reports and scheduling',
-        'Data-driven analytics dashboards',
-        'Integration with existing business systems'
-      ]
-    },
-    {
-      id: 'consultancy',
-      icon: Award,
-      title: 'Consultancy & Grant Support',
-      color: '#EF4444', // Red
-      bgColor: '#FEE2E2',
-      description: 'Expert guidance for EDG grant applications. We help you secure government funding and manage the entire application process.',
-      details: 'CCC provides end-to-end support for Enterprise Singapore grant applications. From eligibility assessment to claim submission, we guide you through every step to maximize your chances of approval.',
-      features: [
-        'EDG eligibility assessment',
-        'Proposal documentation and writing',
-        'Project scope justification',
-        'Budget preparation and validation',
-        'Claim preparation and submission',
-        'Post-project compliance support'
+        'Order or project management systems',
+        'Membership or client portals',
+        'Internal admin dashboards',
+        'Document or submission management tools',
+        'Custom workflow automation',
+        'Multi-user access and role management'
       ]
     }
   ];
@@ -116,21 +129,21 @@ export default function ServicesSolutions() {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
             <div className="max-w-3xl mx-auto text-center">
-              <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]">
-                Services & Solutions
+              <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white hover:bg-[hsl(var(--secondary))]">
+                <Rocket className="mr-1 h-3 w-3" /> Complete Digital Solutions
               </Badge>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
-                Complete Digital Solutions for Your Business
+                Smart Digital Systems for Modern Businesses
               </h1>
               <p className="text-lg text-[#475467] leading-relaxed mb-8">
-                From modern websites and Progressive Web Apps to AI automation, CCC delivers web-first solutions that help Singapore SMEs grow and succeed in the digital age.
+                From websites and e-commerce platforms to AI chatbots and WhatsApp automation, CCC delivers complete digital solutions that help Singapore SMEs grow and succeed.
               </p>
               <Button 
                 asChild
                 className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
                 data-testid="hero-cta-button"
               >
-                <Link to="/contact">Get a Free Consultation</Link>
+                <Link to="/#lead-form">Start Your Project</Link>
               </Button>
             </div>
           </FadeUp>
@@ -176,7 +189,7 @@ export default function ServicesSolutions() {
                   </p>
 
                   <div className="flex items-center gap-2 mb-6">
-                    <MessageSquare className="h-5 w-5" style={{ color: service.color }} />
+                    <MessageCircle className="h-5 w-5" style={{ color: service.color }} />
                     <p className="text-sm font-medium" style={{ color: service.color }}>
                       Have questions? Chat with our AI consultant for personalized advice!
                     </p>
@@ -200,7 +213,7 @@ export default function ServicesSolutions() {
                             className="h-5 w-5 shrink-0 mt-0.5" 
                             style={{ color: service.color }}
                           />
-                          <span className="text-sm text-[#1F2A37]">{feature}</span>
+                          <span className="text-sm text-[#374151]">{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -212,37 +225,120 @@ export default function ServicesSolutions() {
         </section>
       ))}
 
-      {/* CTA Section */}
-      <section className="py-16 sm:py-20 bg-[hsl(var(--primary))] text-white">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Optional EDG Support Section */}
+      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#EAF7F5] to-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
-            <div className="text-center">
-              <h2 className="text-3xl sm:text-4xl font-semibold mb-4">
-                Ready to Get Started?
+            <div className="text-center mb-12">
+              <Badge className="mb-4 bg-[#12B76A] text-white">
+                <Award className="mr-1 h-3 w-3" /> Optional Funding Support
+              </Badge>
+              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
+                EDG Support for Eligible Projects
               </h2>
-              <p className="text-lg text-[#EAF7F5] mb-8 max-w-2xl mx-auto">
-                Let's discuss your project and explore how CCC can help you achieve your digital transformation goals. Our team is ready to provide personalized recommendations and accurate project estimates.
+              <p className="text-base text-[#475467] max-w-2xl mx-auto">
+                Eligible Singapore SMEs may qualify for up to 50% support under the Enterprise Development Grant (EDG) for qualifying transformation projects.
               </p>
-              <div className="flex flex-wrap gap-4 justify-center">
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={0.1}>
+            <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-xl font-semibold mb-4 text-[#12B76A]">
+                    ✅ Projects That May Qualify:
+                  </h3>
+                  <ul className="space-y-3 text-sm text-[#475467]">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-[#12B76A] shrink-0 mt-0.5" />
+                      <span>Projects involving process automation or AI integration</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-[#12B76A] shrink-0 mt-0.5" />
+                      <span>Custom web systems that improve business capability</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-[#12B76A] shrink-0 mt-0.5" />
+                      <span>WhatsApp automation for customer service improvement</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-[#12B76A] shrink-0 mt-0.5" />
+                      <span>CRM integration and workflow automation</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h3 className="text-xl font-semibold mb-4 text-red-600">
+                    ❌ Projects That Don't Qualify:
+                  </h3>
+                  <ul className="space-y-3 text-sm text-[#475467]">
+                    <li className="flex items-start gap-2">
+                      <span className="h-4 w-4 text-red-500 font-bold text-center flex items-center justify-center mt-0.5">×</span>
+                      <span>Marketing-only websites without automation</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="h-4 w-4 text-red-500 font-bold text-center flex items-center justify-center mt-0.5">×</span>
+                      <span>Basic company profile websites</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="h-4 w-4 text-red-500 font-bold text-center flex items-center justify-center mt-0.5">×</span>
+                      <span>Simple brochure sites without business process improvement</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="mt-8 pt-8 border-t text-center">
+                <p className="text-sm text-[#475467] mb-4">
+                  CCC can guide you through the EDG documentation process for qualifying transformation projects.
+                </p>
                 <Button 
                   asChild
-                  className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
-                  data-testid="cta-contact-button"
+                  className="bg-[#12B76A] hover:bg-[#10A561] text-white"
+                  data-testid="edg-eligibility-cta"
                 >
-                  <Link to="/contact">Schedule a Consultation</Link>
-                </Button>
-                <Button 
-                  asChild
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-[hsl(var(--primary))]"
-                  data-testid="cta-grants-button"
-                >
-                  <Link to="/grants">Learn About Grants</Link>
+                  <Link to="/edg">Check EDG Eligibility</Link>
                 </Button>
               </div>
-              <p className="text-sm text-[#EAF7F5] mt-6">
-                💬 Or chat with our AI consultant now for instant answers and rough cost estimates!
-              </p>
+            </Card>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <FadeUp>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
+              Ready to Build Something Intelligent?
+            </h2>
+            <p className="text-base text-[#475467] mb-8">
+              Let's discuss how smart digital systems can help your business grow, engage customers, and streamline operations.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                asChild
+                className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
+                data-testid="cta-primary-button"
+              >
+                <Link to="/#lead-form">
+                  <Rocket className="mr-2 h-4 w-4" />
+                  Start My Project
+                </Link>
+              </Button>
+              <Button 
+                asChild
+                variant="outline"
+                className="border-[hsl(var(--border))]"
+                data-testid="cta-secondary-button"
+              >
+                <Link to="/contact">
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  Get in Touch <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
             </div>
           </FadeUp>
         </div>
