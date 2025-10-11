@@ -29,13 +29,11 @@ export const Header = () => {
         {/* Logo */}
         <Link 
           to="/" 
-          className="flex items-center gap-2 font-bold text-xl text-[hsl(var(--primary))]"
+          className="flex items-center gap-3"
           data-testid="header-logo-link"
         >
-          <div className="h-8 w-8 rounded-lg bg-[hsl(var(--secondary))] flex items-center justify-center text-white font-bold">
-            CCC
-          </div>
-          <span className="hidden sm:inline">Cognition & Competence</span>
+          <CCCLogo className="h-8 w-auto" variant="default" />
+          <span className="hidden sm:inline text-xl font-semibold text-[var(--brand-navy)]">Cognition & Competence</span>
         </Link>
 
         {/* Desktop Navigation */}
