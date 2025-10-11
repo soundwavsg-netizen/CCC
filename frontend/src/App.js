@@ -14,6 +14,7 @@ import EDG from './pages/EDG';
 import Contact from './pages/Contact';
 import PDPA from './pages/PDPA';
 import Terms from './pages/Terms';
+import Promotion from './pages/Promotion';
 import WhatsAppSetup from './pages/WhatsAppSetup';
 import { initializeTracking } from './utils/analytics';
 import './App.css';
