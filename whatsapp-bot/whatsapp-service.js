@@ -228,7 +228,37 @@ Ready to automate? Share your business type and I'll recommend the best package!
 What type of business do you run?`
     }
 
-    // === PRICING REQUESTS - MUST BE BEFORE EDUCATION SECTION ===
+    // === E-COMMERCE BUSINESS RECOGNITION ===
+    if (text.includes('ecommerce') || text.includes('e-commerce') || text.includes('selling') || 
+        text.includes('shopee') || text.includes('lazada') || text.includes('online store') ||
+        text.includes('polymailer') || text.includes('products') || text.includes('inventory')) {
+        
+        memory.lastResponse = 'ecommerce_business'
+        memory.businessType = 'ecommerce'
+        
+        return `🛒 **Perfect! For e-commerce businesses selling on platforms like Shopee:**
+
+🎁 **Year-End Special: Professional Automation Bundle**
+• **Was $11,500 → Now $9,800 setup (Save $1,700!)**
+• **Only $1,250/month**
+
+**Perfect for your e-commerce business:**
+✅ AI chatbot for customer inquiries
+✅ WhatsApp Business API for order updates  
+✅ Integration with Shopee/marketplace orders
+✅ Inventory management automation
+✅ Customer service automation
+
+**This package helps you:**
+• Handle customer questions 24/7
+• Automate order confirmations via WhatsApp
+• Manage inventory across platforms
+• Reduce manual customer service work
+
+**🎯 Early signup = Free AI retraining within 3 months!**
+
+Want to see how this works for polymailer/e-commerce businesses? Type "demo" or call +65 8982 1301`
+    }
     if (text.includes('how much') || text.includes('cost') || text.includes('price') || text.includes('pricing')) {
         memory.lastResponse = 'pricing'
         return `💰 **CCC Investment Guide:**
