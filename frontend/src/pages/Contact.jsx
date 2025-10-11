@@ -75,11 +75,11 @@ export default function Contact() {
           <FadeUp>
             <div className="max-w-3xl mx-auto text-center">
               {/* CCC Logo */}
-              <div className="mb-6">
+              <div className="mb-8">
                 <img 
                   src="/ccc-logo.svg" 
-                  alt="CCC Logo" 
-                  className="h-12 w-auto mx-auto"
+                  alt="Cognition & Competence Consultancy" 
+                  className="h-16 w-auto mx-auto"
                 />
               </div>
               <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="contact-badge">
