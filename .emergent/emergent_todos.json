@@ -1,34 +1,18 @@
 [
   {
-    "content": "Create new /promotion page with Year-End AI Automation campaign",
-    "status": "completed"
+    "content": "Update promotional messaging to remove false Shopee integration claims",
+    "status": "in_progress"
   },
   {
-    "content": "Add homepage banner link for promotion",
-    "status": "completed"
+    "content": "Create /AILibrary/ with CCC chatbot training documentation",
+    "status": "pending"
   },
   {
-    "content": "Create package pricing table with 3 tiers",
-    "status": "completed"
+    "content": "Document current AI agent system prompts for reuse",
+    "status": "pending"
   },
   {
-    "content": "Update AI agent greeting to promote campaign",
-    "status": "completed"
-  },
-  {
-    "content": "Update WhatsApp bot auto-reply for promotion",
-    "status": "completed"
-  },
-  {
-    "content": "Add SEO metadata for promotion page",
-    "status": "completed"
-  },
-  {
-    "content": "Add footer link integration",
-    "status": "completed"
-  },
-  {
-    "content": "Implement click tracking for promotional CTAs",
-    "status": "completed"
+    "content": "Document WhatsApp bot logic and responses for reuse",
+    "status": "pending"
   }
 ]
