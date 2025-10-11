@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="90" height="30" viewBox="0 0 90 30">
+  <!-- Left C (Blue) -->
+  <path d="M2 20C2 23.3 4.7 26 8 26C9.1 26 10.1 25.5 10.8 24.7L9.4 23.3C9 23.6 8.5 23.7 8 23.7C6.3 23.7 4.9 22.3 4.9 20.6V9.4C4.9 7.7 6.3 6.3 8 6.3C8.5 6.3 9 6.4 9.4 6.7L10.8 5.3C10.1 4.5 9.1 4 8 4C4.7 4 2 6.7 2 10V20Z" fill="#253989"/>
+  
+  <!-- White connecting line -->
+  <rect x="11" y="22" width="4" height="1.5" fill="white"/>
+  
+  <!-- Center C (Red) -->
+  <path d="M15 22C15 25.3 17.7 28 21 28C22.1 28 23.1 27.5 23.8 26.7L22.4 25.3C22 25.6 21.5 25.7 21 25.7C19.3 25.7 17.9 24.3 17.9 22.6V9.4C17.9 7.7 19.3 6.3 21 6.3C21.5 6.3 22 6.4 22.4 6.7L23.8 5.3C23.1 4.5 22.1 4 21 4C17.7 4 15 6.7 15 12V22Z" fill="#EE1823"/>
+  
+  <!-- Speech bubble inside red C -->
+  <ellipse cx="20" cy="16" rx="1.5" ry="1.2" fill="white"/>
+  <path d="M19.5 17.2L18.5 19.5L20.5 18.5Z" fill="white"/>
+  
+  <!-- White connecting line -->
+  <rect x="24" y="22" width="4" height="1.5" fill="white"/>
+  
+  <!-- Right C (Blue) -->
+  <path d="M28 20C28 23.3 30.7 26 34 26C35.1 26 36.1 25.5 36.8 24.7L35.4 23.3C35 23.6 34.5 23.7 34 23.7C32.3 23.7 30.9 22.3 30.9 20.6V9.4C30.9 7.7 32.3 6.3 34 6.3C34.5 6.3 35 6.4 35.4 6.7L36.8 5.3C36.1 4.5 35.1 4 34 4C30.7 4 28 6.7 28 10V20Z" fill="#253989"/>
+  
+  <!-- CCC text for larger versions -->
+  <text x="45" y="18" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#253989">COGNITION &amp; COMPETENCE CONSULTANCY</text>
+</svg>
