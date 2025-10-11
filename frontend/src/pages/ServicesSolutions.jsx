@@ -126,30 +126,24 @@ export default function ServicesSolutions() {
   return (
     <div className="flex flex-col" data-testid="services-solutions-page">
       {/* Hero Section */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-gradient-to-br from-[#EAF7F5] via-white to-[#EAF7F5]">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp>
-            <div className="max-w-3xl mx-auto text-center">
-              <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white hover:bg-[hsl(var(--secondary))]">
-                <Rocket className="mr-1 h-3 w-3" /> Complete Digital Solutions
-              </Badge>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
-                Smart Digital Systems for Modern Businesses
-              </h1>
-              <p className="text-lg text-[#475467] leading-relaxed mb-8">
-                From websites and e-commerce platforms to AI chatbots and WhatsApp automation, CCC delivers complete digital solutions that help Singapore SMEs grow and succeed.
-              </p>
-              <Button 
-                asChild
-                className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
-                data-testid="hero-cta-button"
-              >
-                <Link to="/#lead-form">Start Your Project</Link>
-              </Button>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
+      <PageHeader>
+        <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white hover:bg-[hsl(var(--secondary))]">
+          <Rocket className="mr-1 h-3 w-3" /> Complete Digital Solutions
+        </Badge>
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
+          Smart Digital Systems for Modern Businesses
+        </h1>
+        <p className="text-lg text-[#475467] leading-relaxed mb-8">
+          From websites and e-commerce platforms to AI chatbots and WhatsApp automation, CCC delivers complete digital solutions that help Singapore SMEs grow and succeed.
+        </p>
+        <Button 
+          asChild
+          className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
+          data-testid="hero-cta-button"
+        >
+          <Link to="/#lead-form">Start Your Project</Link>
+        </Button>
+      </PageHeader>
 
       {/* Services Sections */}
       {services.map((service, index) => (
