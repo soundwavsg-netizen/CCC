@@ -13,11 +13,11 @@
   },
   {
     "content": "Update AI agent greeting to promote campaign",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Update WhatsApp bot auto-reply for promotion",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add SEO metadata for promotion page",
@@ -25,7 +25,7 @@
   },
   {
     "content": "Add footer link integration",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Implement click tracking for promotional CTAs",
