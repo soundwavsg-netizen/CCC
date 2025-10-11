@@ -33,9 +33,9 @@ export const Header = () => {
           data-testid="header-logo-link"
         >
           <img 
-            src="/ccc-logo-detailed.svg" 
+            src="/ccc-logo-header.svg" 
             alt="CCC Logo" 
-            className="h-8 w-auto"
+            className="h-7 w-auto"
           />
         </Link>
 
