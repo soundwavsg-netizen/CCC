@@ -29,13 +29,14 @@ export const Header = () => {
         {/* Logo */}
         <Link 
           to="/" 
-          className="flex items-center gap-3"
+          className="flex items-center"
           data-testid="header-logo-link"
         >
           <img 
             src="/ccc-logo.svg" 
             alt="CCC Logo" 
-            className="h-8 w-auto"
+            className="h-10 w-auto"
+            style={{ maxWidth: '200px' }}
           />
         </Link>
 
