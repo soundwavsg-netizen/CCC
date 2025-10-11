@@ -1,19 +1,19 @@
 [
   {
     "content": "Create new /promotion page with Year-End AI Automation campaign",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Add homepage banner link for promotion",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Create package pricing table with 3 tiers",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Update AI agent greeting to promote campaign",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Update WhatsApp bot auto-reply for promotion",
@@ -21,7 +21,7 @@
   },
   {
     "content": "Add SEO metadata for promotion page",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Add footer link integration",
@@ -29,6 +29,6 @@
   },
   {
     "content": "Implement click tracking for promotional CTAs",
-    "status": "pending"
+    "status": "completed"
   }
 ]
