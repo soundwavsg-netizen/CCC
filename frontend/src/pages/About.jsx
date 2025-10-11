@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
+import PageHeader from '../components/PageHeader';
 import { Target, Eye, Users, TrendingUp, Award, Shield } from 'lucide-react';
 
 const FadeUp = ({ delay = 0, children }) => (
