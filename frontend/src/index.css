@@ -5,25 +5,31 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 216 45% 6%;
+    --foreground: 231 100% 12%; /* Brand navy */
     --card: 0 0% 100%;
-    --card-foreground: 216 45% 6%;
+    --card-foreground: 231 100% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 216 45% 6%;
-    --primary: 210 60% 12%;
-    --primary-foreground: 180 70% 97%;
-    --secondary: 180 84% 38%;
-    --secondary-foreground: 180 100% 98%;
-    --muted: 210 18% 96%;
+    --popover-foreground: 231 100% 12%;
+    --primary: 231 100% 12%; /* Brand navy #00003D */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 233 65% 35%; /* Brand blue #293889 */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 243 47% 96%; /* Brand light gray */
     --muted-foreground: 215 20% 52%;
-    --accent: 180 84% 94%;
-    --accent-foreground: 210 60% 12%;
-    --destructive: 3 75% 49%;
+    --accent: 243 47% 96%; /* Brand light gray #EFF1F9 */
+    --accent-foreground: 231 100% 12%;
+    --destructive: 354 82% 52%; /* Brand red #E91F2C */
     --destructive-foreground: 0 0% 98%;
     --border: 210 20% 88%;
     --input: 210 20% 88%;
-    --ring: 180 84% 38%;
+    --ring: 233 65% 35%;
     --radius: 0.625rem;
+    
+    /* Brand color utilities */
+    --brand-red: 354 82% 52%; /* #E91F2C */
+    --brand-blue: 233 65% 35%; /* #293889 */
+    --brand-navy: 231 100% 12%; /* #00003D */
+    --brand-light-gray: 243 47% 96%; /* #EFF1F9 */
   }
 
   .dark {
