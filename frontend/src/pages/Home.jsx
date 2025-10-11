@@ -384,7 +384,7 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <FadeUp>
               <div>
-                <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white" data-testid="ai-badge">
+                <Badge className="mb-4 text-white font-medium" style={{ backgroundColor: '#293889' }} data-testid="ai-badge">
                   <Bot className="mr-1 h-3 w-3" /> AI-Powered
                 </Badge>
                 <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
