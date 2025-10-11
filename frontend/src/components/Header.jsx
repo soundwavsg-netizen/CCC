@@ -32,8 +32,11 @@ export const Header = () => {
           className="flex items-center gap-3"
           data-testid="header-logo-link"
         >
-          <CCCLogo className="h-8 w-auto" variant="default" />
-          <span className="hidden sm:inline text-xl font-semibold text-[var(--brand-navy)]">Cognition & Competence</span>
+          <img 
+            src="/ccc-logo.svg" 
+            alt="CCC Logo" 
+            className="h-8 w-auto"
+          />
         </Link>
 
         {/* Desktop Navigation */}
