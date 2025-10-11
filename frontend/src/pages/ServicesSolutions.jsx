@@ -138,7 +138,7 @@ export default function ServicesSolutions() {
         </p>
         <Button 
           asChild
-          className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
+          className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium shadow-[0_6px_18px_rgba(41,56,137,0.22)]"
           data-testid="hero-cta-button"
         >
           <Link to="/#lead-form">Start Your Project</Link>
@@ -322,7 +322,7 @@ export default function ServicesSolutions() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 asChild
-                className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
+                className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium shadow-[0_6px_18px_rgba(41,56,137,0.22)]"
                 data-testid="cta-primary-button"
               >
                 <Link to="/#lead-form">
