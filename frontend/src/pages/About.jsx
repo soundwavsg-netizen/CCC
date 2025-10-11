@@ -46,6 +46,14 @@ export default function About() {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
             <div className="max-w-3xl mx-auto text-center">
+              {/* CCC Logo */}
+              <div className="mb-8">
+                <img 
+                  src="/ccc-logo.svg" 
+                  alt="Cognition & Competence Consultancy" 
+                  className="h-16 w-auto mx-auto"
+                />
+              </div>
               <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="about-badge">
                 About CCC
               </Badge>
