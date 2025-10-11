@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
+import PageHeader from '../components/PageHeader';
 import { 
   Globe, 
   ShoppingCart, 
