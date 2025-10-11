@@ -49,7 +49,7 @@ export default function About() {
               {/* CCC Logo */}
               <div className="mb-8">
                 <img 
-                  src="/ccc-logo.svg" 
+                  src="/ccc-logo-footer.svg" 
                   alt="Cognition & Competence Consultancy" 
                   className="h-16 w-auto mx-auto"
                 />
