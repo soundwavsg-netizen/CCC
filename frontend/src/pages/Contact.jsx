@@ -77,9 +77,9 @@ export default function Contact() {
               {/* CCC Logo */}
               <div className="mb-8">
                 <img 
-                  src="/ccc-logo-detailed.svg" 
+                  src="https://customer-assets.emergentagent.com/job_smartbiz-portal/artifacts/ehb8g8zz_Screenshot%202025-10-11%20at%203.08.19%20PM.png" 
                   alt="Cognition & Competence Consultancy" 
-                  className="h-16 w-auto mx-auto"
+                  className="h-20 w-auto object-contain mx-auto"
                 />
               </div>
               <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="contact-badge">
