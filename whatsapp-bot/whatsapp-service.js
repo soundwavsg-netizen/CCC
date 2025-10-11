@@ -155,21 +155,54 @@ Ready for a proposal? Type "quote education website"`
 What type of business is this for?`
     }
 
-    // 2. WELCOME - Commercial positioning
+    // 2. WELCOME - Year-End Promotion
     if (text === 'hi' || text === 'hello' || text === 'start') {
         memory.lastResponse = 'welcome'
         return `👋 Hi! Welcome to CCC Digital!
 
+🎁 **Year-End AI Automation Promotion!**
+
 We help Singapore SMEs build smart websites, AI chatbots, and WhatsApp automation.
 
-**How can we help your business today?**
-• Professional website or online store?
-• AI chatbot for customer service?
-• WhatsApp automation like this?
-• Business process automation?
-• Something else?
+**🎯 Special offer: Save up to $2,000 on AI setup until Dec 31, 2025!**
 
-Tell me about your business and I'll guide you!`
+• Website Chatbot + WhatsApp Bot: from $580/month  
+• Professional AI Bundle: from $1,250/month
+• Enterprise Concierge: from $1,950/month
+
+**How can we automate your business today?**
+• Reply "PROMO" for full pricing details
+• Or tell me about your business!
+
+*Limited time offer - act fast! 🚀*`
+    }
+
+    // PROMO keyword response
+    if (text.includes('promo') || text.includes('promotion') || text.includes('offer') || text.includes('pricing')) {
+        memory.lastResponse = 'promo'
+        return `🎁 **CCC Digital Year-End Offer: AI Chatbot & WhatsApp Bot Automation**
+
+**3 PACKAGES AVAILABLE:**
+
+💚 **Start-Up Bundle:** $4,280 setup (was $4,800)
+• Website chatbot + WhatsApp simple setup
+• Perfect for small businesses
+• Only $580/month
+
+💙 **Professional Bundle:** $9,800 setup (was $11,500)  
+• AI trained on your documents + WhatsApp Business API
+• Perfect for SMEs & professional services
+• Only $1,250/month
+
+💜 **Enterprise Concierge:** $15,800 setup (was $18,500)
+• Full AI concierge with CRM integration
+• Perfect for enterprises
+• Only $1,950/month
+
+**🕒 Valid until December 31, 2025**
+**🎯 Early signup = Free AI retraining within 3 months**
+
+Ready to automate? Share your business type and I'll recommend the best package!`
     }
 
     // 3. SERVICES INQUIRY - Commercial focus
