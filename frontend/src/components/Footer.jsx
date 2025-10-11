@@ -84,6 +84,14 @@ export const Footer = () => {
               <li><span className="text-sm">WhatsApp AI Bot Integration</span></li>
               <li><span className="text-sm">CRM & Analytics Integration</span></li>
               <li><span className="text-sm">Custom Web Systems</span></li>
+              <li>
+                <Link 
+                  to="/promotion" 
+                  className="text-sm text-[#E91F2C] hover:text-[#d1171e] font-semibold transition-colors"
+                >
+                  🎁 AI Chatbot & WhatsApp Automation (Promotion)
+                </Link>
+              </li>
             </ul>
           </div>
 
