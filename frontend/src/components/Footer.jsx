@@ -12,16 +12,18 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2 font-bold text-xl text-[hsl(var(--primary))]">
-              <div className="h-8 w-8 rounded-lg bg-[hsl(var(--secondary))] flex items-center justify-center text-white font-bold text-sm">
-                CCC
-              </div>
-              <span>CCC</span>
+            {/* CCC Logo */}
+            <div className="mb-4">
+              <img 
+                src="/ccc-logo.svg" 
+                alt="CCC - Cognition & Competence Consultancy" 
+                className="h-12 w-auto"
+              />
             </div>
             <p className="text-sm">
-              Digital transformation for Singapore SMEs through technology and AI.
+              Smart digital systems for modern businesses. We build websites, AI automation, and WhatsApp integration solutions.
             </p>
-            <p className="text-xs">
+            <p className="text-xs mt-2">
               UEN: 201208916K
             </p>
           </div>
