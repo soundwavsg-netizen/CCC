@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
+import PageHeader from '../components/PageHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Code, Bot, ShoppingCart, GraduationCap, ArrowRight, Check } from 'lucide-react';
 
