@@ -68,7 +68,7 @@ export const Header = () => {
           ))}
           <Button 
             asChild
-            className="bg-[hsl(var(--secondary))] hover:bg-[hsl(var(--secondary))]/90 text-white"
+            className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium"
             data-testid="header-cta-button"
           >
             <Link to="/contact">Get Started</Link>
