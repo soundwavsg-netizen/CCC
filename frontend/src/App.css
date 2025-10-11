@@ -1,6 +1,9 @@
 /* Import brand colors */
 @import './brand-colors.css';
 
+/* Import button fixes */
+@import './button-fixes.css';
+
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
