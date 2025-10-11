@@ -14,6 +14,7 @@ export const Header = () => {
     { path: '/about', label: 'About Us' },
     { path: '/services-solutions', label: 'Services & Solutions' },
     { path: '/portfolio', label: 'Portfolio' },
+    { path: '/promotion', label: '🎁 Year-End Promo', highlight: true },
     { path: '/edg', label: 'EDG Funding (Optional)' },
     { path: '/contact', label: 'Contact' },
   ];
