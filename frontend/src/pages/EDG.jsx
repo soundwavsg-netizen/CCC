@@ -166,6 +166,18 @@ export default function EDG() {
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <FadeUp>
               <div>
+                {/* CCC Logo */}
+                <div className="mb-6">
+                  <img 
+                    src="https://customer-assets.emergentagent.com/job_smartbiz-portal/artifacts/p67oqb1l_Screenshot%202025-10-11%20at%204.38.29%20PM.png" 
+                    alt="Cognition & Competence Consultancy" 
+                    className="h-12 w-auto object-contain"
+                    style={{ 
+                      background: 'transparent',
+                      filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+                    }}
+                  />
+                </div>
                 <Badge className="mb-4 bg-[#12B76A] text-white hover:bg-[#12B76A]" data-testid="hero-badge">
                   <Award className="mr-1 h-3 w-3" /> Strategic Guidance
                 </Badge>
