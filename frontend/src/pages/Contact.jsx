@@ -71,23 +71,17 @@ export default function Contact() {
   return (
     <div className="flex flex-col" data-testid="contact-page">
       {/* Hero Section */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-gradient-to-br from-[#EAF7F5] via-white to-[#EAF7F5]">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp>
-            <div className="max-w-3xl mx-auto text-center">
-              <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="contact-badge">
-                Get In Touch
-              </Badge>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
-                Let's Talk About Your Project
-              </h1>
-              <p className="text-lg text-[#475467] leading-relaxed">
-                Ready to build something intelligent with CCC Digital? We're here to help.
-              </p>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
+      <PageHeader>
+        <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="contact-badge">
+          Get In Touch
+        </Badge>
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
+          Let's Talk About Your Project
+        </h1>
+        <p className="text-lg text-[#475467] leading-relaxed">
+          Ready to build something intelligent with CCC Digital? We're here to help.
+        </p>
+      </PageHeader>
 
       {/* Contact Form & Info */}
       <section className="py-16 sm:py-20 bg-white">
