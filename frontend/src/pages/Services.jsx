@@ -158,7 +158,7 @@ export default function Services() {
 
                       <Button 
                         asChild
-                        className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white"
+                        className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium"
                         data-testid={`service-cta-${service.id}`}
                       >
                         <Link to="/contact">Get Started <ArrowRight className="ml-2 h-4 w-4" /></Link>
