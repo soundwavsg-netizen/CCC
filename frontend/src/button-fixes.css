@@ -1,0 +1,64 @@
+/* Button Fix Utilities - Ensure visible text on all CCC branded buttons */
+
+/* Primary Button (Brand Blue) */
+.btn-primary {
+  background-color: #293889 !important;
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+.btn-primary:hover {
+  background-color: #1e2c6b !important;
+  color: white !important;
+}
+
+/* Secondary Button (Brand Red) */
+.btn-secondary {
+  background-color: #E91F2C !important;
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+.btn-secondary:hover {
+  background-color: #d1171e !important;
+  color: white !important;
+}
+
+/* Success Button (Green) */
+.btn-success {
+  background-color: #25D366 !important;
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+.btn-success:hover {
+  background-color: #1ea952 !important;
+  color: white !important;
+}
+
+/* Ensure all buttons have visible text */
+button {
+  color: inherit !important;
+}
+
+/* Fix any invisible text issues */
+.text-invisible-fix {
+  color: white !important;
+  text-shadow: none !important;
+}
+
+/* Brand color utilities with guaranteed contrast */
+.bg-brand-blue {
+  background-color: #293889 !important;
+  color: white !important;
+}
+
+.bg-brand-red {
+  background-color: #E91F2C !important;
+  color: white !important;
+}
+
+.bg-brand-navy {
+  background-color: #00003D !important;
+  color: white !important;
+}
