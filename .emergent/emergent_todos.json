@@ -1,18 +1,18 @@
 [
   {
     "content": "Update promotional messaging to remove false Shopee integration claims",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Create /AILibrary/ with CCC chatbot training documentation",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Document current AI agent system prompts for reuse",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Document WhatsApp bot logic and responses for reuse",
-    "status": "pending"
+    "status": "completed"
   }
 ]
