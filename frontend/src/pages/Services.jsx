@@ -227,7 +227,7 @@ export default function Services() {
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button 
                   asChild
-                  className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
+                  className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium shadow-[0_6px_18px_rgba(41,56,137,0.22)]"
                   data-testid="services-contact-cta"
                 >
                   <Link to="/contact">Schedule a Consultation</Link>
