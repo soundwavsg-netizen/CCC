@@ -167,11 +167,11 @@ export default function EDG() {
             <FadeUp>
               <div>
                 {/* CCC Logo */}
-                <div className="mb-6">
+                <div className="mb-6 text-center">
                   <img 
                     src="https://customer-assets.emergentagent.com/job_smartbiz-portal/artifacts/p67oqb1l_Screenshot%202025-10-11%20at%204.38.29%20PM.png" 
                     alt="Cognition & Competence Consultancy" 
-                    className="h-12 w-auto object-contain"
+                    className="h-20 w-auto object-contain mx-auto"
                     style={{ 
                       background: 'transparent',
                       filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
