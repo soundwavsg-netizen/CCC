@@ -196,49 +196,47 @@ export default function Home() {
 
   return (
     <div className="flex flex-col" data-testid="home-page">
-      {/* Hero Section */}
+      {/* Logo Header - Consistent across all pages */}
+      <PageHeader>
+        <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white hover:bg-[hsl(var(--secondary))]" data-testid="hero-badge">
+          <Zap className="mr-1 h-3 w-3" /> Smart Digital Solutions
+        </Badge>
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
+          Build Smarter Websites. Automate with AI. Engage Customers Instantly.
+        </h1>
+        <p className="text-base text-[#1F2A37] max-w-prose leading-relaxed mb-6">
+          Cognition & Competence Consultancy (CCC) helps Singapore businesses create modern digital experiences — from responsive websites and e-commerce systems to AI chatbots and WhatsApp automation.
+        </p>
+        <p className="text-sm text-[#475467] mb-8">
+          We build smart websites, apps & AI systems that grow your business.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button 
+            onClick={handleStartProject}
+            className="bg-[hsl(var(--secondary))] hover:bg-[#1e2c6b] text-white shadow-[0_6px_18px_rgba(41,56,137,0.22)]"
+            data-testid="hero-primary-cta-button"
+          >
+            <Rocket className="mr-2 h-4 w-4" />
+            Start My Project
+          </Button>
+          <Button 
+            asChild
+            variant="outline"
+            className="border-[hsl(var(--border))]"
+            data-testid="hero-secondary-cta-button"
+          >
+            <Link to="/edg">
+              <Award className="mr-2 h-4 w-4" />
+              Check EDG Eligibility (Optional) <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      </PageHeader>
+
+      {/* Hero Content Section */}
       <section className="relative overflow-hidden bg-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#EAF7F5] via-white to-[#EAF7F5] opacity-60" />
-        <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
-            <FadeUp>
-              <div>
-                <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white hover:bg-[hsl(var(--secondary))]" data-testid="hero-badge">
-                  <Zap className="mr-1 h-3 w-3" /> Smart Digital Solutions
-                </Badge>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
-                  Build Smarter Websites. Automate with AI. Engage Customers Instantly.
-                </h1>
-                <p className="text-base text-[#1F2A37] max-w-prose leading-relaxed mb-6">
-                  Cognition & Competence Consultancy (CCC) helps Singapore businesses create modern digital experiences — from responsive websites and e-commerce systems to AI chatbots and WhatsApp automation.
-                </p>
-                <p className="text-sm text-[#475467] mb-8">
-                  We build smart websites, apps & AI systems that grow your business.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button 
-                    onClick={handleStartProject}
-                    className="bg-[hsl(var(--secondary))] hover:bg-[#1e2c6b] text-white shadow-[0_6px_18px_rgba(41,56,137,0.22)]"
-                    data-testid="hero-primary-cta-button"
-                  >
-                    <Rocket className="mr-2 h-4 w-4" />
-                    Start My Project
-                  </Button>
-                  <Button 
-                    asChild
-                    variant="outline"
-                    className="border-[hsl(var(--border))]"
-                    data-testid="hero-secondary-cta-button"
-                  >
-                    <Link to="/edg">
-                      <Award className="mr-2 h-4 w-4" />
-                      Check EDG Eligibility (Optional) <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            </FadeUp>
-            
+        <div className="relative max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="flex justify-center">
             <FadeUp delay={0.1}>
               <Card className="rounded-xl overflow-hidden shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
                 <img 
