@@ -168,19 +168,16 @@ export default function EDG() {
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
           Empowering SMEs Through Digital Transformation
         </h1>
-        <p className="text-base text-[#1F2A37] max-w-prose leading-relaxed mb-6">
+        <p className="text-base text-[#1F2A37] max-w-prose leading-relaxed mb-4">
           CCC helps Singapore businesses modernize their operations with AI automation, intelligent web systems, and digital workflows.
         </p>
-        <p className="text-base text-[#475467] max-w-prose leading-relaxed mb-6">
-          For eligible SMEs, portions of these transformation projects may qualify for support under Enterprise Singapore's Enterprise Development Grant (EDG).
-        </p>
-        <p className="text-sm text-[#6B7280] mb-8">
+        <p className="text-sm text-[#6B7280] mb-6">
           CCC assists with project documentation and alignment to ensure your proposal meets transformation-focused requirements — but final funding approval is determined solely by Enterprise Singapore.
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
           <Button 
             onClick={() => handleChatOpen('edg-hero')}
-            className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white shadow-[0_6px_18px_rgba(15,181,174,0.22)]"
+            className="bg-[hsl(var(--secondary))] hover:bg-[#1e2c6b] text-white shadow-[0_6px_18px_rgba(41,56,137,0.22)]"
             data-testid="hero-primary-cta-button"
           >
             <MessageCircle className="mr-2 h-4 w-4" />
