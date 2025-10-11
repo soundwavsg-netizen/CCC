@@ -236,28 +236,31 @@ What type of business do you run?`
         memory.lastResponse = 'ecommerce_business'
         memory.businessType = 'ecommerce'
         
-        return `🛒 **Perfect! For e-commerce businesses selling on platforms like Shopee:**
+        return `🛒 **Perfect! For e-commerce businesses like yours:**
 
 🎁 **Year-End Special: Professional Automation Bundle**
 • **Was $11,500 → Now $9,800 setup (Save $1,700!)**
 • **Only $1,250/month**
 
-**Perfect for your e-commerce business:**
-✅ AI chatbot for customer inquiries
-✅ WhatsApp Business API for order updates  
-✅ Integration with Shopee/marketplace orders
-✅ Inventory management automation
-✅ Customer service automation
+**What this includes for your e-commerce:**
+✅ AI chatbot for customer product inquiries
+✅ WhatsApp Business API for customer service  
+✅ Inventory management dashboard (CSV import/export)
+✅ Customer inquiry automation
+✅ Lead capture for repeat customers
+✅ Automated customer service responses
 
-**This package helps you:**
-• Handle customer questions 24/7
-• Automate order confirmations via WhatsApp
-• Manage inventory across platforms
-• Reduce manual customer service work
+**This helps you:**
+• Answer product questions instantly via chat/WhatsApp
+• Track inventory through dashboard (not direct Shopee API)
+• Automate customer service workflows
+• Capture leads and follow up automatically
+
+**Note:** We focus on customer service automation rather than direct marketplace API integration.
 
 **🎯 Early signup = Free AI retraining within 3 months!**
 
-Want to see how this works for polymailer/e-commerce businesses? Type "demo" or call +65 8982 1301`
+Want to see how customer automation works? Type "demo" or call +65 8982 1301`
     }
     if (text.includes('how much') || text.includes('cost') || text.includes('price') || text.includes('pricing')) {
         memory.lastResponse = 'pricing'
