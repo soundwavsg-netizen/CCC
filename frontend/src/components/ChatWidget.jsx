@@ -424,7 +424,7 @@ export const ChatWidget = () => {
                   <div className="flex gap-2">
                     <Button
                       onClick={submitLeadForm}
-                      className="flex-1 bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white"
+                      className="flex-1 bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium"
                       data-testid="lead-form-submit"
                     >
                       Submit
