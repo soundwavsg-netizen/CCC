@@ -307,6 +307,70 @@ Which option interests you most?`
 What subjects do you teach? This helps me recommend specific features.`
     }
 
+    // === RETAIL/PHYSICAL STORE RECOGNITION ===
+    if (text.includes('retail') || text.includes('store') || text.includes('shop') || 
+        text.includes('clinic') || text.includes('tuition') || text.includes('restaurant') ||
+        text.includes('salon') || text.includes('pharmacy')) {
+        
+        memory.lastResponse = 'retail_business'
+        memory.businessType = 'retail'
+        
+        return `🏪 **Great! For retail/service businesses like yours:**
+
+🎁 **Year-End Special: Start-Up AI Bundle**
+• **Was $4,800 → Now $4,280 setup (Save $520!)**
+• **Only $580/month**
+
+**Perfect for your ${text.includes('tuition') ? 'tuition center' : text.includes('clinic') ? 'clinic' : text.includes('restaurant') ? 'restaurant' : 'business'}:**
+✅ Website AI chatbot for inquiries
+✅ WhatsApp bot for appointments/orders
+✅ Customer qualification & lead capture
+✅ Automated responses for common questions
+✅ Integration with your current systems
+
+**This helps you:**
+• Answer customer questions instantly
+• Book appointments via WhatsApp
+• Capture leads automatically
+• Reduce phone calls and manual work
+
+**🎯 Early signup = Free AI retraining within 3 months!**
+
+Ready to automate? Type "startup bundle" or call +65 8982 1301`
+    }
+
+    // === BUSINESS SERVICE RECOGNITION ===
+    if (text.includes('consultancy') || text.includes('professional service') || 
+        text.includes('agency') || text.includes('firm') || text.includes('lawyer') ||
+        text.includes('accounting') || text.includes('marketing')) {
+        
+        memory.lastResponse = 'professional_service'
+        memory.businessType = 'professional'
+        
+        return `🏢 **Excellent! For professional service businesses:**
+
+🎁 **Year-End Special: Professional Automation Bundle**
+• **Was $11,500 → Now $9,800 setup (Save $1,700!)**
+• **Only $1,250/month**
+
+**Perfect for professional services:**
+✅ AI chatbot trained on your service documents
+✅ WhatsApp Business API for client communication
+✅ CRM integration (HubSpot/Salesforce)
+✅ Automated client qualification
+✅ Professional response flows
+✅ Lead nurturing automation
+
+**This helps you:**
+• Qualify prospects automatically
+• Provide instant service information
+• Schedule consultations efficiently
+• Nurture leads with follow-ups
+
+**🎯 Early signup = Free AI retraining within 3 months!**
+
+Want to see how this works for your industry? Type "professional demo" or call +65 8982 1301`
+    }
     // === PRICING REQUESTS ===
     if (text.includes('how much') || text.includes('cost') || text.includes('price') || text.includes('pricing')) {
         memory.lastResponse = 'pricing'
