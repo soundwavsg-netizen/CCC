@@ -409,7 +409,7 @@ export default function Home() {
                 </ul>
                 <Button 
                   onClick={() => handleChatOpen('ai-section')}
-                  className="bg-[hsl(var(--secondary))] hover:bg-[#1e2c6b] text-white"
+                  className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium"
                   data-testid="ai-section-cta-button"
                 >
                   <MessageCircle className="mr-2 h-4 w-4" />
