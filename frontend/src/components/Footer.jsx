@@ -15,7 +15,7 @@ export const Footer = () => {
             {/* CCC Logo */}
             <div className="mb-4">
               <img 
-                src="/ccc-logo-footer.svg" 
+                src="/ccc-logo-detailed.svg" 
                 alt="CCC - Cognition & Competence Consultancy" 
                 className="h-12 w-auto"
               />
