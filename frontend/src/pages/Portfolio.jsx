@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
+import PageHeader from '../components/PageHeader';
 import { Dialog, DialogContent, DialogTrigger } from '../components/ui/dialog';
 import { ExternalLink } from 'lucide-react';
 
