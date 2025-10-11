@@ -74,6 +74,14 @@ export default function Contact() {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
             <div className="max-w-3xl mx-auto text-center">
+              {/* CCC Logo */}
+              <div className="mb-6">
+                <img 
+                  src="/ccc-logo.svg" 
+                  alt="CCC Logo" 
+                  className="h-12 w-auto mx-auto"
+                />
+              </div>
               <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="contact-badge">
                 Get In Touch
               </Badge>
@@ -81,7 +89,7 @@ export default function Contact() {
                 Let's Talk About Your Project
               </h1>
               <p className="text-lg text-[#475467] leading-relaxed">
-                Have a question or ready to start your digital transformation? We're here to help.
+                Ready to build something intelligent with CCC Digital? We're here to help.
               </p>
             </div>
           </FadeUp>
