@@ -1,0 +1,29 @@
+/* CCC Brand Colors - Updated from Brand Specifications */
+:root {
+  /* Primary Brand Colors */
+  --brand-red: #E91F2C;
+  --brand-red-rgb: 233, 31, 44;
+  
+  --brand-blue: #293889;
+  --brand-blue-rgb: 41, 54, 137;
+  
+  --brand-navy: #00003D;
+  --brand-navy-rgb: 0, 0, 61;
+  
+  --brand-light-gray: #EFF1F9;
+  --brand-light-gray-rgb: 240, 241, 249;
+  
+  /* Update existing color variables */
+  --primary: var(--brand-navy);
+  --primary-foreground: white;
+  
+  --secondary: var(--brand-blue);
+  --secondary-foreground: white;
+  
+  --accent: var(--brand-light-gray);
+  --accent-foreground: var(--brand-navy);
+  
+  /* Teal colors (keep existing for gradients) */
+  --teal: #0FB5AE;
+  --teal-hover: #0AA099;
+}
