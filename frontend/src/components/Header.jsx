@@ -29,32 +29,14 @@ export const Header = () => {
         {/* Logo */}
         <Link 
           to="/" 
-          className="flex items-center gap-1"
+          className="flex items-center"
           data-testid="header-logo-link"
         >
-          <div className="flex items-center">
-            {/* Left C (Blue) */}
-            <div 
-              className="w-5 h-5 border-2 border-l-0 border-t-0 border-b-0 rounded-r-full"
-              style={{ borderColor: '#253989', borderRightColor: '#253989' }}
-            ></div>
-            {/* Center C (Red) with speech bubble */}
-            <div className="relative -ml-1">
-              <div 
-                className="w-5 h-5 border-2 border-l-0 border-r-0 border-t-0 border-b-0 rounded-full"
-                style={{ borderColor: '#EE1823', borderTopColor: '#EE1823', borderBottomColor: '#EE1823' }}
-              ></div>
-              <div 
-                className="absolute top-1 left-1 w-1.5 h-1 bg-white rounded-full"
-              ></div>
-            </div>
-            {/* Right C (Blue) */}
-            <div 
-              className="w-5 h-5 border-2 border-r-0 border-t-0 border-b-0 rounded-l-full -ml-1"
-              style={{ borderColor: '#253989', borderLeftColor: '#253989' }}
-            ></div>
-          </div>
-          <span className="text-sm font-bold ml-2" style={{ color: '#253989' }}>CCC</span>
+          <img 
+            src="https://customer-assets.emergentagent.com/job_smartbiz-portal/artifacts/ehb8g8zz_Screenshot%202025-10-11%20at%203.08.19%20PM.png" 
+            alt="CCC Logo" 
+            className="h-8 w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop Navigation */}
