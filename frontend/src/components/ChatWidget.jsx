@@ -460,7 +460,7 @@ export const ChatWidget = () => {
                   <Button
                     onClick={sendMessage}
                     disabled={!inputValue.trim() || isLoading}
-                    className="bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white px-4"
+                    className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium px-4"
                     data-testid="chat-send-button"
                   >
                     <Send className="h-4 w-4" />
