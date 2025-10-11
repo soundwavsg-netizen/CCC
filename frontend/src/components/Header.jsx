@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
+import CCCLogo from './CCCLogo';
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
