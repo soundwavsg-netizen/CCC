@@ -178,7 +178,7 @@ export default function Contact() {
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[hsl(var(--secondary))] hover:bg-[#0AA099] text-white"
+                    className="w-full bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium"
                     data-testid="contact-form-submit-button"
                   >
                     {loading ? 'Sending...' : 'Send Message'}
