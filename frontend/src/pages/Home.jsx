@@ -198,7 +198,7 @@ export default function Home() {
     <div className="flex flex-col" data-testid="home-page">
       {/* Logo Header - Consistent across all pages */}
       <PageHeader>
-        <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white hover:bg-[hsl(var(--secondary))]" data-testid="hero-badge">
+        <Badge className="mb-4 text-white font-medium" style={{ backgroundColor: '#293889' }} data-testid="hero-badge">
           <Zap className="mr-1 h-3 w-3" /> Smart Digital Solutions
         </Badge>
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
