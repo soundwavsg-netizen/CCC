@@ -4,29 +4,10 @@ import { Mail, Phone } from 'lucide-react';
 
 export const Footer = () => {
   return (
-    <>
-      {/* Centralized Logo Section */}
-      <section className="py-12 bg-gradient-to-br from-[#EAF7F5] to-white border-t">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <img 
-              src="https://customer-assets.emergentagent.com/job_smartbiz-portal/artifacts/p67oqb1l_Screenshot%202025-10-11%20at%204.38.29%20PM.png" 
-              alt="Cognition & Competence Consultancy" 
-              className="h-20 w-auto object-contain mx-auto"
-              style={{ 
-                background: 'transparent',
-                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
-              }}
-            />
-          </div>
-        </div>
-      </section>
-      
-      {/* Main Footer */}
-      <footer 
-        className="border-t bg-[hsl(var(--background))] text-[#475467]"
-        data-testid="main-footer"
-      >
+    <footer 
+      className="border-t bg-[hsl(var(--background))] text-[#475467]"
+      data-testid="main-footer"
+    >
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
