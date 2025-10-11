@@ -575,7 +575,7 @@ export default function Home() {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-[hsl(var(--secondary))] hover:bg-[#1e2c6b] text-white"
+                    className="w-full bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium"
                     disabled={isFormLoading}
                     data-testid="lead-form-submit"
                   >
