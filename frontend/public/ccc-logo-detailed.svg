@@ -1,0 +1,34 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Left C (Blue) -->
+  <path d="M5 42C5 48.6 10.4 54 17 54C19.8 54 22.4 52.7 24.2 50.5L21.2 46.8C20.2 47.6 18.7 48.1 17.1 48.1C14.3 48.1 12 45.8 12 43V17C12 14.2 14.3 11.9 17.1 11.9C18.7 11.9 20.2 12.4 21.2 13.2L24.2 9.5C22.4 7.3 19.8 6 17 6C10.4 6 5 11.4 5 18V42Z" fill="#253989"/>
+  
+  <!-- Connecting line between left and center -->
+  <line x1="24" y1="45" x2="30" y1="45" stroke="white" stroke-width="2"/>
+  
+  <!-- Center C (Red) with speech bubble -->
+  <g>
+    <path d="M30 45C30 51.6 35.4 57 42 57C44.8 57 47.4 55.7 49.2 53.5L46.2 49.8C45.2 50.6 43.7 51.1 42.1 51.1C39.3 51.1 37 48.8 37 46V20C37 17.2 39.3 14.9 42.1 14.9C43.7 14.9 45.2 15.4 46.2 16.2L49.2 12.5C47.4 10.3 44.8 9 42 9C35.4 9 30 14.4 30 21V45Z" fill="#EE1823"/>
+    
+    <!-- Speech bubble inside red C -->
+    <g>
+      <!-- Main bubble body -->
+      <ellipse cx="40" cy="33" rx="4" ry="3" fill="white"/>
+      <!-- Speech bubble tail -->
+      <path d="M38 36L35 42L40 38Z" fill="white"/>
+    </g>
+  </g>
+  
+  <!-- Connecting line between center and right -->
+  <line x1="49" y1="45" x2="55" y1="45" stroke="white" stroke-width="2"/>
+  
+  <!-- Right C (Blue) -->
+  <path d="M55 42C55 48.6 60.4 54 67 54C69.8 54 72.4 52.7 74.2 50.5L71.2 46.8C70.2 47.6 68.7 48.1 67.1 48.1C64.3 48.1 62 45.8 62 43V17C62 14.2 64.3 11.9 67.1 11.9C68.7 11.9 70.2 12.4 71.2 13.2L74.2 9.5C72.4 7.3 69.8 6 67 6C60.4 6 55 11.4 55 18V42Z" fill="#253989"/>
+  
+  <!-- Company name text -->
+  <text x="85" y="25" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#253989">
+    COGNITION &amp; COMPETENCE
+  </text>
+  <text x="85" y="42" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#253989">
+    CONSULTANCY
+  </text>
+</svg>
