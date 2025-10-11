@@ -43,23 +43,17 @@ export default function About() {
   return (
     <div className="flex flex-col" data-testid="about-page">
       {/* Hero Section */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-gradient-to-br from-[#EAF7F5] via-white to-[#EAF7F5]">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp>
-            <div className="max-w-3xl mx-auto text-center">
-              <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="about-badge">
-                About CCC
-              </Badge>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
-                Your Digital Transformation Partner
-              </h1>
-              <p className="text-lg text-[#475467] leading-relaxed">
-                Since 2012, Cognition & Competence Consultancy has been helping Singapore SMEs navigate the digital landscape with confidence and success.
-              </p>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
+      <PageHeader>
+        <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="about-badge">
+          About CCC
+        </Badge>
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
+          Your Digital Transformation Partner
+        </h1>
+        <p className="text-lg text-[#475467] leading-relaxed">
+          Since 2012, Cognition & Competence Consultancy has been helping Singapore SMEs navigate the digital landscape with confidence and success.
+        </p>
+      </PageHeader>
 
       {/* Company Background */}
       <section className="py-16 sm:py-20 bg-white" data-testid="company-background">
