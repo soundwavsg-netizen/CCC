@@ -129,6 +129,18 @@ export default function ServicesSolutions() {
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeUp>
             <div className="max-w-3xl mx-auto text-center">
+              {/* CCC Logo */}
+              <div className="mb-8">
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_smartbiz-portal/artifacts/p67oqb1l_Screenshot%202025-10-11%20at%204.38.29%20PM.png" 
+                  alt="Cognition & Competence Consultancy" 
+                  className="h-16 w-auto object-contain mx-auto"
+                  style={{ 
+                    background: 'transparent',
+                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+                  }}
+                />
+              </div>
               <Badge className="mb-4 bg-[hsl(var(--secondary))] text-white hover:bg-[hsl(var(--secondary))]">
                 <Rocket className="mr-1 h-3 w-3" /> Complete Digital Solutions
               </Badge>
