@@ -57,6 +57,7 @@ export default function About() {
                     filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
                   }}
                 />
+              </div>
               <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="about-badge">
                 About CCC
               </Badge>
