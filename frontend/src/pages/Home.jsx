@@ -662,7 +662,12 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 onClick={handleStartProject}
-                className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium shadow-[0_6px_18px_rgba(41,56,137,0.22)]"
+                style={{ 
+                  backgroundColor: '#293889',
+                  color: 'white',
+                  fontWeight: '500'
+                }}
+                className="hover:bg-[#1e2c6b] shadow-[0_6px_18px_rgba(41,56,137,0.22)]"
                 data-testid="cta-primary-button"
               >
                 <Rocket className="mr-2 h-4 w-4" />
