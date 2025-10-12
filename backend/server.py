@@ -413,7 +413,7 @@ async def send_email_notification(lead: ChatLead):
         smtp_port = int(os.environ.get('SMTP_PORT', '587'))
         sender_email = os.environ.get('SENDER_EMAIL', '')
         sender_password = os.environ.get('SENDER_PASSWORD', '')
-        recipient_email = os.environ.get('NOTIFICATION_EMAIL', 'glor-yeo@hotmail.com')
+        recipient_email = os.environ.get('NOTIFICATION_EMAIL', 'hello@cccdigital.sg')
         
         if not sender_email or not sender_password:
             logger.warning("Email credentials not configured. Notification skipped.")
