@@ -298,6 +298,8 @@ What type of business do you run?`
 
 Want to see how customer automation works? Type "demo" or call +65 8982 1301`
     }
+
+    // === PRICING REQUESTS ===
     if (text.includes('how much') || text.includes('cost') || text.includes('price') || text.includes('pricing')) {
         memory.lastResponse = 'pricing'
         return `💰 **CCC Investment Guide:**
