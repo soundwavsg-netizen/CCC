@@ -188,7 +188,7 @@ export default function Services() {
                         <Button 
                           asChild
                           variant="ghost" 
-                          className="p-0 h-auto hover:bg-transparent text-[hsl(var(--secondary))] hover:text-[#0AA099]"
+                          className="p-0 h-auto hover:bg-transparent text-white hover:text-white"
                           data-testid={`service-portfolio-link-${service.id}`}
                         >
                           <Link to="/portfolio">View Portfolio <ArrowRight className="ml-1 h-4 w-4" /></Link>
