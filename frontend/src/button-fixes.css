@@ -1,14 +1,33 @@
 /* Button Fix Utilities - Ensure visible text on all CCC branded buttons */
 
-/* Primary Button (Brand Blue) */
-.btn-primary {
+/* Primary Button (Brand Blue) - Force white text */
+.btn-primary,
+[style*="background-color: #293889"],
+[class*="bg-[#293889]"],
+[class*="bg-[hsl(var(--secondary))]"] {
   background-color: #293889 !important;
   color: white !important;
   font-weight: 500 !important;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+[style*="background-color: #293889"]:hover,
+[class*="bg-[#293889]"]:hover,
+[class*="bg-[hsl(var(--secondary))]"]:hover {
   background-color: #1e2c6b !important;
+  color: white !important;
+}
+
+/* Force white text on all blue backgrounds */
+button[class*="bg-[#293889]"],
+button[class*="bg-[hsl(var(--secondary))]"],
+.bg-blue-600, .bg-blue-500, .bg-blue-700 {
+  color: white !important;
+}
+
+button[class*="bg-[#293889]"] *,
+button[class*="bg-[hsl(var(--secondary))]"] *,
+.bg-blue-600 *, .bg-blue-500 *, .bg-blue-700 * {
   color: white !important;
 }
 
