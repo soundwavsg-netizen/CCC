@@ -95,7 +95,43 @@ async function getSmartResponse(phoneNumber, messageText) {
     
     const memory = conversationMemory[phoneNumber]
 
-    // === QUOTE REQUESTS (always handle first) ===
+    // 1. BUSINESS TYPE RECOGNITION - HIGHEST PRIORITY
+    // === E-COMMERCE BUSINESS RECOGNITION ===
+    if (text.includes('ecommerce') || text.includes('e-commerce') || text.includes('selling') || 
+        text.includes('shopee') || text.includes('lazada') || text.includes('online store') ||
+        text.includes('polymailer') || text.includes('products') || text.includes('inventory')) {
+        
+        memory.lastResponse = 'ecommerce_business'
+        memory.businessType = 'ecommerce'
+        
+        return `🛒 **Perfect! For e-commerce businesses like yours:**
+
+🎁 **Year-End Special: Professional Automation Bundle**
+• **Was $11,500 → Now $9,800 setup (Save $1,700!)**
+• **Only $1,250/month**
+
+**What this includes for your e-commerce:**
+✅ AI chatbot for customer product inquiries
+✅ WhatsApp Business API for customer service  
+✅ Inventory management dashboard (CSV import/export)
+✅ Customer inquiry automation
+✅ Lead capture for repeat customers
+✅ Automated customer service responses
+
+**This helps you:**
+• Answer product questions instantly via chat/WhatsApp
+• Track inventory through dashboard (not direct Shopee API)
+• Automate customer service workflows
+• Capture leads and follow up automatically
+
+**Note:** We focus on customer service automation rather than direct marketplace API integration.
+
+**🎯 Early signup = Free AI retraining within 3 months!**
+
+Want to see how customer automation works? Type "demo" or call +65 8982 1301`
+    }
+
+    // === QUOTE REQUESTS (second priority) ===
     if (text.includes('quote')) {
         memory.lastResponse = 'quote'
         if (text.includes('education') || text.includes('school')) {
