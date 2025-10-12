@@ -1,6 +1,10 @@
 [
   {
-    "content": "Find and fix all invisible button text across website pages",
+    "content": "Fix all blue buttons to have white text instead of black",
     "status": "in_progress"
+  },
+  {
+    "content": "Debug WhatsApp bot business recognition failure",
+    "status": "pending"
   }
 ]
