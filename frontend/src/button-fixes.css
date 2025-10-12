@@ -1,33 +1,48 @@
 /* Button Fix Utilities - Ensure visible text on all CCC branded buttons */
 
-/* Primary Button (Brand Blue) - Force white text */
-.btn-primary,
-[style*="background-color: #293889"],
+/* Force white text on ALL blue backgrounds - comprehensive fix */
 [class*="bg-[#293889]"],
-[class*="bg-[hsl(var(--secondary))]"] {
+[class*="bg-[hsl(var(--secondary))]"],
+[style*="background-color: #293889"],
+.bg-blue-600, .bg-blue-500, .bg-blue-700 {
+  color: white !important;
+}
+
+/* Force white text on all children of blue backgrounds */
+[class*="bg-[#293889]"] *,
+[class*="bg-[hsl(var(--secondary))]"] *,
+[style*="background-color: #293889"] *,
+.bg-blue-600 *, .bg-blue-500 *, .bg-blue-700 * {
+  color: white !important;
+}
+
+/* Fix specific button and link elements */
+button[class*="bg-[#293889]"],
+button[class*="bg-[hsl(var(--secondary))]"],
+a[class*="bg-[#293889]"],
+a[class*="bg-[hsl(var(--secondary))]"] {
+  color: white !important;
+  font-weight: 500 !important;
+}
+
+/* Fix hover states to maintain white text */
+button[class*="bg-[#293889]"]:hover,
+button[class*="bg-[hsl(var(--secondary))]"]:hover,
+a[class*="bg-[#293889]"]:hover,
+a[class*="bg-[hsl(var(--secondary))]"]:hover {
+  background-color: #1e2c6b !important;
+  color: white !important;
+}
+
+/* Primary Button (Brand Blue) */
+.btn-primary {
   background-color: #293889 !important;
   color: white !important;
   font-weight: 500 !important;
 }
 
-.btn-primary:hover,
-[style*="background-color: #293889"]:hover,
-[class*="bg-[#293889]"]:hover,
-[class*="bg-[hsl(var(--secondary))]"]:hover {
+.btn-primary:hover {
   background-color: #1e2c6b !important;
-  color: white !important;
-}
-
-/* Force white text on all blue backgrounds */
-button[class*="bg-[#293889]"],
-button[class*="bg-[hsl(var(--secondary))]"],
-.bg-blue-600, .bg-blue-500, .bg-blue-700 {
-  color: white !important;
-}
-
-button[class*="bg-[#293889]"] *,
-button[class*="bg-[hsl(var(--secondary))]"] *,
-.bg-blue-600 *, .bg-blue-500 *, .bg-blue-700 * {
   color: white !important;
 }
 
@@ -55,15 +70,15 @@ button[class*="bg-[hsl(var(--secondary))]"] *,
   color: white !important;
 }
 
-/* Ensure all buttons have visible text */
-button {
-  color: inherit !important;
+/* Specific fixes for blue link elements that might be on blue backgrounds */
+[class*="text-[hsl(var(--secondary))]"] {
+  color: #293889 !important;
 }
 
-/* Fix any invisible text issues */
-.text-invisible-fix {
+/* When blue text is on blue background, make it white */
+[class*="bg-[#293889]"] [class*="text-[hsl(var(--secondary))]"],
+[class*="bg-[hsl(var(--secondary))]"] [class*="text-[hsl(var(--secondary))]"] {
   color: white !important;
-  text-shadow: none !important;
 }
 
 /* Brand color utilities with guaranteed contrast */
