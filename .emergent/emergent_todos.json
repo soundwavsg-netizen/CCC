@@ -1,10 +1,10 @@
 [
   {
     "content": "Fix all blue buttons to have white text instead of black",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Debug WhatsApp bot business recognition failure",
-    "status": "pending"
+    "status": "completed"
   }
 ]
