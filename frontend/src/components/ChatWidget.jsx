@@ -110,7 +110,7 @@ export const ChatWidget = () => {
       console.error('Chat error:', error);
       const errorMessage = {
         role: 'assistant',
-        content: "I apologize, but I'm having trouble connecting right now. Please try contacting us directly at glor-yeo@hotmail.com or call 8982 1301.",
+        content: "I apologize, but I'm having trouble connecting right now. Please try contacting us directly at hello@cccdigital.sg or call 8982 1301.",
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);
