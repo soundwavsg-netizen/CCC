@@ -245,7 +245,7 @@ export default function Terms() {
                   <p><strong>Cognition & Competence Consultancy Pte Ltd</strong></p>
                   <p>UEN: 201208916K</p>
                   <p className="mt-2">
-                    Email: <a href="mailto:glor-yeo@hotmail.com" className="text-[hsl(var(--secondary))] hover:underline">glor-yeo@hotmail.com</a>
+                    Email: <a href="mailto:hello@cccdigital.sg" className="text-[hsl(var(--secondary))] hover:underline">hello@cccdigital.sg</a>
                   </p>
                   <p>Phone: <a href="tel:+6589821301" className="text-[hsl(var(--secondary))] hover:underline">+65 8982 1301</a></p>
                 </div>
