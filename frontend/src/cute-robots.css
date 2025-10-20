@@ -1,0 +1,199 @@
+/* Cute AI Robot Character Animations */
+
+/* Shimmer Animation for Robot Avatars */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Robot Breathing Animation */
+@keyframes robot-breathe {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg); 
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+  50% { 
+    transform: scale(1.05) rotate(1deg); 
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+  }
+}
+
+.robot-breathe {
+  animation: robot-breathe 4s ease-in-out infinite;
+}
+
+/* Robot Eye Blink */
+@keyframes blink {
+  0%, 90%, 100% { height: 6px; }
+  95% { height: 1px; }
+}
+
+.robot-eye {
+  animation: blink 3s infinite;
+}
+
+/* Antenna Ping */
+@keyframes antenna-ping {
+  0% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  75% { 
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% { 
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+.antenna-ping {
+  animation: antenna-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Robot Hover Dance */
+@keyframes robot-dance {
+  0%, 100% { transform: rotate(-2deg) translateY(0px); }
+  25% { transform: rotate(1deg) translateY(-2px); }
+  50% { transform: rotate(-1deg) translateY(-1px); }
+  75% { transform: rotate(2deg) translateY(-3px); }
+}
+
+.robot-hover:hover .robot-avatar {
+  animation: robot-dance 0.6s ease-in-out;
+}
+
+/* AI Employee Card Styles */
+.ai-employee-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-employee-card:hover {
+  transform: translateY(-12px) rotateX(5deg);
+  box-shadow: 0 20px 60px rgba(31, 38, 135, 0.25);
+}
+
+.ai-employee-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.8), transparent);
+  transition: left 0.8s;
+}
+
+.ai-employee-card:hover::before {
+  left: 100%;
+}
+
+/* Cute Robot Components */
+.robot-face {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+.robot-eyes {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  right: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.robot-eye {
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+}
+
+.robot-mouth {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 2px;
+  border-bottom: 2px solid white;
+  border-radius: 0 0 6px 6px;
+}
+
+.robot-antenna {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 1px;
+}
+
+.robot-antenna-tip {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}
+
+/* Role Title Styling */
+.role-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: #1F2937;
+  margin-bottom: 4px;
+}
+
+/* AI Name Styling */
+.ai-name {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  background: linear-gradient(135deg, #8B5CF6, #EC4899, #06B6D4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+/* Tagline Styling */
+.tagline {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: #6B7280;
+  line-height: 1.4;
+}
+
+/* Color Gradients for Each Robot */
+.robot-pam { background: linear-gradient(135deg, #87CEEB, #4682B4); } /* Sky Blue */
+.robot-ela { background: linear-gradient(135deg, #DDA0DD, #9370DB); } /* Lavender Purple */
+.robot-ora { background: linear-gradient(135deg, #7FFFD4, #20B2AA); } /* Aqua Green */
+.robot-hurla { background: linear-gradient(135deg, #FFDAB9, #FF7F50); } /* Peach Orange */
+.robot-sile { background: linear-gradient(135deg, #FF7F7F, #DC143C); } /* Coral Red */
+.robot-miles { background: linear-gradient(135deg, #DA70D6, #8B008B); } /* Magenta Violet */
+.robot-cais { background: linear-gradient(135deg, #40E0D0, #008B8B); } /* Turquoise */
+.robot-dena { background: linear-gradient(135deg, #5F9EA0, #2F4F4F); } /* Cool Teal */
+.robot-fina { background: linear-gradient(135deg, #98FB98, #32CD32); } /* Mint Green */
+.robot-torr { background: linear-gradient(135deg, #FFD700, #FFA500); } /* Warm Yellow */
