@@ -70,15 +70,15 @@ export default function Contact() {
 
   return (
     <div className="flex flex-col" data-testid="contact-page">
-      {/* Hero Section */}
-      <PageHeader>
-        <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="contact-badge">
-          Get In Touch
+      {/* Modern Contact Hero */}
+      <PageHeader theme="contact">
+        <Badge className="ai-badge mb-6">
+          <MessageCircle className="mr-2 h-5 w-5" /> Get In Touch
         </Badge>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6" style={{ fontFamily: 'Plus Jakarta Sans' }}>
           Let's Talk About Your Project
         </h1>
-        <p className="text-lg text-[#475467] leading-relaxed">
+        <p className="text-xl leading-relaxed opacity-90">
           Ready to build something intelligent with CCC Digital? We're here to help.
         </p>
       </PageHeader>
