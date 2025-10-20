@@ -566,40 +566,111 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Our Services */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#F9FAFB] to-white">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Modern AI Services Showcase */}
+      <section className="section-spacing bg-gradient-to-br from-[#ffecd2] via-white to-[#fcb69f] relative">
+        {/* Parallax Background */}
+        <div className="absolute inset-0 opacity-20 parallax-bg" style={{
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'
+        }}></div>
+        
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeUp>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                Our Services
+            <div className="text-center mb-20">
+              <Badge className="ai-badge mb-6">
+                <Rocket className="mr-2 h-5 w-5" /> Our AI Solutions
+              </Badge>
+              <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--foreground))] mb-6 tracking-tight">
+                Complete Digital Solutions
               </h2>
-              <p className="text-base text-[#475467] max-w-2xl mx-auto">
-                Complete digital solutions designed to help your business grow and engage customers more effectively.
+              <p className="text-xl text-[#475467] max-w-3xl mx-auto leading-relaxed">
+                From intelligent websites to AI workforce management, we help businesses embrace the future of automation.
               </p>
             </div>
           </FadeUp>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <FadeUp key={service.id} delay={index * 0.1}>
-                <Card className="p-8 rounded-xl hover:shadow-[0_12px_40px_rgba(16,24,40,0.08)] transition-shadow duration-200 border border-[#EAECF0] h-full">
-                  <div className="h-12 w-12 rounded-lg bg-[hsl(var(--secondary))] flex items-center justify-center text-white mb-6">
-                    <service.icon size={24} />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-4">{service.title}</h3>
-                  <p className="text-sm text-[#475467] mb-6 leading-relaxed">{service.description}</p>
-                  <Button 
-                    onClick={() => {
-                      window.location.href = `/services-solutions#service-section-${service.id}`;
-                    }}
-                    variant="ghost" 
-                    className="p-0 h-auto hover:bg-transparent text-white hover:text-white"
-                    data-testid={`service-learn-more-${index}`}
-                  >
-                    Learn More <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
-                </Card>
+              <FadeUp key={service.id} delay={index * 0.15}>
+                <motion.div
+                  className="interactive-card ai-card h-full"
+                  whileHover={{ 
+                    y: -12,
+                    rotateY: 5,
+                    rotateX: 5
+                  }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card className="p-8 h-full border-0 bg-white/80 backdrop-blur-md">
+                    {/* Floating Icon */}
+                    <motion.div 
+                      className="h-16 w-16 rounded-2xl mb-6 mx-auto relative overflow-hidden"
+                      style={{
+                        background: `linear-gradient(135deg, ${
+                          index % 4 === 0 ? '#667eea, #764ba2' :
+                          index % 4 === 1 ? '#f093fb, #f5576c' :
+                          index % 4 === 2 ? '#4facfe, #00f2fe' :
+                          '#a8edea, #fed6e3'
+                        })`
+                      }}
+                      animate={{ 
+                        rotate: [0, 5, -5, 0],
+                        scale: [1, 1.1, 1]
+                      }}
+                      transition={{ 
+                        duration: 4,
+                        repeat: Infinity,
+                        delay: index * 0.5
+                      }}
+                    >
+                      <div className="absolute inset-0 flex items-center justify-center text-white">
+                        <service.icon size={32} />
+                      </div>
+                      {/* Shimmer Effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                        animate={{
+                          x: ['-100%', '100%']
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          delay: index * 0.3,
+                          repeatDelay: 3
+                        }}
+                      />
+                    </motion.div>
+                    
+                    <h3 className="text-2xl font-bold mb-4 text-center" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+                      {service.title}
+                    </h3>
+                    <p className="text-[#6B7280] leading-relaxed text-center mb-6">
+                      {service.description}
+                    </p>
+                    
+                    {/* Interactive CTA */}
+                    <div className="text-center mt-auto">
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button 
+                          onClick={() => {
+                            window.location.href = `/services-solutions#service-section-${service.id}`;
+                          }}
+                          variant="ghost" 
+                          className="p-0 h-auto hover:bg-transparent font-semibold text-[#8B5CF6] hover:text-[#7C3AED] transition-colors"
+                          data-testid={`service-learn-more-${index}`}
+                        >
+                          Learn More 
+                          <motion.div
+                            className="ml-2 inline-block"
+                            animate={{ x: [0, 5, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                          >
+                            <ArrowRight className="h-4 w-4" />
+                          </motion.div>
+                        </Button>
+                      </motion.div>
+                    </div>
+                  </Card>
+                </motion.div>
               </FadeUp>
             ))}
           </div>
