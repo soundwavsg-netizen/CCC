@@ -1,18 +1,30 @@
 [
   {
-    "content": "Apply modern AI SaaS design to all pages (About, Services, Contact, etc.)",
-    "status": "completed"
+    "content": "Update AI employee lineup to final 10 with exact names, colors, and taglines",
+    "status": "in_progress"
   },
   {
-    "content": "Replace AI employee icons with animated cute robots of different colors",
-    "status": "completed"
+    "content": "Merge Marketing Writer into Marketing Assistant (Miles)",
+    "status": "pending"
   },
   {
-    "content": "Add cute short names for each AI employee",
-    "status": "completed"
+    "content": "Create cuter animated robot characters with personalities",
+    "status": "pending"
   },
   {
-    "content": "Update PageHeader component to support multiple gradient themes",
-    "status": "completed"
+    "content": "Implement role-first, name-second UX hierarchy",
+    "status": "pending"
+  },
+  {
+    "content": "Add Phase 2 placeholder for Moir (Marketing Writer) - internal only",
+    "status": "pending"
+  },
+  {
+    "content": "Update grid layout and Motion-style animations",
+    "status": "pending"
+  },
+  {
+    "content": "Implement analytics tracking for all interactions",
+    "status": "pending"
   }
 ]
