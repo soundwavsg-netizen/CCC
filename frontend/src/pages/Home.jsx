@@ -677,15 +677,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Our Process */}
-      <section className="py-16 sm:py-20 bg-white">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Playful Process Section */}
+      <section className="section-spacing bg-gradient-to-br from-[#a1c4fd] to-[#c2e9fb] relative overflow-hidden">
+        {/* Floating Background Elements */}
+        <div className="absolute inset-0">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-32 h-32 rounded-full bg-white/10 blur-xl"
+              animate={{
+                x: [0, 100, -50, 0],
+                y: [0, -100, 50, 0],
+                scale: [1, 1.2, 0.8, 1]
+              }}
+              transition={{
+                duration: 15 + i * 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 2
+              }}
+              style={{
+                left: `${i * 15}%`,
+                top: `${20 + (i % 2) * 40}%`
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeUp>
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-                Our Process
+            <div className="text-center mb-20">
+              <Badge className="ai-badge mb-6">
+                <Zap className="mr-2 h-5 w-5" /> How It Works
+              </Badge>
+              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight">
+                Our AI-Powered Process
               </h2>
-              <p className="text-base text-[#475467] max-w-2xl mx-auto">
+              <p className="text-xl text-white/90 max-w-3xl mx-auto">
                 Transparent workflow with milestone-based delivery for your peace of mind.
               </p>
             </div>
@@ -693,17 +721,62 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {processSteps.map((step, index) => (
-              <FadeUp key={index} delay={index * 0.1}>
-                <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[hsl(var(--secondary))] text-white font-semibold text-xl mb-4">
-                    {step.step}
-                  </div>
-                  <div className="h-10 w-10 rounded-lg bg-[hsl(var(--accent))] flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
-                    <step.icon size={20} />
-                  </div>
-                  <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
-                  <p className="text-sm text-[#475467]">{step.description}</p>
-                </div>
+              <FadeUp key={index} delay={index * 0.2}>
+                <motion.div 
+                  className="text-center"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
+                  {/* Animated Step Number */}
+                  <motion.div 
+                    className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm text-white font-bold text-2xl mb-6 border-2 border-white/30 relative overflow-hidden"
+                    animate={{ 
+                      boxShadow: [
+                        '0 0 20px rgba(255,255,255,0.3)',
+                        '0 0 40px rgba(255,255,255,0.6)', 
+                        '0 0 20px rgba(255,255,255,0.3)'
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, delay: index * 0.5 }}
+                  >
+                    <span className="relative z-10">{step.step}</span>
+                    
+                    {/* Shimmer Effect */}
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                      animate={{
+                        x: ['-100%', '100%']
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: index * 0.5,
+                        repeatDelay: 4
+                      }}
+                    />
+                  </motion.div>
+                  
+                  {/* Floating Icon */}
+                  <motion.div 
+                    className="h-12 w-12 rounded-2xl bg-white/30 backdrop-blur-sm flex items-center justify-center mx-auto mb-6 border border-white/40"
+                    animate={{ 
+                      y: [0, -10, 0],
+                      rotate: [0, 5, -5, 0]
+                    }}
+                    transition={{ 
+                      duration: 4,
+                      repeat: Infinity,
+                      delay: index * 0.3
+                    }}
+                  >
+                    <step.icon size={24} className="text-white" />
+                  </motion.div>
+                  
+                  <h3 className="text-xl font-bold mb-3 text-white" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+                    {step.title}
+                  </h3>
+                  <p className="text-white/80 leading-relaxed">{step.description}</p>
+                </motion.div>
               </FadeUp>
             ))}
           </div>
