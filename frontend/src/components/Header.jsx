@@ -49,19 +49,23 @@ export const Header = () => {
               key={link.path}
               to={link.path}
               className={`text-sm font-medium transition-colors hover:text-[hsl(var(--secondary))] relative group ${
-                link.highlight 
-                  ? 'text-[#E91F2C] font-bold animate-pulse' 
-                  : isActive(link.path) 
-                    ? 'text-[hsl(var(--secondary))]' 
-                    : 'text-[hsl(var(--foreground))]'
+                link.featured
+                  ? 'text-[#293889] font-bold bg-gradient-to-r from-[#293889]/10 to-[#E91F2C]/10 px-3 py-1 rounded-lg'
+                  : link.highlight 
+                    ? 'text-[#E91F2C] font-bold animate-pulse' 
+                    : isActive(link.path) 
+                      ? 'text-[hsl(var(--secondary))]' 
+                      : 'text-[hsl(var(--foreground))]'
               }`}
               data-testid={`nav-link-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
             >
               {link.label}
               <span className={`absolute left-0 -bottom-1 w-full h-0.5 ${
                 link.highlight 
-                  ? 'bg-[#E91F2C]' 
-                  : 'bg-[hsl(var(--secondary))]'
+                  ? 'bg-[#E91F2C]'
+                  : link.featured
+                    ? 'bg-[#293889]'
+                    : 'bg-[hsl(var(--secondary))]'
               } transform origin-left transition-transform duration-200 ${
                 isActive(link.path) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
               }`} />
