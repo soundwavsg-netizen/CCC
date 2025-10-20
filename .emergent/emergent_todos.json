@@ -1,22 +1,30 @@
 [
   {
-    "content": "Update homepage hero with C³ AI Employees as flagship SaaS offering",
-    "status": "completed"
+    "content": "Update typography to modern AI SaaS fonts (Inter/Plus Jakarta Sans)",
+    "status": "in_progress"
   },
   {
-    "content": "Create new /ai-employees subpage with 10 AI templates and pricing",
-    "status": "completed"
+    "content": "Replace corporate blocks with animated gradient layouts",
+    "status": "pending"
   },
   {
-    "content": "Add C³ AI Employees navigation menu item",
-    "status": "completed"
+    "content": "Add rounded components and pastel gradients",
+    "status": "pending"
   },
   {
-    "content": "Design animated AI employee dashboard visuals",
-    "status": "completed"
+    "content": "Implement subtle parallax scroll effects",
+    "status": "pending"
   },
   {
-    "content": "Integrate with existing CCC Digital branding and keep all current content",
-    "status": "completed"
+    "content": "Add 2-3 interactive animations for hero and cards",
+    "status": "pending"
+  },
+  {
+    "content": "Enhance color palette with blue-purple-cyan gradients",
+    "status": "pending"
+  },
+  {
+    "content": "Make design feel alive and approachable like Motion.ai",
+    "status": "pending"
   }
 ]
