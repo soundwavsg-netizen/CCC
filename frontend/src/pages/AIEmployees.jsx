@@ -24,34 +24,32 @@ import {
 export default function AIEmployees() {
   return (
     <div className="flex flex-col" data-testid="ai-employees-page">
-      {/* Logo Header */}
-      <PageHeader>
-        <Badge className="mb-4 bg-[#293889] text-white" data-testid="ai-employees-badge">
-          <Bot className="mr-1 h-3 w-3" /> C³ AI Employees Platform
+      {/* Modern AI Employees Hero */}
+      <PageHeader theme="ai">
+        <Badge className="ai-badge mb-6">
+          <Bot className="mr-2 h-5 w-5" /> C³ AI Employees Platform
         </Badge>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6" style={{ fontFamily: 'Plus Jakarta Sans' }}>
           Hire Your Next AI Employee
         </h1>
-        <p className="text-lg text-[#475467] leading-relaxed mb-8">
+        <p className="text-xl leading-relaxed opacity-90 mb-8">
           A complete platform to train, deploy, and manage AI Employees for your business. 
           No coding required — just upload, train, and deploy intelligent digital staff.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
             asChild
-            style={{ backgroundColor: '#293889', color: 'white' }}
-            className="hover:bg-[#1e2c6b] font-medium text-lg px-8 py-3"
+            className="btn-ai-primary text-white text-lg px-8 py-3"
             data-testid="launch-demo-cta"
           >
             <Link to="#pricing">
               <Play className="mr-2 h-5 w-5" />
-              Launch Platform Demo
+              <span className="text-white">Launch Platform Demo</span>
             </Link>
           </Button>
           <Button 
             asChild
-            variant="outline"
-            className="border-[hsl(var(--border))] text-lg px-8 py-3"
+            className="border-white/30 text-white hover:bg-white hover:text-[#293889] text-lg px-8 py-3 backdrop-blur-sm rounded-2xl"
             data-testid="early-access-cta"
           >
             <Link to="/contact">
