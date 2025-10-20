@@ -409,11 +409,12 @@ export default function Home() {
               <div className="text-center mt-8">
                 <Button 
                   asChild
-                  className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium"
+                  style={{ backgroundColor: '#293889', color: 'white' }}
+                  className="hover:bg-[#1e2c6b] font-medium"
                 >
                   <Link to="/ai-employees">
-                    <ArrowRight className="mr-2 h-4 w-4" />
-                    See All 10 AI Employee Templates
+                    <ArrowRight className="mr-2 h-4 w-4" style={{ color: 'white' }} />
+                    <span style={{ color: 'white' }}>See All 10 AI Employee Templates</span>
                   </Link>
                 </Button>
               </div>
