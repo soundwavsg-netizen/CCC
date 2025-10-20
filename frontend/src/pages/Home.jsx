@@ -196,43 +196,97 @@ export default function Home() {
 
   return (
     <div className="flex flex-col" data-testid="home-page">
-      {/* Logo Header - Consistent across all pages */}
-      <PageHeader>
-        <Badge className="mb-4 text-white font-medium" style={{ backgroundColor: '#293889' }} data-testid="hero-badge">
-          <Zap className="mr-1 h-3 w-3" /> Smart Digital Solutions
+      {/* C³ AI Employees Hero Section */}
+      <PageHeader className="bg-gradient-to-br from-[#002B49] via-[#004C8A] to-[#293889] text-white relative overflow-hidden">
+        {/* AI Matrix Background Animation */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 25% 25%, #ffffff 1px, transparent 1px),
+                             radial-gradient(circle at 75% 75%, #ffffff 1px, transparent 1px)`,
+            backgroundSize: '50px 50px',
+            animation: 'matrix-move 20s linear infinite'
+          }}></div>
+        </div>
+        
+        {/* Floating AI Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-white/20 rounded-full"
+              animate={{
+                y: [-20, -100],
+                opacity: [0, 1, 0],
+                scale: [0, 1, 0]
+              }}
+              transition={{
+                duration: 4 + i,
+                repeat: Infinity,
+                delay: i * 0.8
+              }}
+              style={{
+                left: `${10 + i * 10}%`,
+                bottom: '10%'
+              }}
+            />
+          ))}
+        </div>
+
+        <Badge className="mb-6 bg-white/20 text-white hover:bg-white/30 text-lg px-6 py-2 backdrop-blur-sm border border-white/30" data-testid="hero-badge">
+          <Bot className="mr-2 h-5 w-5" /> C³ AI Employees
         </Badge>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
-          Build Smarter Websites. Automate with AI. Engage Customers Instantly.
+        
+        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+          Hire AI Employees —{' '}
+          <span className="bg-gradient-to-r from-[#E91F2C] to-[#FF6B6B] bg-clip-text text-transparent">
+            Not Human Staff.
+          </span>
         </h1>
-        <p className="text-base text-[#1F2A37] max-w-prose leading-relaxed mb-6">
-          Cognition & Competence Consultancy (CCC) helps Singapore businesses create modern digital experiences — from responsive websites and e-commerce systems to AI chatbots and WhatsApp automation.
-        </p>
-        <p className="text-sm text-[#475467] mb-8">
-          We build smart websites, apps & AI systems that grow your business.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Button 
-            onClick={handleStartProject}
-            style={{ 
-              backgroundColor: '#293889',
-              color: 'white',
-              fontWeight: '500'
-            }}
-            className="hover:bg-[#1e2c6b] shadow-[0_6px_18px_rgba(41,56,137,0.22)]"
-            data-testid="hero-primary-cta-button"
-          >
-            <Rocket className="mr-2 h-4 w-4" />
-            Start My Project
-          </Button>
+        
+        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-8 max-w-4xl mx-auto border border-white/20">
+          <p className="text-2xl text-white/90 leading-relaxed mb-6">
+            Build your own team of intelligent AI employees that work 24/7.
+          </p>
+          <p className="text-xl text-white/80">
+            Schedule, manage, design, and train — all in one unified platform.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
             asChild
-            variant="outline"
-            className="border-[hsl(var(--border))]"
-            data-testid="hero-secondary-cta-button"
+            size="lg"
+            className="bg-white text-[#293889] hover:bg-white/90 text-lg px-8 py-4 font-semibold shadow-xl"
+            data-testid="hero-primary-cta"
           >
-            <Link to="/edg">
-              <Award className="mr-2 h-4 w-4" />
-              Check EDG Eligibility (Optional) <ArrowRight className="ml-2 h-4 w-4" />
+            <Link to="/ai-employees">
+              <Bot className="mr-2 h-5 w-5" />
+              Create Your AI Employee
+            </Link>
+          </Button>
+          
+          <Button 
+            asChild
+            size="lg"
+            variant="outline"
+            className="border-white/30 text-white hover:bg-white hover:text-[#293889] text-lg px-8 py-4 backdrop-blur-sm"
+            data-testid="hero-secondary-cta"
+          >
+            <Link to="/ai-employees#templates">
+              <Zap className="mr-2 h-5 w-5" />
+              Explore Templates
+            </Link>
+          </Button>
+          
+          <Button 
+            asChild
+            size="lg"
+            className="bg-[#E91F2C] hover:bg-[#d1171e] text-white text-lg px-8 py-4 shadow-xl"
+            data-testid="hero-enterprise-cta"
+          >
+            <Link to="/contact">
+              <Rocket className="mr-2 h-5 w-5" />
+              Customize for My Company
             </Link>
           </Button>
         </div>
