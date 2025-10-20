@@ -1,10 +1,22 @@
 [
   {
-    "content": "Fix all blue buttons to have white text instead of black",
-    "status": "completed"
+    "content": "Update homepage hero with C³ AI Employees as flagship SaaS offering",
+    "status": "in_progress"
   },
   {
-    "content": "Debug WhatsApp bot business recognition failure",
-    "status": "completed"
+    "content": "Create new /ai-employees subpage with 10 AI templates and pricing",
+    "status": "pending"
+  },
+  {
+    "content": "Add C³ AI Employees navigation menu item",
+    "status": "pending"
+  },
+  {
+    "content": "Design animated AI employee dashboard visuals",
+    "status": "pending"
+  },
+  {
+    "content": "Integrate with existing CCC Digital branding and keep all current content",
+    "status": "pending"
   }
 ]
