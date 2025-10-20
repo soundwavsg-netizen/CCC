@@ -1,30 +1,18 @@
 [
   {
-    "content": "Update typography to modern AI SaaS fonts (Inter/Plus Jakarta Sans)",
-    "status": "completed"
+    "content": "Apply modern AI SaaS design to all pages (About, Services, Contact, etc.)",
+    "status": "in_progress"
   },
   {
-    "content": "Replace corporate blocks with animated gradient layouts",
-    "status": "completed"
+    "content": "Replace AI employee icons with animated cute robots of different colors",
+    "status": "pending"
   },
   {
-    "content": "Add rounded components and pastel gradients",
-    "status": "completed"
+    "content": "Add cute short names for each AI employee",
+    "status": "pending"
   },
   {
-    "content": "Implement subtle parallax scroll effects",
-    "status": "completed"
-  },
-  {
-    "content": "Add 2-3 interactive animations for hero and cards",
-    "status": "completed"
-  },
-  {
-    "content": "Enhance color palette with blue-purple-cyan gradients",
-    "status": "completed"
-  },
-  {
-    "content": "Make design feel alive and approachable like Motion.ai",
-    "status": "completed"
+    "content": "Update PageHeader component to support multiple gradient themes",
+    "status": "pending"
   }
 ]
