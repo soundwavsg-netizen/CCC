@@ -783,78 +783,112 @@ export default function Home() {
         </div>
       </section>
 
-      {/* AI-Powered Support */}
-      <section className="py-16 sm:py-20 bg-gradient-to-br from-[#EAF7F5] to-white">
-        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* AI-Powered Support - Glass Morphism Style */}
+      <section className="section-spacing bg-gradient-to-br from-[#667eea] to-[#764ba2] relative overflow-hidden">
+        {/* Animated Grid Background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px',
+            animation: 'matrix-move 30s linear infinite reverse'
+          }}></div>
+        </div>
+
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <FadeUp>
               <div>
-                <Badge className="mb-4 text-white font-medium" style={{ backgroundColor: '#293889' }} data-testid="ai-badge">
-                  <Bot className="mr-1 h-3 w-3" /> AI-Powered
+                <Badge className="ai-badge mb-6">
+                  <Bot className="mr-2 h-5 w-5" /> AI-Powered Intelligence
                 </Badge>
-                <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
+                <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight">
                   Smart Digital Assistant
                 </h2>
-                <p className="text-base text-[#475467] mb-6">
+                <p className="text-xl text-white/90 mb-8 leading-relaxed">
                   Our AI Digital Consultant assists visitors and clients across website chat, WhatsApp automation, and email notifications.
                 </p>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-[hsl(var(--secondary))] shrink-0 mt-0.5" />
-                    <span className="text-sm">Collects project requirements automatically</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-[hsl(var(--secondary))] shrink-0 mt-0.5" />
-                    <span className="text-sm">Provides instant pricing estimates</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-[hsl(var(--secondary))] shrink-0 mt-0.5" />
-                    <span className="text-sm">Directs qualified leads to your team in real-time</span>
-                  </li>
-                </ul>
-                <Button 
-                  onClick={() => handleChatOpen('ai-section')}
-                  className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium"
-                  data-testid="ai-section-cta-button"
-                >
-                  <MessageCircle className="mr-2 h-4 w-4" />
-                  Try Our AI Assistant
-                </Button>
+                
+                <div className="space-y-6 mb-10">
+                  {[
+                    { icon: Globe, text: 'Collects project requirements automatically' },
+                    { icon: Zap, text: 'Provides instant pricing estimates' },
+                    { icon: Target, text: 'Directs qualified leads to your team in real-time' }
+                  ].map((item, index) => (
+                    <motion.div 
+                      key={index}
+                      className="flex items-start gap-4"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.8 + index * 0.2 }}
+                    >
+                      <div className="h-12 w-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
+                        <item.icon className="h-6 w-6 text-white" />
+                      </div>
+                      <div>
+                        <span className="text-white font-medium">{item.text}</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+                
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button 
+                    onClick={() => handleChatOpen('ai-section')}
+                    className="btn-ai-primary text-white text-lg px-8 py-4"
+                    data-testid="ai-section-cta-button"
+                  >
+                    <MessageCircle className="mr-3 h-5 w-5" />
+                    Try Our AI Assistant
+                  </Button>
+                </motion.div>
               </div>
             </FadeUp>
             
-            <FadeUp delay={0.2}>
-              <Card className="p-6 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 bg-white">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-full bg-[hsl(var(--accent))] flex items-center justify-center">
-                      <Globe className="h-6 w-6 text-[hsl(var(--primary))]" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">Website Chat</h3>
-                      <p className="text-[#475467] text-sm">Engage visitors instantly</p>
-                    </div>
+            <FadeUp delay={0.3}>
+              <motion.div 
+                className="ai-glow"
+                animate={{ 
+                  rotateY: [0, 5, -5, 0],
+                  rotateX: [0, 2, -2, 0]
+                }}
+                transition={{ duration: 6, repeat: Infinity }}
+              >
+                <Card className="ai-card p-8 bg-white/10 backdrop-blur-md border border-white/20">
+                  <h3 className="text-xl font-bold text-white mb-6 text-center">AI Capabilities</h3>
+                  <div className="space-y-6">
+                    {[
+                      { icon: Globe, title: 'Website Chat', desc: 'Engage visitors instantly', gradient: 'from-[#4facfe] to-[#00f2fe]' },
+                      { icon: MessageCircle, title: 'WhatsApp Automation', desc: '24/7 customer support', gradient: 'from-[#f093fb] to-[#f5576c]' },
+                      { icon: BarChart3, title: 'Lead Analytics', desc: 'Real-time notifications', gradient: 'from-[#a8edea] to-[#fed6e3]' }
+                    ].map((item, index) => (
+                      <motion.div 
+                        key={index}
+                        className="flex items-center gap-4"
+                        animate={{ 
+                          x: [0, 10, 0],
+                          opacity: [0.8, 1, 0.8]
+                        }}
+                        transition={{ 
+                          duration: 3,
+                          repeat: Infinity,
+                          delay: index * 0.5
+                        }}
+                      >
+                        <div 
+                          className={`h-14 w-14 rounded-2xl bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg`}
+                        >
+                          <item.icon className="h-7 w-7 text-white" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-white">{item.title}</h4>
+                          <p className="text-white/70 text-sm">{item.desc}</p>
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-full bg-[hsl(var(--accent))] flex items-center justify-center">
-                      <MessageCircle className="h-6 w-6 text-[hsl(var(--primary))]" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">WhatsApp Automation</h3>
-                      <p className="text-[#475467] text-sm">24/7 customer support</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-full bg-[hsl(var(--accent))] flex items-center justify-center">
-                      <BarChart3 className="h-6 w-6 text-[hsl(var(--primary))]" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">Lead Analytics</h3>
-                      <p className="text-[#475467] text-sm">Real-time notifications</p>
-                    </div>
-                  </div>
-                </div>
-              </Card>
+                </Card>
+              </motion.div>
             </FadeUp>
           </div>
         </div>
