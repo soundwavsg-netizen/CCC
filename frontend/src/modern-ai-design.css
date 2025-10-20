@@ -1,0 +1,234 @@
+/* Modern AI SaaS Design System - Motion.ai Inspired */
+
+/* Typography - Friendly AI SaaS Fonts */
+:root {
+  --font-display: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'Manrope', 'Inter', -apple-system, sans-serif;
+}
+
+/* Enhanced Color Palette - AI SaaS with Brighter Highlights */
+:root {
+  /* Original CCC Brand Colors */
+  --ccc-blue: #293889;
+  --ccc-red: #E91F2C;
+  --ccc-navy: #00003D;
+  
+  /* Bright AI SaaS Gradients */
+  --ai-purple: #8B5CF6;
+  --ai-cyan: #06B6D4;
+  --ai-pink: #EC4899;
+  --ai-emerald: #10B981;
+  --ai-amber: #F59E0B;
+  
+  /* Pastel Gradient Backgrounds */
+  --gradient-ai-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-ai-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-ai-tertiary: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient-ai-purple: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  --gradient-ai-blue: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+  
+  /* Motion-inspired Glass Effects */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  
+  /* Rounded Design Elements */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  
+  /* AI-themed Shadows */
+  --shadow-ai-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+  --shadow-ai-float: 0 10px 40px rgba(0, 0, 0, 0.1);
+  --shadow-ai-intense: 0 20px 60px rgba(139, 92, 246, 0.4);
+}
+
+/* Global Typography Updates */
+* {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+/* Modern Card Styling */
+.ai-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-ai-float);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-ai-intense);
+}
+
+/* Gradient Button Styles */
+.btn-ai-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: var(--radius-md);
+  border: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ai-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-ai-primary:hover::before {
+  left: 100%;
+}
+
+.btn-ai-secondary {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border-radius: var(--radius-md);
+  border: none;
+}
+
+.btn-ai-tertiary {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  border-radius: var(--radius-md);
+  border: none;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Parallax Scroll Effect */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* AI Glow Effects */
+.ai-glow {
+  box-shadow: var(--shadow-ai-glow);
+  position: relative;
+}
+
+.ai-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe);
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: glow-rotate 3s linear infinite;
+}
+
+@keyframes glow-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Motion-inspired Section Backgrounds */
+.section-ai-gradient-1 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.section-ai-gradient-2 {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.section-ai-gradient-3 {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.section-ai-light {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+/* Glass Morphism Effects */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Improved Text Contrast */
+.text-on-dark {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.text-on-light {
+  color: rgba(31, 41, 55, 0.95) !important;
+}
+
+/* Interactive Hover Effects */
+.interactive-card {
+  transform: perspective(1000px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.interactive-card:hover {
+  transform: perspective(1000px) translateY(-12px) rotateX(5deg);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+}
+
+/* AI Badge Styling */
+.ai-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* Breathing Animation for AI Elements */
+@keyframes breathe {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+  50% { transform: scale(1.05) rotate(1deg); opacity: 1; }
+}
+
+.ai-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* Modern Spacing */
+.section-spacing {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
