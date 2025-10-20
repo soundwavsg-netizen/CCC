@@ -117,35 +117,33 @@ export default function AIEmployees() {
       {/* CTA Section */}
       <section className="py-16 sm:py-20 bg-[#293889] text-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <FadeUp>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Ready to Hire Your First AI Employee?
-            </h2>
-            <p className="text-xl text-white/90 mb-8">
-              Join forward-thinking companies already scaling with AI workforce.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                asChild
-                size="lg"
-                className="bg-white text-[#293889] hover:bg-white/90 font-medium text-lg px-8 py-4"
-              >
-                <Link to="#pricing">
-                  Try Free for 14 Days
-                </Link>
-              </Button>
-              <Button 
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-white/30 text-white hover:bg-white hover:text-[#293889] text-lg px-8 py-4"
-              >
-                <Link to="/contact">
-                  Talk to Our Team <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
-          </FadeUp>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            Ready to Hire Your First AI Employee?
+          </h2>
+          <p className="text-xl text-white/90 mb-8">
+            Join forward-thinking companies already scaling with AI workforce.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              asChild
+              size="lg"
+              className="bg-white text-[#293889] hover:bg-white/90 font-medium text-lg px-8 py-4"
+            >
+              <Link to="/contact">
+                Try Free for 14 Days
+              </Link>
+            </Button>
+            <Button 
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-white/30 text-white hover:bg-white hover:text-[#293889] text-lg px-8 py-4"
+            >
+              <Link to="/contact">
+                Talk to Our Team <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>
