@@ -128,15 +128,15 @@ export default function Portfolio() {
 
   return (
     <div className="flex flex-col" data-testid="portfolio-page">
-      {/* Hero Section */}
-      <PageHeader>
-        <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="portfolio-badge">
-          Our Work
+      {/* Modern Portfolio Hero */}
+      <PageHeader theme="portfolio">
+        <Badge className="ai-badge mb-6">
+          <BarChart3 className="mr-2 h-5 w-5" /> Our Work
         </Badge>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6" style={{ fontFamily: 'Plus Jakarta Sans' }}>
           Project Portfolio
         </h1>
-        <p className="text-lg text-[#475467] leading-relaxed">
+        <p className="text-xl leading-relaxed opacity-90">
           Discover how we've helped Singapore SMEs transform their businesses through innovative digital solutions.
         </p>
       </PageHeader>
