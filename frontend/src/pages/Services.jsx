@@ -93,15 +93,15 @@ export default function Services() {
 
   return (
     <div className="flex flex-col" data-testid="services-page">
-      {/* Hero Section */}
-      <PageHeader>
-        <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="services-badge">
-          Our Services
+      {/* Modern Services Hero */}
+      <PageHeader theme="services">
+        <Badge className="ai-badge mb-6">
+          <Bot className="mr-2 h-5 w-5" /> Our Services
         </Badge>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6" style={{ fontFamily: 'Plus Jakarta Sans' }}>
           Comprehensive Digital Solutions
         </h1>
-        <p className="text-lg text-[#475467] leading-relaxed">
+        <p className="text-xl leading-relaxed opacity-90">
           From concept to deployment, we deliver end-to-end technology solutions that drive business growth and digital transformation.
         </p>
       </PageHeader>
