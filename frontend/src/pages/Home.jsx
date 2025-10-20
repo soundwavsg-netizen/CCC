@@ -299,7 +299,7 @@ export default function Home() {
             <FadeUp delay={0.1}>
               <Card className="rounded-xl overflow-hidden shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0">
                 <img 
-                  alt="Modern Singapore business technology and digital transformation" 
+                  alt="AI Employees dashboard showing multiple AI staff working together" 
                   src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=85&w=800&h=600" 
                   className="w-full h-[360px] object-cover" 
                   data-testid="hero-image"
@@ -307,6 +307,118 @@ export default function Home() {
               </Card>
             </FadeUp>
           </div>
+        </div>
+      </section>
+
+      {/* C³ AI Employees Focus Section */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeUp>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--foreground))] mb-4">
+                The Future of <span className="text-[#E91F2C]">Digital Workforce</span>
+              </h2>
+              <p className="text-xl text-[#475467] max-w-3xl mx-auto">
+                Transform your business with intelligent AI employees that never sleep, never call in sick, and continuously improve.
+              </p>
+            </div>
+          </FadeUp>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            <FadeUp delay={0.1}>
+              <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 text-center h-full">
+                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-[#293889] to-[#004C8A] flex items-center justify-center text-white mx-auto mb-6">
+                  <Users className="h-8 w-8" />
+                </div>
+                <h3 className="text-2xl font-semibold mb-4">AI Workforce Platform</h3>
+                <p className="text-[#475467] leading-relaxed">
+                  Hire pre-built AI Employees instantly. No setup, no coding. Choose from 10 specialized roles including Executive Assistant, Project Manager, and Customer Support Rep.
+                </p>
+              </Card>
+            </FadeUp>
+
+            <FadeUp delay={0.2}>
+              <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 text-center h-full border-2 border-[#E91F2C]">
+                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-[#E91F2C] to-[#FF6B6B] flex items-center justify-center text-white mx-auto mb-6">
+                  <Bot className="h-8 w-8" />
+                </div>
+                <Badge className="mb-4 bg-[#E91F2C] text-white">MOST POPULAR</Badge>
+                <h3 className="text-2xl font-semibold mb-4">Self-Training System</h3>
+                <p className="text-[#475467] leading-relaxed">
+                  Teach your AI Employees by uploading files and data — just like onboarding real staff. Train them on your processes, knowledge, and company culture.
+                </p>
+              </Card>
+            </FadeUp>
+
+            <FadeUp delay={0.3}>
+              <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 text-center h-full">
+                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-[#8B5CF6] to-[#A78BFA] flex items-center justify-center text-white mx-auto mb-6">
+                  <Settings className="h-8 w-8" />
+                </div>
+                <h3 className="text-2xl font-semibold mb-4">Custom Creation (Enterprise)</h3>
+                <p className="text-[#475467] leading-relaxed">
+                  CCC engineers can build EduAI-style clones customized to your organization. Fully branded AI employees tailored to your specific business needs.
+                </p>
+              </Card>
+            </FadeUp>
+          </div>
+
+          {/* AI Employee Preview */}
+          <FadeUp delay={0.4}>
+            <Card className="p-8 rounded-2xl shadow-[0_20px_60px_rgba(16,24,40,0.12)] border border-[#E5E7EB] bg-gradient-to-br from-[#FAFBFC] to-white">
+              <h3 className="text-2xl font-bold text-center text-[hsl(var(--foreground))] mb-8">
+                Meet Your Future AI Employees
+              </h3>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                  { name: 'AI Executive Assistant', status: 'Scheduling meeting...', color: 'bg-blue-500' },
+                  { name: 'AI Project Manager', status: 'Tracking deliverables...', color: 'bg-green-500' },
+                  { name: 'AI Marketing Writer', status: 'Drafting campaign...', color: 'bg-purple-500' },
+                  { name: 'AI Data Analyst', status: 'Generating report...', color: 'bg-orange-500' }
+                ].map((employee, index) => (
+                  <motion.div
+                    key={index}
+                    className="bg-white rounded-xl p-4 shadow-md border border-[#E5E7EB]"
+                    animate={{
+                      y: [0, -5, 0],
+                      boxShadow: [
+                        '0 4px 6px rgba(0,0,0,0.1)',
+                        '0 8px 25px rgba(0,0,0,0.15)',
+                        '0 4px 6px rgba(0,0,0,0.1)'
+                      ]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      delay: index * 0.5
+                    }}
+                  >
+                    <div className={`h-12 w-12 ${employee.color} rounded-lg flex items-center justify-center text-white mb-3`}>
+                      <Bot className="h-6 w-6" />
+                    </div>
+                    <h4 className="font-semibold text-sm mb-2">{employee.name}</h4>
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      <span className="text-xs text-[#6B7280]">{employee.status}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              
+              <div className="text-center mt-8">
+                <Button 
+                  asChild
+                  className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium"
+                >
+                  <Link to="/ai-employees">
+                    <ArrowRight className="mr-2 h-4 w-4" />
+                    See All 10 AI Employee Templates
+                  </Link>
+                </Button>
+              </div>
+            </Card>
+          </FadeUp>
         </div>
       </section>
 
