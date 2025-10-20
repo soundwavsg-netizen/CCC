@@ -11,6 +11,7 @@ export const Header = () => {
 
   const navLinks = [
     { path: '/', label: 'Home' },
+    { path: '/ai-employees', label: 'C³ AI Employees', highlight: true, featured: true },
     { path: '/about', label: 'About Us' },
     { path: '/services-solutions', label: 'Services & Solutions' },
     { path: '/portfolio', label: 'Portfolio' },
