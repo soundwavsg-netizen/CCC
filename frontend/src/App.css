@@ -4,6 +4,12 @@
 /* Import button fixes */
 @import './button-fixes.css';
 
+/* AI Matrix Animation */
+@keyframes matrix-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-50px, -50px); }
+}
+
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
