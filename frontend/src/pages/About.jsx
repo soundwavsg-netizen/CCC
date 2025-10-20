@@ -42,15 +42,15 @@ export default function About() {
 
   return (
     <div className="flex flex-col" data-testid="about-page">
-      {/* Hero Section */}
-      <PageHeader>
-        <Badge className="mb-4 bg-[hsl(var(--accent))] text-[hsl(var(--primary))] hover:bg-[hsl(var(--accent))]" data-testid="about-badge">
-          About CCC
+      {/* Modern About Hero */}
+      <PageHeader theme="about">
+        <Badge className="ai-badge mb-6">
+          <Users className="mr-2 h-5 w-5" /> About CCC
         </Badge>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-[hsl(var(--foreground))] mb-6">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6" style={{ fontFamily: 'Plus Jakarta Sans' }}>
           Your Digital Transformation Partner
         </h1>
-        <p className="text-lg text-[#475467] leading-relaxed">
+        <p className="text-xl leading-relaxed opacity-90">
           Since 2012, Cognition & Competence Consultancy has been helping Singapore SMEs navigate the digital landscape with confidence and success.
         </p>
       </PageHeader>
