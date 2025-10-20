@@ -62,154 +62,282 @@ export default function AIEmployees() {
         </div>
       </PageHeader>
 
-      {/* AI Employee Templates Section */}
-      <section id="templates" className="py-16 sm:py-20 bg-white">
+      {/* AI Employee Templates Section - Final 10 Lineup */}
+      <section id="templates" className="section-spacing bg-gradient-to-br from-white to-[#f8fafc]">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--foreground))] mb-4">
-              Choose from 10 Ready AI Employee Templates
+          <div className="text-center mb-20">
+            <h2 className="text-4xl sm:text-5xl font-bold text-[hsl(var(--foreground))] mb-6 tracking-tight" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+              Meet Your C³ AI Employees
             </h2>
-            <p className="text-base text-[#475467] max-w-2xl mx-auto">
-              Each AI Employee comes pre-trained with specialized skills and can be customized to your business needs.
+            <p className="text-xl text-[#6B7280] max-w-3xl mx-auto leading-relaxed">
+              Your all-in-one digital workforce — ready to train, deploy, and grow with you.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {/* Desktop: 2 rows × 5 cards, Mobile: 1 per row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-16">
             {[
               { 
-                name: 'AI Executive Assistant', 
-                cuteName: 'Assi 🤖', 
-                description: 'Schedule meetings, reminders, draft emails', 
-                tools: ['Google Calendar', 'Gmail', 'Slack'], 
-                robotColor: '#3B82F6',
-                gradient: 'from-[#3B82F6] to-[#1D4ED8]'
+                role: 'Project Manager', 
+                name: 'Pam', 
+                color: 'robot-pam',
+                icon: '📋',
+                tagline: 'Keeps every project on time and on track.',
+                tools: ['Trello', 'Notion', 'Slack'],
+                gradientFrom: '#87CEEB',
+                gradientTo: '#4682B4'
               },
               { 
-                name: 'AI Project Manager', 
-                cuteName: 'Proji 🚀', 
-                description: 'Tracks deliverables, deadlines, stand-ups', 
-                tools: ['Trello', 'Notion', 'Slack'], 
-                robotColor: '#10B981',
-                gradient: 'from-[#10B981] to-[#059669]'
+                role: 'Executive Assistant', 
+                name: 'Ela', 
+                color: 'robot-ela',
+                icon: '🗓️',
+                tagline: 'Plans, reminds, and streamlines your day.',
+                tools: ['Google Calendar', 'Gmail', 'Slack'],
+                gradientFrom: '#DDA0DD',
+                gradientTo: '#9370DB'
               },
               { 
-                name: 'AI Operations Assistant', 
-                cuteName: 'Opie ⚡', 
-                description: 'Updates Sheets, monitors workflows', 
-                tools: ['Google Sheets', 'Notion'], 
-                robotColor: '#F59E0B',
-                gradient: 'from-[#F59E0B] to-[#D97706]'
+                role: 'Operations Assistant', 
+                name: 'Ora', 
+                color: 'robot-ora',
+                icon: '⚙️',
+                tagline: 'Runs daily ops smoothly behind the scenes.',
+                tools: ['Google Sheets', 'Notion'],
+                gradientFrom: '#7FFFD4',
+                gradientTo: '#20B2AA'
               },
               { 
-                name: 'AI Customer Support Rep', 
-                cuteName: 'Supie 💬', 
-                description: 'Handles FAQ and ticket replies', 
-                tools: ['Docs DB', 'Email', 'Slack'], 
-                robotColor: '#8B5CF6',
-                gradient: 'from-[#8B5CF6] to-[#7C3AED]'
+                role: 'HR Assistant', 
+                name: 'Hurla', 
+                color: 'robot-hurla',
+                icon: '🧑‍🤝‍🧑',
+                tagline: 'Understands people and simplifies HR.',
+                tools: ['Google Sheets', 'Calendar'],
+                gradientFrom: '#FFDAB9',
+                gradientTo: '#FF7F50'
               },
               { 
-                name: 'AI Marketing Writer', 
-                cuteName: 'Writey ✍️', 
-                description: 'Creates blogs and social captions', 
-                tools: ['Notion', 'Google Docs'], 
-                robotColor: '#EF4444',
-                gradient: 'from-[#EF4444] to-[#DC2626]'
+                role: 'Sales Executive', 
+                name: 'Sile', 
+                color: 'robot-sile',
+                icon: '💬',
+                tagline: 'Drives leads and closes deals.',
+                tools: ['CRM', 'Email', 'WhatsApp'],
+                gradientFrom: '#FF7F7F',
+                gradientTo: '#DC143C'
               },
               { 
-                name: 'AI Digital Marketing Assistant', 
-                cuteName: 'Markie 📈', 
-                description: 'Plans & schedules posts, simple videos', 
-                tools: ['Facebook', 'Instagram', 'LinkedIn', 'Canva'], 
-                robotColor: '#06B6D4',
-                gradient: 'from-[#06B6D4] to-[#0891B2]'
+                role: 'Marketing Assistant', 
+                name: 'Miles', 
+                color: 'robot-miles',
+                icon: '🚀',
+                tagline: 'Builds smart campaigns that convert.',
+                tools: ['Facebook', 'Instagram', 'Canva', 'Notion'],
+                expandedFeatures: [
+                  'Plan and schedule posts across channels',
+                  'Draft copy for blogs, emails, ads, and captions', 
+                  'Generate campaign ideas and content calendars',
+                  'Create A/B headline variants and CTA suggestions',
+                  'Summarize analytics and recommend next actions'
+                ],
+                gradientFrom: '#DA70D6',
+                gradientTo: '#8B008B'
               },
               { 
-                name: 'AI Trainer / Tutor', 
-                cuteName: 'Tutie 🎓', 
-                description: 'Creates lessons, quizzes, and feedback', 
-                tools: ['Google Docs', 'Notion'], 
-                robotColor: '#84CC16',
-                gradient: 'from-[#84CC16] to-[#65A30D]'
+                role: 'Customer Support', 
+                name: 'Cais', 
+                color: 'robot-cais',
+                icon: '🎧',
+                tagline: 'Answers instantly with a human touch.',
+                tools: ['Docs DB', 'Email', 'Slack'],
+                gradientFrom: '#40E0D0',
+                gradientTo: '#008B8B'
               },
               { 
-                name: 'AI HR Assistant', 
-                cuteName: 'Hrie 👥', 
-                description: 'Screens CVs, drafts job posts, reminders', 
-                tools: ['Google Sheets', 'Calendar'], 
-                robotColor: '#F97316',
-                gradient: 'from-[#F97316] to-[#EA580C]'
+                role: 'Data Analyst', 
+                name: 'Dena', 
+                color: 'robot-dena',
+                icon: '📊',
+                tagline: 'Finds insight in every metric.',
+                tools: ['Google Sheets', 'Charts API'],
+                gradientFrom: '#5F9EA0',
+                gradientTo: '#2F4F4F'
               },
               { 
-                name: 'AI Copy & Design Assistant', 
-                cuteName: 'Dezzie 🎨', 
-                description: 'Creates visuals & ads', 
-                tools: ['Canva API', 'Pexels'], 
-                robotColor: '#EC4899',
-                gradient: 'from-[#EC4899] to-[#DB2777]'
+                role: 'Finance Assistant', 
+                name: 'Fina', 
+                color: 'robot-fina',
+                icon: '💰',
+                tagline: 'Keeps your books balanced.',
+                tools: ['QuickBooks', 'Google Sheets'],
+                gradientFrom: '#98FB98',
+                gradientTo: '#32CD32'
               },
               { 
-                name: 'AI Data Analyst', 
-                cuteName: 'Datie 📊', 
-                description: 'Generates charts & reports', 
-                tools: ['Google Sheets', 'Charts API'], 
-                robotColor: '#6366F1',
-                gradient: 'from-[#6366F1] to-[#4F46E5]'
+                role: 'Tutor / Trainer', 
+                name: 'Torr', 
+                color: 'robot-torr',
+                icon: '🎓',
+                tagline: 'Explains clearly and adapts to learners.',
+                tools: ['Google Docs', 'Notion'],
+                gradientFrom: '#FFD700',
+                gradientTo: '#FFA500'
               }
             ].map((employee, index) => (
-              <div key={index} className="interactive-card ai-card h-full">
-                <Card className="p-6 border-0 bg-white/90 backdrop-blur-md h-full">
-                  {/* Cute Animated Robot */}
-                  <div className="text-center mb-6">
-                    <div 
-                      className={`h-20 w-20 rounded-full bg-gradient-to-br ${employee.gradient} flex items-center justify-center text-white mx-auto mb-3 ai-breathe relative overflow-hidden`}
-                    >
-                      {/* Robot Face */}
-                      <div className="relative">
-                        {/* Robot Head */}
-                        <div className="w-8 h-8 bg-white/20 rounded-lg relative">
-                          {/* Eyes */}
-                          <div className="absolute top-1 left-1 w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
-                          <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                          {/* Smile */}
-                          <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-3 h-1 border-b-2 border-white rounded-full"></div>
+              <motion.div 
+                key={index} 
+                className="ai-employee-card robot-hover p-6 h-full"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                onViewportEnter={() => {
+                  // Analytics tracking
+                  if (window.dataLayer) {
+                    window.dataLayer.push({
+                      event: 'template_card_view',
+                      role: employee.role,
+                      name: employee.name
+                    });
+                  }
+                }}
+              >
+                {/* Cuter Animated Robot Character */}
+                <div className="text-center mb-6">
+                  <div 
+                    className={`robot-avatar h-24 w-24 rounded-full flex items-center justify-center mx-auto mb-4 robot-breathe relative overflow-hidden`}
+                    style={{
+                      background: `linear-gradient(135deg, ${employee.gradientFrom}, ${employee.gradientTo})`
+                    }}
+                  >
+                    {/* Enhanced Robot Face */}
+                    <div className="relative">
+                      {/* Robot Head with Personality */}
+                      <div className="w-10 h-10 bg-white/25 rounded-xl relative backdrop-blur-sm">
+                        {/* Animated Eyes */}
+                        <div className="robot-eyes">
+                          <div className="robot-eye w-2 h-2 bg-white rounded-full"></div>
+                          <div className="robot-eye w-2 h-2 bg-white rounded-full" style={{ animationDelay: '0.2s' }}></div>
                         </div>
-                        {/* Antenna */}
-                        <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0.5 h-2 bg-white/60 rounded-full"></div>
-                        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white/80 rounded-full animate-ping"></div>
+                        
+                        {/* Happy Mouth */}
+                        <div className="robot-mouth"></div>
+                        
+                        {/* Cheeks */}
+                        <div className="absolute top-3 left-1 w-1 h-1 bg-white/50 rounded-full animate-pulse"></div>
+                        <div className="absolute top-3 right-1 w-1 h-1 bg-white/50 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                       </div>
                       
-                      {/* Shimmer Effect */}
-                      <div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                        style={{
-                          animation: `shimmer 3s ease-in-out infinite ${index * 0.5}s`
-                        }}
-                      />
+                      {/* Animated Antenna */}
+                      <div className="robot-antenna"></div>
+                      <div className="robot-antenna-tip antenna-ping"></div>
+                      
+                      {/* Robot Body Indicator */}
+                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-white text-xs">
+                        {employee.icon}
+                      </div>
                     </div>
                     
-                    {/* Cute Name */}
-                    <h4 className="text-sm font-bold text-[#8B5CF6] mb-1" style={{ fontFamily: 'Plus Jakarta Sans' }}>
-                      {employee.cuteName}
-                    </h4>
+                    {/* Shimmer Effect */}
+                    <div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                      style={{
+                        animation: `shimmer 4s ease-in-out infinite ${index * 0.7}s`
+                      }}
+                    />
                   </div>
                   
-                  <h3 className="text-lg font-bold mb-2" style={{ fontFamily: 'Plus Jakarta Sans' }}>{employee.name}</h3>
-                  <p className="text-sm text-[#6B7280] mb-4">{employee.description}</p>
-                  
-                  <div className="mb-4">
-                    <h4 className="text-xs font-semibold text-[#374151] mb-2">Core Tools:</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {employee.tools.map((tool, i) => (
-                        <Badge key={i} variant="outline" className="text-xs rounded-full">
-                          {tool}
-                        </Badge>
-                      ))}
-                    </div>
+                  {/* Role First, Name Second Hierarchy */}
+                  <h3 className="role-title">{employee.role}</h3>
+                  <h4 className="ai-name">{employee.name}</h4>
+                </div>
+                
+                {/* Tagline */}
+                <p className="tagline text-center mb-6">"{employee.tagline}"</p>
+                
+                {/* Core Tools */}
+                <div className="mb-6">
+                  <h4 className="text-xs font-semibold text-[#374151] mb-3 text-center">Core Tools:</h4>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {employee.tools.map((tool, i) => (
+                      <Badge key={i} variant="outline" className="text-xs rounded-full bg-white/60 backdrop-blur-sm">
+                        {tool}
+                      </Badge>
+                    ))}
                   </div>
-                </Card>
-              </div>
+                </div>
+
+                {/* Learn More Button */}
+                <div className="text-center mt-auto">
+                  <Button 
+                    onClick={() => {
+                      // Analytics tracking
+                      if (window.dataLayer) {
+                        window.dataLayer.push({
+                          event: 'template_card_click',
+                          role: employee.role,
+                          name: employee.name
+                        });
+                      }
+                      // Navigate to detail (for now, show more info)
+                      window.location.href = `/ai-employees#${employee.name.toLowerCase()}`;
+                    }}
+                    variant="ghost" 
+                    className="text-[#8B5CF6] hover:text-[#7C3AED] font-medium text-sm group"
+                  >
+                    Learn more 
+                    <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </div>
+              </motion.div>
             ))}
+          </div>
+
+          {/* CTA Section */}
+          <div className="text-center">
+            <div className="space-y-6">
+              <p className="text-lg text-[#6B7280]">Ready to hire your AI workforce?</p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  asChild
+                  className="btn-ai-primary text-white font-medium text-lg px-10 py-4"
+                  onClick={() => {
+                    if (window.dataLayer) {
+                      window.dataLayer.push({
+                        event: 'cta_click',
+                        placement: 'grid',
+                        action: 'explore_templates'
+                      });
+                    }
+                  }}
+                >
+                  <Link to="#pricing">
+                    <Bot className="mr-2 h-5 w-5" />
+                    <span className="text-white">Explore Templates</span>
+                  </Link>
+                </Button>
+                <Button 
+                  asChild
+                  variant="outline"
+                  className="border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white font-medium text-lg px-10 py-4"
+                  onClick={() => {
+                    if (window.dataLayer) {
+                      window.dataLayer.push({
+                        event: 'cta_click',
+                        placement: 'grid', 
+                        action: 'book_demo'
+                      });
+                    }
+                  }}
+                >
+                  <Link to="/contact?utm_source=site&utm_medium=cta&utm_campaign=c3_launch">
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    Book a 15-min Demo
+                  </Link>
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
