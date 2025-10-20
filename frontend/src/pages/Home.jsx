@@ -1088,39 +1088,94 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 sm:py-20 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      {/* Modern CTA Section with Glass Effect */}
+      <section className="section-spacing bg-gradient-to-br from-[#f093fb] via-[#f5576c] to-[#E91F2C] relative overflow-hidden">
+        {/* Floating Geometric Shapes */}
+        <div className="absolute inset-0">
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className={`absolute ${
+                i % 3 === 0 ? 'w-20 h-20 rounded-full' :
+                i % 3 === 1 ? 'w-16 h-16 rounded-2xl' :
+                'w-12 h-12 rounded-full'
+              } bg-white/10 backdrop-blur-sm`}
+              animate={{
+                rotate: [0, 360],
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.7, 0.3]
+              }}
+              transition={{
+                duration: 12 + i * 2,
+                repeat: Infinity,
+                ease: "linear",
+                delay: i * 1.5
+              }}
+              style={{
+                left: `${10 + i * 10}%`,
+                top: `${15 + (i % 3) * 25}%`
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <FadeUp>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-4">
-              Ready to Build Something Intelligent?
-            </h2>
-            <p className="text-base text-[#475467] mb-8">
-              Let's discuss how smart digital systems can help your business grow, engage customers, and streamline operations.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                onClick={handleStartProject}
-                style={{ 
-                  backgroundColor: '#293889',
-                  color: 'white',
-                  fontWeight: '500'
-                }}
-                className="hover:bg-[#1e2c6b] shadow-[0_6px_18px_rgba(41,56,137,0.22)]"
-                data-testid="cta-primary-button"
+            <motion.div
+              animate={{
+                y: [0, -10, 0]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight">
+                Ready to Build Something{' '}
+                <span 
+                  className="bg-gradient-to-r from-[#4facfe] to-[#00f2fe] bg-clip-text text-transparent"
+                  style={{ fontFamily: 'Plus Jakarta Sans' }}
+                >
+                  Intelligent?
+                </span>
+              </h2>
+            </motion.div>
+            
+            <div className="glass-card p-8 mb-10 border border-white/30">
+              <p className="text-xl text-white/90 leading-relaxed">
+                Let's discuss how smart digital systems can help your business grow, engage customers, and streamline operations.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: 1 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <Rocket className="mr-2 h-4 w-4" />
-                Start My Project
-              </Button>
-              <Button 
-                onClick={() => handleChatOpen('cta')}
-                variant="outline"
-                className="border-[hsl(var(--border))]"
-                data-testid="cta-secondary-button"
+                <Button 
+                  onClick={handleStartProject}
+                  className="bg-white text-[#f5576c] hover:bg-white/90 font-bold text-xl px-12 py-4 rounded-2xl shadow-2xl"
+                  data-testid="cta-primary-button"
+                >
+                  <Rocket className="mr-3 h-6 w-6" />
+                  Start My Project
+                </Button>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: -1 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <MessageCircle className="mr-2 h-4 w-4" />
-                Chat with AI Consultant <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+                <Button 
+                  onClick={() => handleChatOpen('cta')}
+                  className="border-2 border-white/40 text-white hover:bg-white hover:text-[#f5576c] backdrop-blur-sm text-xl px-12 py-4 rounded-2xl"
+                  data-testid="cta-secondary-button"
+                >
+                  <MessageCircle className="mr-3 h-6 w-6" />
+                  Chat with AI Consultant
+                </Button>
+              </motion.div>
             </div>
           </FadeUp>
         </div>
