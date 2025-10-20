@@ -39,7 +39,8 @@ export default function AIEmployees() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
             asChild
-            className="bg-[#293889] hover:bg-[#1e2c6b] text-white font-medium text-lg px-8 py-3"
+            style={{ backgroundColor: '#293889', color: 'white' }}
+            className="hover:bg-[#1e2c6b] font-medium text-lg px-8 py-3"
             data-testid="launch-demo-cta"
           >
             <Link to="#pricing">
