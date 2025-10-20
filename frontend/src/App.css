@@ -7,6 +7,9 @@
 /* Import modern AI design system */
 @import './modern-ai-design.css';
 
+/* Import cute robot animations */
+@import './cute-robots.css';
+
 /* AI Matrix Animation */
 @keyframes matrix-move {
   0% { transform: translate(0, 0); }
