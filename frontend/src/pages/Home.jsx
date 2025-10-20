@@ -26,7 +26,8 @@ import {
   Rocket,
   Search,
   Target,
-  TrendingUp
+  TrendingUp,
+  Sparkles
 } from 'lucide-react';
 import { 
   trackHeroView, 
@@ -196,101 +197,194 @@ export default function Home() {
 
   return (
     <div className="flex flex-col" data-testid="home-page">
-      {/* C³ AI Employees Hero Section */}
-      <PageHeader className="bg-gradient-to-br from-[#002B49] via-[#004C8A] to-[#293889] text-white relative overflow-hidden">
-        {/* AI Matrix Background Animation */}
-        <div className="absolute inset-0 opacity-10">
+      {/* Modern AI SaaS Hero Section */}
+      <section className="relative min-h-screen bg-gradient-to-br from-[#667eea] via-[#764ba2] to-[#8B5CF6] overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 opacity-30">
           <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, #ffffff 1px, transparent 1px),
-                             radial-gradient(circle at 75% 75%, #ffffff 1px, transparent 1px)`,
-            backgroundSize: '50px 50px',
-            animation: 'matrix-move 20s linear infinite'
+            backgroundImage: `radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 1px, transparent 1px),
+                             radial-gradient(circle at 80% 50%, rgba(255,255,255,0.15) 1px, transparent 1px),
+                             radial-gradient(circle at 40% 20%, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '100px 100px, 80px 80px, 120px 120px',
+            animation: 'float 20s ease-in-out infinite'
           }}></div>
         </div>
         
         {/* Floating AI Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          {[...Array(8)].map((_, i) => (
+          {[...Array(12)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-2 h-2 bg-white/20 rounded-full"
+              className="absolute w-4 h-4 bg-white/20 rounded-full blur-sm"
               animate={{
-                y: [-20, -100],
-                opacity: [0, 1, 0],
-                scale: [0, 1, 0]
+                x: [0, 100, 0],
+                y: [0, -100, 0],
+                opacity: [0.2, 0.8, 0.2],
+                scale: [0.5, 1.2, 0.5]
               }}
               transition={{
-                duration: 4 + i,
+                duration: 8 + i * 2,
                 repeat: Infinity,
-                delay: i * 0.8
+                delay: i * 1.5,
+                ease: "easeInOut"
               }}
               style={{
-                left: `${10 + i * 10}%`,
-                bottom: '10%'
+                left: `${5 + i * 8}%`,
+                top: `${10 + (i % 3) * 30}%`
               }}
             />
           ))}
         </div>
 
-        <Badge className="mb-6 bg-white/20 text-white hover:bg-white/30 text-lg px-6 py-2 backdrop-blur-sm border border-white/30" data-testid="hero-badge">
-          <Bot className="mr-2 h-5 w-5" /> C³ AI Employees
-        </Badge>
-        
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
-          Hire AI Employees —{' '}
-          <span className="bg-gradient-to-r from-[#E91F2C] to-[#FF6B6B] bg-clip-text text-transparent">
-            Not Human Staff.
-          </span>
-        </h1>
-        
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-8 max-w-4xl mx-auto border border-white/20">
-          <p className="text-2xl text-white/90 leading-relaxed mb-6">
-            Build your own team of intelligent AI employees that work 24/7.
-          </p>
-          <p className="text-xl text-white/80">
-            Schedule, manage, design, and train — all in one unified platform.
-          </p>
-        </div>
+        {/* Glass Morphism Header */}
+        <div className="relative z-10 flex items-center justify-center min-h-screen">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+            
+            {/* CCC Logo with AI Glow */}
+            <motion.div 
+              className="mb-8"
+              animate={{ 
+                boxShadow: [
+                  '0 0 20px rgba(139, 92, 246, 0.3)',
+                  '0 0 40px rgba(139, 92, 246, 0.6)',
+                  '0 0 20px rgba(139, 92, 246, 0.3)'
+                ]
+              }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              <img 
+                src="https://customer-assets.emergentagent.com/job_smartbiz-portal/artifacts/p67oqb1l_Screenshot%202025-10-11%20at%204.38.29%20PM.png" 
+                alt="Cognition & Competence Consultancy" 
+                className="h-24 w-auto object-contain mx-auto rounded-2xl bg-white/10 backdrop-blur-sm p-4 border border-white/20"
+                style={{ 
+                  filter: 'drop-shadow(0 8px 32px rgba(139, 92, 246, 0.4))'
+                }}
+              />
+            </motion.div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button 
-            asChild
-            size="lg"
-            className="bg-white text-[#293889] hover:bg-white/90 text-lg px-8 py-4 font-semibold shadow-xl"
-            data-testid="hero-primary-cta"
-          >
-            <Link to="/ai-employees">
-              <Bot className="mr-2 h-5 w-5" />
-              Create Your AI Employee
-            </Link>
-          </Button>
-          
-          <Button 
-            asChild
-            size="lg"
-            variant="outline"
-            className="border-white/30 text-white hover:bg-white hover:text-[#293889] text-lg px-8 py-4 backdrop-blur-sm"
-            data-testid="hero-secondary-cta"
-          >
-            <Link to="/ai-employees#templates">
-              <Zap className="mr-2 h-5 w-5" />
-              Explore Templates
-            </Link>
-          </Button>
-          
-          <Button 
-            asChild
-            size="lg"
-            className="bg-[#E91F2C] hover:bg-[#d1171e] text-white text-lg px-8 py-4 shadow-xl"
-            data-testid="hero-enterprise-cta"
-          >
-            <Link to="/contact">
-              <Rocket className="mr-2 h-5 w-5" />
-              Customize for My Company
-            </Link>
-          </Button>
+            {/* AI Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <Badge className="ai-badge mb-8 text-lg px-8 py-3">
+                <Bot className="mr-3 h-6 w-6" /> 
+                C³ AI Employees Platform
+              </Badge>
+            </motion.div>
+            
+            {/* Hero Title with Gradient Text */}
+            <motion.h1 
+              className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight mb-8 leading-none"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+            >
+              <span className="text-white">Hire AI Employees —</span>
+              <br />
+              <span 
+                className="bg-gradient-to-r from-[#f093fb] via-[#f5576c] to-[#4facfe] bg-clip-text text-transparent"
+                style={{ fontFamily: 'Plus Jakarta Sans' }}
+              >
+                Not Human Staff.
+              </span>
+            </motion.h1>
+            
+            {/* Glass Morphism Description Box */}
+            <motion.div 
+              className="glass-card p-8 mb-12 max-w-4xl mx-auto border border-white/30"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-4">
+                Build your own team of intelligent AI employees that work 24/7.
+              </h2>
+              <p className="text-xl text-white/80 leading-relaxed">
+                Schedule, manage, design, and train — all in one unified platform.
+              </p>
+            </motion.div>
+
+            {/* Interactive CTA Buttons */}
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-6 justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button 
+                  asChild
+                  size="lg"
+                  className="btn-ai-primary text-white text-xl px-12 py-4 relative overflow-hidden group"
+                >
+                  <Link to="/ai-employees">
+                    <Bot className="mr-3 h-6 w-6" />
+                    <span className="relative z-10">Create Your AI Employee</span>
+                  </Link>
+                </Button>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button 
+                  asChild
+                  size="lg"
+                  className="btn-ai-secondary text-white text-xl px-12 py-4"
+                >
+                  <Link to="/ai-employees#templates">
+                    <Zap className="mr-3 h-6 w-6" />
+                    Explore Templates
+                  </Link>
+                </Button>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button 
+                  asChild
+                  size="lg"
+                  className="btn-ai-tertiary text-white text-xl px-12 py-4"
+                >
+                  <Link to="/contact">
+                    <Sparkles className="mr-3 h-6 w-6" />
+                    Customize for My Company
+                  </Link>
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            {/* Trust Indicators */}
+            <motion.div 
+              className="mt-16 flex justify-center items-center gap-8 text-white/60"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            >
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-green-400" />
+                <span>No Setup Fees</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-green-400" />
+                <span>14-Day Free Trial</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="h-5 w-5 text-green-400" />
+                <span>Singapore Based</span>
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </PageHeader>
+      </section>
 
       {/* Hero Content Section */}
       <section className="relative overflow-hidden bg-white">
