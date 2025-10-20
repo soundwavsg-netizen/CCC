@@ -55,16 +55,16 @@ export default function About() {
         </p>
       </PageHeader>
 
-      {/* Company Background */}
-      <section className="py-16 sm:py-20 bg-white" data-testid="company-background">
+      {/* Company Background - Modern Glass Cards */}
+      <section className="section-spacing bg-gradient-to-br from-white to-[#f8fafc]" data-testid="company-background">
         <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12">
             <FadeUp>
-              <div>
-                <h2 className="text-3xl sm:text-4xl font-semibold text-[hsl(var(--foreground))] mb-6">
+              <div className="ai-card p-8">
+                <h2 className="text-3xl sm:text-4xl font-bold text-[hsl(var(--foreground))] mb-6" style={{ fontFamily: 'Plus Jakarta Sans' }}>
                   Who We Are
                 </h2>
-                <div className="space-y-4 text-base text-[#475467] leading-relaxed">
+                <div className="space-y-6 text-base text-[#475467] leading-relaxed">
                   <p>
                     Cognition & Competence Consultancy (CCC) is a Singapore-based digital transformation agency specializing in helping SMEs modernize through technology and AI.
                   </p>
@@ -75,28 +75,40 @@ export default function About() {
                     CCC also assists clients in applying for Enterprise Singapore's EDG support, guiding them from consultation to deployment. Whether you're launching a new site, upgrading your digital infrastructure, or implementing AI automation, CCC delivers end-to-end digital solutions built for results.
                   </p>
                 </div>
+                
+                {/* Modern Feature Highlights */}
+                <div className="mt-8 grid grid-cols-1 gap-4">
+                  {[
+                    { icon: CheckCircle2, text: 'Singapore-based with deep SME experience', color: '#10B981' },
+                    { icon: CheckCircle2, text: 'Full in-house web, app, and AI expertise', color: '#3B82F6' },
+                    { icon: CheckCircle2, text: 'Real-time lead notifications', color: '#8B5CF6' }
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-center gap-3 p-3 rounded-xl bg-white/60 backdrop-blur-sm">
+                      <div 
+                        className="h-8 w-8 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: item.color }}
+                      >
+                        <item.icon className="h-4 w-4 text-white" />
+                      </div>
+                      <span className="text-sm font-medium text-[hsl(var(--foreground))]">{item.text}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </FadeUp>
             
-            <FadeUp delay={0.1}>
-              <Card className="p-8 rounded-xl shadow-[0_12px_40px_rgba(16,24,40,0.08)] border-0 space-y-6">
-                <div>
-                  <h3 className="font-semibold text-xl mb-2">Company Details</h3>
-                  <div className="space-y-2 text-sm text-[#475467]">
-                    <p><span className="font-medium text-[hsl(var(--foreground))]">Registered Name:</span> Cognition & Competence Consultancy Pte Ltd</p>
-                    <p><span className="font-medium text-[hsl(var(--foreground))]">UEN:</span> 201208916K</p>
-                    <p><span className="font-medium text-[hsl(var(--foreground))]">Founded:</span> 2012</p>
-                    <p><span className="font-medium text-[hsl(var(--foreground))]">Location:</span> Singapore</p>
+            <FadeUp delay={0.2}>
+              <div className="ai-card p-8 bg-gradient-to-br from-[#8B5CF6]/10 to-[#06B6D4]/10 border border-[#8B5CF6]/20">
+                <div className="text-center">
+                  <div className="h-20 w-20 rounded-full bg-gradient-to-br from-[#8B5CF6] to-[#06B6D4] flex items-center justify-center text-white mx-auto mb-6 ai-breathe">
+                    <TrendingUp className="h-10 w-10" />
                   </div>
+                  <h3 className="text-2xl font-bold mb-4" style={{ fontFamily: 'Plus Jakarta Sans' }}>Smart Digital Growth</h3>
+                  <p className="text-[#475467] leading-relaxed">
+                    From websites and e-commerce stores to WhatsApp automation and AI chat, CCC helps your business go digital fast — with optional EDG support for eligible projects.
+                  </p>
                 </div>
-                <div className="border-t pt-6">
-                  <h3 className="font-semibold text-xl mb-2">Contact Information</h3>
-                  <div className="space-y-2 text-sm text-[#475467]">
-                    <p><span className="font-medium text-[hsl(var(--foreground))]">Email:</span> hello@cccdigital.sg</p>
-                    <p><span className="font-medium text-[hsl(var(--foreground))]">Phone:</span> 8982 1301</p>
-                  </div>
-                </div>
-              </Card>
+              </div>
             </FadeUp>
           </div>
         </div>
