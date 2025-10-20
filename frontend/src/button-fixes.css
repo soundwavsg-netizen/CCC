@@ -1,40 +1,49 @@
-/* Button Fix Utilities - Ensure visible text on all CCC branded buttons */
+/* Button Fix Utilities - Smart text contrast based on background */
 
-/* Force white text on ALL blue backgrounds - comprehensive fix */
+/* Dark backgrounds get white text */
 [class*="bg-[#293889]"],
 [class*="bg-[hsl(var(--secondary))]"],
-[style*="background-color: #293889"],
-.bg-blue-600, .bg-blue-500, .bg-blue-700 {
+[class*="bg-[#E91F2C]"],
+[class*="bg-[#25D366]"],
+[class*="bg-[#8B5CF6]"],
+.bg-blue-600, .bg-blue-500, .bg-blue-700,
+.bg-red-600, .bg-red-500, .bg-red-700,
+.bg-green-600, .bg-green-500, .bg-green-700,
+.bg-purple-600, .bg-purple-500, .bg-purple-700 {
   color: white !important;
 }
 
-/* Force white text on all children of blue backgrounds */
+/* Dark backgrounds - all children get white text */
 [class*="bg-[#293889]"] *,
 [class*="bg-[hsl(var(--secondary))]"] *,
-[style*="background-color: #293889"] *,
-.bg-blue-600 *, .bg-blue-500 *, .bg-blue-700 * {
+[class*="bg-[#E91F2C]"] *,
+[class*="bg-[#25D366]"] * {
   color: white !important;
 }
 
-/* Fix specific button and link elements */
-button[class*="bg-[#293889]"],
-button[class*="bg-[hsl(var(--secondary))]"],
-a[class*="bg-[#293889]"],
-a[class*="bg-[hsl(var(--secondary))]"] {
-  color: white !important;
-  font-weight: 500 !important;
+/* Light backgrounds get dark text */
+[class*="bg-white"],
+[class*="bg-gray-50"],
+[class*="bg-gray-100"],
+.bg-white {
+  color: #1F2937 !important;
 }
 
-/* Fix hover states to maintain white text */
-button[class*="bg-[#293889]"]:hover,
-button[class*="bg-[hsl(var(--secondary))]"]:hover,
-a[class*="bg-[#293889]"]:hover,
-a[class*="bg-[hsl(var(--secondary))]"]:hover {
-  background-color: #1e2c6b !important;
-  color: white !important;
+/* Light backgrounds - children get dark text */
+[class*="bg-white"] *,
+[class*="bg-gray-50"] *,
+[class*="bg-gray-100"] * {
+  color: #1F2937 !important;
 }
 
-/* Primary Button (Brand Blue) */
+/* Outline buttons with dark text */
+[class*="variant-outline"],
+button[variant="outline"] {
+  color: #1F2937 !important;
+  border-color: #D1D5DB !important;
+}
+
+/* Specific button fixes */
 .btn-primary {
   background-color: #293889 !important;
   color: white !important;
@@ -46,7 +55,6 @@ a[class*="bg-[hsl(var(--secondary))]"]:hover {
   color: white !important;
 }
 
-/* Secondary Button (Brand Red) */
 .btn-secondary {
   background-color: #E91F2C !important;
   color: white !important;
@@ -55,44 +63,5 @@ a[class*="bg-[hsl(var(--secondary))]"]:hover {
 
 .btn-secondary:hover {
   background-color: #d1171e !important;
-  color: white !important;
-}
-
-/* Success Button (Green) */
-.btn-success {
-  background-color: #25D366 !important;
-  color: white !important;
-  font-weight: 500 !important;
-}
-
-.btn-success:hover {
-  background-color: #1ea952 !important;
-  color: white !important;
-}
-
-/* Specific fixes for blue link elements that might be on blue backgrounds */
-[class*="text-[hsl(var(--secondary))]"] {
-  color: #293889 !important;
-}
-
-/* When blue text is on blue background, make it white */
-[class*="bg-[#293889]"] [class*="text-[hsl(var(--secondary))]"],
-[class*="bg-[hsl(var(--secondary))]"] [class*="text-[hsl(var(--secondary))]"] {
-  color: white !important;
-}
-
-/* Brand color utilities with guaranteed contrast */
-.bg-brand-blue {
-  background-color: #293889 !important;
-  color: white !important;
-}
-
-.bg-brand-red {
-  background-color: #E91F2C !important;
-  color: white !important;
-}
-
-.bg-brand-navy {
-  background-color: #00003D !important;
   color: white !important;
 }
