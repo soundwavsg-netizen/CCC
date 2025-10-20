@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -17,29 +16,12 @@ import {
   BarChart3,
   Palette,
   CheckCircle2,
-  Zap,
-  Star,
-  Clock,
-  Shield,
-  Globe,
   ArrowRight,
   Play,
   Sparkles
 } from 'lucide-react';
 
-const FadeUp = ({ delay = 0, children }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 16 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, amount: 0.2 }}
-    transition={{ duration: 0.45, delay }}
-  >
-    {children}
-  </motion.div>
-);
-
 export default function AIEmployees() {
-  const [selectedPlan, setSelectedPlan] = useState('growth');
 
   const aiEmployeeTemplates = [
     {
