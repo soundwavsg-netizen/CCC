@@ -8,7 +8,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Badge } from '../components/ui/badge';
 import { toast } from 'sonner';
 import PageHeader from '../components/PageHeader';
-import { Mail, Phone, MessageSquare } from 'lucide-react';
+import { Mail, Phone, MessageSquare, MessageCircle } from 'lucide-react';
 
 const FadeUp = ({ delay = 0, children }) => (
   <motion.div
