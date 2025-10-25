@@ -1,30 +1,18 @@
 [
   {
-    "content": "Update AI employee lineup to final 10 with exact names, colors, and taglines",
+    "content": "Replace hello@cccdigital.sg with cognitioncompetence@gmail.com across frontend",
     "status": "in_progress"
   },
   {
-    "content": "Merge Marketing Writer into Marketing Assistant (Miles)",
+    "content": "Update backend email configuration and notifications",
     "status": "pending"
   },
   {
-    "content": "Create cuter animated robot characters with personalities",
+    "content": "Update AI agent and WhatsApp bot contact references",
     "status": "pending"
   },
   {
-    "content": "Implement role-first, name-second UX hierarchy",
-    "status": "pending"
-  },
-  {
-    "content": "Add Phase 2 placeholder for Moir (Marketing Writer) - internal only",
-    "status": "pending"
-  },
-  {
-    "content": "Update grid layout and Motion-style animations",
-    "status": "pending"
-  },
-  {
-    "content": "Implement analytics tracking for all interactions",
+    "content": "Test email notifications and confirm delivery",
     "status": "pending"
   }
 ]
