@@ -201,11 +201,11 @@ export default function Contact() {
                         Send us an email and we'll respond within 24 hours
                       </p>
                       <a 
-                        href="mailto:hello@cccdigital.sg"
+                        href="mailto:cognitioncompetence@gmail.com"
                         className="text-[hsl(var(--secondary))] hover:text-[#0AA099] font-medium"
                         data-testid="contact-email-link"
                       >
-                        hello@cccdigital.sg
+                        cognitioncompetence@gmail.com
                       </a>
                     </div>
                   </div>
