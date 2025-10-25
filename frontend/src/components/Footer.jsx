@@ -112,11 +112,11 @@ export const Footer = () => {
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 shrink-0" />
                 <a 
-                  href="mailto:hello@cccdigital.sg" 
+                  href="mailto:cognitioncompetence@gmail.com" 
                   className="text-sm hover:text-[hsl(var(--secondary))] transition-colors"
                   data-testid="footer-email-link"
                 >
-                  hello@cccdigital.sg
+                  cognitioncompetence@gmail.com
                 </a>
               </li>
             </ul>
