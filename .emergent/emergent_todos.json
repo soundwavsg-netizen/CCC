@@ -1,15 +1,15 @@
 [
   {
     "content": "Replace hello@cccdigital.sg with cognitioncompetence@gmail.com across frontend",
-    "status": "in_progress"
+    "status": "completed"
   },
   {
     "content": "Update backend email configuration and notifications",
-    "status": "pending"
+    "status": "completed"
   },
   {
     "content": "Update AI agent and WhatsApp bot contact references",
-    "status": "pending"
+    "status": "in_progress"
   },
   {
     "content": "Test email notifications and confirm delivery",
