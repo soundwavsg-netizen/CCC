@@ -5,7 +5,7 @@ import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import PageHeader from '../components/PageHeader';
 import { Dialog, DialogContent, DialogTrigger } from '../components/ui/dialog';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, BarChart3 } from 'lucide-react';
 
 const FadeUp = ({ delay = 0, children }) => (
   <motion.div
