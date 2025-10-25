@@ -207,7 +207,7 @@ Ready to automate? Share your business type and I'll recommend the best package!
 1. **Direct WhatsApp:** Live bot responses
 2. **Voice Call:** +65 8982 1301  
 3. **Website Chat:** Integrated with same AI logic
-4. **Email:** hello@cccdigital.sg
+4. **Email:** cognitioncompetence@gmail.com
 
 ---
 
