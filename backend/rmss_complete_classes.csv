@@ -1,0 +1,172 @@
+Level,Subject,Location,Tutor_Name,Day1,Time1,Day2,Time2
+P2,Math,Marine Parade,Mr David Lim (DY HOD),WED,7:30pm-9:30pm,,
+P2,Math,Marine Parade,Mr Winston Loh,FRI,4:00pm-6:00pm,,
+P2,English,Marine Parade,Ms Rachel Tan,SAT,10:00am-12:00pm,,
+P2,Math,Punggol,Ms Lisa Tan (HOD),WED,7:30pm-9:30pm,,
+P2,English,Punggol,Ms Jennifer Lee,SAT,2:00pm-4:00pm,,
+P2,Math,Jurong,Mr Benjamin Lee,WED,7:30pm-9:30pm,,
+P2,English,Jurong,Ms Catherine Lim,SAT,2:00pm-4:00pm,,
+P2,Math,Bishan,Mr Zech Zhuang,WED,4:00pm-6:00pm,,
+P2,Math,Bishan,Mr Franklin Neo,FRI,7:30pm-9:30pm,,
+P2,English,Bishan,Ms Ong L.T.,SAT,2:00pm-4:00pm,,
+P2,Chinese,Bishan,Ms Samantha Teo,SUN,10:30am-12:30pm,,
+P2,Math,Kovan,Mr Eric Lim,WED,7:30pm-9:30pm,,
+P2,English,Kovan,Ms Rachel Goh,SAT,2:00pm-4:00pm,,
+P3,Math,Marine Parade,Mr David Lim (DY HOD),MON,7:30pm-9:30pm,,
+P3,Science,Marine Parade,Mr Desmond Tham (HOD),SAT,9:00am-11:00am,,
+P3,English,Marine Parade,Ms Rachel Tan,SAT,12:00pm-2:00pm,,
+P3,Math,Punggol,Ms Lisa Tan (HOD),MON,7:30pm-9:30pm,,
+P3,Science,Punggol,Mr Alex Wong,SAT,11:30am-1:30pm,,
+P3,English,Punggol,Ms Jennifer Lee,SUN,10:30am-12:30pm,,
+P3,Chinese,Punggol,Ms Priya Kumar,SAT,4:00pm-6:00pm,,
+P3,Math,Jurong,Mr Benjamin Lee,MON,7:30pm-9:30pm,,
+P3,Science,Jurong,Mr Steven Ng,SAT,9:00am-11:00am,,
+P3,English,Jurong,Ms Catherine Lim,SUN,10:30am-12:30pm,,
+P3,Math,Bishan,Mr Zech Zhuang,MON,4:00pm-6:00pm,,
+P3,Science,Bishan,Mr Zech Zhuang,SAT,12:00pm-2:00pm,,
+P3,English,Bishan,Ms Ong L.T.,SUN,10:30am-12:30pm,,
+P3,Chinese,Bishan,Ms Samantha Teo,SUN,2:00pm-4:00pm,,
+P3,Math,Kovan,Mr Eric Lim,MON,7:30pm-9:30pm,,
+P3,Science,Kovan,Mr Thomas Lee,SAT,9:00am-11:00am,,
+P3,English,Kovan,Ms Rachel Goh,SUN,10:30am-12:30pm,,
+P4,Math,Marine Parade,Mr David Lim (DY HOD),TUE,6:00pm-7:30pm,THU,6:00pm-7:30pm
+P4,Math,Marine Parade,Mr Winston Loh,WED,4:00pm-5:30pm,FRI,4:00pm-5:30pm
+P4,Science,Marine Parade,Mr Desmond Tham (HOD),SAT,11:00am-1:00pm,,
+P4,English,Marine Parade,Ms Rachel Tan,SAT,4:00pm-6:00pm,,
+P4,Math,Punggol,Ms Lisa Tan (HOD),TUE,6:00pm-7:30pm,THU,6:00pm-7:30pm
+P4,Math,Punggol,Mr Jeremy Chong,WED,4:00pm-5:30pm,FRI,7:30pm-9:00pm
+P4,Science,Punggol,Mr Alex Wong,SAT,2:00pm-4:00pm,,
+P4,English,Punggol,Ms Jennifer Lee,SUN,12:30pm-2:30pm,,
+P4,Math,Jurong,Mr Benjamin Lee,TUE,6:00pm-7:30pm,THU,6:00pm-7:30pm
+P4,Math,Jurong,Mr Jason Tan,WED,4:00pm-5:30pm,FRI,7:30pm-9:00pm
+P4,Science,Jurong,Mr Steven Ng,SAT,11:00am-1:00pm,,
+P4,English,Jurong,Ms Michelle Koh,SUN,12:30pm-2:30pm,,
+P4,Math,Bishan,Mr Zech Zhuang,TUE,4:00pm-5:30pm,THU,7:30pm-9:00pm
+P4,Math,Bishan,Mr Franklin Neo,WED,4:00pm-5:30pm,FRI,6:00pm-7:30pm
+P4,Science,Bishan,Mr Zech Zhuang,SAT,10:00am-12:00pm,,
+P4,English,Bishan,Ms Ong L.T.,SAT,6:00pm-8:00pm,,
+P4,Chinese,Bishan,Ms Samantha Teo,SAT,4:00pm-6:00pm,,
+P4,Math,Kovan,Mr Eric Lim,TUE,6:00pm-7:30pm,THU,6:00pm-7:30pm
+P4,Math,Kovan,Mr Andrew Ng,WED,7:30pm-9:00pm,FRI,4:00pm-5:30pm
+P4,Science,Kovan,Mr Thomas Lee,SAT,11:00am-1:00pm,,
+P4,English,Kovan,Ms Rachel Goh,SAT,4:00pm-6:00pm,,
+P5,Math,Marine Parade,Mr David Lim (DY HOD),MON,7:30pm-9:00pm,THU,7:30pm-9:00pm
+P5,Math,Marine Parade,Mr Winston Loh,TUE,6:00pm-7:30pm,FRI,6:00pm-7:30pm
+P5,Science,Marine Parade,Mr Desmond Tham (HOD),SAT,1:00pm-3:00pm,,
+P5,English,Marine Parade,Ms Rachel Tan,SAT,6:00pm-8:00pm,,
+P5,Math,Punggol,Ms Lisa Tan (HOD),MON,7:30pm-9:00pm,THU,7:30pm-9:00pm
+P5,Math,Punggol,Mr Jeremy Chong,TUE,4:00pm-5:30pm,THU,4:00pm-5:30pm
+P5,Science,Punggol,Mr Alex Wong,SAT,4:00pm-6:00pm,,
+P5,English,Punggol,Ms Jennifer Lee,SUN,10:30am-12:30pm,,
+P5,Math,Jurong,Ms Catherine Lim,MON,7:30pm-9:00pm,THU,7:30pm-9:00pm
+P5,Math,Jurong,Mr Jason Tan,TUE,6:00pm-7:30pm,FRI,7:30pm-9:00pm
+P5,Science,Jurong,Mr Steven Ng,SAT,1:00pm-3:00pm,,
+P5,English,Jurong,Ms Michelle Koh,SAT,4:00pm-6:00pm,,
+P5,Math,Bishan,Mr Zech Zhuang,MON,6:00pm-7:30pm,WED,6:00pm-7:30pm
+P5,Math,Bishan,Mr Franklin Neo,TUE,6:00pm-7:30pm,FRI,4:00pm-5:30pm
+P5,Science,Bishan,Mr Zech Zhuang,SAT,12:00pm-2:00pm,,
+P5,English,Bishan,Ms Ong L.T.,SUN,10:30am-12:30pm,,
+P5,Chinese,Bishan,Ms Samantha Teo,SUN,12:30pm-2:30pm,,
+P5,Math,Kovan,Mr Eric Lim,MON,7:30pm-9:00pm,THU,7:30pm-9:00pm
+P5,Math,Kovan,Mr Andrew Ng,TUE,4:00pm-5:30pm,FRI,4:00pm-5:30pm
+P5,Science,Kovan,Mr Thomas Lee,SAT,1:00pm-3:00pm,,
+P5,English,Kovan,Ms Rachel Goh,SUN,10:30am-12:30pm,,
+P6,Math,Marine Parade,Mr David Lim (DY HOD),TUE,7:30pm-9:00pm,FRI,7:30pm-9:00pm
+P6,Math,Marine Parade,Mr Winston Loh,TUE,6:00pm-7:30pm,FRI,6:00pm-7:30pm
+P6,Math,Marine Parade,Mr Sean Yeo (HOD),WED,6:00pm-7:30pm,SAT,11:00am-12:30pm
+P6,Science,Marine Parade,Mr David Lim (DY HOD),SAT,4:00pm-6:00pm,,
+P6,Science,Marine Parade,Mr Desmond Tham (HOD),SUN,11:00am-1:00pm,,
+P6,English,Marine Parade,Ms Rachel Tan,SAT,2:00pm-4:00pm,,
+P6,Math,Punggol,Ms Lisa Tan (HOD),TUE,7:30pm-9:00pm,FRI,7:30pm-9:00pm
+P6,Math,Punggol,Mr Jeremy Chong,WED,6:00pm-7:30pm,SAT,9:30am-11:00am
+P6,Science,Punggol,Ms Lisa Tan (HOD),SAT,4:00pm-6:00pm,,
+P6,Science,Punggol,Mr Alex Wong,SUN,9:30am-11:30am,,
+P6,English,Punggol,Ms Jennifer Lee,SUN,2:00pm-4:00pm,,
+P6,Math,Jurong,Mr Benjamin Lee,TUE,7:30pm-9:00pm,FRI,7:30pm-9:00pm
+P6,Math,Jurong,Mr Jason Tan,WED,6:00pm-7:30pm,SAT,11:00am-12:30pm
+P6,Science,Jurong,Mr Benjamin Lee,SAT,4:00pm-6:00pm,,
+P6,Math,Bishan,Mr Zech Zhuang,TUE,4:00pm-5:30pm,THU,4:00pm-5:30pm
+P6,Math,Bishan,Mr Franklin Neo,WED,6:00pm-7:30pm,SAT,9:30am-11:00am
+P6,Science,Bishan,Mr Zech Zhuang,SAT,2:00pm-4:00pm,,
+P6,English,Bishan,Ms Ong L.T.,SAT,4:00pm-6:00pm,,
+P6,Math,Kovan,Mr Eric Lim,TUE,7:30pm-9:00pm,FRI,7:30pm-9:00pm
+P6,Science,Kovan,Mr Eric Lim,SAT,4:00pm-6:00pm,,
+S1,Math,Marine Parade,Mr Sean Yeo (HOD),WED,7:30pm-9:00pm,FRI,4:00pm-5:30pm
+S1,Math,Marine Parade,Mr John Lee (DY HOD),TUE,6:00pm-7:30pm,THU,7:30pm-9:00pm
+S1,Science,Marine Parade,Mr Desmond Tham (HOD),SAT,9:00am-11:00am,,
+S1,English,Marine Parade,Ms Rachel Tan,SUN,4:00pm-6:00pm,,
+S1,Math,Punggol,Mr Ang C.X.,MON,7:30pm-9:00pm,WED,4:00pm-5:30pm
+S1,Science,Punggol,Mr Kevin Lim,SAT,2:00pm-4:00pm,,
+S1,Math,Jurong,Mr Jason Tan,TUE,7:30pm-9:00pm,THU,6:00pm-7:30pm
+S1,Science,Jurong,Mr Steven Ng,SAT,9:00am-11:00am,,
+S1,Math,Bishan,Mr Sean Yeo (HOD),TUE,4:00pm-5:30pm,THU,6:00pm-7:30pm
+S1,Math,Bishan,Mr Franklin Neo,WED,7:30pm-9:00pm,FRI,6:00pm-7:30pm
+S1,Science,Bishan,Mr Desmond Tham (HOD),SAT,2:00pm-4:00pm,,
+S1,Chinese,Bishan,Ms Samantha Teo,SAT,4:00pm-6:00pm,,
+S1,Math,Kovan,Mr Eric Lim,TUE,7:30pm-9:00pm,THU,6:00pm-7:30pm
+S1,Science,Kovan,Mr Thomas Lee,SAT,9:00am-11:00am,,
+S1,Chinese,Kovan,Ms Samantha Teo,SUN,9:30am-11:30am,,
+S2,Math,Marine Parade,Mr Sean Yeo (HOD),MON,7:30pm-9:00pm,FRI,6:00pm-7:30pm
+S2,Math,Marine Parade,Mr John Lee (DY HOD),TUE,7:30pm-9:00pm,THU,6:00pm-7:30pm
+S2,Science,Marine Parade,Ms Melissa Lim (DY HOD),SAT,11:00am-1:00pm,,
+S2,English,Marine Parade,Ms Rachel Tan,SUN,2:00pm-4:00pm,,
+S2,Math,Punggol,Mr Ang C.X.,MON,6:00pm-7:30pm,WED,6:00pm-7:30pm
+S2,Science,Punggol,Ms Grace Chen,SAT,4:00pm-6:00pm,,
+S2,Math,Jurong,Mr Jason Tan,TUE,6:00pm-7:30pm,THU,7:30pm-9:00pm
+S2,Science,Jurong,Ms Michelle Koh,SAT,11:00am-1:00pm,,
+S2,Math,Bishan,Mr Sean Yeo (HOD),TUE,6:00pm-7:30pm,THU,4:00pm-5:30pm
+S2,Math,Bishan,Mr Marcus Lee,WED,6:00pm-7:30pm,FRI,7:30pm-9:00pm
+S2,Science,Bishan,Ms Angela Tan,SAT,4:00pm-6:00pm,,
+S2,Chinese,Bishan,Ms Samantha Teo,SAT,6:00pm-8:00pm,,
+S2,Math,Kovan,Mr Andrew Ng,TUE,6:00pm-7:30pm,THU,7:30pm-9:00pm
+S2,Science,Kovan,Mr Thomas Lee,SAT,11:00am-1:00pm,,
+S2,Chinese,Kovan,Ms Samantha Teo,SAT,9:00am-11:00am,,
+S3,EMath,Marine Parade,Mr Sean Yeo (HOD),SAT,9:00am-11:00am,,
+S3,EMath,Marine Parade,Mr John Lee (DY HOD),SUN,9:00am-11:00am,,
+S3,AMath,Marine Parade,Mr Sean Yeo (HOD),WED,6:00pm-7:30pm,SAT,11:00am-12:30pm
+S3,AMath,Marine Parade,Mr John Lee (DY HOD),THU,6:30pm-8:00pm,SUN,11:00am-12:30pm
+S3,Chemistry,Marine Parade,Ms Melissa Lim (DY HOD),SAT,4:00pm-6:00pm,,
+S3,Physics,Marine Parade,Mr Desmond Tham (HOD),SUN,2:00pm-4:00pm,,
+S3,EMath,Punggol,Mr Ang C.X.,SAT,2:00pm-4:00pm,,
+S3,AMath,Punggol,Mr Kevin Lim,WED,7:30pm-9:00pm,SAT,4:00pm-5:30pm
+S3,EMath,Jurong,Mr Jason Tan,SUN,9:00am-11:00am,,
+S3,AMath,Jurong,Mr Jason Tan,TUE,4:00pm-5:30pm,SAT,2:00pm-3:30pm
+S3,Chemistry,Jurong,Ms Chan S.Q.,SUN,11:00am-1:00pm,,
+S3,EMath,Bishan,Mr Sean Yeo (HOD),SAT,2:00pm-4:00pm,,
+S3,AMath,Bishan,Mr John Lee (DY HOD),MON,6:30pm-8:00pm,SAT,4:00pm-5:30pm
+S3,Chemistry,Bishan,Ms Melissa Lim (DY HOD),SAT,12:00pm-2:00pm,,
+S3,Physics,Bishan,Mr Desmond Tham (HOD),SAT,4:00pm-6:00pm,,
+S3,Biology,Bishan,Ms Rachel Goh,SAT,2:00pm-4:00pm,,
+S4,EMath,Marine Parade,Ms Emily Koh,WED,6:00pm-7:30pm,SAT,2:00pm-3:30pm
+S4,EMath,Marine Parade,Mr Sean Tan,THU,6:00pm-7:30pm,SUN,9:00am-10:30am
+S4,AMath,Marine Parade,Mr Sean Yeo (HOD),TUE,7:30pm-9:00pm,SAT,1:00pm-2:30pm
+S4,AMath,Marine Parade,Mr John Lee (DY HOD),WED,7:30pm-9:00pm,SUN,1:00pm-2:30pm
+S4,Chemistry,Marine Parade,Ms Melissa Lim (DY HOD),SAT,6:00pm-8:00pm,,
+S4,Physics,Marine Parade,Mr Desmond Tham (HOD),SUN,4:00pm-6:00pm,,
+S4,EMath,Punggol,Mr Ang C.X.,SAT,4:00pm-5:30pm,SUN,9:00am-10:30am
+S4,AMath,Punggol,Mr Kevin Lim,WED,6:00pm-7:30pm,SAT,6:00pm-7:30pm
+S4,EMath,Jurong,Mr Jason Tan,SAT,4:00pm-5:30pm,SUN,11:00am-12:30pm
+S4,AMath,Jurong,Mr Jason Tan,TUE,6:00pm-7:30pm,SAT,12:30pm-2:00pm
+S4,EMath,Bishan,Ms Emily Koh,TUE,6:00pm-7:30pm,SAT,9:00am-10:30am
+S4,AMath,Bishan,Mr John Lee (DY HOD),MON,8:00pm-9:30pm,SAT,6:00pm-7:30pm
+S4,Chemistry,Bishan,Ms Angela Tan,SAT,6:00pm-8:00pm,,
+S4,Physics,Bishan,Mr Thomas Lee,SAT,2:00pm-4:00pm,,
+J1,Math,Marine Parade,Mr Sean Yeo (HOD),SUN,1:30pm-3:30pm,,
+J1,Math,Marine Parade,Mr John Lee (DY HOD),SAT,2:30pm-4:30pm,,
+J1,Chemistry,Marine Parade,Mr Leonard Teo,SUN,3:00pm-5:00pm,,
+J1,Physics,Marine Parade,Mr Ryan Teo,SAT,4:00pm-6:00pm,,
+J1,Math,Bishan,Mr John Lee (DY HOD),SUN,9:00am-11:00am,,
+J1,Chemistry,Bishan,Mr Leonard Teo,SAT,4:30pm-6:30pm,,
+J1,Physics,Bishan,Mr Ryan Teo,SUN,11:00am-1:00pm,,
+J1,Economics,Bishan,Mrs Cheong,SUN,9:00am-11:00am,,
+J1,Math,Punggol,Mr Ang C.X.,SAT,11:00am-1:00pm,,
+J1,Chemistry,Jurong,Ms Chan S.Q.,SAT,4:00pm-6:00pm,,
+J2,Math,Marine Parade,Mr Sean Yeo (HOD),TUE,8:00pm-9:30pm,SAT,4:30pm-6:00pm
+J2,Math,Marine Parade,Mr John Lee (DY HOD),THU,8:30pm-10:00pm,SUN,3:30pm-5:00pm
+J2,Chemistry,Marine Parade,Mr Leonard Teo,SUN,5:00pm-7:00pm,,
+J2,Economics,Marine Parade,Mrs Cheong,SAT,4:30pm-6:30pm,,
+J2,Math,Bishan,Mr Sean Yeo (HOD),WED,8:30pm-10:00pm,SUN,3:30pm-5:00pm
+J2,Chemistry,Bishan,Mr Leonard Teo,SAT,6:30pm-8:30pm,,
+J2,Physics,Bishan,Mr Ryan Teo,SUN,1:00pm-3:00pm,,
+J2,Economics,Bishan,Mrs Cheong,MON,6:00pm-8:00pm,,
+J2,Math,Punggol,Mr Ang C.X.,FRI,8:00pm-9:30pm,SUN,11:30am-1:00pm
