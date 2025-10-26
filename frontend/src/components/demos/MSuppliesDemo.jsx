@@ -412,4 +412,6 @@ const MSuppliesDemo = () => {
       </div>
     </div>
   );
-};\n\nexport default MSuppliesDemo;
+};
+
+export default MSuppliesDemo;
