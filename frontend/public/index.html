@@ -28,6 +28,39 @@
         ga4: window.NEXT_PUBLIC_GA4_ID || 'G-XXXXXXX',
         pixel: window.NEXT_PUBLIC_META_PIXEL_ID || '000000000000000'
       };
+      
+      // Global error handler to suppress Chrome extension errors
+      window.addEventListener('error', function(event) {
+        // Check if error is from a Chrome extension
+        if (event.filename && event.filename.includes('chrome-extension://')) {
+          // Suppress the error display (don't show to users)
+          event.preventDefault();
+          console.warn('Suppressed Chrome extension error:', event.message);
+          return true;
+        }
+        // Check for ethereum provider errors from extensions
+        if (event.message && (
+          event.message.includes('ethereum') || 
+          event.message.includes('setExternalProvider') ||
+          event.message.includes('injected.bundle')
+        )) {
+          event.preventDefault();
+          console.warn('Suppressed wallet extension error:', event.message);
+          return true;
+        }
+      });
+      
+      // Suppress unhandled promise rejections from extensions
+      window.addEventListener('unhandledrejection', function(event) {
+        if (event.reason && event.reason.message && (
+          event.reason.message.includes('ethereum') ||
+          event.reason.message.includes('chrome-extension')
+        )) {
+          event.preventDefault();
+          console.warn('Suppressed extension promise rejection:', event.reason);
+          return true;
+        }
+      });
     </script>
   </head>
   <body>
