@@ -1,18 +1,30 @@
 [
   {
-    "content": "Create TuitionCentreDemo component with live RMSS integration",
+    "content": "Create main /demo hub page with overview of both demos",
     "status": "in_progress"
   },
   {
-    "content": "Add demo navigation and routing",
+    "content": "Update TuitionCentreDemo to be at /demo/tuition route",
     "status": "pending"
   },
   {
-    "content": "Create demos index page to showcase different industry solutions",
+    "content": "Create M Supplies e-commerce demo at /demo/ecommerce",
     "status": "pending"
   },
   {
-    "content": "Integrate with CCC Digital branding and modern design",
+    "content": "Add 'Demos (Live)' to header navigation",
+    "status": "pending"
+  },
+  {
+    "content": "Update portfolio cards to link to respective demos",
+    "status": "pending"
+  },
+  {
+    "content": "Add analytics tracking for all demo interactions",
+    "status": "pending"
+  },
+  {
+    "content": "Update SEO meta tags for demo pages",
     "status": "pending"
   }
 ]
