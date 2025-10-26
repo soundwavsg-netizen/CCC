@@ -86,7 +86,7 @@ const AILibrary = () => {
       color: "blue",
       description: "Core conversation patterns, context memory, formatting - the foundation for all chatbots",
       successRate: "100% (Multi-Client Proven)",
-      implementations: ["RMSS", "CCC Digital", "M Supplies"]
+      implementations: ["Tuition Centre", "CCC Digital", "M Supplies"]
     },
     specialized: {
       title: "🎯 SPECIALIZED Training", 
