@@ -65,7 +65,7 @@ const EnhancedAILibrary = () => {
   };
 
   const successMetrics = {
-    rmss: {
+    tuition: {
       dataAccuracy: "100% - all 11 PDFs integrated correctly", 
       pricingAccuracy: "100% - P2 $261.60, P6 $357.52, J2 $444.72 exact",
       tutorMapping: "50+ tutors mapped to subjects and locations",
