@@ -746,6 +746,132 @@ async def get_whatsapp_qr():
     except Exception as e:
         return {"qr": None, "error": str(e)}
 
+# Tuition Demo Models
+class TuitionChatRequest(BaseModel):
+    message: str
+    session_id: Optional[str] = None
+    user_type: Optional[str] = "demo_visitor"
+
+class TuitionChatResponse(BaseModel):
+    response: str
+    session_id: str
+    message_id: str
+
+# In-memory session storage for tuition demo
+tuition_sessions = {}
+
+# Tuition Centre System Message
+TUITION_SYSTEM_MESSAGE = """You are an AI assistant for a premier tuition center in Singapore. You provide detailed, accurate information about our 2026 class schedules and pricing.
+
+🏫 **LOCATIONS & CONTACT:**
+- **5 Locations**: Jurong, Bishan, Punggol, Kovan, Marine Parade
+- **Main Line**: 6222 8222
+- **Website**: www.rmss.com.sg
+
+📚 **QUICK PRICING REFERENCE:**
+
+**Primary (P2-P6):**
+- P2: $261.60/month (Math, English, Chinese)
+- P3: $277.95/month (All subjects)
+- P4: Math $332.45, Others $288.85/month
+- P5: Math $346.62, Science $303.02, Languages $299.75/month
+- P6: Math $357.52, Science $313.92, Languages $310.65/month
+
+**Secondary (S1-S4):**
+- S1-S2: Math $370-381/month, Science $327, Languages $321/month
+- S3-S4: EMath $343-408, AMath $397-408, Sciences $343/month
+
+**Junior College (J1-J2):**
+- J1: All subjects $401.12/month
+- J2: Math $444.72, Others $412.02/month
+
+📅 **2026 HOLIDAYS:** CNY (Feb 18), Hari Raya Puasa (Mar 21), Good Friday (Mar 30), Labour Day (Apr 27), National Day (Aug 9), Deepavali (Nov 8), Christmas (Dec 25)
+
+**CONVERSATION GUIDELINES:**
+1. **Ask clarifying questions** - "Which level?" "Which location?" "Which subject?"
+2. **Progressive disclosure** - Don't dump all info at once
+3. **Use emojis** appropriately (📚 🏫 👨‍🏫 💰 📅)
+4. **Remember context** - If user mentions location/level, use it in follow-ups
+5. **Suggest next steps** - "Would you like to know about tutors?" "Call 6222 8222 for enrollment"
+6. **Format clearly** - Use line breaks, bold pricing (**$XXX.XX/month**)
+
+**EXAMPLE:**
+User: "P6 math"
+You: "Great! P6 Math is **$357.52/month** (Course $310 + Material $18 + GST).
+📚 Classes are 2 lessons/week × 1.5 hours each.
+🏫 Available at all 5 locations: Jurong, Bishan, Punggol, Kovan, and Marine Parade.
+
+Which location works best for you? I can share specific tutors! 😊"
+"""
+
+@api_router.post("/tuition/chat", response_model=TuitionChatResponse)
+async def tuition_demo_chat(request: TuitionChatRequest):
+    """
+    Tuition Centre Demo Chat endpoint with context memory.
+    Specifically designed for the tuition demo page.
+    """
+    try:
+        # Generate or use existing session ID
+        session_id = request.session_id or str(uuid.uuid4())
+        
+        # Get or create conversation history
+        if session_id not in tuition_sessions:
+            tuition_sessions[session_id] = []
+        
+        # Build context from conversation history (last 4 exchanges)
+        context_enhancement = ""
+        history = tuition_sessions[session_id]
+        
+        if history:
+            context_enhancement = "\n\n**CONVERSATION CONTEXT:**\n"
+            for msg in history[-4:]:
+                context_enhancement += f"User: {msg['user']}\n"
+                context_enhancement += f"Assistant: {msg['assistant'][:150]}...\n"
+        
+        # Combine system message with context
+        enhanced_system_msg = TUITION_SYSTEM_MESSAGE + context_enhancement
+        
+        # Initialize LLM Chat
+        chat = LlmChat(
+            api_key=EMERGENT_API_KEY,
+            session_id=session_id,
+            system_message=enhanced_system_msg
+        )
+        
+        # Use gpt-4o-mini model
+        chat.with_model("openai", "gpt-4o-mini")
+        
+        # Create user message and send
+        user_message = UserMessage(text=request.message)
+        assistant_response = await chat.send_message(user_message)
+        
+        # Extract response text
+        response_text = assistant_response
+        if hasattr(assistant_response, 'content') and len(assistant_response.content) > 0:
+            response_text = assistant_response.content[0].text
+        
+        # Save to conversation history
+        tuition_sessions[session_id].append({
+            'user': request.message,
+            'assistant': response_text,
+            'timestamp': datetime.now(timezone.utc).isoformat()
+        })
+        
+        # Generate message ID
+        message_id = str(uuid.uuid4())
+        
+        logger.info(f"Tuition demo chat request processed - Session: {session_id}")
+        
+        return TuitionChatResponse(
+            response=response_text,
+            session_id=session_id,
+            message_id=message_id
+        )
+        
+    except Exception as e:
+        logger.error(f"Error in tuition demo chat endpoint: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to process chat request: {str(e)}")
+
 # Include the router in the main app
 app.include_router(api_router)
 
