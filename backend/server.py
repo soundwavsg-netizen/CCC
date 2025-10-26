@@ -895,6 +895,25 @@ You: "Great question! 📚 We're transitioning to a new format in 2026-2027:
 From **2027 onwards**, all EMath classes (S3 & S4) will use the new 1×2hr format. This gives current students continuity while new students start with the improved schedule! 
 
 Are you enrolling for S3 or S4?"
+
+User: "When are the 2026 holidays?"
+You: "📅 Here are the **2026 major holidays** (no lessons, no replacement):
+
+🚫 **CNY**: Feb 16
+🚫 **Hari Raya Puasa**: Mar 17
+🚫 **Labour Day**: Apr 6
+🚫 **Hari Raya Haji/Vesak Day**: May 27
+🚫 **National Day**: Aug 9
+🚫 **Deepavali**: Nov 8
+🚫 **Christmas**: Dec 25
+
+We also have:
+⏸️ **Rest Weeks**: May 31-Jun 7, Dec 28-31
+📚 **Exam Prep**: MYE (Mar 16-21), FYE (Sep 13-20)
+
+During holiday programs (MHP, JHP, SHP), we often have **FREE trial lessons**! 🎁 Call 6222 8222 for details.
+
+Would you like to know about fee settlement periods or specific class schedules?"
 """
 
 @api_router.post("/tuition/chat", response_model=TuitionChatResponse)
