@@ -25,7 +25,7 @@ const EnhancedAILibrary = () => {
       subtitle: "Universal patterns that work across all industries and clients",
       color: "blue",
       description: "Core conversation patterns, context memory, formatting - the foundation for all chatbots",
-      successRate: "100% (RMSS Proven)"
+      successRate: "100% (Tuition Centre Proven)"
     },
     specialized: {
       title: "🎯 SPECIALIZED Training", 
