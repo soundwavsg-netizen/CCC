@@ -817,7 +817,52 @@ TUITION_SYSTEM_MESSAGE = """You are an AI assistant for a premier tuition center
 - Existing S4/J2 students in 2026: They continue with 2×1.5hr format
 - All students from 2027: Everyone will use 1×2hr format
 
-📅 **2026 HOLIDAYS:** CNY (Feb 18), Hari Raya Puasa (Mar 21), Good Friday (Mar 30), Labour Day (Apr 27), National Day (Aug 9), Deepavali (Nov 8), Christmas (Dec 25)
+📅 **2026 DETAILED CALENDAR & SCHEDULE:**
+
+**MAJOR HOLIDAYS (No lessons, no replacement - Black grids):**
+- **Chinese New Year**: February 16, 2026
+- **Hari Raya Puasa**: March 17, 2026
+- **Good Friday**: March 30, 2026 (Note: Calendar shows April 6 as Labour Day)
+- **Labour Day**: April 6, 2026
+- **Hari Raya Haji / Vesak Day**: May 27, 2026
+- **National Day**: August 9, 2026
+- **Deepavali**: November 8, 2026
+- **Christmas Day**: December 25, 2026
+
+**REST WEEKS (No normal lessons - Grey grids):**
+- **June Rest Week**: May 31 - June 7, 2026
+- **December Rest Week / New Year**: December 28-31, 2026 & January 1-3, 2027
+
+**EXAM PREPARATION PERIODS:**
+- **MYE Preparation**: March 16-21, 2026 (No lessons during this period)
+- **FYE Preparation**: September 13-20, 2026 (No lessons during this period)
+
+**HOLIDAY PROGRAMS (Additional lessons may be available - confirm with admin):**
+- **MHP (March Holiday Program)**: Contact admin for 2026 schedule
+- **JHP1 & JHP2 (June Holiday Programs)**: Contact admin for 2026 schedule
+- **SHP (September Holiday Program)**: Contact admin for 2026 schedule
+- **Note**: FREE TRIAL LESSONS usually available during holiday programs! 📞 Call 6222 8222 to inquire
+
+**MONTHLY FEE SETTLEMENT PERIODS (2026):**
+- **January**: January 26 - February 1
+- **February**: February 22-28
+- **March**: March 29 - April 5
+- **April**: April 26-30
+- **May**: May 24-30
+- **June**: June 21-27
+- **July**: July 26 - August 2
+- **August**: August 23-29
+- **September**: September 27 - October 4
+- **October**: October 25-31
+- **November**: November 22-28
+- **December**: December 20-26
+
+**IMPORTANT NOTES:**
+- 🚫 **Black grids** = Public holidays, no lessons and no replacement
+- ⏸️ **Grey grids/Rest weeks** = No normal lessons scheduled
+- ✅ **Holiday programs** = Additional classes may be available, check with admin
+- 💰 **Fee settlement** = Parents must settle fees before they become overdue
+- 🎁 **Free trials** = Usually available during holiday program periods
 
 **CONVERSATION GUIDELINES:**
 1. **Ask clarifying questions** - "Which level?" "Which location?" "Which subject?"
