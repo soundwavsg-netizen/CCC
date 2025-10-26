@@ -25,7 +25,7 @@ const TuitionCentreDemo = () => {
   const messagesEndRef = useRef(null);
 
   // External backend URL (RMSS project)
-  const RMSS_BACKEND_URL = 'https://tutor-assist-3.preview.emergentagent.com/api';
+  const RMSS_BACKEND_URL = 'https://ccc-digital.preview.emergentagent.com/api';
 
   // Initialize demo
   useEffect(() => {
