@@ -240,7 +240,7 @@ const TuitionCentreDemo = () => {
                   className="bg-white text-[#f5576c] hover:bg-white/90 font-bold text-xl px-12 py-6 rounded-2xl shadow-2xl"
                 >
                   <MessageCircle className="mr-3 h-6 w-6" />
-                  🚀 Launch RMSS Demo Chat
+                  🚀 Launch Demo Chat
                 </Button>
               </motion.div>
               
