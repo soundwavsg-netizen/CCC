@@ -161,9 +161,9 @@ const EnhancedAILibrary = () => {
             through successful client implementations. Never rebuild the same solutions twice.
           </p>
 
-          {/* RMSS Success Story */}
+          {/* Tuition Centre Success Story */}
           <Card className="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-8 mb-8">
-            <h3 className="text-2xl font-bold mb-4">🏆 Framework Success Story - RMSS Implementation</h3>
+            <h3 className="text-2xl font-bold mb-4">🏆 Framework Success Story - Tuition Centre Implementation</h3>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h4 className="font-bold mb-3">✅ Problems Solved:</h4>
