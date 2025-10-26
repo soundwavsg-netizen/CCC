@@ -1,23 +1,41 @@
 /* Button Fix Utilities - Smart text contrast based on background */
 
-/* Dark backgrounds get white text */
+/* Dark backgrounds get white text - CRITICAL FIX */
 [class*="bg-[#293889]"],
+[class*="bg-[#00003D]"],
 [class*="bg-[hsl(var(--secondary))]"],
 [class*="bg-[#E91F2C]"],
 [class*="bg-[#25D366]"],
 [class*="bg-[#8B5CF6]"],
-.bg-blue-600, .bg-blue-500, .bg-blue-700,
+.bg-blue-600, .bg-blue-500, .bg-blue-700, .bg-blue-800, .bg-blue-900,
 .bg-red-600, .bg-red-500, .bg-red-700,
 .bg-green-600, .bg-green-500, .bg-green-700,
-.bg-purple-600, .bg-purple-500, .bg-purple-700 {
+.bg-purple-600, .bg-purple-500, .bg-purple-700,
+button[class*="bg-[#293889]"],
+button[class*="bg-[#00003D]"],
+a[class*="bg-[#293889]"],
+a[class*="bg-[#00003D]"] {
   color: white !important;
 }
 
-/* Dark backgrounds - all children get white text */
+/* Dark backgrounds - all children get white text - CRITICAL FIX */
 [class*="bg-[#293889]"] *,
+[class*="bg-[#00003D]"] *,
 [class*="bg-[hsl(var(--secondary))]"] *,
 [class*="bg-[#E91F2C]"] *,
-[class*="bg-[#25D366]"] * {
+[class*="bg-[#25D366]"] *,
+button[class*="bg-[#293889]"] *,
+button[class*="bg-[#00003D]"] *,
+a[class*="bg-[#293889]"] *,
+a[class*="bg-[#00003D]"] * {
+  color: white !important;
+}
+
+/* Force white text on buttons specifically */
+button.bg-\[#293889\],
+button.bg-\[#00003D\],
+.bg-\[#293889\],
+.bg-\[#00003D\] {
   color: white !important;
 }
 
@@ -44,24 +62,32 @@ button[variant="outline"] {
 }
 
 /* Specific button fixes */
-.btn-primary {
+.btn-primary,
+button.btn-primary,
+a.btn-primary {
   background-color: #293889 !important;
   color: white !important;
   font-weight: 500 !important;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+button.btn-primary:hover,
+a.btn-primary:hover {
   background-color: #1e2c6b !important;
   color: white !important;
 }
 
-.btn-secondary {
+.btn-secondary,
+button.btn-secondary,
+a.btn-secondary {
   background-color: #E91F2C !important;
   color: white !important;
   font-weight: 500 !important;
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover,
+button.btn-secondary:hover,
+a.btn-secondary:hover {
   background-color: #d1171e !important;
   color: white !important;
 }
