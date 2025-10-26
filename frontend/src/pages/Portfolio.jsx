@@ -134,7 +134,7 @@ export default function Portfolio() {
         'Student authentication system',
         'Mobile-optimized responses'
       ],
-      demoLink: '/demos/tuition-centre',
+      demoLink: '/demo/tuition',
       isLiveDemo: true
     }
   ];
