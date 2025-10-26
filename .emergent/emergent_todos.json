@@ -1,18 +1,18 @@
 [
   {
-    "content": "Replace hello@cccdigital.sg with cognitioncompetence@gmail.com across frontend",
-    "status": "completed"
+    "content": "Create TuitionCentreDemo component with live RMSS integration",
+    "status": "in_progress"
   },
   {
-    "content": "Update backend email configuration and notifications",
-    "status": "completed"
+    "content": "Add demo navigation and routing",
+    "status": "pending"
   },
   {
-    "content": "Update AI agent and WhatsApp bot contact references",
-    "status": "completed"
+    "content": "Create demos index page to showcase different industry solutions",
+    "status": "pending"
   },
   {
-    "content": "Test email notifications and confirm delivery",
-    "status": "completed"
+    "content": "Integrate with CCC Digital branding and modern design",
+    "status": "pending"
   }
 ]
