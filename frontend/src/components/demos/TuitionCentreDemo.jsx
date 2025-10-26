@@ -64,7 +64,7 @@ const TuitionCentreDemo = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${RMSS_BACKEND_URL}/chat`, {
+      const response = await axios.post(`${BACKEND_URL}/api/chat`, {
         message: cleanText(inputMessage),
         session_id: sessionId,
         user_type: 'demo_visitor'
