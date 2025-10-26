@@ -11,12 +11,9 @@ export const Header = () => {
 
   const navLinks = [
     { path: '/', label: 'Home' },
-    { path: '/ai-employees', label: 'C³ AI Employees', highlight: true, featured: true },
-    { path: '/about', label: 'About Us' },
-    { path: '/services-solutions', label: 'Services & Solutions' },
+    { path: '/services-solutions', label: 'Services' },
     { path: '/portfolio', label: 'Portfolio' },
-    { path: '/promotion', label: '🎁 Year-End Promo', highlight: true },
-    { path: '/edg', label: 'EDG Funding (Optional)' },
+    { path: '/demos', label: 'Demos (Live)', highlight: true, featured: true },
     { path: '/contact', label: 'Contact' },
   ];
 
