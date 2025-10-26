@@ -17,6 +17,7 @@ import Terms from './pages/Terms';
 import Promotion from './pages/Promotion';
 import AILibrary from './pages/AILibrary';
 import AIEmployees from './pages/AIEmployees';
+import TuitionCentreDemo from './components/demos/TuitionCentreDemo';
 import WhatsAppSetup from './pages/WhatsAppSetup';
 import { initializeTracking } from './utils/analytics';
 import './App.css';
