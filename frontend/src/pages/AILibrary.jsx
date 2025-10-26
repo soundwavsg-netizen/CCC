@@ -232,7 +232,7 @@ const EnhancedAILibrary = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-3">Return (RMSS Monthly Benefits):</h4>
+              <h4 className="font-bold mb-3">Return (Tuition Centre Monthly Benefits):</h4>
               <ul className="space-y-2 text-sm">
                 <li>• Staff time saved: $2,000-3,000</li>
                 <li>• Increased enrollments: $2,000-4,000</li>
