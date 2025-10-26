@@ -196,4 +196,12 @@ test_plan:
 
 agent_communication:
   - agent: "main"
-    message: "✅ COMPLETED: AI library update for tuition centre. Created comprehensive training doc with all 2026 data (P2-J2, pricing, locations, tutors, holidays). Updated demo page and AI library page to remove ALL RMSS branding while keeping actual contact info and data. All changes verified via screenshots - no RMSS references remaining in UI."
+    message: "✅ COMPLETED & FIXED: AI library update for tuition centre with demo connection issue resolved. 
+    
+    **What was done:**
+    1. Created comprehensive training doc with 2026 data
+    2. Removed ALL RMSS branding from demo and AI library pages
+    3. FIXED demo connection issue by creating dedicated `/api/tuition/chat` endpoint with proper system message
+    4. Tested and verified - chat now works correctly, responds with accurate pricing info
+    
+    **Test results:** Bot successfully responds to 'P6 Math' with '$357.52/month' and proper details. All functionality working!"
