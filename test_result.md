@@ -117,7 +117,7 @@ backend:
         agent: "main"
         comment: "Created complete AI training document with all 2026 data (P2-J2, pricing, locations, tutors, holidays) with generic branding but keeping actual data like 6222 8222, www.rmss.com.sg, locations."
   
-  - task: "Create dedicated tuition demo chat endpoint"
+  - task: "Update tuition system message with 2026-2027 Math transition"
     implemented: true
     working: true
     file: "/app/backend/server.py"
@@ -127,7 +127,7 @@ backend:
     status_history:
       - working: true
         agent: "main"
-        comment: "Created new `/api/tuition/chat` endpoint with tuition center system message, context memory (last 4 exchanges), and session management. Uses gpt-4o-mini model. TESTED and VERIFIED - responding correctly with pricing info."
+        comment: "Updated TUITION_SYSTEM_MESSAGE with detailed 2026-2027 transition info for S3/S4 EMath and J1/J2 Math. Added transition notes to 4 classes, added comprehensive transition explanation section. TESTED via curl - all 3 test scenarios pass: S3 EMath shows NEW format (1×2hr), S4 EMath shows OLD format (2×1.5hr), transition explanation works correctly."
 
 frontend:
   - task: "Update TuitionCentreDemo.jsx to remove RMSS branding"
