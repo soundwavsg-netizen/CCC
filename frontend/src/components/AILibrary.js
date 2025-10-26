@@ -94,7 +94,7 @@ const AILibrary = () => {
       color: "green",
       description: "Industry-specific conversation flows, terminology, and business logic patterns",
       successRate: "100% Education, 95% E-commerce",
-      implementations: ["Education (RMSS)", "E-commerce (M Supplies)", "Digital Services (CCC)"]
+      implementations: ["Education (Tuition Centre)", "E-commerce (M Supplies)", "Digital Services (CCC)"]
     },
     businessSpecific: {
       title: "🏢 BUSINESS-SPECIFIC Training",
