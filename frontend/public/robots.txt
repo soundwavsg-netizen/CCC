@@ -20,4 +20,4 @@ Disallow: /api/
 Disallow: /backend/
 
 # Allow search engines to access sitemap
-Sitemap: https://smartbiz-portal.preview.emergentagent.com/sitemap.xml
+Sitemap: https://ccc-digital.preview.emergentagent.com/sitemap.xml
