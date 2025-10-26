@@ -221,11 +221,11 @@ const TuitionCentreDemo = () => {
         >
           <div className="text-center mb-8">
             <h3 className="text-3xl font-bold text-white mb-4" style={{ fontFamily: 'Plus Jakarta Sans' }}>
-              Live Demo - RMSS AI Assistant
+              Live Demo - Tuition Centre AI Assistant
             </h3>
             <p className="text-white/80 text-lg">
               Try asking about courses, pricing, schedules, or holidays. 
-              Experience the same AI that RMSS students and parents would use.
+              Experience intelligent AI that adapts to your questions.
             </p>
           </div>
 
