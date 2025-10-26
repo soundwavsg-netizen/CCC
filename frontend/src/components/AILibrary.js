@@ -29,8 +29,8 @@ const AILibrary = () => {
 
   // Success metrics from multiple implementations
   const successStories = {
-    rmss: {
-      name: "RMSS (Education)",
+    tuition: {
+      name: "Tuition Centre (Education)",
       status: "✅ 100% SUCCESS",
       achievements: [
         "Context memory: 100% fixed (was major user complaint)",
@@ -41,7 +41,7 @@ const AILibrary = () => {
       ],
       metrics: {
         development_time: "35 hours (down from 115)",
-        user_satisfaction: "RMSS management approved",
+        user_satisfaction: "Production-ready and approved",
         technical_performance: "Sub-2-second responses"
       }
     },
