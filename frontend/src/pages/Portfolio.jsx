@@ -117,6 +117,25 @@ export default function Portfolio() {
         'Customer database management',
         'Analytics and reporting'
       ]
+    },
+    {
+      id: 7,
+      name: 'RMSS AI Assistant (Live Demo)',
+      category: 'AI',
+      description: 'Interactive tuition centre AI chatbot with live RMSS integration',
+      longDescription: 'A sophisticated AI assistant for education centers featuring complete course information, pricing, schedules, and student authentication. This live demo connects to our actual RMSS implementation.',
+      image: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=85&w=800',
+      technologies: ['React', 'OpenAI GPT', 'FastAPI', 'MongoDB', 'Authentication'],
+      features: [
+        'Complete course and pricing database',
+        'Context-aware conversation flow', 
+        'Multi-location coordination',
+        'Academic calendar integration',
+        'Student authentication system',
+        'Mobile-optimized responses'
+      ],
+      demoLink: '/demos/tuition-centre',
+      isLiveDemo: true
     }
   ];
 
