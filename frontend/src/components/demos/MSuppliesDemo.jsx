@@ -1,28 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import { Button } from '../../components/ui/button';
 import { Card } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
 import { 
   ExternalLink, 
-  Play, 
-  Code, 
-  Database, 
-  Mail, 
   MessageCircle, 
-  Users, 
   ShoppingCart, 
-  Gift, 
   Package,
   ArrowLeft,
   Target,
-  Zap
+  Send,
+  X,
+  Zap,
+  Gift,
+  Users,
+  BarChart3,
+  Mail
 } from 'lucide-react';
 import { trackEvent } from '../../utils/analytics';
 
 const MSuppliesDemo = () => {
-  const [activeFeature, setActiveFeature] = useState('overview');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [sessionId, setSessionId] = useState(null);
+  const messagesEndRef = useRef(null);
+
+  // M Supplies backend URL (adjust to actual M Supplies chatbot endpoint)
+  const MSUPPLIES_BACKEND_URL = 'https://www.msupplies.sg/api';
 
   useEffect(() => {
     // Analytics tracking
@@ -34,10 +42,196 @@ const MSuppliesDemo = () => {
     if (metaDesc) {
       metaDesc.content = "Product Q&A, delivery support, order guidance, lead capture.";
     }
-    
-    // Simulate loading
-    setTimeout(() => setIsLoading(false), 1000);
   }, []);
+
+  // Initialize demo
+  useEffect(() => {
+    if (isOpen && !sessionId) {
+      setSessionId(Date.now().toString());
+      setMessages([{
+        id: 'welcome',
+        text: 'Hi! I am M Supplies AI Assistant Demo. I can help you with product information, polymailer sizing, delivery options, and bulk pricing. Try asking about polymailer colors or shipping to Malaysia!',
+        sender: 'bot',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }]);
+    }
+  }, [isOpen, sessionId]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  const cleanText = (text) => {
+    if (!text || typeof text !== 'string') return '';
+    return text.replace(/\\r\\n/g, '\\n').replace(/\\r/g, '\\n').trim();
+  };
+
+  const handleSendMessage = async () => {
+    if (!inputMessage.trim() || isLoading) return;
+
+    const userMsg = {
+      id: Date.now().toString(),
+      text: cleanText(inputMessage),
+      sender: 'user',
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+
+    setMessages(prev => [...prev, userMsg]);
+    setInputMessage('');
+    setIsLoading(true);
+
+    try {
+      // For demo purposes, simulate M Supplies AI responses
+      const simulatedResponse = generateMSuppliesResponse(inputMessage);
+      
+      const botMsg = {
+        id: Date.now().toString(),
+        text: simulatedResponse,
+        sender: 'bot',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      // Simulate network delay
+      setTimeout(() => {
+        setMessages(prev => [...prev, botMsg]);
+        setIsLoading(false);
+      }, 1000 + Math.random() * 1000);
+
+    } catch (error) {
+      console.error('Chat error:', error);
+      const errorMsg = {
+        id: 'error-' + Date.now(),
+        text: 'Demo connection issue. This showcases M Supplies chatbot capabilities. Please try again.',
+        sender: 'bot',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, errorMsg]);
+      setIsLoading(false);
+    }
+  };
+
+  // Simulate M Supplies AI responses
+  const generateMSuppliesResponse = (input) => {
+    const text = input.toLowerCase();
+    
+    if (text.includes('polymailer') || text.includes('size') || text.includes('color')) {
+      return `🌈 **M Supplies Polymailers:**
+
+📦 **Available Sizes:**
+• Small: 17cm x 30cm (suitable for documents)
+• Medium: 25cm x 35cm (clothing, accessories)  
+• Large: 35cm x 45cm (shoes, bulky items)
+• Custom sizes available for bulk orders
+
+🎨 **Popular Colors:**
+• Classic White • Vibrant Pink • Ocean Blue • Forest Green
+• Rainbow Palace collection: 12 vibrant colors available
+
+💰 **Pricing (50+ pieces):**
+• Small: $0.45 each • Medium: $0.65 each • Large: $0.85 each
+• Bulk discounts available for 500+ pieces
+
+Would you like information about delivery or custom branding options?`;
+    }
+    
+    if (text.includes('delivery') || text.includes('shipping') || text.includes('malaysia')) {
+      return `🚚 **M Supplies Delivery Options:**
+
+🇸🇬 **Singapore Delivery:**
+• Same day: $15 (orders before 2pm)
+• Next day: $8 (standard)
+• Free delivery for orders above $200
+
+🇲🇾 **Malaysia Shipping:**
+• Standard: 3-5 days, from $25
+• Express: 1-2 days, from $45  
+• Bulk shipments: Special rates available
+
+📦 **Weight Calculations:**
+Our system automatically calculates shipping based on:
+• Package dimensions and weight
+• Delivery location (postal code)
+• Service type selected
+
+Need a shipping quote for your specific order?`;
+    }
+    
+    if (text.includes('bulk') || text.includes('business') || text.includes('wholesale')) {
+      return `💼 **M Supplies Business Solutions:**
+
+🏢 **VIP Business Program:**
+• Dedicated account manager
+• Volume discounts (15-30% off)
+• Priority processing & shipping
+• Custom branding options
+• Flexible payment terms
+
+📊 **Bulk Pricing Tiers:**
+• 100-499 pieces: 10% discount
+• 500-999 pieces: 20% discount  
+• 1000+ pieces: 25% discount
+• 5000+ pieces: Custom pricing
+
+🎨 **Custom Branding:**
+• Logo printing on polymailers
+• Custom colors and sizes
+• Professional design consultation
+• Sample approval process
+
+Would you like to apply for our VIP program?`;
+    }
+    
+    if (text.includes('rainbow palace') || text.includes('vibrant') || text.includes('colorful')) {
+      return `🌈 **Rainbow Palace Collection:**
+
+✨ **Premium Vibrant Series:**
+Perfect for fashion brands, gift packaging, and creative businesses!
+
+🎨 **12 Stunning Colors:**
+• Sunset Orange • Electric Purple • Neon Pink
+• Ocean Teal • Forest Green • Royal Blue
+• Sunshine Yellow • Rose Gold • Mint Green  
+• Coral Red • Lavender • Hot Magenta
+
+📏 **All Standard Sizes Available:**
+• Small, Medium, Large
+• Custom sizes for bulk orders
+• Matching tissue paper options
+
+💎 **Premium Features:**
+• Extra-thick material (120gsm)
+• Tear-resistant design
+• Water-resistant coating
+• Professional finish
+
+Perfect for your brand image! Need samples?`;
+    }
+    
+    // Default response
+    return `🤖 **M Supplies AI Assistant:**
+
+I can help you with:
+• 📦 Polymailer sizes, colors, and pricing
+• 🚚 Delivery options (Singapore & Malaysia)
+• 💼 Business & wholesale solutions
+• 🌈 Rainbow Palace vibrant collection
+• 📞 Custom packaging consultation
+
+Try asking about:
+• "Polymailer sizes and colors"
+• "Delivery to Malaysia"
+• "Bulk business pricing"
+• "Rainbow Palace collection"
+
+What would you like to know about our packaging solutions?`;
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
 
   const handleContactClick = () => {
     trackEvent('click_contact_from_demo', { 
@@ -53,81 +247,33 @@ const MSuppliesDemo = () => {
     });
   };
 
-  const features = {
-    overview: {
-      title: "Project Overview",
-      icon: <Package className="w-6 h-6" />,
-      content: (
-        <div className="space-y-6">
-          <div className="bg-gradient-to-br from-teal-50 to-blue-50 p-6 rounded-xl border border-teal-200">
-            <h3 className="text-2xl font-bold text-slate-900 mb-4">M Supplies (INT) Pte Ltd</h3>
-            <p className="text-gray-700 text-lg leading-relaxed mb-4">
-              Complete e-commerce platform for premium polymailers and custom packaging solutions serving Singapore and Malaysia markets.
-            </p>
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="bg-white p-4 rounded-lg">
-                <h4 className="font-semibold text-teal-700">🌈 Rainbow Palace</h4>
-                <p className="text-sm text-gray-600">Vibrant polymailers for brand impact</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg">
-                <h4 className="font-semibold text-teal-700">📦 M Supplies</h4>
-                <p className="text-sm text-gray-600">Thick polymailers & branding solutions</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg">
-                <h4 className="font-semibold text-teal-700">🌿 Mossom SG Studio</h4>
-                <p className="text-sm text-gray-600">Bespoke floral arrangements & styling</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    },
-    ai: {
-      title: "AI Chat Assistant",
-      icon: <MessageCircle className="w-6 h-6" />,
-      content: (
-        <div className="space-y-6">
-          <div className="bg-white p-6 rounded-xl shadow-sm">
-            <h3 className="text-xl font-bold text-slate-900 mb-4">Intelligent Customer Support</h3>
-            <p className="text-gray-700 mb-6">
-              Context-aware AI assistant that provides specialized help based on page location and customer needs.
-            </p>
-            
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <div className="bg-teal-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-teal-700 mb-2">💼 Homepage: Sales Expert</h4>
-                <p className="text-sm text-gray-600">Focuses on bulk pricing, VIP programs, and business solutions</p>
-              </div>
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-blue-700 mb-2">📏 Products: Sizing Specialist</h4>
-                <p className="text-sm text-gray-600">Helps with dimensions, pack quantities, and sizing advice</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    }
-  };
+  const quickReplies = [
+    "What polymailer sizes do you have?",
+    "Shipping to Malaysia pricing?",
+    "Rainbow Palace collection colors?",
+    "Bulk business pricing?"
+  ];
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#4facfe] to-[#00f2fe] flex items-center justify-center">
-        <motion.div 
-          className="text-center text-white"
-          animate={{ 
-            scale: [1, 1.05, 1],
-            opacity: [0.8, 1, 0.8]
-          }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-            <ShoppingCart className="w-10 h-10" />
-          </div>
-          <p className="text-xl font-medium">Loading M Supplies Demo...</p>
-        </motion.div>
-      </div>
-    );
-  }
+  const demoFeatures = [
+    {
+      icon: Package,
+      title: 'Product Intelligence',
+      description: 'AI knows all polymailer sizes, colors, materials, and pricing for instant customer guidance',
+      color: 'from-[#4facfe] to-[#00f2fe]'
+    },
+    {
+      icon: ShoppingCart,
+      title: 'E-commerce Support',
+      description: 'Order assistance, delivery calculations, and business solution recommendations',
+      color: 'from-[#f093fb] to-[#f5576c]'
+    },
+    {
+      icon: Gift,
+      title: 'Smart Promotions',
+      description: 'AI understands bulk pricing, VIP programs, and promotional offers for customer benefits',
+      color: 'from-[#a8edea] to-[#fed6e3]'
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#4facfe] via-[#00f2fe] to-[#06B6D4]">
