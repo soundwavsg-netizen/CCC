@@ -254,15 +254,34 @@ export default function Portfolio() {
                         {project.isLiveDemo && (
                           <div className="mt-6 p-6 bg-gradient-to-r from-[#667eea] to-[#764ba2] rounded-xl text-white text-center">
                             <h4 className="font-bold text-lg mb-2">🚀 Try the Live Demo!</h4>
-                            <p className="text-white/90 mb-4">Experience this AI assistant in action with real RMSS data.</p>
-                            <Button 
-                              asChild 
-                              className="bg-white text-[#667eea] hover:bg-white/90 font-bold"
-                            >
-                              <a href={project.demoLink}>
-                                Launch Interactive Demo
-                              </a>
-                            </Button>
+                            <p className="text-white/90 mb-4">
+                              {project.name.includes('RMSS') 
+                                ? 'Experience this AI assistant in action with real RMSS data.'
+                                : 'Explore the complete e-commerce platform with real products and AI chat.'
+                              }
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                              <Button 
+                                asChild 
+                                className="bg-white text-[#667eea] hover:bg-white/90 font-bold"
+                              >
+                                <a href={project.demoLink}>
+                                  Launch Interactive Demo
+                                </a>
+                              </Button>
+                              {project.liveUrl && (
+                                <Button 
+                                  asChild 
+                                  variant="outline"
+                                  className="border-white/30 text-white hover:bg-white hover:text-[#667eea]"
+                                >
+                                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                                    <ExternalLink className="mr-2 h-4 w-4" />
+                                    Visit Live Site
+                                  </a>
+                                </Button>
+                              )}
+                            </div>
                           </div>
                         )}
                       </div>
