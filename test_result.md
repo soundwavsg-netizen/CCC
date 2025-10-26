@@ -117,17 +117,20 @@ backend:
         agent: "main"
         comment: "Created complete AI training document with all 2026 data (P2-J2, pricing, locations, tutors, holidays) with generic branding but keeping actual data like 6222 8222, www.rmss.com.sg, locations."
   
-  - task: "Update tuition system message with 2026-2027 Math transition"
+  - task: "Fix button visibility - dark blue background with black text"
     implemented: true
     working: true
-    file: "/app/backend/server.py"
+    file: "/app/frontend/src/button-fixes.css"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported: Many buttons with dark blue background have black words that can't be seen clearly"
       - working: true
         agent: "main"
-        comment: "Updated TUITION_SYSTEM_MESSAGE with detailed 2026-2027 transition info for S3/S4 EMath and J1/J2 Math. Added transition notes to 4 classes, added comprehensive transition explanation section. TESTED via curl - all 3 test scenarios pass: S3 EMath shows NEW format (1×2hr), S4 EMath shows OLD format (2×1.5hr), transition explanation works correctly."
+        comment: "FIXED: Enhanced button-fixes.css with stronger CSS rules to force white text on dark backgrounds (#293889, #00003D). Added specificity for button and anchor elements. VERIFIED via screenshots - all buttons (header 'Get Started', services 'Start Your Project', contact 'Send Message') now display white text clearly on dark blue backgrounds."
 
 frontend:
   - task: "Update TuitionCentreDemo.jsx to remove RMSS branding"
