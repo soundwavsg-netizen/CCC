@@ -352,7 +352,7 @@ const TuitionCentreDemo = () => {
                       value={inputMessage}
                       onChange={(e) => setInputMessage(e.target.value)}
                       onKeyPress={handleKeyPress}
-                      placeholder="Ask about RMSS courses, pricing, schedules..."
+                      placeholder="Ask about courses, pricing, schedules..."
                       className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:border-[#667eea] focus:ring-2 focus:ring-[#667eea]/20 transition-all"
                       disabled={isLoading}
                     />
