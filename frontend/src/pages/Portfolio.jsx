@@ -24,19 +24,23 @@ export default function Portfolio() {
   const projects = [
     {
       id: 1,
-      name: 'M-Supplies',
+      name: 'M Supplies Premium Packaging',
       category: 'E-Commerce',
-      description: 'Complete e-commerce platform with inventory management system',
-      longDescription: 'A comprehensive e-commerce solution featuring real-time inventory management, secure payment processing, customer accounts, and order tracking. Built with React frontend and FastAPI backend, integrated with MongoDB for scalable data management.',
-      image: 'https://images.unsplash.com/photo-1537155986727-3c402583a35a?auto=format&fit=crop&q=85&w=800',
-      technologies: ['React', 'FastAPI', 'MongoDB', 'Stripe', 'Tailwind CSS'],
+      description: 'Complete e-commerce platform with AI chat and promotion system',
+      longDescription: 'A comprehensive e-commerce solution for Singapore\'s premium packaging supplier featuring AI-powered customer support, intelligent promotion engine, multi-brand support (Rainbow Palace, M Supplies, Mossom), user profiles, and admin dashboard.',
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=85&w=800',
+      technologies: ['React', 'FastAPI', 'MongoDB', 'AI Chat', 'SendGrid', 'Promotion Engine'],
       features: [
-        'Real-time inventory management',
-        'Secure payment processing',
-        'Customer account management',
-        'Order tracking and fulfillment',
-        'Admin dashboard with analytics'
-      ]
+        'AI customer support with context awareness',
+        'Multi-brand product management',
+        'Smart promotion and gift tier system',
+        'User profiles with address management',
+        'Weight-based shipping calculations',
+        'Real-time admin dashboard'
+      ],
+      demoLink: '/demo/ecommerce',
+      isLiveDemo: true,
+      liveUrl: 'https://www.msupplies.sg'
     },
     {
       id: 2,
