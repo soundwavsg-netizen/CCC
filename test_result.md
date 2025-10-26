@@ -165,6 +165,21 @@ frontend:
       - working: true
         agent: "main"
         comment: "Replaced all 13 'RMSS' references with 'Tuition Centre' across training categories, success rates, ROI calculator, and badges. Changed 'RMSS Approved' to 'Production Ready'. VERIFIED via screenshots - all references removed successfully."
+  
+  - task: "Fix TuitionCentreDemo chat connection issue"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/demos/TuitionCentreDemo.jsx"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported: Demo connection issue when trying demo in demo page"
+      - working: true
+        agent: "main"
+        comment: "FIXED: Updated endpoint from `/api/chat` to `/api/tuition/chat`. Created dedicated backend endpoint with proper tuition center system message. TESTED via screenshots - bot now responds correctly with pricing info (e.g., 'P6 Math is $357.52/month'). Connection issue resolved!"
 
 metadata:
   created_by: "main_agent"
