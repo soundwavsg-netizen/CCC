@@ -290,7 +290,7 @@ const EnhancedAILibrary = () => {
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">Client Satisfaction:</span>
-                <Badge className="bg-purple-100 text-purple-800">RMSS Approved</Badge>
+                <Badge className="bg-purple-100 text-purple-800">Production Ready</Badge>
               </div>
             </div>
           </Card>
