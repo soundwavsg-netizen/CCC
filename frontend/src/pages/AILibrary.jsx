@@ -268,7 +268,7 @@ const EnhancedAILibrary = () => {
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-green-500" />
-                <span className="text-sm">Test with RMSS success patterns</span>
+                <span className="text-sm">Test with Tuition Centre success patterns</span>
               </li>
             </ul>
           </Card>
