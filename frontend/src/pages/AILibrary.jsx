@@ -32,7 +32,7 @@ const EnhancedAILibrary = () => {
       subtitle: "Domain-specific expertise for industries",
       color: "green",
       description: "Industry-specific conversation flows, terminology, and business logic patterns",
-      successRate: "100% Education (RMSS)"
+      successRate: "100% Education (Tuition Centre)"
     },
     businessSpecific: {
       title: "🏢 BUSINESS-SPECIFIC Training",
