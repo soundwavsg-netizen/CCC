@@ -101,3 +101,62 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Update the chatbot AI library for tuition centre with comprehensive 2026 data. Remove RMSS branding from demo pages and main page while keeping all data intact (locations, phone numbers, tutors, pricing). Make it generic 'Tuition Centre' chatbot rather than RMSS-specific."
+
+backend:
+  - task: "Create comprehensive tuition center AI training documentation"
+    implemented: true
+    working: "NA"
+    file: "/app/AILibrary/Tuition_Centre_Complete_Training_2026.md"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Created complete AI training document with all 2026 data (P2-J2, pricing, locations, tutors, holidays) with generic branding but keeping actual data like 6222 8222, www.rmss.com.sg, locations."
+
+frontend:
+  - task: "Update TuitionCentreDemo.jsx to remove RMSS branding"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/demos/TuitionCentreDemo.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Removed all 'RMSS' references from UI text. Changed 'RMSS AI Assistant' to 'Tuition Centre AI', kept all actual data unchanged (phone, website, locations). Updated welcome messages, headers, and placeholders."
+  
+  - task: "Update AILibrary.js success stories to generic branding"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/AILibrary.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Changed 'RMSS (Education)' to 'Tuition Centre (Education)' in success stories. Updated all references to be generic while keeping metrics and achievements."
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: true
+
+test_plan:
+  current_focus:
+    - "Test TuitionCentreDemo.jsx UI displays generic branding"
+    - "Verify chat functionality still works"
+    - "Check AI Library page displays correctly"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Completed AI library update for tuition centre. Created comprehensive training doc with all 2026 data. Updated demo page to remove RMSS branding while keeping actual contact info and data. Ready for UI testing to verify changes display correctly."
