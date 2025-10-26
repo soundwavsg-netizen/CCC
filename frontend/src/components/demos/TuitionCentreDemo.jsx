@@ -183,7 +183,7 @@ const TuitionCentreDemo = () => {
           <div className="glass-card p-8 max-w-4xl mx-auto border border-white/20">
             <p className="text-xl text-white/90 leading-relaxed">
               Experience how an AI chatbot transforms tuition centre operations. 
-              This demo shows real RMSS (Raymond's Math & Science Studio) functionality.
+              This demo shows real functionality with 2026 Singapore tuition center data.
             </p>
           </div>
         </motion.div>
