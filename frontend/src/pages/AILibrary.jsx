@@ -219,10 +219,10 @@ const EnhancedAILibrary = () => {
 
         {/* ROI Calculator */}
         <Card className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-8 mb-8">
-          <h3 className="text-2xl font-bold mb-6">💰 ROI Calculator - RMSS Success Example</h3>
+          <h3 className="text-2xl font-bold mb-6">💰 ROI Calculator - Tuition Centre Success Example</h3>
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h4 className="font-bold mb-3">Investment (RMSS Complete Package):</h4>
+              <h4 className="font-bold mb-3">Investment (Tuition Centre Complete Package):</h4>
               <ul className="space-y-2 text-sm">
                 <li>• Intermediate Widget: $10,000 setup</li>
                 <li>• Authentication System: $5,000 setup</li>
