@@ -24,8 +24,8 @@ const TuitionCentreDemo = () => {
   const [sessionId, setSessionId] = useState(null);
   const messagesEndRef = useRef(null);
 
-  // External backend URL (RMSS project)
-  const RMSS_BACKEND_URL = 'https://ccc-digital.preview.emergentagent.com/api';
+  // External backend URL
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://ccc-digital.preview.emergentagent.com';
 
   // Initialize demo
   useEffect(() => {
@@ -33,7 +33,7 @@ const TuitionCentreDemo = () => {
       setSessionId(Date.now().toString());
       setMessages([{
         id: 'welcome',
-        text: 'Hi! I am RMSS AI Assistant Demo. I can help you with course information, pricing, schedules, and enrollment inquiries. Try asking about P6 Math classes or 2026 holidays!',
+        text: 'Hi! I am your Tuition Centre AI Assistant Demo. I can help you with course information, pricing, schedules, and enrollment inquiries. Try asking about P6 Math classes or 2026 holidays!',
         sender: 'bot',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }]);
