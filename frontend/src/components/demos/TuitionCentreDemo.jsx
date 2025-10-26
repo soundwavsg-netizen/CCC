@@ -382,7 +382,7 @@ const TuitionCentreDemo = () => {
                 🎯 What This Demo Shows
               </h3>
               <ul className="space-y-3 text-white/90">
-                <li>• <strong>Real RMSS Data</strong> - Actual 2026 pricing and schedules</li>
+                <li>• <strong>Real Tuition Center Data</strong> - Actual 2026 pricing and schedules</li>
                 <li>• <strong>Context Memory</strong> - AI remembers conversation flow</li>
                 <li>• <strong>Smart Responses</strong> - No information dumping</li>
                 <li>• <strong>Mobile Optimized</strong> - Works perfectly on all devices</li>
