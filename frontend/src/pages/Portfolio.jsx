@@ -234,7 +234,7 @@ export default function Portfolio() {
                         </ul>
 
                         <h3 className="font-semibold text-lg mb-3">Technologies Used:</h3>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-2 mb-6">
                           {project.technologies.map((tech) => (
                             <Badge 
                               key={tech} 
@@ -245,6 +245,22 @@ export default function Portfolio() {
                             </Badge>
                           ))}
                         </div>
+                        
+                        {/* Live Demo CTA */}
+                        {project.isLiveDemo && (
+                          <div className="mt-6 p-6 bg-gradient-to-r from-[#667eea] to-[#764ba2] rounded-xl text-white text-center">
+                            <h4 className="font-bold text-lg mb-2">🚀 Try the Live Demo!</h4>
+                            <p className="text-white/90 mb-4">Experience this AI assistant in action with real RMSS data.</p>
+                            <Button 
+                              asChild 
+                              className="bg-white text-[#667eea] hover:bg-white/90 font-bold"
+                            >
+                              <a href={project.demoLink}>
+                                Launch Interactive Demo
+                              </a>
+                            </Button>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </DialogContent>
