@@ -82,7 +82,7 @@ const TuitionCentreDemo = () => {
       console.error('Chat error:', error);
       const errorMsg = {
         id: 'error-' + Date.now(),
-        text: 'Demo connection issue. This chatbot connects to our live RMSS demo backend. Please try again.',
+        text: 'Demo connection issue. This chatbot connects to our live demo backend. Please try again.',
         sender: 'bot',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
