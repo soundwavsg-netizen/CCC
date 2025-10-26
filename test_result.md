@@ -107,7 +107,7 @@ user_problem_statement: "Update the chatbot AI library for tuition centre with c
 backend:
   - task: "Create comprehensive tuition center AI training documentation"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/AILibrary/Tuition_Centre_Complete_Training_2026.md"
     stuck_count: 0
     priority: "high"
@@ -116,6 +116,18 @@ backend:
       - working: true
         agent: "main"
         comment: "Created complete AI training document with all 2026 data (P2-J2, pricing, locations, tutors, holidays) with generic branding but keeping actual data like 6222 8222, www.rmss.com.sg, locations."
+  
+  - task: "Create dedicated tuition demo chat endpoint"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Created new `/api/tuition/chat` endpoint with tuition center system message, context memory (last 4 exchanges), and session management. Uses gpt-4o-mini model. TESTED and VERIFIED - responding correctly with pricing info."
 
 frontend:
   - task: "Update TuitionCentreDemo.jsx to remove RMSS branding"
