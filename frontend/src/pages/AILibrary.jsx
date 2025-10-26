@@ -53,7 +53,7 @@ const EnhancedAILibrary = () => {
       subtitle: "Authentication, data protection, and compliance patterns",
       color: "red",
       description: "Security implementations, authentication flows, and data protection patterns", 
-      successRate: "RMSS Demo Ready"
+      successRate: "Tuition Centre Demo Ready"
     },
     performance: {
       title: "⚡ PERFORMANCE Training",
