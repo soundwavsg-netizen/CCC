@@ -39,7 +39,7 @@ const EnhancedAILibrary = () => {
       subtitle: "Client-specific customizations and unique requirements", 
       color: "purple",
       description: "Custom implementations, unique business rules, and client-specific conversation patterns",
-      successRate: "RMSS + CCC Digital"
+      successRate: "Tuition Centre + CCC Digital"
     },
     platform: {
       title: "📱 PLATFORM Training",
