@@ -95,7 +95,7 @@ const EnhancedAILibrary = () => {
         setup: "$8K-12K",
         monthly: "$800-1,200",
         features: ["AI-powered responses (GPT-4o-mini)", "Context memory", "PDF knowledge base", "Professional UI"],
-        bestFor: "RMSS level - education centers, professional services",
+        bestFor: "Tuition Centre level - education centers, professional services",
         highlight: true
       },
       {
