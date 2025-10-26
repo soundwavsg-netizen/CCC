@@ -150,9 +150,9 @@ const TuitionCentreDemo = () => {
             </div>
             <div className="flex items-center gap-4">
               <Button asChild variant="outline" className="border-white/30 text-white hover:bg-white hover:text-[#f5576c]">
-                <a href="/">
+                <a href="/demos">
                   <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to Home
+                  Back to Demos
                 </a>
               </Button>
               <Button asChild className="bg-white text-[#f5576c] hover:bg-white/90 font-medium">
