@@ -271,7 +271,7 @@ const TuitionCentreDemo = () => {
                       <GraduationCap className="h-6 w-6" />
                     </div>
                     <div>
-                      <div className="font-bold" style={{ fontFamily: 'Plus Jakarta Sans' }}>RMSS AI Assistant</div>
+                      <div className="font-bold" style={{ fontFamily: 'Plus Jakarta Sans' }}>Tuition Centre AI</div>
                       <div className="text-xs text-white/80">Live Demo - Powered by CCC Digital</div>
                     </div>
                   </div>
