@@ -1217,14 +1217,37 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                     logger.info(f"Filtering {len(classes)} classes by tutor: {tutor_search}")
                     tutor_search_lower = tutor_search.lower()
                     filtered_classes = []
+                    matching_tutors = set()  # Track unique tutors that match
+                    
                     for cls in classes:
                         tutor_name = cls.get('tutor_base_name', cls.get('tutor_name', '')).lower()
                         if tutor_search_lower in tutor_name or any(part in tutor_name for part in tutor_search_lower.split()):
                             filtered_classes.append(cls)
+                            matching_tutors.add(cls.get('tutor_base_name', cls.get('tutor_name', '')))
+                    
                     classes = filtered_classes
-                    logger.info(f"Filtered to {len(classes)} classes matching tutor")
-                
-                if classes:
+                    logger.info(f"Filtered to {len(classes)} classes with {len(matching_tutors)} unique tutors")
+                    
+                    # If multiple tutors match (e.g., "Sean" matches Sean Tan, Sean Yeo, Sean Phua)
+                    if len(matching_tutors) > 1:
+                        firebase_context = f"\n\n**MULTIPLE TUTORS FOUND:**\n"
+                        firebase_context += f"The name '{tutor_search}' matches {len(matching_tutors)} different tutors:\n\n"
+                        for tutor_name in sorted(matching_tutors):
+                            tutor_classes = [c for c in classes if c.get('tutor_base_name', c.get('tutor_name', '')) == tutor_name]
+                            firebase_context += f"• {tutor_name} ({len(tutor_classes)} classes)\n"
+                        firebase_context += f"\n**IMPORTANT**: Ask the user to clarify which tutor they mean. List the options above and ask them to specify the full name.\n"
+                        firebase_context += f"Example: 'I found multiple tutors named {tutor_search}. Which one would you like to know about: {", ".join(sorted(matching_tutors))}?'\n"
+                    elif classes:
+                        firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL OF THESE:**\n\n"
+                        for cls in classes[:15]:
+                            firebase_context += f"{format_class_info(cls)}\n"
+                        firebase_context += f"\n**CRITICAL INSTRUCTIONS FOR RESPONSE:**\n"
+                        firebase_context += f"1. The data above shows {min(len(classes), 15)} class options. Present ALL of them.\n"
+                        firebase_context += f"2. If all classes are at ONE location, say '{classes[0].get('location')}' and present them directly.\n"
+                        firebase_context += f"3. Show each class's complete schedule (day + time).\n"
+                        firebase_context += f"4. Be direct and confident. Don't ask for location if only one location shown.\n"
+                        firebase_context += f"5. Never mention 'database' or technical terms.\n"
+                elif classes:
                     logger.info(f"Found {len(classes)} classes, formatting for LLM")
                     firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL OF THESE:**\n\n"
                     for cls in classes[:15]:  # Limit to 15 results
