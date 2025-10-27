@@ -1085,7 +1085,7 @@ Would you like to know about fee settlement periods or specific class schedules?
 @api_router.post("/tuition/chat", response_model=TuitionChatResponse)
 async def tuition_demo_chat(request: TuitionChatRequest):
     """
-    Tuition Centre Demo Chat endpoint with context memory.
+    Tuition Centre Demo Chat endpoint with context memory and Firebase integration.
     Specifically designed for the tuition demo page.
     """
     try:
@@ -1106,8 +1106,89 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                 context_enhancement += f"User: {msg['user']}\n"
                 context_enhancement += f"Assistant: {msg['assistant'][:150]}...\n"
         
-        # Combine system message with context
-        enhanced_system_msg = TUITION_SYSTEM_MESSAGE + context_enhancement
+        # Check if we need to query Firebase for specific data
+        user_message_lower = request.message.lower()
+        firebase_context = ""
+        
+        # Detect specific queries that need Firebase data
+        needs_firebase = any([
+            'tutor' in user_message_lower and ('who' in user_message_lower or 'teach' in user_message_lower),
+            'class' in user_message_lower and any(loc in user_message_lower for loc in ['bishan', 'punggol', 'marine parade', 'jurong', 'kovan']),
+            'schedule' in user_message_lower or 'when' in user_message_lower,
+            any(level in user_message_lower for level in ['p2', 'p3', 'p4', 'p5', 'p6', 's1', 's2', 's3', 's4', 'j1', 'j2'])
+        ])
+        
+        if needs_firebase:
+            # Try to extract level, subject, location from query
+            level = None
+            subject = None
+            location = None
+            
+            # Extract level
+            for l in ['P2', 'P3', 'P4', 'P5', 'P6', 'S1', 'S2', 'S3', 'S4', 'J1', 'J2']:
+                if l.lower() in user_message_lower:
+                    level = l
+                    break
+            
+            # Extract location
+            location_map = {
+                'bishan': 'Bishan',
+                'punggol': 'Punggol',
+                'marine': 'Marine Parade',
+                'jurong': 'Jurong',
+                'kovan': 'Kovan'
+            }
+            for key, val in location_map.items():
+                if key in user_message_lower:
+                    location = val
+                    break
+            
+            # Extract subject (common subjects)
+            subject_keywords = {
+                'math': 'Math', 'mathematics': 'Math',
+                'science': 'Science',
+                'english': 'English',
+                'chinese': 'Chinese',
+                'emath': 'EMath', 'e-math': 'EMath',
+                'amath': 'AMath', 'a-math': 'AMath',
+                'physics': 'Physics',
+                'chemistry': 'Chemistry',
+                'biology': 'Biology',
+                'economics': 'Economics'
+            }
+            for key, val in subject_keywords.items():
+                if key in user_message_lower:
+                    subject = val
+                    break
+            
+            # Query Firebase if we have filters
+            if level or subject or location:
+                classes = query_firebase_classes(level, subject, location, limit=20)
+                if classes:
+                    firebase_context = "\n\n**FIREBASE DATA (Real-time class information):**\n"
+                    for cls in classes[:10]:  # Limit to 10 results to avoid token overflow
+                        firebase_context += f"- {format_class_info(cls)}\n"
+                    firebase_context += "\nUse this LIVE data to answer the user's question accurately.\n"
+            
+            # If asking about specific tutor
+            if 'tutor' in user_message_lower or 'mr ' in user_message_lower or 'ms ' in user_message_lower or 'mdm ' in user_message_lower:
+                # Try to extract tutor name
+                words = request.message.split()
+                tutor_search = None
+                for i, word in enumerate(words):
+                    if word.lower() in ['mr', 'ms', 'mrs', 'mdm'] and i + 1 < len(words):
+                        tutor_search = ' '.join(words[i:i+3])  # Get name
+                        break
+                
+                if tutor_search:
+                    tutors = query_firebase_tutors(tutor_search, limit=5)
+                    if tutors:
+                        firebase_context += "\n**TUTOR DATA (From Firebase):**\n"
+                        for tutor in tutors:
+                            firebase_context += f"- {format_tutor_info(tutor)}\n"
+        
+        # Combine system message with context and Firebase data
+        enhanced_system_msg = TUITION_SYSTEM_MESSAGE + context_enhancement + firebase_context
         
         # Initialize LLM Chat
         chat = LlmChat(
@@ -1138,7 +1219,7 @@ async def tuition_demo_chat(request: TuitionChatRequest):
         # Generate message ID
         message_id = str(uuid.uuid4())
         
-        logger.info(f"Tuition demo chat request processed - Session: {session_id}")
+        logger.info(f"Tuition demo chat request processed - Session: {session_id} - Firebase queried: {bool(firebase_context)}")
         
         return TuitionChatResponse(
             response=response_text,
