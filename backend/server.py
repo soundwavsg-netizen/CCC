@@ -1167,6 +1167,8 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             
             # Extract tutor name - improved detection (works with or without titles)
             tutor_search = None
+            tutor_search_list = []  # To handle multiple names like "Sean Tan Phua"
+            
             if any(title in user_message_lower for title in ['mr', 'ms', 'mrs', 'mdm', 'miss', 'dr']):
                 words = request.message.split()
                 for i, word in enumerate(words):
@@ -1191,23 +1193,44 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                 common_tutor_names = ['eugene', 'sean', 'david', 'john', 'pang', 'zhang', 'tan', 'liew', 'ang', 'cao', 'jackie', 'ronnie', 
                                      'leonard', 'benjamin', 'winston', 'alman', 'franklin', 'zech', 'desmond', 'melissa', 'victor', 
                                      'johnson', 'jason', 'wong', 'cheong', 'deborah', 'jade', 'hannah', 'omar', 'kang', 'chan', 
-                                     'joel', 'kenji', 'lim', 'samuel', 'alan', 'aaron', 'lin', 'teo', 'huang', 'kai', 'ning', 'ong', 'koh']
+                                     'joel', 'kenji', 'lim', 'samuel', 'alan', 'aaron', 'lin', 'teo', 'huang', 'kai', 'ning', 'ong', 'koh', 'phua']
                 
                 words = request.message.lower().split()
                 skip_words = ['teach', 'teaches', 'class', 'classes', 'at', 'in', 'for', 'the', 'schedules', 'schedule', 
                              'math', 'maths', 'science', 'english', 'chinese', 'physics', 'chemistry', 'biology',
                              'p2', 'p3', 'p4', 'p5', 'p6', 's1', 's2', 's3', 's4', 'j1', 'j2']
-                for i, word in enumerate(words):
-                    clean_word = word.replace(',', '').replace('.', '')
+                
+                # Check if multiple tutor names appear (e.g., "Sean Tan Phua" should extract both "sean tan" and "phua")
+                found_names = []
+                i = 0
+                while i < len(words):
+                    clean_word = words[i].replace(',', '').replace('.', '')
                     if clean_word in common_tutor_names:
                         # Found a potential name, get next word too (if it's not a skip word)
                         name_parts = [clean_word]
                         if i + 1 < len(words):
                             next_word = words[i+1].replace(',', '').replace('.', '')
                             if next_word not in skip_words:
-                                name_parts.append(next_word)
-                        tutor_search = ' '.join(name_parts)
-                        break
+                                if next_word in common_tutor_names:
+                                    # This could be a second name (e.g., "Sean Tan Phua" -> "tan" and "phua" both match)
+                                    # Add first name combination
+                                    found_names.append(' '.join(name_parts))
+                                    # Check if next word forms another name
+                                    name_parts = [next_word]
+                                    i += 1
+                                else:
+                                    name_parts.append(next_word)
+                        found_names.append(' '.join(name_parts))
+                        i += 1
+                    else:
+                        i += 1
+                
+                # If we found multiple potential names, set them as a list
+                if len(found_names) > 1:
+                    tutor_search_list = found_names
+                    tutor_search = ' '.join(found_names)  # Combined for initial search
+                elif len(found_names) == 1:
+                    tutor_search = found_names[0]
             
             # Query Firebase for classes
             if level or subject or location or tutor_search:
