@@ -837,10 +837,13 @@ def format_class_info(class_data):
     schedule_str = ""
     for idx, session in enumerate(class_data.get('schedule', [])):
         if idx > 0:
-            schedule_str += " & "
+            schedule_str += " + "
         schedule_str += f"{session.get('day')} {session.get('time')}"
     
-    return f"{class_data.get('level')} {class_data.get('subject')} at {class_data.get('location')} - {class_data.get('tutor_base_name', class_data.get('tutor_name'))}: {schedule_str} (${class_data.get('monthly_fee')}/month, {class_data.get('sessions_per_week')} sessions/week)"
+    variant_info = class_data.get('tutor_name', '').split('(')
+    variant = f" (Class {variant_info[1].replace(')', '')})" if len(variant_info) > 1 and variant_info[1][0] in ['A', 'B', 'C', 'D'] else ""
+    
+    return f"• {class_data.get('level')} {class_data.get('subject')} at {class_data.get('location')}{variant}: {class_data.get('tutor_base_name', class_data.get('tutor_name'))} - {schedule_str} - ${class_data.get('monthly_fee')}/month ({class_data.get('sessions_per_week')} session{'s' if class_data.get('sessions_per_week', 0) > 1 else ''}/week)"
 
 def format_tutor_info(tutor_data):
     """
