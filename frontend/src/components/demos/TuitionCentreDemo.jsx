@@ -132,30 +132,30 @@ const TuitionCentreDemo = () => {
       {/* Header with CCC Branding */}
       <header className="bg-white/10 backdrop-blur-md border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 sm:py-6 gap-4">
+            <div className="flex items-center gap-3 sm:gap-4">
               <img 
                 src="https://customer-assets.emergentagent.com/job_smartbiz-portal/artifacts/p67oqb1l_Screenshot%202025-10-11%20at%204.38.29%20PM.png" 
                 alt="CCC Logo" 
-                className="h-8 w-auto object-contain"
+                className="h-6 sm:h-8 w-auto object-contain"
               />
               <div>
-                <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+                <h1 className="text-lg sm:text-2xl font-bold text-white" style={{ fontFamily: 'Plus Jakarta Sans' }}>
                   Tuition Centre AI Demo
                 </h1>
-                <p className="text-sm text-white/80 font-medium">
-                  CCC Digital - Education Industry Chatbot Solution
+                <p className="text-xs sm:text-sm text-white/80 font-medium">
+                  CCC Digital - Education Industry Chatbot
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <Button asChild variant="outline" className="border-white/30 text-white hover:bg-white hover:text-[#f5576c]">
+            <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
+              <Button asChild variant="outline" className="flex-1 sm:flex-initial border-white/30 text-white hover:bg-white hover:text-[#f5576c] text-xs sm:text-sm">
                 <a href="/demos">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to Demos
+                  <ArrowLeft className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                  Back
                 </a>
               </Button>
-              <Button asChild className="bg-white text-[#f5576c] hover:bg-white/90 font-medium">
+              <Button asChild className="flex-1 sm:flex-initial bg-white text-[#f5576c] hover:bg-white/90 font-medium text-xs sm:text-sm">
                 <a href="/contact">
                   Get Your Chatbot
                 </a>
