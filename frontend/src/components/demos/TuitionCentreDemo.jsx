@@ -214,16 +214,16 @@ const TuitionCentreDemo = () => {
 
         {/* Interactive Demo */}
         <motion.div
-          className="glass-card p-8 border border-white/20"
+          className="glass-card p-4 sm:p-8 border border-white/20"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-white mb-4" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+          <div className="text-center mb-6 sm:mb-8">
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4 px-4" style={{ fontFamily: 'Plus Jakarta Sans' }}>
               Live Demo - Tuition Centre AI Assistant
             </h3>
-            <p className="text-white/80 text-lg">
+            <p className="text-white/80 text-sm sm:text-lg px-4">
               Try asking about courses, pricing, schedules, or holidays. 
               Experience intelligent AI that adapts to your questions.
             </p>
@@ -237,24 +237,24 @@ const TuitionCentreDemo = () => {
               >
                 <Button
                   onClick={() => setIsOpen(true)}
-                  className="bg-white text-[#f5576c] hover:bg-white/90 font-bold text-xl px-12 py-6 rounded-2xl shadow-2xl"
+                  className="bg-white text-[#f5576c] hover:bg-white/90 font-bold text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-6 rounded-2xl shadow-2xl"
                 >
-                  <MessageCircle className="mr-3 h-6 w-6" />
+                  <MessageCircle className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6" />
                   🚀 Launch Demo Chat
                 </Button>
               </motion.div>
               
-              <div className="mt-8 grid md:grid-cols-4 gap-4">
+              <div className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                 {[
                   { label: 'Try asking:', example: 'P6 Math classes at Marine Parade' },
                   { label: 'Test context:', example: 'J2 math" then "Bishan' },
                   { label: 'Check calendar:', example: '2026 holiday schedule' },
                   { label: 'Test responses:', example: 'Classes at Punggol' }
                 ].map((item, index) => (
-                  <Card key={index} className="ai-card p-4 bg-white/20 backdrop-blur-md border border-white/30">
+                  <Card key={index} className="ai-card p-3 sm:p-4 bg-white/20 backdrop-blur-md border border-white/30">
                     <div className="text-center">
-                      <div className="font-bold text-white text-sm mb-2">{item.label}</div>
-                      <div className="text-white/70 text-xs">{item.example}</div>
+                      <div className="font-bold text-white text-xs sm:text-sm mb-2">{item.label}</div>
+                      <div className="text-white/70 text-xs break-words">{item.example}</div>
                     </div>
                   </Card>
                 ))}
