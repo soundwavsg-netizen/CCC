@@ -1232,13 +1232,14 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                     
                     # If multiple tutors match (e.g., "Sean" matches Sean Tan, Sean Yeo, Sean Phua)
                     if len(matching_tutors) > 1:
+                        tutor_list = ", ".join(sorted(matching_tutors))
                         firebase_context = f"\n\n**MULTIPLE TUTORS FOUND:**\n"
                         firebase_context += f"The name '{tutor_search}' matches {len(matching_tutors)} different tutors:\n\n"
                         for tutor_name in sorted(matching_tutors):
                             tutor_classes = [c for c in classes if c.get('tutor_base_name', c.get('tutor_name', '')) == tutor_name]
                             firebase_context += f"• {tutor_name} ({len(tutor_classes)} classes)\n"
                         firebase_context += f"\n**IMPORTANT**: Ask the user to clarify which tutor they mean. List the options above and ask them to specify the full name.\n"
-                        firebase_context += f"Example: 'I found multiple tutors named {tutor_search}. Which one would you like to know about: {", ".join(sorted(matching_tutors))}?'\n"
+                        firebase_context += f"Example: 'I found multiple tutors named {tutor_search}. Which one would you like to know about: {tutor_list}?'\n"
                     elif classes:
                         firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL OF THESE:**\n\n"
                         for cls in classes[:15]:
