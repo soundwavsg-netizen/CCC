@@ -1182,9 +1182,10 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                 
                 if classes:
                     firebase_context = "\n\n**AVAILABLE CLASSES (from our database):**\n"
+                    firebase_context += "**IMPORTANT: Show ALL class options below to give the customer complete choices:**\n\n"
                     for cls in classes[:15]:  # Limit to 15 results
-                        firebase_context += f"- {format_class_info(cls)}\n"
-                    firebase_context += "\n**IMPORTANT**: Use this data to answer accurately. Present it naturally without mentioning 'database' or 'Firebase'.\n"
+                        firebase_context += f"{format_class_info(cls)}\n"
+                    firebase_context += "\n**INSTRUCTIONS**: Present ALL classes above naturally. If there are multiple class sections (A, B, C), show all timing options so customers can choose what fits their schedule. Don't mention 'database' or technical terms.\n"
             
             # If specifically asking about a tutor by name
             if tutor_search and not classes:
