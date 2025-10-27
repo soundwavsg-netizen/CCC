@@ -774,6 +774,80 @@ class TuitionChatResponse(BaseModel):
 # In-memory session storage for tuition demo
 tuition_sessions = {}
 
+# ==================== FIREBASE QUERY HELPER FUNCTIONS ====================
+
+def query_firebase_classes(level=None, subject=None, location=None, limit=50):
+    """
+    Query Firebase for classes based on filters.
+    Returns list of class dictionaries.
+    """
+    try:
+        classes_ref = firebase_db.collection('classes')
+        query = classes_ref
+        
+        if level:
+            query = query.where('level', '==', level)
+        if subject:
+            query = query.where('subject', '==', subject)
+        if location:
+            query = query.where('location', '==', location)
+        
+        results = query.limit(limit).stream()
+        classes = []
+        for doc in results:
+            class_data = doc.to_dict()
+            classes.append(class_data)
+        
+        return classes
+    except Exception as e:
+        logger.error(f"Error querying Firebase classes: {str(e)}")
+        return []
+
+def query_firebase_tutors(name_search=None, limit=20):
+    """
+    Query Firebase for tutors.
+    Returns list of tutor dictionaries.
+    """
+    try:
+        tutors_ref = firebase_db.collection('tutors')
+        
+        if name_search:
+            # Firebase doesn't support text search well, so we'll get all and filter
+            results = tutors_ref.limit(100).stream()
+            tutors = []
+            search_lower = name_search.lower()
+            for doc in results:
+                tutor_data = doc.to_dict()
+                if search_lower in tutor_data.get('name', '').lower():
+                    tutors.append(tutor_data)
+                    if len(tutors) >= limit:
+                        break
+            return tutors
+        else:
+            results = tutors_ref.limit(limit).stream()
+            return [doc.to_dict() for doc in results]
+    except Exception as e:
+        logger.error(f"Error querying Firebase tutors: {str(e)}")
+        return []
+
+def format_class_info(class_data):
+    """
+    Format a single class document into a readable string for LLM.
+    """
+    schedule_str = ""
+    for idx, session in enumerate(class_data.get('schedule', [])):
+        if idx > 0:
+            schedule_str += " & "
+        schedule_str += f"{session.get('day')} {session.get('time')}"
+    
+    return f"{class_data.get('level')} {class_data.get('subject')} at {class_data.get('location')} - {class_data.get('tutor_base_name', class_data.get('tutor_name'))}: {schedule_str} (${class_data.get('monthly_fee')}/month, {class_data.get('sessions_per_week')} sessions/week)"
+
+def format_tutor_info(tutor_data):
+    """
+    Format a tutor document into a readable string for LLM.
+    """
+    return f"{tutor_data.get('name')} - Teaches: {', '.join(tutor_data.get('subjects', []))} | Levels: {', '.join(tutor_data.get('levels', []))} | Locations: {', '.join(tutor_data.get('locations', []))} | Total Classes: {tutor_data.get('total_classes')}"
+
 # Tuition Centre System Message
 TUITION_SYSTEM_MESSAGE = """You are an AI assistant for a premier tuition center in Singapore. You provide detailed, accurate information about our 2026 class schedules and pricing.
 
