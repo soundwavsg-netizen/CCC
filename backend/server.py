@@ -1093,10 +1093,11 @@ async def tuition_demo_chat(request: TuitionChatRequest):
         
         # Detect specific queries that need Firebase data
         needs_firebase = any([
-            'tutor' in user_message_lower and ('who' in user_message_lower or 'teach' in user_message_lower),
-            'class' in user_message_lower and any(loc in user_message_lower for loc in ['bishan', 'punggol', 'marine parade', 'jurong', 'kovan']),
-            'schedule' in user_message_lower or 'when' in user_message_lower,
-            any(level in user_message_lower for level in ['p2', 'p3', 'p4', 'p5', 'p6', 's1', 's2', 's3', 's4', 'j1', 'j2'])
+            'tutor' in user_message_lower or 'teacher' in user_message_lower,
+            'class' in user_message_lower and any(loc in user_message_lower for loc in ['bishan', 'punggol', 'marine parade', 'marine', 'jurong', 'kovan']),
+            'schedule' in user_message_lower or 'when' in user_message_lower or 'time' in user_message_lower,
+            any(level in user_message_lower for level in ['p2', 'p3', 'p4', 'p5', 'p6', 's1', 's2', 's3', 's4', 'j1', 'j2']),
+            any(name in user_message_lower for name in ['mr', 'ms', 'mrs', 'mdm', 'miss'])
         ])
         
         if needs_firebase:
@@ -1104,6 +1105,7 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             level = None
             subject = None
             location = None
+            tutor_search = None
             
             # Extract level
             for l in ['P2', 'P3', 'P4', 'P5', 'P6', 'S1', 'S2', 'S3', 'S4', 'J1', 'J2']:
@@ -1126,47 +1128,68 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             
             # Extract subject (common subjects)
             subject_keywords = {
-                'math': 'Math', 'mathematics': 'Math',
+                'math': 'Math', 'maths': 'Math', 'mathematics': 'Math',
                 'science': 'Science',
                 'english': 'English',
                 'chinese': 'Chinese',
-                'emath': 'EMath', 'e-math': 'EMath',
-                'amath': 'AMath', 'a-math': 'AMath',
+                'emath': 'EMath', 'e-math': 'EMath', 'e math': 'EMath',
+                'amath': 'AMath', 'a-math': 'AMath', 'a math': 'AMath',
                 'physics': 'Physics',
                 'chemistry': 'Chemistry',
                 'biology': 'Biology',
-                'economics': 'Economics'
+                'economics': 'Economics', 'econs': 'Economics'
             }
             for key, val in subject_keywords.items():
                 if key in user_message_lower:
                     subject = val
                     break
             
-            # Query Firebase if we have filters
-            if level or subject or location:
-                classes = query_firebase_classes(level, subject, location, limit=20)
-                if classes:
-                    firebase_context = "\n\n**FIREBASE DATA (Real-time class information):**\n"
-                    for cls in classes[:10]:  # Limit to 10 results to avoid token overflow
-                        firebase_context += f"- {format_class_info(cls)}\n"
-                    firebase_context += "\nUse this LIVE data to answer the user's question accurately.\n"
-            
-            # If asking about specific tutor
-            if 'tutor' in user_message_lower or 'mr ' in user_message_lower or 'ms ' in user_message_lower or 'mdm ' in user_message_lower:
-                # Try to extract tutor name
+            # Extract tutor name - improved detection
+            if any(title in user_message_lower for title in ['mr', 'ms', 'mrs', 'mdm', 'miss', 'dr']):
                 words = request.message.split()
-                tutor_search = None
                 for i, word in enumerate(words):
-                    if word.lower() in ['mr', 'ms', 'mrs', 'mdm'] and i + 1 < len(words):
-                        tutor_search = ' '.join(words[i:i+3])  # Get name
-                        break
+                    word_lower = word.lower().replace(',', '').replace('.', '')
+                    if word_lower in ['mr', 'ms', 'mrs', 'mdm', 'miss', 'dr'] and i + 1 < len(words):
+                        # Get next 1-2 words as name
+                        name_parts = []
+                        for j in range(i+1, min(i+3, len(words))):
+                            next_word = words[j].replace(',', '').replace('.', '')
+                            if next_word.lower() not in ['teach', 'teaches', 'class', 'classes', 'at', 'in', 'for', 'the']:
+                                name_parts.append(next_word)
+                            else:
+                                break
+                        if name_parts:
+                            tutor_search = ' '.join(name_parts)
+                            break
+            
+            # Query Firebase for classes
+            if level or subject or location or tutor_search:
+                classes = query_firebase_classes(level, subject, location, limit=30)
                 
-                if tutor_search:
-                    tutors = query_firebase_tutors(tutor_search, limit=5)
-                    if tutors:
-                        firebase_context += "\n**TUTOR DATA (From Firebase):**\n"
-                        for tutor in tutors:
-                            firebase_context += f"- {format_tutor_info(tutor)}\n"
+                # If we have a tutor search, filter classes by tutor name
+                if tutor_search and classes:
+                    tutor_search_lower = tutor_search.lower()
+                    filtered_classes = []
+                    for cls in classes:
+                        tutor_name = cls.get('tutor_base_name', cls.get('tutor_name', '')).lower()
+                        if tutor_search_lower in tutor_name or any(part in tutor_name for part in tutor_search_lower.split()):
+                            filtered_classes.append(cls)
+                    classes = filtered_classes
+                
+                if classes:
+                    firebase_context = "\n\n**AVAILABLE CLASSES (from our database):**\n"
+                    for cls in classes[:15]:  # Limit to 15 results
+                        firebase_context += f"- {format_class_info(cls)}\n"
+                    firebase_context += "\n**IMPORTANT**: Use this data to answer accurately. Present it naturally without mentioning 'database' or 'Firebase'.\n"
+            
+            # If specifically asking about a tutor by name
+            if tutor_search and not classes:
+                tutors = query_firebase_tutors(tutor_search, limit=5)
+                if tutors:
+                    firebase_context += "\n**TUTOR INFORMATION:**\n"
+                    for tutor in tutors:
+                        firebase_context += f"- {format_tutor_info(tutor)}\n"
+                    firebase_context += "\nPresent this information naturally in your response.\n"
         
         # Combine system message with context and Firebase data
         enhanced_system_msg = TUITION_SYSTEM_MESSAGE + context_enhancement + firebase_context
