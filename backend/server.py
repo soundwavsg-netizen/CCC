@@ -23,6 +23,18 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+# Initialize Firebase
+try:
+    firebase_db = firestore.client()
+    logger = logging.getLogger(__name__)
+    logger.info("Firebase client already initialized")
+except:
+    cred = credentials.Certificate(ROOT_DIR / 'firebase-credentials.json')
+    firebase_admin.initialize_app(cred)
+    firebase_db = firestore.client()
+    logger = logging.getLogger(__name__)
+    logger.info("Firebase initialized successfully")
+
 # Emergent Universal Key
 EMERGENT_API_KEY = "sk-emergent-c97712cF4BaD07b816"
 
