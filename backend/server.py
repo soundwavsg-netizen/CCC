@@ -1218,14 +1218,15 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                 
                 if classes:
                     logger.info(f"Found {len(classes)} classes, formatting for LLM")
-                    firebase_context = "\n\n**AVAILABLE CLASSES (from our database):**\n"
-                    firebase_context += "**IMPORTANT INSTRUCTIONS:**\n"
-                    firebase_context += "- Show ALL class options below to give customers complete choices\n"
-                    firebase_context += "- Check if all classes are at the SAME location. If yes, just present them directly without asking for location confirmation\n"
-                    firebase_context += "- Be direct and confident when presenting clear data\n\n"
+                    firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL OF THESE:**\n\n"
                     for cls in classes[:15]:  # Limit to 15 results
                         firebase_context += f"{format_class_info(cls)}\n"
-                    firebase_context += "\n**PRESENTATION RULES**: Present ALL classes above naturally. If there are multiple class sections (A, B, C), show all timing options. Don't mention 'database' or technical terms. If all classes are at ONE location only, present them directly without asking 'which location?'\n"
+                    firebase_context += f"\n**CRITICAL INSTRUCTIONS FOR RESPONSE:**\n"
+                    firebase_context += f"1. The data above shows {min(len(classes), 15)} class options. Present ALL of them.\n"
+                    firebase_context += f"2. If all classes are at ONE location, say '{classes[0].get('location')}' and present them directly.\n"
+                    firebase_context += f"3. Show each class's complete schedule (day + time).\n"
+                    firebase_context += f"4. Be direct and confident. Don't ask for location if only one location shown.\n"
+                    firebase_context += f"5. Never mention 'database' or technical terms.\n"
                 else:
                     logger.warning(f"No classes found for query - Level: {level}, Subject: {subject}, Location: {location}, Tutor: {tutor_search}")
             
