@@ -302,7 +302,7 @@ print(f"   - S3: {len([c for c in all_classes if c[0] == 'S3'])} classes (sample
 print(f"   - S4: {len([c for c in all_classes if c[0] == 'S4'])} classes (sample)")
 print(f"   - J1: {len([c for c in all_classes if c[0] == 'J1'])} classes")
 print(f"   - J2: {len([c for c in all_classes if c[0] == 'J2'])} classes")
-print()"
+print()
 
 # Write to CSV
 output_file = '/app/tuition_complete_data_export.csv'
