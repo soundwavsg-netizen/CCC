@@ -1162,11 +1162,14 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                 for i, word in enumerate(words):
                     word_lower = word.lower().replace(',', '').replace('.', '')
                     if word_lower in ['mr', 'ms', 'mrs', 'mdm', 'miss', 'dr'] and i + 1 < len(words):
-                        # Get next 1-2 words as name
+                        # Get next 1-2 words as name (but skip level/subject keywords)
                         name_parts = []
+                        skip_words = ['teach', 'teaches', 'class', 'classes', 'at', 'in', 'for', 'the', 'schedules', 'schedule',
+                                    'p2', 'p3', 'p4', 'p5', 'p6', 's1', 's2', 's3', 's4', 'j1', 'j2',
+                                    'math', 'science', 'english', 'chinese', 'physics', 'chemistry', 'biology']
                         for j in range(i+1, min(i+3, len(words))):
                             next_word = words[j].replace(',', '').replace('.', '')
-                            if next_word.lower() not in ['teach', 'teaches', 'class', 'classes', 'at', 'in', 'for', 'the', 'schedules', 'schedule']:
+                            if next_word.lower() not in skip_words:
                                 name_parts.append(next_word)
                             else:
                                 break
@@ -1181,14 +1184,17 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                                      'joel', 'kenji', 'lim', 'samuel', 'alan', 'aaron', 'lin', 'teo', 'huang', 'kai', 'ning', 'ong', 'koh']
                 
                 words = request.message.lower().split()
+                skip_words = ['teach', 'teaches', 'class', 'classes', 'at', 'in', 'for', 'the', 'schedules', 'schedule', 
+                             'math', 'maths', 'science', 'english', 'chinese', 'physics', 'chemistry', 'biology',
+                             'p2', 'p3', 'p4', 'p5', 'p6', 's1', 's2', 's3', 's4', 'j1', 'j2']
                 for i, word in enumerate(words):
                     clean_word = word.replace(',', '').replace('.', '')
                     if clean_word in common_tutor_names:
-                        # Found a potential name, get next word too
+                        # Found a potential name, get next word too (if it's not a skip word)
                         name_parts = [clean_word]
                         if i + 1 < len(words):
                             next_word = words[i+1].replace(',', '').replace('.', '')
-                            if next_word not in ['teach', 'teaches', 'class', 'classes', 'at', 'in', 'for', 'the', 'schedules', 'schedule', 'math', 'science', 'english', 'chinese']:
+                            if next_word not in skip_words:
                                 name_parts.append(next_word)
                         tutor_search = ' '.join(name_parts)
                         break
