@@ -1,0 +1,667 @@
+Level,Subject,Location,Tutor_Name,Day1,Time1,Day2,Time2,Monthly_Fee,Sessions_Per_Week
+S1,Chinese,Punggol,Mdm Zhang (HOD),WED,5:00pm-7:00pm,,,321.55,1
+S1,Chinese,Punggol,Ms Tan S.F.,THU,7:00pm-9:00pm,,,321.55,1
+S1,English,Punggol,Mr Pang W.F. (A) (HOD),WED,7:30pm-9:30pm,,,321.55,1
+S1,English,Punggol,Mr Pang W.F. (B) (HOD),SAT,3:00pm-5:00pm,,,321.55,1
+S1,Math,Punggol,Mr David Cao (A),MON,5:00pm-6:30pm,SAT,3:00pm-4:30pm,370.6,2
+S1,Math,Punggol,Mr Ang C.X. (A),TUE,5:00pm-6:30pm,SAT,4:30pm-6:00pm,370.6,2
+S1,Math,Punggol,Ms Kathy Liew (A),WED,6:30pm-8:00pm,SAT,3:00pm-4:30pm,370.6,2
+S1,Math,Punggol,Mr David Cao (B),WED,6:30pm-8:00pm,SUN,11:00am-12:30pm,370.6,2
+S1,Math,Punggol,Mr Ang C.X. (B),FRI,6:30pm-8:00pm,SUN,1:00pm-2:30pm,370.6,2
+S1,Math,Punggol,Ms Kathy Liew (B),FRI,8:00pm-9:30pm,SUN,9:30am-11:00am,370.6,2
+S1,Science,Punggol,Ms Alvina Tan (A),TUE,7:30pm-9:30pm,,,327.0,1
+S1,Science,Punggol,Ms Karmen Soon (A),THU,5:30pm-7:30pm,,,327.0,1
+S1,Science,Punggol,Ms Karmen Soon (B),SAT,10:30am-12:30pm,,,327.0,1
+S1,Science,Punggol,Ms Alvina Tan (B),SUN,2:30pm-4:30pm,,,327.0,1
+S1,Chinese,Marine Parade,Mdm Zhang (A) (HOD),FRI,4:30pm-6:30pm,,,321.55,1
+S1,Chinese,Marine Parade,Mdm Zhang (B) (HOD),SAT,8:30am-10:30am,,,321.55,1
+S1,English,Marine Parade,Mrs Cheong (A),FRI,7:30pm-9:30pm,,,321.55,1
+S1,English,Marine Parade,Mrs Cheong (B),SAT,10:30am-12:30pm,,,321.55,1
+S1,Math,Marine Parade,Mr Sean Yeo (HOD),MON,5:00pm-6:30pm,SAT,3:00pm-4:30pm,370.6,2
+S1,Math,Marine Parade,Mr John Lee (DY HOD),THU,5:00pm-6:30pm,SUN,9:30am-11:00am,370.6,2
+S1,Math,Marine Parade,Mr Ng C.H.,MON,4:00pm-5:30pm,SAT,12:00pm-1:30pm,370.6,2
+S1,Math,Marine Parade,Mr Ronnie Quek,MON,6:00pm-7:30pm,SAT,10:00am-11:30am,370.6,2
+S1,Math,Marine Parade,Mr Jackie,TUE,6:30pm-8:00pm,SAT,10:30am-12:00pm,370.6,2
+S1,Math,Marine Parade,Mr Leonard Teo,WED,3:30pm-5:00pm,SUN,2:00pm-3:30pm,370.6,2
+S1,Math,Marine Parade,Mr Sean Tan,WED,5:00pm-6:30pm,SUN,11:30am-1:00pm,370.6,2
+S1,Math,Marine Parade,Mr Sean Phua,FRI,6:00pm-7:30pm,SUN,10:30am-12:00pm,370.6,2
+S1,Math,Marine Parade,Mr Lim W.M.,FRI,6:30pm-8:00pm,SUN,11:00am-12:30pm,370.6,2
+S1,Science,Marine Parade,Mr Desmond Tham (HOD),SAT,1:00pm-3:00pm,,,327.0,1
+S1,Science,Marine Parade,Ms Melissa Lim (DY HOD),TUE,7:30pm-9:30pm,,,327.0,1
+S1,Science,Marine Parade,Mr Wong Q.J.,MON,6:30pm-8:30pm,,,327.0,1
+S1,Science,Marine Parade,Mr Jason Ang,THU,5:30pm-7:30pm,,,327.0,1
+S1,Science,Marine Parade,Mr Victor Wu (A),FRI,5:00pm-7:00pm,,,327.0,1
+S1,Science,Marine Parade,Mr Victor Wu (B),SAT,9:00am-11:00am,,,327.0,1
+S1,Science,Marine Parade,Mr Johnson Boh,SUN,9:00am-11:00am,,,327.0,1
+S1,Chinese,Bishan,Mdm Huang Yu (A),THU,7:00pm-9:00pm,,,321.55,1
+S1,Chinese,Bishan,Ms Tan S.F.,SAT,1:00pm-3:00pm,,,321.55,1
+S1,English,Bishan,Mdm Huang Yu (B),SUN,3:00pm-5:00pm,,,321.55,1
+S1,English,Bishan,Ms See Kai Ning (A),MON,5:30pm-7:30pm,,,321.55,1
+S1,English,Bishan,Ms See Kai Ning (B),SAT,1:00pm-3:00pm,,,321.55,1
+S1,Math,Bishan,Mr Sean Yeo (HOD),WED,4:00pm-5:30pm,SUN,11:00am-12:30pm,370.6,2
+S1,Math,Bishan,Mr John Lee (DY HOD),MON,5:00pm-6:30pm,SAT,10:30am-12:00pm,370.6,2
+S1,Math,Bishan,Mr Leonard Teo,MON,7:00pm-8:30pm,SAT,8:30am-10:00am,370.6,2
+S1,Math,Bishan,Mr Sean Tan,TUE,6:00pm-7:30pm,SAT,12:00pm-1:30pm,370.6,2
+S1,Math,Bishan,Mr Jackie,WED,4:30pm-6:00pm,SUN,12:30pm-2:00pm,370.6,2
+S1,Math,Bishan,Mr Lim W.M.,WED,6:30pm-8:00pm,SAT,10:30am-12:00pm,370.6,2
+S1,Math,Bishan,Mr Ronnie Quek,THU,6:00pm-7:30pm,SUN,10:30am-12:00pm,370.6,2
+S1,Math,Bishan,Mr Sean Phua,THU,6:30pm-8:00pm,SAT,1:00pm-2:30pm,370.6,2
+S1,Math,Bishan,Mr Ng C.H.,FRI,6:30pm-8:00pm,SUN,12:30pm-2:00pm,370.6,2
+S1,Science,Bishan,Mr Desmond Tham (HOD),SUN,9:00am-11:00am,,,327.0,1
+S1,Science,Bishan,Ms Melissa Lim (DY HOD),FRI,5:30pm-7:30pm,,,327.0,1
+S1,Science,Bishan,Mr Wong Q.J.,WED,7:30pm-9:30pm,,,327.0,1
+S1,Science,Bishan,Mr Johnson Boh,SAT,3:00pm-5:00pm,,,327.0,1
+S1,Science,Bishan,Mr Jason Ang,SUN,3:00pm-5:00pm,,,327.0,1
+S1,English,Jurong,Ms Deborah Wong (A),MON,7:30pm-9:30pm,,,321.55,1
+S1,English,Jurong,Ms Deborah Wong (B),WED,5:30pm-7:30pm,,,321.55,1
+S1,Math,Jurong,Mr Omar Bin Noordin (A),MON,4:30pm-6:00pm,SAT,3:00pm-4:30pm,370.6,2
+S1,Math,Jurong,Ms Kang P.Y. (A),TUE,4:30pm-6:00pm,SAT,10:30am-12:00pm,370.6,2
+S1,Math,Jurong,Ms Chan S.Q. (A),WED,7:30pm-9:00pm,SAT,1:00pm-2:30pm,370.6,2
+S1,Math,Jurong,Mr Omar Bin Noordin (B),THU,5:00pm-6:30pm,SUN,9:00am-10:30am,370.6,2
+S1,Math,Jurong,Ms Kang P.Y. (B),THU,6:00pm-7:30pm,SUN,12:00pm-1:30pm,370.6,2
+S1,Math,Jurong,Ms Chan S.Q. (B),FRI,4:30pm-6:00pm,SUN,1:30pm-3:00pm,370.6,2
+S1,Science,Jurong,Mr Joel Seah (A),MON,5:30pm-7:30pm,,,327.0,1
+S1,Science,Jurong,Mr Joel Seah (B),THU,7:30pm-9:30pm,,,327.0,1
+S1,Science,Jurong,Mr Joel Seah (C),SUN,11:00am-1:00pm,,,327.0,1
+S1,English,Kovan,Mr Winston Lin (A),THU,7:30pm-9:30pm,,,321.55,1
+S1,English,Kovan,Mr Winston Lin (B),SAT,3:00pm-5:00pm,,,321.55,1
+S1,Math,Kovan,Mr Lim K.W. (A),MON,6:30pm-8:00pm,THU,8:00pm-9:30pm,370.6,2
+S1,Math,Kovan,Mr Kenji Ng (A),TUE,6:30pm-8:00pm,FRI,6:30pm-8:00pm,370.6,2
+S1,Math,Kovan,Mr Lim K.W. (B),TUE,8:00pm-9:30pm,SUN,11:30am-1:00pm,370.6,2
+S1,Math,Kovan,Mr Kenji Ng (B),WED,5:00pm-6:30pm,SAT,1:30pm-3:00pm,370.6,2
+S1,Math,Kovan,Mr Benjamin Tay (A),WED,7:30pm-9:30pm,,,370.6,1
+S1,Science,Kovan,Mr Benjamin Tay (B),FRI,7:30pm-9:30pm,,,327.0,1
+S1,Science,Kovan,Ms Koh R.T. (A),THU,5:30pm-7:30pm,,,327.0,1
+S1,Science,Kovan,Ms Koh R.T. (B),SUN,9:30am-11:30am,,,327.0,1
+S2,Chinese,Punggol,Mdm Zhang (HOD),WED,7:00pm-9:00pm,,,321.55,1
+S2,Chinese,Punggol,Ms Tan S.F.,MON,7:00pm-9:00pm,,,321.55,1
+S2,English,Punggol,Mr Pang W.F. (A) (HOD),THU,7:30pm-9:30pm,,,321.55,1
+S2,English,Punggol,Mr Pang W.F. (B) (HOD),SAT,9:00am-11:00am,,,321.55,1
+S2,Math,Punggol,Mr Ang C.X. (A),MON,6:30pm-8:00pm,SAT,3:00pm-4:30pm,381.5,2
+S2,Math,Punggol,Mr David Cao (A),TUE,6:30pm-8:00pm,SAT,9:00am-10:30am,381.5,2
+S2,Math,Punggol,Mr David Cao (C),TUE,8:00pm-9:30pm,FRI,8:00pm-9:30pm,381.5,2
+S2,Math,Punggol,Ms Kathy Liew (A),WED,8:00pm-9:30pm,SAT,12:00pm-1:30pm,381.5,2
+S2,Math,Punggol,Mr Ang C.X. (B),THU,6:30pm-8:00pm,SUN,10:00am-11:30am,381.5,2
+S2,Math,Punggol,Mr David Cao (B),FRI,5:00pm-6:30pm,SUN,2:30pm-4:00pm,381.5,2
+S2,Math,Punggol,Ms Kathy Liew (B),FRI,6:30pm-8:00pm,SUN,3:30pm-5:00pm,381.5,2
+S2,Science,Punggol,Ms Alvina Tan (C),WED,5:30pm-7:30pm,,,327.0,1
+S2,Science,Punggol,Ms Alvina Tan (A),THU,5:30pm-7:30pm,,,327.0,1
+S2,Science,Punggol,Ms Karmen Soon (B),FRI,5:30pm-7:30pm,,,327.0,1
+S2,Science,Punggol,Ms Karmen Soon (A),SAT,12:30pm-2:30pm,,,327.0,1
+S2,Science,Punggol,Ms Alvina Tan (B),SUN,12:30pm-2:30pm,,,327.0,1
+S2,Chinese,Marine Parade,Mdm Zhang (A) (HOD),TUE,7:00pm-9:00pm,,,321.55,1
+S2,Chinese,Marine Parade,Mdm Zhang (B) (HOD),SUN,11:00am-1:00pm,,,321.55,1
+S2,English,Marine Parade,Mrs Cheong (A),WED,5:30pm-7:30pm,,,321.55,1
+S2,English,Marine Parade,Mrs Cheong (B),SUN,1:00pm-3:00pm,,,321.55,1
+S2,Math,Marine Parade,Mr Sean Yeo (HOD),TUE,6:30pm-8:00pm,SAT,1:30pm-3:00pm,381.5,2
+S2,Math,Marine Parade,Mr John Lee (DY HOD),WED,5:00pm-6:30pm,SUN,2:00pm-3:30pm,381.5,2
+S2,Math,Marine Parade,Mr Ng C.H.,MON,5:30pm-7:00pm,SAT,10:30am-12:00pm,381.5,2
+S2,Math,Marine Parade,Mr Jackie,MON,6:30pm-8:00pm,SAT,1:30pm-3:00pm,381.5,2
+S2,Math,Marine Parade,Mr Sean Phua,TUE,4:00pm-5:30pm,SUN,3:00pm-4:30pm,381.5,2
+S2,Math,Marine Parade,Mr Ronnie Quek,TUE,6:00pm-7:30pm,SAT,11:30am-1:00pm,381.5,2
+S2,Math,Marine Parade,Mr Leonard Teo,WED,6:30pm-8:00pm,SUN,3:30pm-5:00pm,381.5,2
+S2,Math,Marine Parade,Mr Sean Tan,THU,5:00pm-6:30pm,SUN,9:00am-10:30am,381.5,2
+S2,Math,Marine Parade,Mr Lim W.M.,THU,6:30pm-8:00pm,SUN,12:30pm-2:00pm,381.5,2
+S2,Science,Marine Parade,Mr Desmond Tham (HOD),TUE,5:30pm-7:30pm,,,327.0,1
+S2,Science,Marine Parade,Ms Melissa Lim (DY HOD),SAT,9:00am-11:00am,,,327.0,1
+S2,Science,Marine Parade,Mr Victor Wu (A),MON,7:00pm-9:00pm,,,327.0,1
+S2,Science,Marine Parade,Mr Johnson Boh,WED,5:30pm-7:30pm,,,327.0,1
+S2,Science,Marine Parade,Mr Jason Ang,SAT,10:30am-12:30pm,,,327.0,1
+S2,Science,Marine Parade,Mr Victor Wu (B),SUN,9:00am-11:00am,,,327.0,1
+S2,Science,Marine Parade,Mr Wong Q.J.,SUN,3:00pm-5:00pm,,,327.0,1
+S2,Chinese,Bishan,Mdm Huang Yu (A),MON,6:00pm-8:00pm,,,321.55,1
+S2,Chinese,Bishan,Ms Tan S.F. (A),SAT,11:00am-1:00pm,,,321.55,1
+S2,Chinese,Bishan,Mdm Huang Yu (B),SUN,9:00am-11:00am,,,321.55,1
+S2,Chinese,Bishan,Ms Tan S.F. (B),SUN,3:00pm-5:00pm,,,321.55,1
+S2,English,Bishan,Ms Kai Ning (B),MON,7:30pm-9:30pm,,,321.55,1
+S2,English,Bishan,Ms Kai Ning (A),THU,5:30pm-7:30pm,,,321.55,1
+S2,Math,Bishan,Mr Sean Yeo (HOD),WED,5:30pm-7:00pm,SUN,2:00pm-3:30pm,381.5,2
+S2,Math,Bishan,Mr John Lee (DY HOD),TUE,5:00pm-6:30pm,SAT,12:00pm-1:30pm,381.5,2
+S2,Math,Bishan,Mr Leonard Teo,MON,4:00pm-5:30pm,SAT,3:30pm-5:00pm,381.5,2
+S2,Math,Bishan,Mr Sean Tan,MON,5:00pm-6:30pm,SAT,9:00am-10:30am,381.5,2
+S2,Math,Bishan,Mr Sean Phua,WED,5:00pm-6:30pm,SAT,10:00am-11:30am,381.5,2
+S2,Math,Bishan,Mr Lim W.M.,WED,8:00pm-9:30pm,SAT,1:30pm-3:00pm,381.5,2
+S2,Math,Bishan,Mr Jackie,THU,5:00pm-6:30pm,SUN,9:30am-11:00am,381.5,2
+S2,Math,Bishan,Mr Ronnie Quek,THU,7:30pm-9:00pm,SUN,1:30pm-3:00pm,381.5,2
+S2,Math,Bishan,Mr Ng C.H.,FRI,5:00pm-6:30pm,SUN,11:00am-12:30pm,381.5,2
+S2,Science,Bishan,Mr Desmond Tham (HOD),SUN,11:00am-1:00pm,,,327.0,1
+S2,Science,Bishan,Ms Melissa Lim (B) (DY HOD),FRI,7:30pm-9:30pm,,,327.0,1
+S2,Science,Bishan,Ms Melissa Lim (A) (DY HOD),SUN,1:30pm-3:30pm,,,327.0,1
+S2,Science,Bishan,Mr Jason Ang (A),MON,5:30pm-7:30pm,,,327.0,1
+S2,Science,Bishan,Mr Jason Ang (B),WED,4:00pm-6:00pm,,,327.0,1
+S2,Science,Bishan,Mr Johnson Boh,FRI,5:30pm-7:30pm,,,327.0,1
+S2,Science,Bishan,Mr Wong Q.J.,SAT,11:30am-1:30pm,,,327.0,1
+S2,English,Jurong,Ms Deborah Wong (A),MON,5:30pm-7:30pm,,,321.55,1
+S2,English,Jurong,Ms Deborah Wong (B),THU,7:30pm-9:30pm,,,321.55,1
+S2,Math,Jurong,Ms Kang P.Y. (A),MON,6:30pm-8:00pm,SAT,1:30pm-3:00pm,381.5,2
+S2,Math,Jurong,Ms Chan S.Q. (A),TUE,6:00pm-7:30pm,SAT,2:30pm-4:00pm,381.5,2
+S2,Math,Jurong,Mr Omar Bin Noordin (A),TUE,8:00pm-9:30pm,SAT,12:00pm-1:30pm,381.5,2
+S2,Math,Jurong,Mr Omar Bin Noordin (B),WED,8:00pm-9:30pm,SUN,10:30am-12:00pm,381.5,2
+S2,Math,Jurong,Ms Kang P.Y. (B),THU,4:30pm-6:00pm,SUN,9:00am-10:30am,381.5,2
+S2,Math,Jurong,Ms Chan S.Q. (B),FRI,7:30pm-9:00pm,SUN,12:00pm-1:30pm,381.5,2
+S2,Science,Jurong,Mr Joel Seah (A),THU,5:30pm-7:30pm,,,327.0,1
+S2,Science,Jurong,Mr Joel Seah (B),SAT,3:00pm-5:00pm,,,327.0,1
+S2,Science,Jurong,Mr Joel Seah (C),SUN,9:00am-11:00am,,,327.0,1
+S2,English,Kovan,Mr Winston Lin (A),MON,7:30pm-9:30pm,,,321.55,1
+S2,English,Kovan,Mr Winston Lin (B),FRI,5:30pm-7:30pm,,,321.55,1
+S2,English,Kovan,Mr Winston Lin (C),SUN,1:00pm-3:00pm,,,321.55,1
+S2,Math,Kovan,Mr Lim K.W. (A),TUE,5:00pm-6:30pm,SAT,4:30pm-6:00pm,381.5,2
+S2,Math,Kovan,Mr Kenji Ng (A),WED,6:30pm-8:00pm,SAT,12:00pm-1:30pm,381.5,2
+S2,Math,Kovan,Mr Kenji Ng (B),THU,6:30pm-8:00pm,SUN,3:00pm-4:30pm,381.5,2
+S2,Math,Kovan,Mr Lim K.W. (B),FRI,8:00pm-9:30pm,SUN,8:30am-10:00am,381.5,2
+S2,Science,Kovan,Mr Benjamin Tay (A),MON,5:30pm-7:30pm,,,327.0,1
+S2,Science,Kovan,Mr Benjamin Tay (B),THU,5:30pm-7:30pm,,,327.0,1
+S2,Science,Kovan,Ms Koh R.T. (A),TUE,7:30pm-9:30pm,,,327.0,1
+S2,Science,Kovan,Ms Koh R.T. (B),SAT,9:00am-11:00am,,,327.0,1
+S3,Chinese,Punggol,Mdm Zhang (HOD),THU,7:30pm-9:30pm,,,332.45,1
+S3,English,Punggol,Mr Pang W.F. (A) (HOD),FRI,5:30pm-7:30pm,,,332.45,1
+S3,AMath,Punggol,Mr Ang C.X. (A),MON,5:00pm-6:30pm,SAT,12:00pm-1:30pm,397.85,2
+S3,EMath,Punggol,Ms Kathy Liew,MON,7:30pm-9:30pm,,,343.35,1
+S3,Chemistry,Punggol,Ms Karmen Soon (A),WED,7:30pm-9:30pm,,,343.35,1
+S3,Physics,Punggol,Ms Karmen Soon,MON,7:00pm-9:00pm,,,343.35,1
+S3,AMath,Marine Parade,Mr Sean Yeo (HOD),TUE,5:00pm-6:30pm,SAT,12:00pm-1:30pm,397.85,2
+S3,EMath,Marine Parade,Mr Jackie,FRI,8:00pm-10:00pm,,,343.35,1
+S3,Chemistry,Marine Parade,Mr Victor Wu (A),WED,7:30pm-9:30pm,,,343.35,1
+S3,Physics,Marine Parade,Mr Desmond Tham (HOD),TUE,7:30pm-9:30pm,,,343.35,1
+S4,Chinese,Punggol,Mdm Zhang (HOD),THU,5:30pm-7:30pm,,,332.45,1
+S4,English,Punggol,Mr Pang W.F. (A) (HOD),TUE,7:30pm-9:30pm,,,332.45,1
+S4,AMath,Punggol,Mr David Cao (A),MON,8:00pm-9:30pm,SAT,10:30am-12:00pm,408.75,2
+S4,EMath,Punggol,Mr David Cao (A),MON,6:30pm-8:00pm,SAT,12:00pm-1:30pm,408.75,2
+S4,Chemistry,Punggol,Ms Alvina Tan (B),TUE,5:30pm-7:30pm,,,343.35,1
+S4,Physics,Punggol,Ms Karmen Soon (B),SAT,8:30am-10:30am,,,343.35,1
+S4,AMath,Marine Parade,Mr Sean Yeo (HOD),MON,6:30pm-8:00pm,SAT,10:30am-12:00pm,408.75,2
+S4,EMath,Marine Parade,Mr Ng C.H.,MON,8:30pm-10:00pm,SAT,5:00pm-6:30pm,408.75,2
+S4,Chemistry,Marine Parade,Mr Desmond Tham (HOD),MON,7:00pm-9:00pm,,,343.35,1
+S4,Physics,Marine Parade,Mr Desmond Tham (HOD),SAT,9:00am-11:00am,,,343.35,1
+J1,Chemistry,Jurong,Ms Chan S.Q.,SAT,9:30am-11:30am,,,401.12,1
+J1,Math,Kovan,Mr Kenji Ng (A),WED,8:00pm-10:00pm,,,401.12,1
+J1,Math,Kovan,Mr Kenji Ng (B),SUN,11:00am-1:00pm,,,401.12,1
+J1,Math,Punggol,Mr Ang C.X. (A),THU,8:00pm-10:00pm,,,401.12,1
+J1,Math,Punggol,Mr Ang C.X. (B),SUN,5:30pm-7:30pm,,,401.12,1
+J1,Math,Marine Parade,Mr Sean Yeo (HOD),MON,8:00pm-10:00pm,,,401.12,1
+J1,Math,Marine Parade,Mr John Lee (DY HOD),WED,8:00pm-10:00pm,,,401.12,1
+J1,Math,Marine Parade,Mr Sean Phua,TUE,7:00pm-9:00pm,,,401.12,1
+J1,Math,Marine Parade,Mr Sean Tan,THU,8:00pm-10:00pm,,,401.12,1
+J1,Math,Marine Parade,Mr Leonard Teo,SUN,5:00pm-7:00pm,,,401.12,1
+J1,Economics,Marine Parade,Mrs Cheong,SUN,3:00pm-5:00pm,,,401.12,1
+J1,Biology,Marine Parade,Mr Victor Wu,SAT,11:00am-1:00pm,,,401.12,1
+J1,Chemistry,Marine Parade,Mr Leonard Teo,WED,8:00pm-10:00pm,,,401.12,1
+J1,Physics,Marine Parade,Mr Ronnie Quek,SAT,4:30pm-6:30pm,,,401.12,1
+J1,Math,Bishan,Mr Sean Yeo (HOD),SUN,9:00am-11:00am,,,401.12,1
+J1,Math,Bishan,Mr John Lee (DY HOD),TUE,8:00pm-10:00pm,,,401.12,1
+J1,Math,Bishan,Mr Sean Phua,WED,8:00pm-10:00pm,,,401.12,1
+J1,Math,Bishan,Mr Leonard Teo,FRI,7:00pm-9:00pm,,,401.12,1
+J1,Math,Bishan,Mr Sean Tan,SAT,3:00pm-5:00pm,,,401.12,1
+J1,Economics,Bishan,Mrs Cheong,MON,8:00pm-10:00pm,,,401.12,1
+J1,Chemistry,Bishan,Mr Leonard Teo,SAT,10:00am-12:00pm,,,401.12,1
+J1,Physics,Bishan,Mr Ronnie Quek,SUN,3:00pm-5:00pm,,,401.12,1
+J2,Chemistry,Jurong,Ms Chan S.Q.,SUN,3:00pm-5:00pm,,,412.02,1
+J2,Math,Kovan,Mr Kenji Ng (A),THU,8:00pm-9:30pm,SAT,10:30am-12:00pm,444.72,2
+J2,Math,Kovan,Mr Kenji Ng (B),FRI,8:00pm-9:30pm,SUN,4:30pm-6:00pm,444.72,2
+J2,Math,Punggol,Mr Ang C.X. (A),MON,8:00pm-9:30pm,SAT,1:30pm-3:00pm,444.72,2
+J2,Math,Punggol,Mr Ang C.X. (B),FRI,8:00pm-9:30pm,SUN,11:30am-1:00pm,444.72,2
+J2,Math,Marine Parade,Mr Sean Yeo (HOD),TUE,8:00pm-9:30pm,SAT,4:30pm-6:00pm,444.72,2
+J2,Math,Marine Parade,Mr John Lee (DY HOD),THU,8:30pm-10:00pm,SUN,3:30pm-5:00pm,444.72,2
+J2,Math,Marine Parade,Mr Leonard Teo,WED,8:00pm-9:30pm,SUN,1:30pm-3:00pm,444.72,2
+J2,Math,Marine Parade,Mr Sean Tan,THU,8:30pm-10:00pm,SUN,11:00am-12:30pm,444.72,2
+J2,Math,Marine Parade,Mr Sean Phua,FRI,7:30pm-9:00pm,SUN,1:30pm-3:00pm,444.72,2
+J2,Economics,Marine Parade,Mrs Cheong,SAT,4:30pm-6:30pm,,,412.02,1
+J2,Biology,Marine Parade,Mr Victor Wu,SUN,11:00am-1:00pm,,,412.02,1
+J2,Chemistry,Marine Parade,Mr Leonard Teo,SUN,9:00am-11:00am,,,412.02,1
+J2,Physics,Marine Parade,Mr Ronnie Quek,SAT,2:30pm-4:30pm,,,412.02,1
+J2,Math,Bishan,Mr Sean Yeo (HOD),WED,8:30pm-10:00pm,SUN,3:30pm-5:00pm,444.72,2
+J2,Math,Bishan,Mr John Lee (DY HOD),MON,8:30pm-10:00pm,SAT,9:00am-10:30am,444.72,2
+J2,Math,Bishan,Mr Leonard Teo,MON,8:30pm-10:00pm,SAT,2:00pm-3:30pm,444.72,2
+J2,Math,Bishan,Mr Sean Tan,TUE,8:00pm-9:30pm,SAT,5:00pm-6:30pm,444.72,2
+J2,Math,Bishan,Mr Sean Phua,WED,6:30pm-8:00pm,SAT,8:30am-10:00am,444.72,2
+J2,Economics,Bishan,Mrs Cheong,MON,6:00pm-8:00pm,,,412.02,1
+J2,Chemistry,Bishan,Mr Leonard Teo,SAT,12:00pm-2:00pm,,,412.02,1
+J2,Physics,Bishan,Mr Ronnie Quek,SUN,5:00pm-7:00pm,,,412.02,1
+P2,English,Jurong,Ms Deborah Wong,TUE,3:30pm-5:30pm,,,261.6,1
+P2,English,Jurong,Ms Jade Wong,FRI,4:00pm-6:00pm,,,261.6,1
+P2,Math,Jurong,Mr Ian Chua,SUN,4:00pm-6:00pm,,,261.6,1
+P2,English,Kovan,Mr Winston Lin,THU,3:30pm-5:30pm,,,261.6,1
+P2,Math,Kovan,Mr Alan Foo,MON,4:00pm-6:00pm,,,261.6,1
+P2,Math,Kovan,Mr Samuel Koh,SUN,4:00pm-6:00pm,,,261.6,1
+P2,Math,Punggol,Mr Teo P.H.,THU,3:30pm-5:30pm,,,261.6,1
+P2,Math,Marine Parade,Mr Lin K.W.,WED,3:30pm-5:30pm,,,261.6,1
+P2,Math,Marine Parade,Mr Benjamin Fok,SAT,9:00am-11:00am,,,261.6,1
+P2,Chinese,Bishan,Mdm Huang Yu,FRI,3:00pm-5:00pm,,,261.6,1
+P2,English,Bishan,Ms Kai Ning,SUN,9:00am-11:00am,,,261.6,1
+P2,Math,Bishan,Mr Winston Loh,SAT,4:00pm-6:00pm,,,261.6,1
+P2,Math,Bishan,Mr Zech Zhuang,SUN,4:00pm-6:00pm,,,261.6,1
+P3,English,Jurong,Ms Deborah Wong,FRI,3:30pm-5:30pm,,,277.95,1
+P3,Math,Jurong,Mr Ian Chua,WED,3:30pm-5:30pm,,,277.95,1
+P3,Math,Jurong,Ms Hannah Look,THU,4:00pm-6:00pm,,,277.95,1
+P3,Math,Jurong,Ms Jade Wong,SUN,3:30pm-5:30pm,,,277.95,1
+P3,Math,Jurong,Ms Jade Wong,WED,7:00pm-9:00pm,,,277.95,1
+P3,Science,Jurong,Ms Hannah Look,SAT,9:00am-11:00am,,,277.95,1
+P3,Science,Jurong,Mr Ian Chua,SAT,12:30pm-2:30pm,,,277.95,1
+P3,English,Kovan,Mr Winston Lin,MON,3:30pm-5:30pm,,,277.95,1
+P3,Math,Kovan,Mr Samuel Koh,SAT,12:30pm-2:30pm,,,277.95,1
+P3,Math,Kovan,Mr Alan Foo,SUN,4:00pm-6:00pm,,,277.95,1
+P3,Science,Kovan,Mr Samuel Koh,FRI,5:00pm-7:00pm,,,277.95,1
+P3,Science,Kovan,Mr Alan Foo,SUN,2:00pm-4:00pm,,,277.95,1
+P3,Chinese,Punggol,Ms Tan S.F.,MON,3:00pm-5:00pm,,,277.95,1
+P3,English,Punggol,Mr Pang W.F. (A) (HOD),FRI,3:30pm-5:30pm,,,277.95,1
+P3,English,Punggol,Mr Pang W.F. (B) (HOD),SUN,11:30am-1:30pm,,,277.95,1
+P3,English,Punggol,Mr Teo P.H. (A),TUE,3:30pm-5:30pm,,,277.95,1
+P3,Math,Punggol,Mr Aaron Chow,THU,3:30pm-5:30pm,,,277.95,1
+P3,Math,Punggol,Mr Teo P.H. (B),SUN,9:00am-11:00am,,,277.95,1
+P3,Science,Punggol,Mr Teo P.H.,SAT,3:30pm-5:30pm,,,277.95,1
+P3,Science,Punggol,Mr Aaron Chow,SUN,2:30pm-4:30pm,,,277.95,1
+P3,English,Marine Parade,Mrs Cheong,WED,3:30pm-5:30pm,,,277.95,1
+P3,Math,Marine Parade,Mr David Lim (DY HOD),FRI,3:00pm-5:00pm,,,277.95,1
+P3,Math,Marine Parade,Mr Lin K.W.,FRI,4:00pm-6:00pm,,,277.95,1
+P3,Math,Marine Parade,Mr Benjamin Fok,SAT,11:00am-1:00pm,,,277.95,1
+P3,Math,Marine Parade,Mr Alman,SUN,1:00pm-3:00pm,,,277.95,1
+P3,Science,Marine Parade,Mr Benjamin Fok,MON,3:30pm-5:30pm,,,277.95,1
+P3,Science,Marine Parade,Mr Lin K.W.,TUE,3:00pm-5:00pm,,,277.95,1
+P3,Science,Marine Parade,Mr Alman,SAT,2:30pm-4:30pm,,,277.95,1
+P3,Chinese,Bishan,Mdm Huang Yu (A),TUE,3:00pm-5:00pm,,,277.95,1
+P3,Chinese,Bishan,Mdm Huang Yu (B),WED,5:00pm-7:00pm,,,277.95,1
+P3,English,Bishan,Ms Kai Ning,TUE,3:30pm-5:30pm,,,277.95,1
+P3,English,Bishan,Mr David Lim (DY HOD),SAT,4:30pm-6:30pm,,,277.95,1
+P3,Math,Bishan,Mr Winston Loh,MON,3:30pm-5:30pm,,,277.95,1
+P3,Math,Bishan,Ms Ong L.T.,WED,3:30pm-5:30pm,,,277.95,1
+P3,Math,Bishan,Mr Zech Zhuang,SAT,12:30pm-2:30pm,,,277.95,1
+P3,Math,Bishan,Mr David Lim (DY HOD),WED,7:30pm-9:30pm,,,277.95,1
+P3,Science,Bishan,Mr Zech Zhuang,SAT,10:30am-12:30pm,,,277.95,1
+P3,Science,Bishan,Mr Winston Loh,SAT,2:00pm-4:00pm,,,277.95,1
+P4,Chinese,Punggol,Ms Tan S.F.,FRI,5:00pm-7:00pm,,,288.85,1
+P4,English,Punggol,Mr Pang W.F. (A) (HOD),WED,3:30pm-5:30pm,,,288.85,1
+P4,Math,Punggol,Mr Eugene Tan (A) (HOD),WED,5:30pm-7:00pm,SAT,10:30am-12:00pm,332.45,2
+P4,Math,Punggol,Mr Aaron Chow (A),MON,5:30pm-7:00pm,SAT,2:00pm-3:30pm,332.45,2
+P4,Science,Punggol,Mr Eugene Tan (A) (HOD),TUE,3:30pm-5:30pm,,,288.85,1
+P4,Chinese,Marine Parade,Mdm Zhang (HOD),SUN,1:00pm-3:00pm,,,288.85,1
+P4,English,Marine Parade,Mrs Cheong,SUN,9:00am-11:00am,,,288.85,1
+P4,Math,Marine Parade,Mr David Lim (DY HOD),TUE,4:00pm-5:30pm,SUN,9:00am-10:30am,332.45,2
+P4,Science,Marine Parade,Mr David Lim (DY HOD),SUN,10:30am-12:30pm,,,288.85,1
+P4,Chinese,Bishan,Mdm Huang Yu (A),FRI,5:00pm-7:00pm,,,288.85,1
+P4,English,Bishan,Ms Kai Ning,SUN,3:00pm-5:00pm,,,288.85,1
+P4,Math,Bishan,Mr David Lim (DY HOD),MON,4:00pm-5:30pm,WED,4:00pm-5:30pm,332.45,2
+P4,Science,Bishan,Mr David Lim (DY HOD),SAT,2:30pm-4:30pm,,,288.85,1
+P4,English,Jurong,Ms Deborah Wong,WED,3:30pm-5:30pm,,,288.85,1
+P4,Math,Jurong,Ms Jade Wong (A),MON,4:00pm-5:30pm,WED,5:30pm-7:00pm,332.45,2
+P4,Science,Jurong,Ms Jade Wong,SAT,9:00am-11:00am,,,288.85,1
+P4,English,Kovan,Mr Winston Lin (B),MON,5:30pm-7:30pm,,,288.85,1
+P4,Math,Kovan,Mr Alan Foo (A),MON,6:00pm-7:30pm,SAT,2:30pm-4:00pm,332.45,2
+P4,Science,Kovan,Mr Samuel Koh (B),SAT,10:30am-12:30pm,,,288.85,1
+P4,English,Punggol,Mr Pang W.F. (B) (HOD),SUN,9:30am-11:30am,,,288.85,1
+P4,Math,Punggol,Mr Eugene Tan (B) (HOD),FRI,7:00pm-8:30pm,SUN,3:00pm-4:30pm,332.45,2
+P4,Math,Punggol,Mr Aaron Chow (B),TUE,7:00pm-8:30pm,SUN,4:30pm-6:00pm,332.45,2
+P4,Math,Punggol,Mr Teo P.H. (A),TUE,7:30pm-9:00pm,FRI,7:00pm-8:30pm,332.45,2
+P4,Math,Punggol,Mr Teo P.H. (B),THU,5:30pm-7:00pm,SUN,4:30pm-6:00pm,332.45,2
+P4,Science,Punggol,Mr Eugene Tan (B) (HOD),SAT,8:30am-10:30am,,,288.85,1
+P4,Science,Punggol,Mr Teo P.H. (A),WED,3:30pm-5:30pm,,,288.85,1
+P4,Science,Punggol,Mr Teo P.H. (B),FRI,5:00pm-7:00pm,,,288.85,1
+P4,Science,Punggol,Mr Aaron Chow,SAT,3:30pm-5:30pm,,,288.85,1
+P4,Math,Marine Parade,Mr Alman (A),MON,7:30pm-9:00pm,THU,5:30pm-7:00pm,332.45,2
+P4,Math,Marine Parade,Mr Benjamin Fok (A),TUE,7:30pm-9:00pm,SUN,5:30pm-7:00pm,332.45,2
+P4,Math,Marine Parade,Mr Lin K.W. (A),WED,5:30pm-7:00pm,SAT,2:00pm-3:30pm,332.45,2
+P4,Math,Marine Parade,Mr Alman (B),WED,7:00pm-8:30pm,SUN,5:00pm-6:30pm,332.45,2
+P4,Math,Marine Parade,Mr Lin K.W. (B),THU,3:30pm-5:00pm,SUN,11:00am-12:30pm,332.45,2
+P4,Math,Marine Parade,Mr Benjamin Fok (B),FRI,5:30pm-7:00pm,SUN,12:30pm-2:00pm,332.45,2
+P4,Science,Marine Parade,Mr Benjamin Fok (A),TUE,5:30pm-7:30pm,,,288.85,1
+P4,Science,Marine Parade,Mr Alman (A),WED,5:00pm-7:00pm,,,288.85,1
+P4,Science,Marine Parade,Mr Alman (B),THU,7:00pm-9:00pm,,,288.85,1
+P4,Science,Marine Parade,Mr Benjamin Fok (B),FRI,3:30pm-5:30pm,,,288.85,1
+P4,Science,Marine Parade,Mr Lin K.W. (A),SAT,12:00pm-2:00pm,,,288.85,1
+P4,Science,Marine Parade,Mr Lin K.W. (B),SUN,9:00am-11:00am,,,288.85,1
+P4,Science,Marine Parade,Mr Alman (C),SUN,3:00pm-5:00pm,,,288.85,1
+P4,Chinese,Bishan,Mdm Huang Yu (B),SAT,1:00pm-3:00pm,,,288.85,1
+P4,Math,Bishan,Ms Ong L.T. (B),MON,4:00pm-5:30pm,SAT,3:00pm-4:30pm,332.45,2
+P4,Math,Bishan,Mr Winston Loh (B),MON,7:30pm-9:00pm,FRI,6:00pm-7:30pm,332.45,2
+P4,Math,Bishan,Ms Ong L.T. (A),TUE,5:30pm-7:00pm,SUN,12:30pm-2:00pm,332.45,2
+P4,Math,Bishan,Mr Franklin Neo,TUE,7:30pm-9:00pm,FRI,4:30pm-6:00pm,332.45,2
+P4,Math,Bishan,Mr Winston Loh (A),TUE,7:30pm-9:00pm,SAT,9:00am-10:30am,332.45,2
+P4,Math,Bishan,Mr Zech Zhuang (B),WED,7:00pm-8:30pm,FRI,6:30pm-8:00pm,332.45,2
+P4,Math,Bishan,Mr Zech Zhuang (A),THU,5:30pm-7:00pm,SUN,11:00am-12:30pm,332.45,2
+P4,Science,Bishan,Mr Franklin Neo (B),TUE,5:30pm-7:30pm,,,288.85,1
+P4,Science,Bishan,Ms Ong L.T. (A),TUE,7:00pm-9:00pm,,,288.85,1
+P4,Science,Bishan,Mr Winston Loh,THU,5:30pm-7:30pm,,,288.85,1
+P4,Science,Bishan,Ms Ong L.T. (B),SAT,1:00pm-3:00pm,,,288.85,1
+P4,Science,Bishan,Mr Zech Zhuang,SUN,9:00am-11:00am,,,288.85,1
+P4,Science,Bishan,Mr Franklin Neo (A),SUN,4:00pm-6:00pm,,,288.85,1
+P4,Math,Jurong,Ms Hannah Look (A),MON,5:30pm-7:00pm,FRI,4:00pm-5:30pm,332.45,2
+P4,Math,Jurong,Ms Hannah Look (B),TUE,5:30pm-7:00pm,SAT,11:00am-12:30pm,332.45,2
+P4,Math,Jurong,Mr Ian Chua,THU,6:00pm-7:30pm,SAT,4:30pm-6:00pm,332.45,2
+P4,Math,Jurong,Ms Jade Wong (B),THU,6:00pm-7:30pm,SUN,12:30pm-2:00pm,332.45,2
+P4,Science,Jurong,Ms Hannah Look (A),SAT,2:00pm-4:00pm,,,288.85,1
+P4,Science,Jurong,Mr Ian Chua (A),SAT,2:30pm-4:30pm,,,288.85,1
+P4,Science,Jurong,Mr Ian Chua (B),SUN,2:00pm-4:00pm,,,288.85,1
+P4,Science,Jurong,Ms Hannah Look (B),SUN,4:00pm-6:00pm,,,288.85,1
+P4,English,Kovan,Mr Winston Lin (A),SUN,9:00am-11:00am,,,288.85,1
+P4,Math,Kovan,Mr Alan Foo (B),TUE,6:00pm-7:30pm,SUN,9:00am-10:30am,332.45,2
+P4,Math,Kovan,Mr Samuel Koh (B),THU,6:00pm-7:30pm,SAT,9:00am-10:30am,332.45,2
+P4,Math,Kovan,Mr Samuel Koh (A),FRI,3:30pm-5:00pm,SUN,2:30pm-4:00pm,332.45,2
+P4,Science,Kovan,Mr Alan Foo (A),SAT,4:00pm-6:00pm,,,288.85,1
+P4,Science,Kovan,Mr Samuel Koh (A),SUN,12:30pm-2:30pm,,,288.85,1
+P5,Chinese,Punggol,Mdm Zhang (HOD),THU,3:30pm-5:30pm,,,299.75,1
+P5,Chinese,Punggol,Ms Tan S.F.,MON,5:00pm-7:00pm,,,299.75,1
+P5,English,Punggol,Mr Pang W.F. (A) (HOD),THU,5:30pm-7:30pm,,,299.75,1
+P5,English,Punggol,Mr Pang W.F. (B) (HOD),SAT,11:00am-1:00pm,,,299.75,1
+P5,Math,Punggol,Mr Eugene Tan (A) (HOD),WED,4:00pm-5:30pm,SAT,1:30pm-3:00pm,346.62,2
+P5,Math,Punggol,Mr Aaron Chow (A),MON,4:00pm-5:30pm,SAT,12:30pm-2:00pm,346.62,2
+P5,Science,Punggol,Mr Teo P.H. (A),TUE,5:30pm-7:30pm,,,303.02,1
+P5,Science,Punggol,Mr Aaron Chow (A),SAT,10:30am-12:30pm,,,303.02,1
+P5,Chinese,Marine Parade,Mdm Zhang (A) (HOD),MON,5:00pm-7:00pm,,,299.75,1
+P5,English,Marine Parade,Mrs Cheong (A),FRI,3:30pm-5:30pm,,,299.75,1
+P5,Math,Marine Parade,Mr David Lim (DY HOD),TUE,7:00pm-8:30pm,SUN,2:30pm-4:00pm,346.62,2
+P5,Math,Marine Parade,Mr Benjamin Fok (A),MON,5:30pm-7:00pm,WED,7:00pm-8:30pm,346.62,2
+P5,Science,Marine Parade,Mr Benjamin Fok (A),WED,3:30pm-5:30pm,,,303.02,1
+P5,Science,Marine Parade,Mr Lin K.W. (A),THU,5:00pm-7:00pm,,,303.02,1
+P5,Chinese,Bishan,Mdm Huang Yu (A),SAT,11:00am-1:00pm,,,299.75,1
+P5,English,Bishan,Ms Kai Ning (A),SUN,1:00pm-3:00pm,,,299.75,1
+P5,Math,Bishan,Mr David Lim (DY HOD),MON,7:00pm-8:30pm,SAT,1:00pm-2:30pm,346.62,2
+P5,Math,Bishan,Mr Zech Zhuang (A),WED,4:00pm-5:30pm,SUN,12:30pm-2:00pm,346.62,2
+P5,Science,Bishan,Mr Zech Zhuang (B),THU,7:00pm-9:00pm,,,303.02,1
+P5,Science,Bishan,Mr Winston Loh (A),SAT,10:30am-12:30pm,,,303.02,1
+P5,English,Jurong,Ms Deborah Wong,THU,3:30pm-5:30pm,,,299.75,1
+P5,Math,Jurong,Ms Jade Wong (A),WED,4:00pm-5:30pm,SUN,9:00am-10:30am,346.62,2
+P5,Math,Jurong,Ms Hannah Look (A),THU,7:30pm-9:00pm,SAT,11:00am-12:30pm,346.62,2
+P5,Science,Jurong,Mr Ian Chua (A),FRI,5:30pm-7:30pm,,,303.02,1
+P5,Science,Jurong,Ms Jade Wong (A),SAT,12:30pm-2:30pm,,,303.02,1
+P5,English,Kovan,Mr Winston Lin (A),THU,5:30pm-7:30pm,,,299.75,1
+P5,Math,Kovan,Mr Samuel Koh (A),MON,4:00pm-5:30pm,THU,7:30pm-9:00pm,346.62,2
+P5,Math,Kovan,Mr Alan Foo (A),TUE,4:30pm-6:00pm,FRI,4:00pm-5:30pm,346.62,2
+P5,Science,Kovan,Mr Alan Foo (B),SAT,9:00am-11:00am,,,303.02,1
+P5,Science,Kovan,Mr Samuel Koh (A),SAT,2:30pm-4:30pm,,,303.02,1
+P6,Chinese,Punggol,Mdm Zhang (HOD),WED,3:00pm-5:00pm,,,310.65,1
+P6,Chinese,Punggol,Ms Tan S.F.,THU,5:00pm-7:00pm,,,310.65,1
+P6,English,Punggol,Mr Pang W.F. (A) (HOD),TUE,5:30pm-7:30pm,,,310.65,1
+P6,English,Punggol,Mr Pang W.F. (B) (HOD),SAT,1:00pm-3:00pm,,,310.65,1
+P6,Math,Punggol,Mr Eugene Tan (A) (HOD),WED,7:00pm-8:30pm,FRI,5:30pm-7:00pm,357.52,2
+P6,Math,Punggol,Mr Aaron Chow (A),WED,4:00pm-5:30pm,SUN,6:00pm-7:30pm,357.52,2
+P6,Science,Punggol,Mr Eugene Tan (A) (HOD),MON,5:30pm-7:30pm,,,313.92,1
+P6,Science,Punggol,Mr Aaron Chow (A),THU,5:30pm-7:30pm,,,313.92,1
+P6,Chinese,Marine Parade,Mdm Zhang (A) (HOD),TUE,5:00pm-7:00pm,,,310.65,1
+P6,English,Marine Parade,Mrs Cheong (A),THU,3:30pm-5:30pm,,,310.65,1
+P6,Math,Marine Parade,Mr David Lim (DY HOD),TUE,5:30pm-7:00pm,FRI,7:00pm-8:30pm,357.52,2
+P6,Math,Marine Parade,Mr Benjamin Fok (A),MON,7:00pm-8:30pm,SAT,1:00pm-2:30pm,357.52,2
+P6,Science,Marine Parade,Mr Franklin Neo (A),MON,5:30pm-7:30pm,,,313.92,1
+P6,Science,Marine Parade,Mr Benjamin Fok (A),SAT,2:30pm-4:30pm,,,313.92,1
+P6,Chinese,Bishan,Mdm Huang Yu (A),MON,4:00pm-6:00pm,,,310.65,1
+P6,English,Bishan,Ms Kai Ning (A),SUN,11:00am-1:00pm,,,310.65,1
+P6,Math,Bishan,Mr David Lim (DY HOD),MON,5:30pm-7:00pm,SAT,9:30am-11:00am,357.52,2
+P6,Math,Bishan,Mr Zech Zhuang (A),TUE,4:00pm-5:30pm,THU,4:00pm-5:30pm,357.52,2
+P6,Science,Bishan,Mr Zech Zhuang (A),TUE,5:30pm-7:30pm,,,313.92,1
+P6,Science,Bishan,Mr Winston Loh (A),SUN,9:00am-11:00am,,,313.92,1
+P6,English,Jurong,Ms Deborah Wong (A),THU,5:30pm-7:30pm,,,310.65,1
+P6,Math,Jurong,Mr Ian Chua (A),TUE,4:00pm-5:30pm,SUN,10:30am-12:00pm,357.52,2
+P6,Math,Jurong,Ms Jade Wong (A),THU,4:30pm-6:00pm,SAT,4:30pm-6:00pm,357.52,2
+P6,Science,Jurong,Ms Jade Wong (A),MON,7:00pm-9:00pm,,,313.92,1
+P6,Science,Jurong,Mr Ian Chua (A),WED,7:00pm-9:00pm,,,313.92,1
+P6,English,Kovan,Mr Winston Lin (A),WED,3:30pm-5:30pm,,,310.65,1
+P6,Math,Kovan,Mr Samuel Koh (A),MON,7:30pm-9:00pm,WED,6:00pm-7:30pm,357.52,2
+P6,Math,Kovan,Mr Alan Foo (A),MON,7:30pm-9:00pm,FRI,7:30pm-9:00pm,357.52,2
+P6,Science,Kovan,Mr Samuel Koh (A),FRI,7:00pm-9:00pm,,,313.92,1
+P6,Science,Kovan,Mr Alan Foo (B),SAT,12:30pm-2:30pm,,,313.92,1
+P5,Chinese Enrichment,Punggol,Ms Tan S.F.,FRI,7:00pm-9:00pm,,,321.55,1
+P5,Math,Punggol,Mr Eugene Tan (B) (HOD),FRI,4:00pm-5:30pm,SUN,11:30am-1:00pm,346.62,2
+P5,Math,Punggol,Mr Aaron Chow (C),MON,4:00pm-5:30pm,SAT,12:30pm-2:00pm,346.62,2
+P5,Math,Punggol,Mr Teo P.H. (A),TUE,5:30pm-7:00pm,SAT,9:00am-10:30am,346.62,2
+P5,Math,Punggol,Mr Teo P.H. (A),WED,5:30pm-7:00pm,SUN,6:00pm-7:30pm,346.62,2
+P5,Math,Punggol,Mr Teo P.H. (B),THU,7:00pm-8:30pm,SAT,10:30am-12:00pm,346.62,2
+P5,Math,Punggol,Mr Aaron Chow (B),THU,7:30pm-9:00pm,SUN,11:30am-1:00pm,346.62,2
+P5,Science,Punggol,Mr Teo P.H. (B),SAT,8:30am-10:30am,,,303.02,1
+P5,Science,Punggol,Mr Aaron Chow (B),SUN,9:30am-11:30am,,,303.02,1
+P5,Chinese,Marine Parade,Mdm Zhang (B) (HOD),SUN,9:00am-11:00am,,,299.75,1
+P5,Chinese Enrichment,Marine Parade,Mdm Zhang (HOD),SAT,4:30pm-6:30pm,,,321.55,1
+P5,English,Marine Parade,Mrs Cheong (B),SAT,2:30pm-4:30pm,,,299.75,1
+P5,Math,Marine Parade,Mr Alman (A),MON,4:30pm-6:00pm,SAT,9:00am-10:30am,346.62,2
+P5,Math,Marine Parade,Mr Benjamin Fok (B),TUE,4:00pm-5:30pm,SUN,9:00am-10:30am,346.62,2
+P5,Math,Marine Parade,Mr Lin K.W. (A),TUE,6:30pm-8:00pm,SAT,3:30pm-5:00pm,346.62,2
+P5,Math,Marine Parade,Mr Alman (B),WED,3:30pm-5:00pm,SUN,11:00am-12:30pm,346.62,2
+P5,Math,Marine Parade,Mr Franklin Neo,WED,7:30pm-9:00pm,SAT,12:00pm-1:30pm,346.62,2
+P5,Math,Marine Parade,Mr Lin K.W. (B),FRI,6:00pm-7:30pm,SUN,12:30pm-2:00pm,346.62,2
+P5,Science,Marine Parade,Mr Franklin Neo (A),WED,5:30pm-7:30pm,,,303.02,1
+P5,Science,Marine Parade,Mr Alman (A),FRI,3:30pm-5:30pm,,,303.02,1
+P5,Science,Marine Parade,Mr Franklin Neo (B),SAT,10:00am-12:00pm,,,303.02,1
+P5,Science,Marine Parade,Mr Alman (B),SAT,10:30am-12:30pm,,,303.02,1
+P5,Science,Marine Parade,Mr Benjamin Fok (B),SUN,10:30am-12:30pm,,,303.02,1
+P5,Science,Marine Parade,Mr Lin K.W. (B),SUN,2:00pm-4:00pm,,,303.02,1
+P5,Chinese,Bishan,Mdm Huang Yu (B),THU,5:00pm-7:00pm,,,299.75,1
+P5,Chinese Enrichment,Bishan,Ms Tan S.F.,SUN,1:00pm-3:00pm,,,321.55,1
+P5,Chinese Enrichment,Bishan,Mdm Huang Yu,SUN,5:00pm-7:00pm,,,321.55,1
+P5,English,Bishan,Ms Kai Ning (B),TUE,5:30pm-7:30pm,,,299.75,1
+P5,Math,Bishan,Ms Ong L.T. (A),TUE,4:00pm-5:30pm,SUN,9:00am-10:30am,346.62,2
+P5,Math,Bishan,Mr Zech Zhuang (B),TUE,7:30pm-9:00pm,SAT,9:00am-10:30am,346.62,2
+P5,Math,Bishan,Mr Winston Loh (A),THU,4:00pm-5:30pm,SAT,12:30pm-2:00pm,346.62,2
+P5,Math,Bishan,Ms Ong L.T. (B),THU,5:30pm-7:00pm,SAT,9:30am-11:00am,346.62,2
+P5,Math,Bishan,Mr Winston Loh (B),FRI,4:30pm-6:00pm,SUN,2:30pm-4:00pm,346.62,2
+P5,Math,Bishan,Mr Franklin Neo,FRI,6:00pm-7:30pm,SUN,11:00am-12:30pm,346.62,2
+P5,Math,Bishan,Mr David Lim (DY HOD),WED,5:30pm-7:30pm,,,346.62,1
+P5,Science,Bishan,Ms Ong L.T. (B),SAT,11:00am-1:00pm,,,303.02,1
+P5,Science,Bishan,Mr Franklin Neo,SUN,9:00am-11:00am,,,303.02,1
+P5,Science,Bishan,Ms Ong L.T. (A),SUN,10:30am-12:30pm,,,303.02,1
+P5,Science,Bishan,Mr Winston Loh (B),SUN,12:30pm-2:30pm,,,303.02,1
+P5,Science,Bishan,Mr Zech Zhuang (A),SUN,2:00pm-4:00pm,,,303.02,1
+P5,Math,Jurong,Mr Ian Chua (B),THU,4:30pm-6:00pm,SUN,9:00am-10:30am,346.62,2
+P5,Math,Jurong,Ms Hannah Look (B),THU,6:00pm-7:30pm,SUN,2:30pm-4:00pm,346.62,2
+P5,Math,Jurong,Mr Ian Chua (C),MON,7:00pm-9:00pm,,,346.62,1
+P5,Math,Jurong,Mr Ian Chua (A),TUE,7:00pm-9:00pm,,,346.62,1
+P5,Science,Jurong,Mr Ian Chua (B),SAT,9:00am-11:00am,,,303.02,1
+P5,Science,Jurong,Ms Jade Wong (B),SUN,10:30am-12:30pm,,,303.02,1
+P5,Science,Jurong,Ms Hannah Look (B),SUN,12:30pm-2:30pm,,,303.02,1
+P5,English,Kovan,Mr Winston Lin (B),SUN,3:00pm-5:00pm,,,299.75,1
+P5,Math,Kovan,Mr Samuel Koh (B),WED,4:30pm-6:00pm,SAT,4:30pm-6:00pm,346.62,2
+P5,Math,Kovan,Mr Alan Foo (B),WED,5:30pm-7:00pm,SUN,12:30pm-2:00pm,346.62,2
+P5,Math,Kovan,Mr Samuel Koh (B),MON,5:30pm-7:30pm,,,346.62,1
+P5,Science,Kovan,Mr Alan Foo (A),SUN,10:30am-12:30pm,,,303.02,1
+P6,Chinese Enrichment,Punggol,Ms Tan S.F.,FRI,7:00pm-9:00pm,,,321.55,1
+P6,English,Punggol,Mr Pang W.F. (C) (HOD),WED,5:30pm-7:30pm,,,310.65,1
+P6,Math,Punggol,Mr Eugene Tan (C) (HOD),MON,7:30pm-9:00pm,SAT,12:00pm-1:30pm,357.52,2
+P6,Math,Punggol,Mr Eugene Tan (B) (HOD),TUE,7:30pm-9:00pm,SUN,10:00am-11:30am,357.52,2
+P6,Math,Punggol,Mr Aaron Chow (B),TUE,4:00pm-5:30pm,SUN,1:00pm-2:30pm,357.52,2
+P6,Math,Punggol,Mr Teo P.H. (B),WED,7:00pm-8:30pm,SAT,2:00pm-3:30pm,357.52,2
+P6,Math,Punggol,Mr Teo P.H. (A),FRI,3:30pm-5:00pm,SUN,1:00pm-2:30pm,357.52,2
+P6,Science,Punggol,Mr Eugene Tan (C) (HOD),TUE,5:30pm-7:30pm,,,313.92,1
+P6,Science,Punggol,Mr Eugene Tan (B) (HOD),SUN,1:00pm-3:00pm,,,313.92,1
+P6,Science,Punggol,Mr Aaron Chow (B),WED,5:30pm-7:30pm,,,313.92,1
+P6,Science,Punggol,Mr Teo P.H. (B),SAT,12:00pm-2:00pm,,,313.92,1
+P6,Science,Punggol,Mr Teo P.H. (A),SUN,2:30pm-4:30pm,,,313.92,1
+P6,Chinese,Marine Parade,Mdm Zhang (B) (HOD),SAT,10:30am-12:30pm,,,310.65,1
+P6,Chinese Enrichment,Marine Parade,Mdm Zhang (HOD),SAT,4:30pm-6:30pm,,,321.55,1
+P6,English,Marine Parade,Mrs Cheong (B),SAT,8:30am-10:30am,,,310.65,1
+P6,Math,Marine Parade,Mr Alman (A),MON,6:00pm-7:30pm,FRI,7:30pm-9:00pm,357.52,2
+P6,Math,Marine Parade,Mr Franklin Neo,MON,7:30pm-9:00pm,SAT,1:30pm-3:00pm,357.52,2
+P6,Math,Marine Parade,Mr Lin K.W. (A),TUE,5:00pm-6:30pm,SAT,8:30am-10:00am,357.52,2
+P6,Math,Marine Parade,Mr Benjamin Fok (B),WED,5:30pm-7:00pm,SUN,4:00pm-5:30pm,357.52,2
+P6,Math,Marine Parade,Mr Alman (B),THU,4:00pm-5:30pm,SAT,4:30pm-6:00pm,357.52,2
+P6,Math,Marine Parade,Mr Lin K.W. (B),FRI,7:30pm-9:00pm,SUN,4:00pm-5:30pm,357.52,2
+P6,Math,Marine Parade,Mr David Lim (A) (DY HOD),FRI,5:00pm-7:00pm,,,357.52,1
+P6,Math,Marine Parade,Mr David Lim (B) (DY HOD),SUN,4:00pm-6:00pm,,,357.52,1
+P6,Science,Marine Parade,Mr Lin K.W. (A),THU,7:00pm-9:00pm,,,313.92,1
+P6,Science,Marine Parade,Mr Alman (A),FRI,5:30pm-7:30pm,,,313.92,1
+P6,Science,Marine Parade,Mr Benjamin Fok (C),FRI,7:00pm-9:00pm,,,313.92,1
+P6,Science,Marine Parade,Mr Lin K.W. (B),SAT,10:00am-12:00pm,,,313.92,1
+P6,Science,Marine Parade,Mr Franklin Neo (B),SAT,3:00pm-5:00pm,,,313.92,1
+P6,Science,Marine Parade,Mr Alman (B),SUN,9:00am-11:00am,,,313.92,1
+P6,Science,Marine Parade,Mr Benjamin Fok (B),SUN,2:00pm-4:00pm,,,313.92,1
+P6,Chinese,Bishan,Mdm Huang Yu (C),TUE,5:00pm-7:00pm,,,310.65,1
+P6,Chinese,Bishan,Mdm Huang Yu (B),SAT,9:00am-11:00am,,,310.65,1
+P6,Chinese Enrichment,Bishan,Ms Tan S.F.,SUN,9:00am-11:00am,,,321.55,1
+P6,Chinese Enrichment,Bishan,Mdm Huang Yu,SUN,5:00pm-7:00pm,,,321.55,1
+P6,English,Bishan,Ms Kai Ning (B),MON,3:30pm-5:30pm,,,310.65,1
+P6,English,Bishan,Ms Kai Ning (C),SAT,11:00am-1:00pm,,,310.65,1
+P6,Math,Bishan,Ms Ong L.T. (B),MON,7:30pm-9:00pm,THU,7:00pm-8:30pm,357.52,2
+P6,Math,Bishan,Mr Franklin Neo (A),TUE,4:00pm-5:30pm,FRI,7:30pm-9:00pm,357.52,2
+P6,Math,Bishan,Mr Winston Loh (A),TUE,6:00pm-7:30pm,FRI,7:30pm-9:00pm,357.52,2
+P6,Math,Bishan,Mr Zech Zhuang (B),WED,5:30pm-7:00pm,SAT,2:30pm-4:00pm,357.52,2
+P6,Math,Bishan,Ms Ong L.T. (A),WED,7:30pm-9:00pm,SUN,4:00pm-5:30pm,357.52,2
+P6,Math,Bishan,Mr Winston Loh (B),THU,7:30pm-9:00pm,SUN,11:00am-12:30pm,357.52,2
+P6,Math,Bishan,Mr Franklin Neo (B),THU,7:30pm-9:00pm,SUN,2:30pm-4:00pm,357.52,2
+P6,Math,Bishan,Mr David Lim (DY HOD),SAT,11:00am-1:00pm,,,357.52,1
+P6,Science,Bishan,Ms Ong L.T. (A),MON,5:30pm-7:30pm,,,313.92,1
+P6,Science,Bishan,Mr Winston Loh (B),TUE,4:00pm-6:00pm,,,313.92,1
+P6,Science,Bishan,Ms Ong L.T. (C),WED,5:30pm-7:30pm,,,313.92,1
+P6,Science,Bishan,Mr Franklin Neo (B),THU,5:30pm-7:30pm,,,313.92,1
+P6,Science,Bishan,Mr Zech Zhuang (B),SAT,4:00pm-6:00pm,,,313.92,1
+P6,Science,Bishan,Mr Franklin Neo (A),SUN,12:30pm-2:30pm,,,313.92,1
+P6,Science,Bishan,Ms Ong L.T. (B),SUN,2:00pm-4:00pm,,,313.92,1
+P6,English,Jurong,Ms Deborah Wong (B),FRI,5:30pm-7:30pm,,,310.65,1
+P6,Math,Jurong,Ms Hannah Look (A),TUE,7:00pm-8:30pm,SAT,12:30pm-2:00pm,357.52,2
+P6,Math,Jurong,Mr Ian Chua (C),WED,5:30pm-7:00pm,FRI,7:30pm-9:00pm,357.52,2
+P6,Math,Jurong,Mr Ian Chua (B),THU,7:30pm-9:00pm,SAT,11:00am-12:30pm,357.52,2
+P6,Math,Jurong,Ms Hannah Look (B),THU,7:30pm-9:00pm,SUN,9:00am-10:30am,357.52,2
+P6,Math,Jurong,Ms Jade Wong (B),FRI,7:30pm-9:00pm,SUN,2:00pm-3:30pm,357.52,2
+P6,Science,Jurong,Ms Hannah Look (A),FRI,7:00pm-9:00pm,,,313.92,1
+P6,Science,Jurong,Ms Jade Wong (B),SAT,2:30pm-4:30pm,,,313.92,1
+P6,Science,Jurong,Ms Hannah Look (B),SUN,10:30am-12:30pm,,,313.92,1
+P6,Science,Jurong,Mr Ian Chua (B),SUN,12:00pm-2:00pm,,,313.92,1
+P6,English,Kovan,Mr Winston Lin (B),SAT,9:00am-11:00am,,,310.65,1
+P6,English,Kovan,Mr Winston Lin (C),SUN,11:00am-1:00pm,,,310.65,1
+P6,Math,Kovan,Mr Alan Foo (B),TUE,7:30pm-9:00pm,SAT,11:00am-12:30pm,357.52,2
+P6,Math,Kovan,Mr Samuel Koh (B),THU,4:30pm-6:00pm,SUN,9:00am-10:30am,357.52,2
+P6,Math,Kovan,Mr Alan Foo (A),WED,7:00pm-9:00pm,,,357.52,1
+P6,Science,Kovan,Mr Samuel Koh (C),WED,7:30pm-9:30pm,,,313.92,1
+P6,Science,Kovan,Mr Samuel Koh (B),SUN,10:30am-12:30pm,,,313.92,1
+S3,Chinese,Punggol,Ms Tan S.F.,SAT,11:00am-1:00pm,,,332.45,1
+S3,English,Punggol,Mr Pang W.F. (B) (HOD),SAT,5:00pm-7:00pm,,,332.45,1
+S3,AMath,Punggol,Mr David Cao (A),MON,6:30pm-8:00pm,SAT,1:30pm-3:00pm,397.85,2
+S3,AMath,Punggol,Mr Ang C.X. (A),TUE,8:00pm-9:30pm,SUN,9:30am-11:00am,397.85,2
+S3,AMath,Punggol,Mr David Cao (B),WED,5:00pm-6:30pm,SUN,2:30pm-4:00pm,397.85,2
+S3,EMath,Punggol,Ms Kathy Liew (A),MON,7:30pm-9:30pm,,,343.35,1
+S3,EMath,Punggol,Mr Ang C.X.,WED,8:00pm-10:00pm,,,343.35,1
+S3,EMath,Punggol,Ms Kathy Liew (B),SAT,10:30am-12:30pm,,,343.35,1
+S3,Physics (Pure),Punggol,Ms Karmen Soon (A),MON,7:00pm-9:00pm,,,343.35,1
+S3,Physics (Pure),Punggol,Ms Karmen Soon (B),SAT,2:30pm-4:30pm,,,343.35,1
+S3,Chemistry (Pure),Punggol,Ms Karmen Soon (C),WED,7:30pm-9:30pm,,,343.35,1
+S3,Chemistry (Pure),Punggol,Ms Alvina Tan (A),SUN,10:30am-12:30pm,,,343.35,1
+S3,Biology (Pure),Punggol,Ms Alvina Tan (A),FRI,7:30pm-9:30pm,,,343.35,1
+S3,Combined Science,Punggol,Ms Alvina Tan (B),SAT,4:30pm-6:30pm,,,343.35,1
+S3,Chinese,Marine Parade,Mdm Zhang (HOD),SUN,3:00pm-5:00pm,,,332.45,1
+S3,English,Marine Parade,Mrs Cheong,SAT,12:30pm-2:30pm,,,332.45,1
+S3,AMath,Marine Parade,Mr Sean Yeo (HOD),TUE,5:00pm-6:30pm,SAT,12:00pm-1:30pm,397.85,2
+S3,AMath,Marine Parade,Mr John Lee (DY HOD),WED,6:30pm-8:00pm,SUN,11:00am-12:30pm,397.85,2
+S3,AMath,Marine Parade,Mr Jackie (A),THU,8:00pm-9:30pm,SUN,2:00pm-3:30pm,397.85,2
+S3,AMath,Marine Parade,Mr Sean Tan (A),FRI,6:30pm-8:00pm,SUN,12:30pm-2:00pm,397.85,2
+S3,EMath,Marine Parade,Mr Jackie (B),FRI,8:00pm-10:00pm,,,343.35,1
+S3,EMath,Marine Parade,Mr Ronnie Quek,SAT,9:00am-11:00am,,,343.35,1
+S3,EMath,Marine Parade,Mr Sean Tan (B),SAT,1:30pm-3:30pm,,,343.35,1
+S3,EMath,Marine Parade,Mr Leonard Teo,SUN,10:30am-12:30pm,,,343.35,1
+S3,Physics (Pure),Marine Parade,Mr Desmond Tham (HOD),TUE,7:30pm-9:30pm,,,343.35,1
+S3,Physics (Pure),Marine Parade,Mr Jason Ang,SAT,11:00am-1:00pm,,,343.35,1
+S3,Chemistry (Pure),Marine Parade,Mr Victor Wu (A),WED,7:30pm-9:30pm,,,343.35,1
+S3,Chemistry (Pure),Marine Parade,Mr Victor Wu (B),SAT,3:00pm-5:00pm,,,343.35,1
+S3,Biology (Pure),Marine Parade,Mr Johnson Boh,FRI,7:30pm-9:30pm,,,343.35,1
+S3,Biology (Pure),Marine Parade,Ms Melissa Lim (DY HOD),SUN,9:00am-11:00am,,,343.35,1
+S3,Combined Science,Marine Parade,Mr Wong Q.J.,SAT,4:30pm-6:30pm,,,343.35,1
+S3,Chinese,Bishan,Ms Tan S.F.,SAT,3:00pm-5:00pm,,,332.45,1
+S3,Chinese,Bishan,Mdm Huang Yu,SUN,11:00am-1:00pm,,,332.45,1
+S3,English,Bishan,Ms Kai Ning (A),THU,7:30pm-9:30pm,,,332.45,1
+S3,English,Bishan,Ms Kai Ning (B),SAT,11:00am-1:00pm,,,332.45,1
+S3,AMath,Bishan,Mr Sean Yeo (HOD),THU,6:30pm-8:00pm,SUN,9:30am-11:00am,397.85,2
+S3,AMath,Bishan,Mr John Lee (DY HOD),FRI,6:30pm-8:00pm,SAT,3:30pm-5:00pm,397.85,2
+S3,AMath,Bishan,Mr Sean Tan (A),TUE,8:00pm-9:30pm,SUN,3:30pm-5:00pm,397.85,2
+S3,AMath,Bishan,Mr Sean Phua (A),WED,8:00pm-9:30pm,SAT,12:00pm-1:30pm,397.85,2
+S3,EMath,Bishan,Mr Jackie,FRI,8:00pm-10:00pm,,,343.35,1
+S3,EMath,Bishan,Mr Ronnie Quek,SAT,9:00am-11:00am,,,343.35,1
+S3,EMath,Bishan,Mr Lim W.M.,SUN,11:00am-1:00pm,,,343.35,1
+S3,Physics (Pure),Bishan,Mr Desmond Tham (HOD),MON,7:30pm-9:30pm,,,343.35,1
+S3,Physics (Pure),Bishan,Ms Melissa Lim (DY HOD),SAT,9:00am-11:00am,,,343.35,1
+S3,Chemistry (Pure),Bishan,Ms Melissa Lim (DY HOD),THU,5:30pm-7:30pm,,,343.35,1
+S3,Chemistry (Pure),Bishan,Mr Jason Ang,SAT,1:00pm-3:00pm,,,343.35,1
+S3,Biology (Pure),Bishan,Mr Johnson Boh (A),WED,7:30pm-9:30pm,,,343.35,1
+S3,Biology (Pure),Bishan,Mr Johnson Boh (B),SUN,11:00am-1:00pm,,,343.35,1
+S3,Combined Science,Bishan,Mr Wong Q.J.,FRI,5:30pm-7:30pm,,,343.35,1
+S3,English,Jurong,Ms Deborah Wong,SAT,11:00am-1:00pm,,,332.45,1
+S3,AMath,Jurong,Ms Chan S.Q. (A),TUE,7:30pm-9:00pm,SAT,9:30am-11:00am,397.85,2
+S3,AMath,Jurong,Ms Kang P.Y. (A),WED,6:30pm-8:00pm,SUN,10:30am-12:00pm,397.85,2
+S3,AMath,Jurong,Mr Omar Bin Noordin,THU,8:00pm-9:30pm,SUN,12:00pm-1:30pm,397.85,2
+S3,EMath,Jurong,Ms Chan S.Q. (B),MON,8:00pm-10:00pm,,,343.35,1
+S3,EMath,Jurong,Ms Kang P.Y. (B),FRI,6:30pm-8:30pm,,,343.35,1
+S3,Physics (Pure),Jurong,Mr Joel Seah (A),WED,7:30pm-9:30pm,,,343.35,1
+S3,Chemistry (Pure),Jurong,Mr Joel Seah (B),SAT,4:30pm-6:30pm,,,343.35,1
+S3,Biology (Pure),Jurong,Mr Joel Seah (C),FRI,7:30pm-9:30pm,,,343.35,1
+S3,Combined Science,Jurong,Mr Joel Seah (D),SUN,2:00pm-4:00pm,,,343.35,1
+S3,English,Kovan,Mr Winston Lin,SAT,11:00am-1:00pm,,,332.45,1
+S3,AMath,Kovan,Mr Lim K.W. (A),MON,8:00pm-9:30pm,SAT,3:00pm-4:30pm,397.85,2
+S3,AMath,Kovan,Mr Kenji Ng (A),TUE,8:00pm-9:30pm,SUN,10:00am-11:30am,397.85,2
+S3,EMath,Kovan,Mr Lim K.W. (B),THU,8:00pm-10:00pm,,,343.35,1
+S3,EMath,Kovan,Mr Kenji Ng (B),SAT,9:00am-11:00am,,,343.35,1
+S3,Physics (Pure),Kovan,Mr Benjamin Tay (A),WED,7:30pm-9:30pm,,,343.35,1
+S3,Chemistry (Pure),Kovan,Ms Koh R.T. (A),FRI,5:30pm-7:30pm,,,343.35,1
+S3,Biology (Pure),Kovan,Mr Benjamin Tay (B),SAT,4:30pm-6:30pm,,,343.35,1
+S3,Combined Science,Kovan,Ms Koh R.T. (B),SUN,11:30am-1:30pm,,,343.35,1
+S4,English,Punggol,Mr Pang W.F. (B) (HOD),SAT,7:00pm-9:00pm,,,332.45,1
+S4,AMath,Punggol,Mr Ang C.X. (A),MON,6:30pm-8:00pm,SAT,9:00am-10:30am,408.75,2
+S4,AMath,Punggol,Mr David Cao (B),TUE,6:30pm-8:00pm,SAT,12:00pm-1:30pm,408.75,2
+S4,AMath,Punggol,Mr Ang C.X. (B),WED,8:00pm-9:30pm,SUN,9:30am-11:00am,408.75,2
+S4,AMath,Punggol,Ms Kathy Liew,THU,8:00pm-9:30pm,SUN,1:00pm-2:30pm,408.75,2
+S4,EMath,Punggol,Mr David Cao (A),MON,6:30pm-8:00pm,SAT,12:00pm-1:30pm,408.75,2
+S4,EMath,Punggol,Mr Ang C.X. (A),TUE,8:00pm-9:30pm,SUN,2:30pm-4:00pm,408.75,2
+S4,EMath,Punggol,Mr David Cao (B),WED,6:30pm-8:00pm,SUN,11:00am-12:30pm,408.75,2
+S4,EMath,Punggol,Ms Kathy Liew,FRI,6:30pm-8:00pm,SUN,4:00pm-5:30pm,408.75,2
+S4,Physics (Pure),Punggol,Ms Karmen Soon (A),MON,5:00pm-7:00pm,,,343.35,1
+S4,Physics (Pure),Punggol,Ms Karmen Soon (B),SAT,8:30am-10:30am,,,343.35,1
+S4,Chemistry (Pure),Punggol,Ms Alvina Tan (A),MON,7:00pm-9:00pm,,,343.35,1
+S4,Chemistry (Pure),Punggol,Ms Alvina Tan (B),TUE,5:30pm-7:30pm,,,343.35,1
+S4,Biology (Pure),Punggol,Ms Alvina Tan (C),THU,5:30pm-7:30pm,,,343.35,1
+S4,Biology (Pure),Punggol,Ms Karmen Soon (C),SAT,4:30pm-6:30pm,,,343.35,1
+S4,Combined Science,Punggol,Ms Karmen Soon (D),SUN,12:30pm-2:30pm,,,343.35,1
+S4,Chinese,Marine Parade,Mdm Zhang (HOD),SAT,12:30pm-2:30pm,,,332.45,1
+S4,English,Marine Parade,Mrs Cheong,SUN,11:00am-1:00pm,,,332.45,1
+S4,AMath,Marine Parade,Mr Sean Yeo (HOD),MON,6:30pm-8:00pm,SAT,10:30am-12:00pm,408.75,2
+S4,AMath,Marine Parade,Mr John Lee (DY HOD),TUE,6:30pm-8:00pm,SUN,11:00am-12:30pm,408.75,2
+S4,AMath,Marine Parade,Mr Jackie (A),WED,8:00pm-9:30pm,SAT,3:30pm-5:00pm,408.75,2
+S4,AMath,Marine Parade,Mr Sean Tan (A),FRI,8:00pm-9:30pm,SUN,2:00pm-3:30pm,408.75,2
+S4,AMath,Marine Parade,Mr Ronnie Quek,THU,8:00pm-9:30pm,SUN,12:30pm-2:00pm,408.75,2
+S4,EMath,Marine Parade,Mr Ng C.H.,MON,8:30pm-10:00pm,SAT,5:00pm-6:30pm,408.75,2
+S4,EMath,Marine Parade,Mr Jackie (B),TUE,8:00pm-9:30pm,SAT,12:00pm-1:30pm,408.75,2
+S4,EMath,Marine Parade,Mr Sean Phua,WED,6:30pm-8:00pm,SUN,3:30pm-5:00pm,408.75,2
+S4,EMath,Marine Parade,Mr Leonard Teo,THU,6:30pm-8:00pm,SUN,9:30am-11:00am,408.75,2
+S4,EMath,Marine Parade,Mr Sean Tan (B),FRI,6:30pm-8:00pm,SUN,10:30am-12:00pm,408.75,2
+S4,Physics (Pure),Marine Parade,Mr Desmond Tham (HOD),MON,7:00pm-9:00pm,,,343.35,1
+S4,Physics (Pure),Marine Parade,Mr Desmond Tham (HOD),SAT,9:00am-11:00am,,,343.35,1
+S4,Chemistry (Pure),Marine Parade,Mr Victor Wu (A),TUE,7:30pm-9:30pm,,,343.35,1
+S4,Chemistry (Pure),Marine Parade,Mr Victor Wu (B),SAT,11:00am-1:00pm,,,343.35,1
+S4,Biology (Pure),Marine Parade,Ms Melissa Lim (DY HOD),WED,5:30pm-7:30pm,,,343.35,1
+S4,Biology (Pure),Marine Parade,Mr Johnson Boh,SUN,11:00am-1:00pm,,,343.35,1
+S4,Combined Science,Marine Parade,Mr Wong Q.J. (A),THU,7:30pm-9:30pm,,,343.35,1
+S4,Combined Science,Marine Parade,Mr Jason Ang,SUN,1:00pm-3:00pm,,,343.35,1
+S4,Chinese,Bishan,Mdm Huang Yu,SAT,9:00am-11:00am,,,332.45,1
+S4,Chinese,Bishan,Ms Tan S.F.,SUN,11:00am-1:00pm,,,332.45,1
+S4,English,Bishan,Ms Kai Ning (A),FRI,7:30pm-9:30pm,,,332.45,1
+S4,English,Bishan,Ms Kai Ning (B),SAT,9:00am-11:00am,,,332.45,1
+S4,AMath,Bishan,Mr Sean Yeo (HOD),WED,6:30pm-8:00pm,SUN,11:30am-1:00pm,408.75,2
+S4,AMath,Bishan,Mr John Lee (DY HOD),THU,6:30pm-8:00pm,SAT,1:30pm-3:00pm,408.75,2
+S4,AMath,Bishan,Mr Sean Tan (A),FRI,6:30pm-8:00pm,SAT,3:30pm-5:00pm,408.75,2
+S4,AMath,Bishan,Mr Sean Phua (A),THU,8:00pm-9:30pm,SUN,2:00pm-3:30pm,408.75,2
+S4,AMath,Bishan,Mr Leonard Teo,TUE,8:00pm-9:30pm,SUN,9:30am-11:00am,408.75,2
+S4,EMath,Bishan,Mr Ng C.H.,MON,6:30pm-8:00pm,SAT,10:30am-12:00pm,408.75,2
+S4,EMath,Bishan,Mr Jackie,TUE,6:30pm-8:00pm,SAT,12:00pm-1:30pm,408.75,2
+S4,EMath,Bishan,Mr Ronnie Quek,WED,8:00pm-9:30pm,SUN,3:30pm-5:00pm,408.75,2
+S4,EMath,Bishan,Mr Sean Phua (B),FRI,8:00pm-9:30pm,SUN,11:00am-12:30pm,408.75,2
+S4,EMath,Bishan,Mr Lim W.M.,THU,6:30pm-8:00pm,SUN,12:30pm-2:00pm,408.75,2
+S4,Physics (Pure),Bishan,Mr Desmond Tham (HOD),WED,5:30pm-7:30pm,,,343.35,1
+S4,Physics (Pure),Bishan,Ms Melissa Lim (DY HOD),SAT,11:00am-1:00pm,,,343.35,1
+S4,Chemistry (Pure),Bishan,Ms Melissa Lim (DY HOD),MON,7:30pm-9:30pm,,,343.35,1
+S4,Chemistry (Pure),Bishan,Mr Jason Ang (A),THU,5:30pm-7:30pm,,,343.35,1
+S4,Biology (Pure),Bishan,Mr Johnson Boh (A),TUE,5:30pm-7:30pm,,,343.35,1
+S4,Biology (Pure),Bishan,Mr Johnson Boh (B),SUN,9:00am-11:00am,,,343.35,1
+S4,Combined Science,Bishan,Mr Wong Q.J.,SAT,1:00pm-3:00pm,,,343.35,1
+S4,Combined Science,Bishan,Mr Jason Ang (B),SUN,1:00pm-3:00pm,,,343.35,1
+S4,English,Jurong,Ms Deborah Wong,SAT,1:00pm-3:00pm,,,332.45,1
+S4,AMath,Jurong,Ms Chan S.Q. (A),MON,6:30pm-8:00pm,SAT,3:30pm-5:00pm,408.75,2
+S4,AMath,Jurong,Ms Kang P.Y. (A),TUE,8:00pm-9:30pm,SAT,11:00am-12:30pm,408.75,2
+S4,AMath,Jurong,Mr Omar Bin Noordin,WED,6:30pm-8:00pm,SUN,3:00pm-4:30pm,408.75,2
+S4,EMath,Jurong,Ms Chan S.Q. (B),TUE,6:30pm-8:00pm,SUN,10:30am-12:00pm,408.75,2
+S4,EMath,Jurong,Ms Kang P.Y. (B),FRI,6:30pm-8:00pm,SUN,9:00am-10:30am,408.75,2
+S4,Physics (Pure),Jurong,Mr Joel Seah (A),MON,7:30pm-9:30pm,,,343.35,1
+S4,Physics (Pure),Jurong,Mr Joel Seah (B),SAT,9:00am-11:00am,,,343.35,1
+S4,Chemistry (Pure),Jurong,Mr Joel Seah (C),THU,5:30pm-7:30pm,,,343.35,1
+S4,Biology (Pure),Jurong,Mr Joel Seah (D),FRI,5:30pm-7:30pm,,,343.35,1
+S4,Combined Science,Jurong,Mr Joel Seah (E),SUN,11:00am-1:00pm,,,343.35,1
+S4,English,Kovan,Mr Winston Lin,SAT,1:00pm-3:00pm,,,332.45,1
+S4,AMath,Kovan,Mr Lim K.W. (A),TUE,6:30pm-8:00pm,SAT,9:30am-11:00am,408.75,2
+S4,AMath,Kovan,Mr Kenji Ng (A),WED,6:30pm-8:00pm,SUN,11:30am-1:00pm,408.75,2
+S4,AMath,Kovan,Mr Lim K.W. (B),FRI,6:30pm-8:00pm,SUN,2:00pm-3:30pm,408.75,2
+S4,EMath,Kovan,Mr Kenji Ng (B),MON,6:30pm-8:00pm,SAT,11:00am-12:30pm,408.75,2
+S4,EMath,Kovan,Mr Lim K.W. (C),THU,6:30pm-8:00pm,SUN,10:00am-11:30am,408.75,2
+S4,Physics (Pure),Kovan,Mr Benjamin Tay (A),MON,7:30pm-9:30pm,,,343.35,1
+S4,Physics (Pure),Kovan,Mr Benjamin Tay (B),SAT,11:00am-1:00pm,,,343.35,1
+S4,Chemistry (Pure),Kovan,Ms Koh R.T. (A),TUE,5:30pm-7:30pm,,,343.35,1
+S4,Biology (Pure),Kovan,Ms Koh R.T. (B),THU,7:30pm-9:30pm,,,343.35,1
+S4,Combined Science,Kovan,Mr Benjamin Tay (C),SUN,9:30am-11:30am,,,343.35,1
