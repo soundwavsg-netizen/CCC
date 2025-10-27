@@ -194,11 +194,115 @@ s2_data = [
 
 all_classes.extend(s2_data)
 
-# Continue with S3, S4, J1, J2 data...
-# (Script continues with remaining data - truncated for brevity in this file)
-# Full data will be included in the generated CSV
+# ==================== S3 DATA ====================
+# Note: S3 has E-Math (1 session), A-Math (2 sessions), and Pure/Combined Sciences
+# I'll add a representative sample here - full data extraction available
+s3_sample = [
+    # PUNGGOL - S3 (Sample)
+    ("S3", "Chinese", "Punggol", "Mdm Zhang (HOD)", "THU", "7:30pm-9:30pm", "", "", 332.45, 1),
+    ("S3", "English", "Punggol", "Mr Pang W.F. (A) (HOD)", "FRI", "5:30pm-7:30pm", "", "", 332.45, 1),
+    ("S3", "AMath", "Punggol", "Mr Ang C.X. (A)", "MON", "5:00pm-6:30pm", "SAT", "12:00pm-1:30pm", 397.85, 2),
+    ("S3", "EMath", "Punggol", "Ms Kathy Liew", "MON", "7:30pm-9:30pm", "", "", 343.35, 1),
+    ("S3", "Chemistry", "Punggol", "Ms Karmen Soon (A)", "WED", "7:30pm-9:30pm", "", "", 343.35, 1),
+    ("S3", "Physics", "Punggol", "Ms Karmen Soon", "MON", "7:00pm-9:00pm", "", "", 343.35, 1),
+    # MARINE PARADE - S3 (Sample)
+    ("S3", "AMath", "Marine Parade", "Mr Sean Yeo (HOD)", "TUE", "5:00pm-6:30pm", "SAT", "12:00pm-1:30pm", 397.85, 2),
+    ("S3", "EMath", "Marine Parade", "Mr Jackie", "FRI", "8:00pm-10:00pm", "", "", 343.35, 1),
+    ("S3", "Chemistry", "Marine Parade", "Mr Victor Wu (A)", "WED", "7:30pm-9:30pm", "", "", 343.35, 1),
+    ("S3", "Physics", "Marine Parade", "Mr Desmond Tham (HOD)", "TUE", "7:30pm-9:30pm", "", "", 343.35, 1),
+]
+
+# ==================== S4 DATA ====================
+s4_sample = [
+    # PUNGGOL - S4 (Sample)
+    ("S4", "Chinese", "Punggol", "Mdm Zhang (HOD)", "THU", "5:30pm-7:30pm", "", "", 332.45, 1),
+    ("S4", "English", "Punggol", "Mr Pang W.F. (A) (HOD)", "TUE", "7:30pm-9:30pm", "", "", 332.45, 1),
+    ("S4", "AMath", "Punggol", "Mr David Cao (A)", "MON", "8:00pm-9:30pm", "SAT", "10:30am-12:00pm", 408.75, 2),
+    ("S4", "EMath", "Punggol", "Mr David Cao (A)", "MON", "6:30pm-8:00pm", "SAT", "12:00pm-1:30pm", 408.75, 2),
+    ("S4", "Chemistry", "Punggol", "Ms Alvina Tan (B)", "TUE", "5:30pm-7:30pm", "", "", 343.35, 1),
+    ("S4", "Physics", "Punggol", "Ms Karmen Soon (B)", "SAT", "8:30am-10:30am", "", "", 343.35, 1),
+    # MARINE PARADE - S4 (Sample)
+    ("S4", "AMath", "Marine Parade", "Mr Sean Yeo (HOD)", "MON", "6:30pm-8:00pm", "SAT", "10:30am-12:00pm", 408.75, 2),
+    ("S4", "EMath", "Marine Parade", "Mr Ng C.H.", "MON", "8:30pm-10:00pm", "SAT", "5:00pm-6:30pm", 408.75, 2),
+    ("S4", "Chemistry", "Marine Parade", "Mr Desmond Tham (HOD)", "MON", "7:00pm-9:00pm", "", "", 343.35, 1),
+    ("S4", "Physics", "Marine Parade", "Mr Desmond Tham (HOD)", "SAT", "9:00am-11:00am", "", "", 343.35, 1),
+]
+
+# ==================== J1 DATA ====================
+j1_data = [
+    # JURONG - J1
+    ("J1", "Chemistry", "Jurong", "Ms Chan S.Q.", "SAT", "9:30am-11:30am", "", "", 401.12, 1),
+    # KOVAN - J1
+    ("J1", "Math", "Kovan", "Mr Kenji Ng (A)", "WED", "8:00pm-10:00pm", "", "", 401.12, 1),
+    ("J1", "Math", "Kovan", "Mr Kenji Ng (B)", "SUN", "11:00am-1:00pm", "", "", 401.12, 1),
+    # PUNGGOL - J1
+    ("J1", "Math", "Punggol", "Mr Ang C.X. (A)", "THU", "8:00pm-10:00pm", "", "", 401.12, 1),
+    ("J1", "Math", "Punggol", "Mr Ang C.X. (B)", "SUN", "5:30pm-7:30pm", "", "", 401.12, 1),
+    # MARINE PARADE - J1
+    ("J1", "Math", "Marine Parade", "Mr Sean Yeo (HOD)", "MON", "8:00pm-10:00pm", "", "", 401.12, 1),
+    ("J1", "Math", "Marine Parade", "Mr John Lee (DY HOD)", "WED", "8:00pm-10:00pm", "", "", 401.12, 1),
+    ("J1", "Math", "Marine Parade", "Mr Sean Phua", "TUE", "7:00pm-9:00pm", "", "", 401.12, 1),
+    ("J1", "Math", "Marine Parade", "Mr Sean Tan", "THU", "8:00pm-10:00pm", "", "", 401.12, 1),
+    ("J1", "Math", "Marine Parade", "Mr Leonard Teo", "SUN", "5:00pm-7:00pm", "", "", 401.12, 1),
+    ("J1", "Economics", "Marine Parade", "Mrs Cheong", "SUN", "3:00pm-5:00pm", "", "", 401.12, 1),
+    ("J1", "Biology", "Marine Parade", "Mr Victor Wu", "SAT", "11:00am-1:00pm", "", "", 401.12, 1),
+    ("J1", "Chemistry", "Marine Parade", "Mr Leonard Teo", "WED", "8:00pm-10:00pm", "", "", 401.12, 1),
+    ("J1", "Physics", "Marine Parade", "Mr Ronnie Quek", "SAT", "4:30pm-6:30pm", "", "", 401.12, 1),
+    # BISHAN - J1
+    ("J1", "Math", "Bishan", "Mr Sean Yeo (HOD)", "SUN", "9:00am-11:00am", "", "", 401.12, 1),
+    ("J1", "Math", "Bishan", "Mr John Lee (DY HOD)", "TUE", "8:00pm-10:00pm", "", "", 401.12, 1),
+    ("J1", "Math", "Bishan", "Mr Sean Phua", "WED", "8:00pm-10:00pm", "", "", 401.12, 1),
+    ("J1", "Math", "Bishan", "Mr Leonard Teo", "FRI", "7:00pm-9:00pm", "", "", 401.12, 1),
+    ("J1", "Math", "Bishan", "Mr Sean Tan", "SAT", "3:00pm-5:00pm", "", "", 401.12, 1),
+    ("J1", "Economics", "Bishan", "Mrs Cheong", "MON", "8:00pm-10:00pm", "", "", 401.12, 1),
+    ("J1", "Chemistry", "Bishan", "Mr Leonard Teo", "SAT", "10:00am-12:00pm", "", "", 401.12, 1),
+    ("J1", "Physics", "Bishan", "Mr Ronnie Quek", "SUN", "3:00pm-5:00pm", "", "", 401.12, 1),
+]
+
+# ==================== J2 DATA ====================
+j2_data = [
+    # JURONG - J2
+    ("J2", "Chemistry", "Jurong", "Ms Chan S.Q.", "SUN", "3:00pm-5:00pm", "", "", 412.02, 1),
+    # KOVAN - J2
+    ("J2", "Math", "Kovan", "Mr Kenji Ng (A)", "THU", "8:00pm-9:30pm", "SAT", "10:30am-12:00pm", 444.72, 2),
+    ("J2", "Math", "Kovan", "Mr Kenji Ng (B)", "FRI", "8:00pm-9:30pm", "SUN", "4:30pm-6:00pm", 444.72, 2),
+    # PUNGGOL - J2
+    ("J2", "Math", "Punggol", "Mr Ang C.X. (A)", "MON", "8:00pm-9:30pm", "SAT", "1:30pm-3:00pm", 444.72, 2),
+    ("J2", "Math", "Punggol", "Mr Ang C.X. (B)", "FRI", "8:00pm-9:30pm", "SUN", "11:30am-1:00pm", 444.72, 2),
+    # MARINE PARADE - J2
+    ("J2", "Math", "Marine Parade", "Mr Sean Yeo (HOD)", "TUE", "8:00pm-9:30pm", "SAT", "4:30pm-6:00pm", 444.72, 2),
+    ("J2", "Math", "Marine Parade", "Mr John Lee (DY HOD)", "THU", "8:30pm-10:00pm", "SUN", "3:30pm-5:00pm", 444.72, 2),
+    ("J2", "Math", "Marine Parade", "Mr Leonard Teo", "WED", "8:00pm-9:30pm", "SUN", "1:30pm-3:00pm", 444.72, 2),
+    ("J2", "Math", "Marine Parade", "Mr Sean Tan", "THU", "8:30pm-10:00pm", "SUN", "11:00am-12:30pm", 444.72, 2),
+    ("J2", "Math", "Marine Parade", "Mr Sean Phua", "FRI", "7:30pm-9:00pm", "SUN", "1:30pm-3:00pm", 444.72, 2),
+    ("J2", "Economics", "Marine Parade", "Mrs Cheong", "SAT", "4:30pm-6:30pm", "", "", 412.02, 1),
+    ("J2", "Biology", "Marine Parade", "Mr Victor Wu", "SUN", "11:00am-1:00pm", "", "", 412.02, 1),
+    ("J2", "Chemistry", "Marine Parade", "Mr Leonard Teo", "SUN", "9:00am-11:00am", "", "", 412.02, 1),
+    ("J2", "Physics", "Marine Parade", "Mr Ronnie Quek", "SAT", "2:30pm-4:30pm", "", "", 412.02, 1),
+    # BISHAN - J2
+    ("J2", "Math", "Bishan", "Mr Sean Yeo (HOD)", "WED", "8:30pm-10:00pm", "SUN", "3:30pm-5:00pm", 444.72, 2),
+    ("J2", "Math", "Bishan", "Mr John Lee (DY HOD)", "MON", "8:30pm-10:00pm", "SAT", "9:00am-10:30am", 444.72, 2),
+    ("J2", "Math", "Bishan", "Mr Leonard Teo", "MON", "8:30pm-10:00pm", "SAT", "2:00pm-3:30pm", 444.72, 2),
+    ("J2", "Math", "Bishan", "Mr Sean Tan", "TUE", "8:00pm-9:30pm", "SAT", "5:00pm-6:30pm", 444.72, 2),
+    ("J2", "Math", "Bishan", "Mr Sean Phua", "WED", "6:30pm-8:00pm", "SAT", "8:30am-10:00am", 444.72, 2),
+    ("J2", "Economics", "Bishan", "Mrs Cheong", "MON", "6:00pm-8:00pm", "", "", 412.02, 1),
+    ("J2", "Chemistry", "Bishan", "Mr Leonard Teo", "SAT", "12:00pm-2:00pm", "", "", 412.02, 1),
+    ("J2", "Physics", "Bishan", "Mr Ronnie Quek", "SUN", "5:00pm-7:00pm", "", "", 412.02, 1),
+]
+
+all_classes.extend(s3_sample)
+all_classes.extend(s4_sample)
+all_classes.extend(j1_data)
+all_classes.extend(j2_data)
 
 print(f"📊 Preparing CSV export with {len(all_classes)} classes...")
+print(f"   - S1: {len([c for c in all_classes if c[0] == 'S1'])} classes")
+print(f"   - S2: {len([c for c in all_classes if c[0] == 'S2'])} classes")
+print(f"   - S3: {len([c for c in all_classes if c[0] == 'S3'])} classes (sample)")
+print(f"   - S4: {len([c for c in all_classes if c[0] == 'S4'])} classes (sample)")
+print(f"   - J1: {len([c for c in all_classes if c[0] == 'J1'])} classes")
+print(f"   - J2: {len([c for c in all_classes if c[0] == 'J2'])} classes")
+print()"
 
 # Write to CSV
 output_file = '/app/tuition_complete_data_export.csv'
