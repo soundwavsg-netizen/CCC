@@ -1195,10 +1195,12 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             
             # Query Firebase for classes
             if level or subject or location or tutor_search:
+                logger.info(f"Querying Firebase - Level: {level}, Subject: {subject}, Location: {location}, Tutor: {tutor_search}")
                 classes = query_firebase_classes(level, subject, location, limit=30)
                 
                 # If we have a tutor search, filter classes by tutor name
                 if tutor_search and classes:
+                    logger.info(f"Filtering {len(classes)} classes by tutor: {tutor_search}")
                     tutor_search_lower = tutor_search.lower()
                     filtered_classes = []
                     for cls in classes:
@@ -1206,8 +1208,10 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                         if tutor_search_lower in tutor_name or any(part in tutor_name for part in tutor_search_lower.split()):
                             filtered_classes.append(cls)
                     classes = filtered_classes
+                    logger.info(f"Filtered to {len(classes)} classes matching tutor")
                 
                 if classes:
+                    logger.info(f"Found {len(classes)} classes, formatting for LLM")
                     firebase_context = "\n\n**AVAILABLE CLASSES (from our database):**\n"
                     firebase_context += "**IMPORTANT INSTRUCTIONS:**\n"
                     firebase_context += "- Show ALL class options below to give customers complete choices\n"
@@ -1216,6 +1220,8 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                     for cls in classes[:15]:  # Limit to 15 results
                         firebase_context += f"{format_class_info(cls)}\n"
                     firebase_context += "\n**PRESENTATION RULES**: Present ALL classes above naturally. If there are multiple class sections (A, B, C), show all timing options. Don't mention 'database' or technical terms. If all classes are at ONE location only, present them directly without asking 'which location?'\n"
+                else:
+                    logger.warning(f"No classes found for query - Level: {level}, Subject: {subject}, Location: {location}, Tutor: {tutor_search}")
             
             # If specifically asking about a tutor by name
             if tutor_search and not classes:
