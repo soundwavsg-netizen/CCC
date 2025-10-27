@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global text wrapping and overflow handling */
+@layer base {
+  * {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  a {
+    word-break: break-all;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
