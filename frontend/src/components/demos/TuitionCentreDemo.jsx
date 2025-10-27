@@ -189,7 +189,7 @@ const TuitionCentreDemo = () => {
         </motion.div>
 
         {/* Demo Features */}
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-12">
           {demoFeatures.map((feature, index) => (
             <motion.div
               key={index}
@@ -197,16 +197,16 @@ const TuitionCentreDemo = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
             >
-              <Card className="ai-card p-8 text-center h-full bg-white/20 backdrop-blur-md border border-white/30">
+              <Card className="ai-card p-6 sm:p-8 text-center h-full bg-white/20 backdrop-blur-md border border-white/30">
                 <div 
-                  className={`h-16 w-16 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mx-auto mb-4 ai-breathe`}
+                  className={`h-12 w-12 sm:h-16 sm:w-16 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mx-auto mb-3 sm:mb-4 ai-breathe`}
                 >
-                  <feature.icon size={32} />
+                  <feature.icon size={24} className="sm:w-8 sm:h-8" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-4" style={{ fontFamily: 'Plus Jakarta Sans' }}>
                   {feature.title}
                 </h3>
-                <p className="text-white/80 leading-relaxed">{feature.description}</p>
+                <p className="text-sm sm:text-base text-white/80 leading-relaxed">{feature.description}</p>
               </Card>
             </motion.div>
           ))}
