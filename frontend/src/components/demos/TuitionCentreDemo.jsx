@@ -169,19 +169,19 @@ const TuitionCentreDemo = () => {
         
         {/* Demo Introduction */}
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Badge className="ai-badge mb-6 text-lg px-6 py-3">
-            <Target className="mr-2 h-5 w-5" /> Live Demo
+          <Badge className="ai-badge mb-4 sm:mb-6 text-base sm:text-lg px-4 sm:px-6 py-2 sm:py-3">
+            <Target className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Live Demo
           </Badge>
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 tracking-tight" style={{ fontFamily: 'Plus Jakarta Sans' }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 tracking-tight px-4" style={{ fontFamily: 'Plus Jakarta Sans' }}>
             Tuition Centre <span className="bg-gradient-to-r from-[#4facfe] to-[#00f2fe] bg-clip-text text-transparent">AI Assistant</span>
           </h2>
-          <div className="glass-card p-8 max-w-4xl mx-auto border border-white/20">
-            <p className="text-xl text-white/90 leading-relaxed">
+          <div className="glass-card p-6 sm:p-8 max-w-4xl mx-auto border border-white/20">
+            <p className="text-base sm:text-xl text-white/90 leading-relaxed">
               Experience how an AI chatbot transforms tuition centre operations. 
               This demo shows real functionality with 2026 Singapore tuition center data.
             </p>
