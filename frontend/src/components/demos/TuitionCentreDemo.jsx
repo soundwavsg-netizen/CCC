@@ -286,7 +286,7 @@ const TuitionCentreDemo = () => {
                 </div>
 
                 {/* Messages */}
-                <div className="h-96 overflow-y-auto p-6 bg-gradient-to-br from-white to-gray-50">
+                <div className="h-96 overflow-y-auto p-4 sm:p-6 bg-gradient-to-br from-white to-gray-50">
                   {messages.map((msg) => (
                     <motion.div
                       key={msg.id}
@@ -295,12 +295,12 @@ const TuitionCentreDemo = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl shadow-sm ${
+                      <div className={`max-w-[85%] sm:max-w-xs lg:max-w-md px-3 sm:px-4 py-3 rounded-2xl shadow-sm ${
                         msg.sender === 'user'
                           ? 'bg-gradient-to-br from-[#667eea] to-[#764ba2] text-white'
                           : 'bg-white text-gray-800 border border-gray-200'
                       }`}>
-                        <div className="whitespace-pre-line leading-relaxed">{msg.text}</div>
+                        <div className="whitespace-pre-line leading-relaxed text-sm sm:text-base break-words overflow-wrap-anywhere">{msg.text}</div>
                         <div className={`text-xs mt-2 ${
                           msg.sender === 'user' ? 'text-white/70' : 'text-gray-500'
                         }`}>
