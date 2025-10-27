@@ -25,7 +25,7 @@ const TuitionCentreDemo = () => {
   const messagesEndRef = useRef(null);
 
   // External backend URL
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://ccc-digital.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://edubot-hub-1.preview.emergentagent.com';
 
   // Initialize demo
   useEffect(() => {

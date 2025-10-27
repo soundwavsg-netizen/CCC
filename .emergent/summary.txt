@@ -1,57 +1,63 @@
 <analysis>
-The previous AI engineer successfully established the initial corporate website for Cognition & Competence Consultancy (CCC), incorporating a FastAPI backend and React frontend. A key feature, the AI chat consultant, underwent significant evolution, from basic functionality to advanced lead capture with email/WhatsApp notifications, AI-generated summaries, and flexible conversation flows. The project navigated a critical re-scoping from EDG-centric to a commercial-first digital agency, culminating in the integration of the C³ AI Employees SaaS platform as a hero feature, complete with a Motion.ai-inspired aesthetic and adorable AI employee avatars. The development included extensive UI/UX refinements, robust analytics integration, and the creation of a public Demos hub showcasing live AI chatbot implementations. A comprehensive AI Library was also established for future reuse. The most recent challenge involves a persistent connection failure with the WhatsApp bot, which remains a pending task despite robust underlying logic.
+The previous AI engineer successfully established the initial corporate website using FastAPI and React, progressively enhancing an AI chat consultant to support lead capture, notification, and dynamic content. The project navigated a significant re-scoping towards a commercial-first digital agency, leading to the integration of the C³ AI Employees SaaS platform and a public Demos hub. The immediate work in this trajectory involved rebranding the RMSS tuition center demo to a generic Tuition Centre, fixing a demo connection issue, updating the AI system message with detailed Math transition and calendar information, resolving UI button contrast, and implementing a global error handler for external browser extensions. Currently, the primary focus is on meticulously extracting and structuring all tutor and class data from provided PDFs to populate a new Firebase data layer, a crucial step for the chatbot's comprehensive factual responses.
 </analysis>
 
 <product_requirements>
-The primary objective was to develop a professional corporate website for Cognition & Competence Consultancy (CCC), a Singapore-based digital transformation agency. It needed to showcase services in digital transformation, AI implementation, and web/app development for SMEs, including grant application support. Key requirements evolved significantly:
-
-1.  **Initial Website:** Seven main pages (Home, About Us, Services, Portfolio, Grants & Funding, Contact, Legal/PDPA/Terms) with a minimal, modern, corporate design (white background, navy + teal accents, rounded elements, specific typography).
-2.  **AI Consultant Chat Widget:** Site-wide access, sub-agent routing, lead capture (name, company, email, WhatsApp, project type, goal, timeline), chat summary/full transcript in notifications, email and WhatsApp notifications.
-3.  **EDG Lead-Gen Upgrade:** A dedicated EDG focus on the homepage, sticky chat launcher, lead form, How It Works section, EDG-friendly services strip, FAQs, GA4/Meta Pixel tracking, SEO, and CRM webhook placeholder. Later, compliance updates for EDG messaging were mandated.
-4.  **Commercial Rebranding & C³ AI Employees:** Reposition CCC as a commercial-first digital agency, not a grant portal. C³ AI Employees was introduced as the flagship SaaS product, requiring a dramatic homepage hero update, a dedicated  subpage (10 templates, pricing, training module), and a modern, playful AI SaaS aesthetic (Motion.ai style, gradients, cute robot icons, role-first hierarchy).
-5.  **Demos Hub:** A public  page with sub-pages (, ) to showcase live AI chatbot implementations for tuition centers (RMSS) and e-commerce (M Supplies).
-6.  **Branding & Communication:** Implementation of specific CCC logo design (symbol-only for header/favicon, full with name for pages/footer), transparent backgrounds, standardized sizing, and a professional Gmail address ().
+The overarching goal was to create a professional corporate website for Cognition & Competence Consultancy (CCC), a digital transformation agency. Key requirements included:
+1.  **Initial Website:** Core pages (Home, About Us, Services, Portfolio, Grants, Contact, Legal, Terms) with a minimal, modern corporate design.
+2.  **AI Consultant Chat Widget:** Site-wide access, sub-agent routing, lead capture with comprehensive fields, chat summaries, and email/WhatsApp notifications.
+3.  **EDG Lead-Gen Upgrade:** Dedicated homepage focus, sticky chat, lead forms, How It Works section, analytics (GA4/Meta Pixel), SEO, and CRM webhook.
+4.  **Commercial Rebranding & C³ AI Employees:** Repositioning CCC, featuring C³ AI Employees as a flagship SaaS product with a dedicated page, AI employee templates, pricing, and a playful AI aesthetic.
+5.  **Demos Hub:** A public  page showcasing live AI chatbot implementations for various industries, specifically a tuition center (initially RMSS) and e-commerce.
+6.  **Branding & Communication:** Specific CCC logo usage, standardized sizing, professional contact.
+The current work focuses on the Demos Hub, specifically the tuition center chatbot, which requires removing RMSS branding, updating AI training with 2026-2027 Math transition and calendar data, enhancing context memory, and migrating comprehensive tutor and class data to Firebase for robust querying.
 </product_requirements>
 
 <key_technical_concepts>
--   **Full-Stack:** FastAPI (Python backend) and React (JavaScript frontend).
--   **UI/UX:** Tailwind CSS, Shadcn/UI, Framer Motion for animations.
--   **Database:** MongoDB for data storage (leads, chat history).
--   **AI Integration:** Emergent LLM Key &  library for AI models.
--   **Notifications:**  (email),  (CallMeBot for WhatsApp).
--   **WhatsApp Bot:** Node.js microservice using Baileys WhatsApp Web API.
--   **Analytics/SEO:** GA4, Meta Pixel, , custom , .
--   **Coding Practices:** UUIDs, timezone-aware datetimes.
+-   **Full-Stack:** FastAPI (Python backend), React (JavaScript frontend).
+-   **UI/UX:** Tailwind CSS, Shadcn/UI.
+-   **Database:** MongoDB (existing), Firebase Firestore (new for tuition data).
+-   **AI Integration:** Emergent LLM Key,  (using ).
+-   **WhatsApp Bot:** Node.js microservice (Baileys WhatsApp Web API).
+-   **Data Management:** PDF data extraction (implicit), structured data upload (CSV to Firebase).
 </key_technical_concepts>
 
 <code_architecture>
 The application utilizes a React frontend and a FastAPI backend, designed for modularity and scalability.
 
 
-
-*   ****: The central API gateway, handling AI chat, lead capture, and notifications. It integrates LLMs, dynamically adjusts AI agent behavior based on page context, and manages contact/chat lead submissions, including email/WhatsApp notifications. It was updated for EDG compliance, commercial rebranding, and to integrate WhatsApp bot routes.
-*   ****: Orchestrates global routing and component rendering. It was frequently updated to include new pages (, , , , ) and integrate global utilities like analytics.
-*   ** / **: Provide site-wide navigation and branding. They were continually refined for new page links, promotional banners, and precise CCC logo integration.
-*   ****: The core AI chat interface. It captures leads, sends data to the backend, and manages conversation flow. Extensive changes were made for chat summary/transcript handling, less intrusive AI interaction, and dynamic prompt adjustments.
-*   ****: Underwent multiple major rewrites, first for EDG lead generation, then for commercial rebranding, and finally to feature the C³ AI Employees platform as its hero section.
-*   ****: A new, critical page detailing the C³ AI Employees SaaS platform, including 10 AI employee templates, their descriptions, and related CTAs, styled with a modern AI aesthetic.
-*   ****: A new custom component to ensure consistent logo placement, sizing, and styling across all content pages.
-*   ****: This Node.js file implements the WhatsApp chatbot logic, including business recognition, conversational memory, anti-repetition, and dynamic responses. It has undergone extensive debugging for connection stability and message processing.
-*   ****: This directory now centralizes comprehensive AI training documentation and reusable code patterns, including domain-specific examples (education, e-commerce) and generic conversation guidelines.
+-   ****: Handles API routes.
+    -   **Changes**:  updated with 2026-2027 Math transition and 2025/2026 calendar. New endpoint  added for the tuition demo, formatted to match frontend requests.
+-   ****: Displays tuition center AI demo.
+    -   **Changes**: Removed RMSS branding, updated to call , fixed demo connection issue.
+-   ****: The AI Library content page.
+    -   **Changes**: All RMSS references replaced with Tuition Centre or generic terms.
+-   ****: Component for AI Library.
+    -   **Changes**: Success stories made more generic.
+-   ****: CSS for button styling.
+    -   **Changes**: Rules strengthened to improve text visibility on dark buttons (white text on dark blue).
+-   ****: Main HTML file.
+    -   **Changes**: Added global error handler to suppress external browser extension errors.
+-   ** (New)**: Stores Firebase service account key.
+-   ** (New)**: Script for initial calendar/pricing upload.
+-   ** (New)**: Script to resolve tutor duplicates in sample data.
+-   ** (New)**: Partial CSV of class data, subject to full generation.
+-   ** (New)**: Script to import CSV data to Firebase.
+-   ****: Added .
+-   ** (New)**: Detailed training document for the generic tuition center AI.
 </code_architecture>
 
 <pending_tasks>
--   Resolve the persistent Connection Failure errors affecting the WhatsApp bot service to enable QR code generation and re-authentication.
+-   **WhatsApp Bot Connection:** Resolve persistent Connection Failure errors in  for QR code generation and re-authentication.
+-   **Full Data Extraction and Firebase Upload:** Complete systematic and accurate extraction of ALL tutor, class, and schedule data from remaining Secondary (S1-S4) and Junior College (J1-J2) PDF documents. Consolidate and upload to Firebase (tutors, classes collections).
+-   **Firebase Chatbot Integration:** Update  to query Firebase for tutor, class, and schedule information.
+-   **AI System Message Update:** Refine  to explicitly instruct the LLM to use Firebase for factual data.
 </pending_tasks>
 
 <current_work>
-The AI engineer was most recently working on resolving critical connection issues with the WhatsApp bot. Despite significant advancements in the bot's intelligence—including robust business recognition for various industries (e.g., e-commerce, retail, education), refined conversational flows that prevent repetition, provide context, and offer progressive clarification, and the integration of promotional messaging for the Year-End AI Automation Promotion—the bot's operational functionality is currently blocked.
-
-The  Node.js service is running, but it is repeatedly failing to establish a stable connection with WhatsApp's servers. This prevents the generation of a QR code, which is essential for re-authenticating the bot's business number (+65 8982 1301) after its session has expired. Attempts to clear old session data and restart the service have not yielded a stable connection, indicating potential external factors such as WhatsApp Web server issues or network connectivity problems.
-
-Consequently, while the bot's logic is fully programmed to offer tailored responses, provide pricing information, schedule consultations, and hand off leads, it cannot actively process incoming messages on WhatsApp. The  page on the frontend displays a disconnection status but is unable to provide a QR code due to these underlying connection failures.
+The AI engineer is currently engaged in a meticulous, systematic data extraction process from all provided PDF documents (P2-J2 levels) to build a comprehensive database for the tuition center chatbot. This involves accurately capturing tutor names, subjects, class schedules, locations, and pricing, with a refined data structure that accounts for unique tutors and class assignments, including multiple sessions per class. The goal is to correct previous partial extractions and ensure the dataset is complete and precise. So far, Primary levels P2, P3, P4, P5, and P6 have been extracted. The process is ongoing, with the AI now extracting data for Secondary S1 level, working towards populating the Firebase Firestore with accurate, queryable information for the chatbot.
 </current_work>
 
 <optional_next_step>
-Continue diagnosing the persistent Connection Failure errors affecting the WhatsApp bot and attempt to restore its connectivity to generate a QR code for re-authentication.
+Continue with systematic, careful data extraction of the remaining Secondary (S1-S4) and Junior College (J1-J2) levels from the provided PDF documents.
 </optional_next_step>
