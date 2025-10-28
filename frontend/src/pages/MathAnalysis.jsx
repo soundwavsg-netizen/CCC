@@ -364,6 +364,12 @@ const MathAnalysis = () => {
           <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
             <div className="flex justify-center mb-6 space-x-4">
               <Button
+                onClick={() => setUploadMethod('pdf')}
+                className={`px-6 py-2 rounded-lg ${uploadMethod === 'pdf' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700'}`}
+              >
+                🤖 AI PDF Analysis
+              </Button>
+              <Button
                 onClick={() => setUploadMethod('csv')}
                 className={`px-6 py-2 rounded-lg ${uploadMethod === 'csv' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700'}`}
               >
@@ -377,7 +383,179 @@ const MathAnalysis = () => {
               </Button>
             </div>
 
-            {uploadMethod === 'csv' ? (
+            {uploadMethod === 'pdf' ? (
+              <div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">🤖 AI-Powered PDF Analysis</h3>
+                <div className="mb-6 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-200">
+                  <p className="text-sm text-gray-700 mb-2"><strong>How it works:</strong></p>
+                  <ul className="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                    <li>Upload scanned test paper PDF</li>
+                    <li>AI reads questions and extracts marks (including handwritten)</li>
+                    <li>Automatically categorizes into topics</li>
+                    <li>You can review and edit before saving</li>
+                  </ul>
+                </div>
+
+                {!showPreview ? (
+                  <form onSubmit={handlePDFAnalyze} className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Student Name *</label>
+                        <input
+                          type="text"
+                          required
+                          value={pdfStudentInfo.student_name}
+                          onChange={(e) => setPdfStudentInfo({ ...pdfStudentInfo, student_name: e.target.value })}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+                        <input
+                          type="text"
+                          required
+                          value={pdfStudentInfo.location}
+                          onChange={(e) => setPdfStudentInfo({ ...pdfStudentInfo, location: e.target.value })}
+                          placeholder="e.g., RMSS Tampines"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Level *</label>
+                        <select
+                          required
+                          value={pdfStudentInfo.level}
+                          onChange={(e) => setPdfStudentInfo({ ...pdfStudentInfo, level: e.target.value })}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                        >
+                          <option value="">Select Level</option>
+                          <option value="S1">S1</option>
+                          <option value="S2">S2</option>
+                          <option value="S3">S3</option>
+                          <option value="S4">S4</option>
+                          <option value="J1">J1</option>
+                          <option value="J2">J2</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Subject *</label>
+                        <select
+                          required
+                          value={pdfStudentInfo.subject}
+                          onChange={(e) => setPdfStudentInfo({ ...pdfStudentInfo, subject: e.target.value })}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                        >
+                          <option value="">Select Subject</option>
+                          <option value="E.Math">E.Math</option>
+                          <option value="A.Math">A.Math</option>
+                          <option value="Pure Math">Pure Math</option>
+                          <option value="Statistics">Statistics</option>
+                        </select>
+                      </div>
+                      <div className="col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Exam Type *</label>
+                        <select
+                          required
+                          value={pdfStudentInfo.exam_type}
+                          onChange={(e) => setPdfStudentInfo({ ...pdfStudentInfo, exam_type: e.target.value })}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                        >
+                          <option value="">Select Exam Type</option>
+                          <option value="WA1">WA1</option>
+                          <option value="WA2">WA2</option>
+                          <option value="WA3">WA3</option>
+                          <option value="EOY">EOY</option>
+                          <option value="Prelim">Prelim</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="border-t pt-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Upload Test Paper (PDF)</label>
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={(e) => setPdfFile(e.target.files[0])}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+                      />
+                      {pdfFile && (
+                        <p className="text-xs text-green-600 mt-2">✓ {pdfFile.name}</p>
+                      )}
+                    </div>
+
+                    <Button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg hover:opacity-90"
+                    >
+                      {loading ? '🤖 AI Analyzing... Please wait...' : '🤖 Analyze with AI'}
+                    </Button>
+                  </form>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-800 mb-2">✅ AI Analysis Complete!</h4>
+                      <p className="text-sm text-gray-600">
+                        Overall Score: <strong>{analyzedResults?.overall_score}%</strong> 
+                        ({analyzedResults?.total_marks}/{analyzedResults?.total_possible} marks)
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">Confidence: {analyzedResults?.confidence}</p>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-gray-800 mb-3">Extracted Topics (Review & Edit)</h4>
+                      {analyzedResults?.extracted_topics.map((topic, index) => (
+                        <div key={index} className="grid grid-cols-4 gap-3 mb-3 items-center">
+                          <input
+                            type="text"
+                            value={topic.topic_name}
+                            onChange={(e) => {
+                              const newTopics = [...analyzedResults.extracted_topics];
+                              newTopics[index].topic_name = e.target.value;
+                              setAnalyzedResults({ ...analyzedResults, extracted_topics: newTopics });
+                            }}
+                            className="col-span-2 px-3 py-2 border border-gray-300 rounded-lg"
+                          />
+                          <input
+                            type="number"
+                            step="0.5"
+                            value={topic.marks}
+                            onChange={(e) => updateAnalyzedTopic(index, 'marks', e.target.value)}
+                            className="px-3 py-2 border border-gray-300 rounded-lg"
+                          />
+                          <input
+                            type="number"
+                            step="0.5"
+                            value={topic.total_marks}
+                            onChange={(e) => updateAnalyzedTopic(index, 'total_marks', e.target.value)}
+                            className="px-3 py-2 border border-gray-300 rounded-lg"
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex gap-3">
+                      <Button
+                        onClick={() => {
+                          setShowPreview(false);
+                          setAnalyzedResults(null);
+                        }}
+                        className="flex-1 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={handleSaveAnalyzedResults}
+                        disabled={loading}
+                        className="flex-1 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                      >
+                        {loading ? 'Saving...' : '✓ Confirm & Save'}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : uploadMethod === 'csv' ? (
               <div>
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">Upload CSV/Excel File</h3>
                 <div className="mb-6 p-4 bg-blue-50 rounded-lg">
