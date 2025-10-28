@@ -1521,17 +1521,25 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                                         firebase_context += f"    {cls.get('subject')}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
                         firebase_context += "\n"
                     
+                    firebase_context += f"\n**🚨 MANDATORY RESPONSE FORMAT - USE THIS EXACT STRUCTURE:**\n\n"
+                    firebase_context += f"For **[Level Subject]** at **[Location]**, we offer the following classes:\n\n"
+                    for location, location_classes in list(classes_by_location.items())[:1]:  # Show example for first location
+                        tutor_names = []
+                        for cls in location_classes[:3]:
+                            tutor_names.append(cls.get('tutor_base_name', cls.get('tutor_name', '')))
+                        firebase_context += f"📚 **{tutor_names[0] if tutor_names else 'Jackie'}**: [schedule] - $[price]/month\n"
+                        if len(tutor_names) > 1:
+                            firebase_context += f"📚 **{tutor_names[1]}**: [schedule] - $[price]/month\n"
+                        if len(tutor_names) > 2:
+                            firebase_context += f"[... continue for all tutors listed above]\n"
+                    firebase_context += f"\n**YOU MUST** present ALL tutors using this format with their actual schedules and pricing from the data above.\n\n"
+                    
                     firebase_context += f"**CRITICAL INSTRUCTIONS:**\n"
-                    firebase_context += f"1. **YOU MUST SHOW THIS DATA IMMEDIATELY** - The above tutor information is from our live database. Present ALL {len(classes_by_location)} tutors listed above RIGHT NOW.\n"
-                    firebase_context += f"2. **DO NOT ask if user wants to see tutors** - They already asked for this information, so SHOW IT DIRECTLY.\n"
-                    firebase_context += f"3. Present classes grouped by LOCATION and TUTOR as shown above\n"
-                    firebase_context += f"4. Only use 'Class A, B, C' labels when the SAME tutor has MULTIPLE classes of the EXACT SAME level AND subject at the SAME location\n"
-                    firebase_context += f"5. If a tutor teaches different subjects at the same location, list each subject separately WITHOUT Class A/B labels\n"
-                    firebase_context += f"6. Always show COMPLETE schedules with ALL session days and times (separated by +)\n"
-                    firebase_context += f"7. Never mention 'database', 'Firebase', 'querying', or any technical terms\n"
-                    firebase_context += f"8. Each class schedule should show ALL weekly sessions (e.g., 'MON 5:00pm-6:30pm + SAT 3:00pm-4:30pm' for a class with 2 sessions)\n"
-                    firebase_context += f"9. List tutor names prominently (e.g., '**Jackie**: MON 6:30pm-8:00pm + SAT 1:30pm-3:00pm - $XXX/month')\n"
-                    firebase_context += f"10. **FORMAT EXAMPLE**: '**Jackie**: WED 4:30pm-6:00pm + SUN 12:30pm-2:00pm - $370.60/month'\n"
+                    firebase_context += f"1. **YOU MUST SHOW THIS DATA IMMEDIATELY** - Present ALL tutors RIGHT NOW using the format shown above.\n"
+                    firebase_context += f"2. **DO NOT ask if user wants to see tutors** - SHOW THEM DIRECTLY.\n"
+                    firebase_context += f"3. Use the EXACT schedule format: 'MON 5:00pm-6:30pm + SAT 3:00pm-4:30pm'\n"
+                    firebase_context += f"4. Include all tutor names, complete schedules, and pricing from the data above\n"
+                    firebase_context += f"5. Never mention 'database', 'Firebase', or technical terms\n"
                 else:
                     logger.warning(f"No classes found for query - Level: {level}, Subject: {subject}, Location: {location}, Tutor: {tutor_search}")
             
