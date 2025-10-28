@@ -716,33 +716,24 @@ const TuitionCentreDemo = () => {
                             </div>
 
                             <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Tutor Preference (Optional)</label>
-                              <input
-                                type="text"
-                                value={enrollmentData.tutor_preference}
-                                onChange={(e) => handleEnrollmentChange('tutor_preference', e.target.value)}
-                                placeholder="e.g., Mr. Sean Yeo"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
-                              />
-                            </div>
-
-                            <div>
                               <label className="block text-sm font-medium text-gray-700 mb-1">Additional Notes (Optional)</label>
                               <textarea
                                 value={enrollmentData.message}
                                 onChange={(e) => handleEnrollmentChange('message', e.target.value)}
-                                rows="3"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                                rows="2"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent text-sm"
                               />
                             </div>
 
-                            <Button
-                              type="submit"
-                              disabled={isLoading}
-                              className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90 mb-4"
-                            >
-                              {isLoading ? 'Submitting...' : 'Submit Request'}
-                            </Button>
+                            <div className="pt-2">
+                              <Button
+                                type="submit"
+                                disabled={isLoading}
+                                className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90"
+                              >
+                                {isLoading ? 'Submitting...' : 'Submit Request'}
+                              </Button>
+                            </div>
                           </form>
                         )}
                       </div>
