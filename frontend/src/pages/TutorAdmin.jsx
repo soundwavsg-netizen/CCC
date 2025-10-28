@@ -315,9 +315,15 @@ const TutorAdmin = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         <button
                           onClick={() => handleDeleteTutor(tutor.login_id, tutor.tutor_name)}
-                          className="text-red-600 hover:text-red-900 font-medium"
+                          className="text-red-600 hover:text-red-900 font-medium mr-4"
                         >
                           🗑️ Delete
+                        </button>
+                        <button
+                          onClick={() => handleResetPassword(tutor.login_id, tutor.tutor_name)}
+                          className="text-blue-600 hover:text-blue-900 font-medium"
+                        >
+                          🔄 Reset Password
                         </button>
                       </td>
                     </tr>
