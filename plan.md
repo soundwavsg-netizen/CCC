@@ -14,7 +14,7 @@ User Requirements:
 3) Analytics: GA4 + Meta Pixel placeholders initially
 4) Priority: Build full site (7 pages) first, then integrate AI chat routing
 
-Preview URL: https://tutor-chat-scroll.preview.emergentagent.com
+Preview URL: https://tuition-chatbot.preview.emergentagent.com
 
 Notes:
 - Implement within current stack (React + FastAPI + Mongo) with exportable design for future Next.js/Vercel deployment.
