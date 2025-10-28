@@ -1223,26 +1223,28 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                     if location:
                         break
             
-            # Extract level
-            for l in ['P2', 'P3', 'P4', 'P5', 'P6', 'S1', 'S2', 'S3', 'S4', 'J1', 'J2']:
-                if l.lower() in user_message_lower:
-                    level = l
-                    break
+            # Extract level (only if not already found from context)
+            if not level:
+                for l in ['P2', 'P3', 'P4', 'P5', 'P6', 'S1', 'S2', 'S3', 'S4', 'J1', 'J2']:
+                    if l.lower() in user_message_lower:
+                        level = l
+                        break
             
-            # Extract location
-            location_map = {
-                'bishan': 'Bishan',
-                'punggol': 'Punggol',
-                'marine': 'Marine Parade',
-                'jurong': 'Jurong',
-                'kovan': 'Kovan'
-            }
-            for key, val in location_map.items():
-                if key in user_message_lower:
-                    location = val
-                    break
+            # Extract location (only if not already found from context)
+            if not location:
+                location_map = {
+                    'bishan': 'Bishan',
+                    'punggol': 'Punggol',
+                    'marine': 'Marine Parade',
+                    'jurong': 'Jurong',
+                    'kovan': 'Kovan'
+                }
+                for key, val in location_map.items():
+                    if key in user_message_lower:
+                        location = val
+                        break
             
-            # Extract subject (common subjects)
+            # Extract subject (only if not already found from context, OR if current message explicitly has it)
             subject_keywords = {
                 'math': 'Math', 'maths': 'Math', 'mathematics': 'Math',
                 'science': 'Science',
@@ -1255,10 +1257,14 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                 'biology': 'Biology',
                 'economics': 'Economics', 'econs': 'Economics'
             }
+            current_message_subject = None
             for key, val in subject_keywords.items():
                 if key in user_message_lower:
-                    subject = val
+                    current_message_subject = val
                     break
+            # Use current message subject if found, otherwise keep context subject
+            if current_message_subject:
+                subject = current_message_subject
             
             # Extract tutor name - improved detection (works with or without titles)
             tutor_search = None
