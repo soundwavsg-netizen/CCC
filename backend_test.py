@@ -885,6 +885,17 @@ class TuitionChatTester:
             
         print(f"\n🎯 OVERALL RESULT: {passed_count}/{total_count} tests passed")
         
+        # Special focus on TOO BROAD QUERY CLARIFICATION (main test focus)
+        print(f"\n🎯 TOO BROAD QUERY CLARIFICATION FIX:")
+        print(f"🤖 Level + Subject (no location) clarification: {'✅ PASSED' if broad_query_passed else '❌ FAILED'}")
+        
+        if not broad_query_passed:
+            print("⚠️  CRITICAL ISSUE: Bot is still dumping all data instead of asking for location clarification!")
+            print("   Expected: Ask 'Which location would you like to know about?' with 5 locations listed")
+            print("   Actual: Bot may be showing tutor names, schedules, or data from multiple locations")
+        else:
+            print("✅ SUCCESS: Bot correctly asks for location clarification instead of data dumping!")
+        
         # Special focus on data accuracy issue
         print(f"\n🔍 DATA ACCURACY INVESTIGATION:")
         print(f"📊 Firebase has {firebase_tutor_count} tutors for S3 AMath Marine Parade")
@@ -901,9 +912,9 @@ class TuitionChatTester:
         print(f"🔥 CONTEXT-AWARE TESTS: {context_passed}/3 passed")
         
         if passed_count == total_count:
-            print("🎉 ALL TESTS PASSED! Chatbot context-aware follow-up queries are working correctly.")
+            print("🎉 ALL TESTS PASSED! Too broad query clarification fix is working correctly.")
         else:
-            print("⚠️  SOME TESTS FAILED. Context-aware querying needs attention.")
+            print("⚠️  SOME TESTS FAILED. Too broad query clarification needs attention.")
             
         return passed_count == total_count
 
