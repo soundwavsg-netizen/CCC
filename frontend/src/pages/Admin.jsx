@@ -20,8 +20,96 @@ const Admin = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [availableLocations, setAvailableLocations] = useState([]);
+  const [availableTutors, setAvailableTutors] = useState([]);
+  const [isNewTutor, setIsNewTutor] = useState(false);
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://tutor-chat-scroll.preview.emergentagent.com';
+
+  // Subject options based on selected level
+  const getSubjectOptions = (level) => {
+    if (!level) return [];
+    
+    if (level.startsWith('P')) {
+      return ['Math', 'Science', 'English', 'Chinese'];
+    } else if (level === 'S1' || level === 'S2') {
+      return ['Math', 'Science', 'English', 'Chinese'];
+    } else if (level === 'S3' || level === 'S4') {
+      return ['EMath', 'AMath', 'Physics', 'Chemistry', 'Biology', 'English', 'Chinese'];
+    } else if (level === 'J1' || level === 'J2') {
+      return ['Math', 'Physics', 'Chemistry', 'Biology', 'Economics'];
+    }
+    return [];
+  };
+
+  // Fetch available locations when level and subject are selected
+  React.useEffect(() => {
+    const fetchLocations = async () => {
+      if (formData.level && formData.subject) {
+        try {
+          const response = await axios.get(`${BACKEND_URL}/api/tuition/available-locations`, {
+            params: { level: formData.level, subject: formData.subject }
+          });
+          setAvailableLocations(response.data.locations || []);
+        } catch (error) {
+          console.error('Error fetching locations:', error);
+          setAvailableLocations(['Bishan', 'Punggol', 'Marine Parade', 'Jurong', 'Kovan']);
+        }
+      } else {
+        setAvailableLocations([]);
+      }
+    };
+    fetchLocations();
+  }, [formData.level, formData.subject, BACKEND_URL]);
+
+  // Fetch available tutors when level, subject, and location are selected
+  React.useEffect(() => {
+    const fetchTutors = async () => {
+      if (formData.level && formData.subject && formData.location) {
+        try {
+          const response = await axios.get(`${BACKEND_URL}/api/admin/available-tutors`, {
+            params: { 
+              level: formData.level, 
+              subject: formData.subject,
+              location: formData.location 
+            }
+          });
+          setAvailableTutors(response.data.tutors || []);
+        } catch (error) {
+          console.error('Error fetching tutors:', error);
+          setAvailableTutors([]);
+        }
+      } else {
+        setAvailableTutors([]);
+      }
+    };
+    fetchTutors();
+  }, [formData.level, formData.subject, formData.location, BACKEND_URL]);
+
+  const handleFormChange = (field, value) => {
+    const updates = { [field]: value };
+    
+    // If level changes, reset everything after it
+    if (field === 'level') {
+      updates.subject = '';
+      updates.location = '';
+      updates.tutor_name = '';
+      setIsNewTutor(false);
+    }
+    // If subject changes, reset location and tutor
+    else if (field === 'subject') {
+      updates.location = '';
+      updates.tutor_name = '';
+      setIsNewTutor(false);
+    }
+    // If location changes, reset tutor
+    else if (field === 'location') {
+      updates.tutor_name = '';
+      setIsNewTutor(false);
+    }
+    
+    setFormData(prev => ({ ...prev, ...updates }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
