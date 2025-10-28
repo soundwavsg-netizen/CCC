@@ -1261,10 +1261,13 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             for key, val in subject_keywords.items():
                 if key in user_message_lower:
                     current_message_subject = val
+                    logger.info(f"Found subject '{val}' from keyword '{key}' in current message")
                     break
             # Use current message subject if found, otherwise keep context subject
             if current_message_subject:
                 subject = current_message_subject
+            
+            logger.info(f"After extraction - Level: {level}, Subject: {subject}, Location: {location}")
             
             # Extract tutor name - improved detection (works with or without titles)
             tutor_search = None
