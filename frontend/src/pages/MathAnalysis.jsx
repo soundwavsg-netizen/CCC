@@ -150,6 +150,103 @@ const MathAnalysis = () => {
     }
   };
 
+  const handlePDFAnalyze = async (e) => {
+    e.preventDefault();
+    if (!pdfFile) {
+      setMessage('❌ Please select a PDF file to upload');
+      return;
+    }
+
+    // Validate student info
+    if (!pdfStudentInfo.student_name || !pdfStudentInfo.location || !pdfStudentInfo.level || 
+        !pdfStudentInfo.subject || !pdfStudentInfo.exam_type) {
+      setMessage('❌ Please fill in all student information');
+      return;
+    }
+
+    setLoading(true);
+    setMessage('🤖 AI is analyzing the test paper... This may take 30-60 seconds.');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', pdfFile);
+      formData.append('student_name', pdfStudentInfo.student_name);
+      formData.append('location', pdfStudentInfo.location);
+      formData.append('level', pdfStudentInfo.level);
+      formData.append('subject', pdfStudentInfo.subject);
+      formData.append('exam_type', pdfStudentInfo.exam_type);
+
+      const response = await axios.post(`${BACKEND_URL}/api/math-analysis/analyze-pdf`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      if (response.data.success) {
+        setAnalyzedResults(response.data);
+        setShowPreview(true);
+        setMessage('✅ AI analysis complete! Please review and edit if needed.');
+      }
+    } catch (error) {
+      setMessage('❌ Error analyzing PDF: ' + (error.response?.data?.detail || error.message));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveAnalyzedResults = async () => {
+    if (!analyzedResults) return;
+
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const dataToSave = {
+        student_name: analyzedResults.student_info.name,
+        location: analyzedResults.student_info.location,
+        level: analyzedResults.student_info.level,
+        subject: analyzedResults.student_info.subject,
+        exam_type: analyzedResults.student_info.exam_type,
+        topics: analyzedResults.extracted_topics.map(t => ({
+          topic_name: t.topic_name,
+          marks: t.marks,
+          total_marks: t.total_marks
+        }))
+      };
+
+      const response = await axios.post(`${BACKEND_URL}/api/math-analysis/save-analyzed-results`, dataToSave);
+
+      if (response.data.success) {
+        setMessage(`✅ Results saved successfully for ${analyzedResults.student_info.name}!`);
+        setShowPreview(false);
+        setAnalyzedResults(null);
+        setPdfFile(null);
+        setPdfStudentInfo({
+          student_name: '',
+          location: '',
+          level: '',
+          subject: '',
+          exam_type: ''
+        });
+        fetchStudents();
+      }
+    } catch (error) {
+      setMessage('❌ Error saving results: ' + (error.response?.data?.detail || error.message));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateAnalyzedTopic = (index, field, value) => {
+    const newTopics = [...analyzedResults.extracted_topics];
+    newTopics[index][field] = parseFloat(value) || 0;
+    // Recalculate percentage
+    if (field === 'marks' || field === 'total_marks') {
+      newTopics[index].percentage = newTopics[index].total_marks > 0 
+        ? Math.round((newTopics[index].marks / newTopics[index].total_marks * 100) * 100) / 100
+        : 0;
+    }
+    setAnalyzedResults({ ...analyzedResults, extracted_topics: newTopics });
+  };
+
   const fetchAnalytics = async () => {
     setLoading(true);
     try {
