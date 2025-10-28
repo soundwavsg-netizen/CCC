@@ -91,6 +91,7 @@ const MathAnalysis = () => {
   const [availableSubtopics, setAvailableSubtopics] = useState([]);
   const [studentAssessments, setStudentAssessments] = useState([]);
   const [improvementData, setImprovementData] = useState(null);
+  const [weakThreshold, setWeakThreshold] = useState(70); // Default 70%
 
   // Fetch students on mount
   useEffect(() => {
