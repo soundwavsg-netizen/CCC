@@ -356,3 +356,40 @@ async def delete_tutor(login_id: str):
     except Exception as e:
         logger.error(f"Error deleting tutor: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@tutor_router.post("/admin/reset-password/{login_id}")
+async def reset_tutor_password(login_id: str):
+    """Admin endpoint: Reset a tutor's password"""
+    try:
+        if not math_db:
+            raise HTTPException(status_code=500, detail="Firebase not initialized")
+        
+        # Check if tutor exists
+        tutor_doc = math_db.collection('tutors').document(login_id).get()
+        if not tutor_doc.exists:
+            raise HTTPException(status_code=404, detail="Tutor not found")
+        
+        # Generate new temporary password
+        temp_password = generate_temp_password()
+        
+        # Update tutor with new password
+        math_db.collection('tutors').document(login_id).update({
+            'password_hash': hash_password(temp_password),
+            'temp_password': temp_password,
+            'must_change_password': True,
+            'password_reset_at': datetime.utcnow().isoformat(),
+            'password_reset_by': 'admin'
+        })
+        
+        return {
+            'success': True,
+            'message': f'Password reset successfully for {login_id}',
+            'temp_password': temp_password,
+            'login_id': login_id
+        }
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error resetting password: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
