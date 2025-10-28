@@ -202,10 +202,10 @@ const Admin = () => {
                   <select
                     required
                     value={formData.level}
-                    onChange={(e) => setFormData({...formData, level: e.target.value})}
+                    onChange={(e) => handleFormChange('level', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   >
-                    <option value="">Select</option>
+                    <option value="">Select Level</option>
                     <option value="P2">P2</option>
                     <option value="P3">P3</option>
                     <option value="P4">P4</option>
@@ -225,20 +225,14 @@ const Admin = () => {
                   <select
                     required
                     value={formData.subject}
-                    onChange={(e) => setFormData({...formData, subject: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    onChange={(e) => handleFormChange('subject', e.target.value)}
+                    disabled={!formData.level}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                   >
-                    <option value="">Select</option>
-                    <option value="Math">Math</option>
-                    <option value="Science">Science</option>
-                    <option value="English">English</option>
-                    <option value="Chinese">Chinese</option>
-                    <option value="EMath">EMath</option>
-                    <option value="AMath">AMath</option>
-                    <option value="Physics">Physics</option>
-                    <option value="Chemistry">Chemistry</option>
-                    <option value="Biology">Biology</option>
-                    <option value="Economics">Economics</option>
+                    <option value="">{formData.level ? 'Select Subject' : 'Select level first'}</option>
+                    {getSubjectOptions(formData.level).map(subject => (
+                      <option key={subject} value={subject}>{subject}</option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -249,28 +243,87 @@ const Admin = () => {
                   <select
                     required
                     value={formData.location}
-                    onChange={(e) => setFormData({...formData, location: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    onChange={(e) => handleFormChange('location', e.target.value)}
+                    disabled={!formData.level || !formData.subject}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                   >
-                    <option value="">Select</option>
-                    <option value="Bishan">Bishan</option>
-                    <option value="Punggol">Punggol</option>
-                    <option value="Marine Parade">Marine Parade</option>
-                    <option value="Jurong">Jurong</option>
-                    <option value="Kovan">Kovan</option>
+                    <option value="">
+                      {!formData.level || !formData.subject 
+                        ? 'Select level & subject first' 
+                        : availableLocations.length === 0 
+                          ? 'Loading...'
+                          : 'Select Location'}
+                    </option>
+                    {availableLocations.map(location => (
+                      <option key={location} value={location}>{location}</option>
+                    ))}
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Tutor Name *</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.tutor_name}
-                    onChange={(e) => setFormData({...formData, tutor_name: e.target.value})}
-                    placeholder="e.g., Mr John Lee (DY HOD)"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                  />
+                  {isNewTutor ? (
+                    <div className="relative">
+                      <input
+                        type="text"
+                        required
+                        value={formData.tutor_name}
+                        onChange={(e) => setFormData({...formData, tutor_name: e.target.value})}
+                        placeholder="e.g., Mr John Lee (DY HOD)"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsNewTutor(false);
+                          setFormData({...formData, tutor_name: ''});
+                        }}
+                        className="absolute right-2 top-2 text-xs text-blue-600 hover:text-blue-800"
+                      >
+                        Choose existing
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      <select
+                        required={!isNewTutor}
+                        value={formData.tutor_name}
+                        onChange={(e) => handleFormChange('tutor_name', e.target.value)}
+                        disabled={!formData.level || !formData.subject || !formData.location}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      >
+                        <option value="">
+                          {!formData.level || !formData.subject || !formData.location
+                            ? 'Select level/subject/location first'
+                            : availableTutors.length === 0
+                              ? 'Loading...'
+                              : 'Select Existing Tutor'}
+                        </option>
+                        {availableTutors.map(tutor => (
+                          <option key={tutor} value={tutor}>{tutor}</option>
+                        ))}
+                      </select>
+                      {formData.level && formData.subject && formData.location && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsNewTutor(true);
+                            setFormData({...formData, tutor_name: ''});
+                          }}
+                          className="absolute right-2 top-2 text-xs text-green-600 hover:text-green-800 font-medium"
+                        >
+                          + Add New Tutor
+                        </button>
+                      )}
+                    </div>
+                  )}
+                  <p className="text-xs text-gray-500 mt-1">
+                    {isNewTutor 
+                      ? '✍️ Manually enter new tutor name' 
+                      : availableTutors.length > 0 
+                        ? `📋 ${availableTutors.length} existing tutor(s) found`
+                        : formData.location && '✨ No tutors yet - click "+ Add New Tutor"'}
+                  </p>
                 </div>
               </div>
 
