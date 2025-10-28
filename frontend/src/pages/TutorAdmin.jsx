@@ -272,6 +272,15 @@ const TutorAdmin = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         <code className="bg-gray-100 px-2 py-1 rounded">{tutor.login_id}</code>
                       </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {tutor.temp_password ? (
+                          <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">
+                            Temp: <code>{tutor.temp_password}</code>
+                          </span>
+                        ) : (
+                          <span className="text-gray-400 text-xs">Password Changed</span>
+                        )}
+                      </td>
                       <td className="px-6 py-4 text-sm text-gray-500">
                         <div className="max-w-xs">
                           {tutor.locations.join(', ')}
