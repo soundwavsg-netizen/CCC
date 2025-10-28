@@ -322,8 +322,21 @@ async def get_students(
     subject: Optional[str] = None,
     authorization: str = Header(None)
 ):
-    """Get list of all students with optional filters"""
+    """Get list of all students with optional filters (tutor authenticated)"""
     try:
+        # Verify tutor authentication
+        if not authorization:
+            raise HTTPException(status_code=401, detail="Authorization header required")
+        
+        try:
+            token = authorization.replace("Bearer ", "")
+            tutor_data = verify_token(token)
+            tutor_id = tutor_data.get('tutor_id')
+            if not tutor_id:
+                raise HTTPException(status_code=401, detail="Invalid tutor token")
+        except Exception as e:
+            raise HTTPException(status_code=401, detail=f"Authentication failed: {str(e)}")
+        
         if not math_db:
             raise HTTPException(status_code=500, detail="Firebase not initialized")
         
