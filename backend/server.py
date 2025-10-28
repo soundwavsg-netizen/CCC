@@ -1633,6 +1633,28 @@ async def tuition_demo_chat(request: TuitionChatRequest):
         raise HTTPException(status_code=500, detail=f"Failed to process chat request: {str(e)}")
 
 
+@api_router.get("/tuition/available-locations")
+async def get_available_locations(level: str, subject: str):
+    """
+    Get available locations for a specific level and subject combination.
+    """
+    try:
+        classes_ref = firebase_db.collection('classes')
+        results = classes_ref.where('level', '==', level).where('subject', '==', subject).stream()
+        
+        locations = set()
+        for doc in results:
+            data = doc.to_dict()
+            locations.add(data.get('location'))
+        
+        return {
+            "locations": sorted(list(locations))
+        }
+    except Exception as e:
+        logger.error(f"Error fetching available locations: {str(e)}")
+        return {"locations": ["Bishan", "Punggol", "Marine Parade", "Jurong", "Kovan"]}  # Fallback
+
+
 @api_router.post("/tuition/enrollment")
 async def tuition_enrollment(enrollment: EnrollmentRequest):
     """
