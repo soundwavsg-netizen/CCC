@@ -342,7 +342,10 @@ async def get_students(
         
         query = math_db.collection('students')
         
-        # Apply filters
+        # Filter by tutor_id first
+        query = query.where('tutor_id', '==', tutor_id)
+        
+        # Apply additional filters
         if location:
             query = query.where('location', '==', location)
         if level:
