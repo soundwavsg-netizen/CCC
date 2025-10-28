@@ -641,3 +641,221 @@ async def seed_topic_library():
     except Exception as e:
         logger.error(f"Error seeding topic library: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# PDF Analysis with AI
+import os
+from dotenv import load_dotenv
+import fitz  # PyMuPDF
+import base64
+from emergentintegrations.llm.chat import LlmChat, UserMessage
+
+load_dotenv()
+
+class PDFAnalysisRequest(BaseModel):
+    student_name: str
+    location: str
+    level: str
+    subject: str
+    exam_type: str
+
+class ExtractedTopic(BaseModel):
+    topic_name: str
+    marks: float
+    total_marks: float
+
+class PDFAnalysisResponse(BaseModel):
+    extracted_topics: List[ExtractedTopic]
+    overall_score: float
+    confidence: str
+    preview_text: str
+
+@math_router.post("/analyze-pdf")
+async def analyze_pdf_test_paper(
+    file: UploadFile = File(...),
+    student_name: str = "",
+    location: str = "",
+    level: str = "",
+    subject: str = "",
+    exam_type: str = ""
+):
+    """
+    AI-powered PDF test paper analysis
+    Extracts questions, marks, and categorizes into topics using GPT-4o
+    """
+    try:
+        if not math_db:
+            raise HTTPException(status_code=500, detail="Firebase not initialized")
+        
+        # Validate PDF file
+        if not file.filename.endswith('.pdf'):
+            raise HTTPException(status_code=400, detail="Only PDF files are accepted")
+        
+        # Read PDF content
+        pdf_content = await file.read()
+        
+        # Convert PDF to images using PyMuPDF
+        pdf_document = fitz.open(stream=pdf_content, filetype="pdf")
+        
+        # Convert first few pages to base64 images (limit to 5 pages to save tokens)
+        page_images = []
+        max_pages = min(5, len(pdf_document))
+        
+        for page_num in range(max_pages):
+            page = pdf_document[page_num]
+            # Render page to image
+            pix = page.get_pixmap(matrix=fitz.Matrix(2, 2))  # 2x zoom for better quality
+            img_bytes = pix.pil_tobytes(format="PNG")
+            
+            # Convert to base64
+            img_base64 = base64.b64encode(img_bytes).decode('utf-8')
+            page_images.append(img_base64)
+        
+        pdf_document.close()
+        
+        # Extract text from PDF for context
+        pdf_document = fitz.open(stream=pdf_content, filetype="pdf")
+        pdf_text = ""
+        for page in pdf_document:
+            pdf_text += page.get_text()
+        pdf_document.close()
+        
+        # Initialize LLM Chat with GPT-4o
+        api_key = os.getenv('EMERGENT_LLM_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail="EMERGENT_LLM_KEY not configured")
+        
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"pdf_analysis_{datetime.now().timestamp()}",
+            system_message=f"""You are an expert math teacher analyzing a {level} {subject} test paper for {exam_type}.
+
+Your task:
+1. Identify each question in the test paper
+2. Extract the marks awarded by the teacher (handwritten marks)
+3. Extract the total marks possible for each question
+4. Categorize each question into appropriate math topics
+
+Math topics you should recognize (examples):
+- Functions
+- Vectors  
+- Calculus (Differentiation, Integration)
+- Algebra
+- Geometry
+- Trigonometry
+- Probability
+- Statistics
+- Linear Equations
+- Quadratic Equations
+- Coordinate Geometry
+- Graphs
+- Sets
+- Numbers and Operations
+- Mensuration
+- And other standard math topics for {level} {subject}
+
+Return your analysis in this EXACT JSON format:
+{{
+  "topics": [
+    {{
+      "topic_name": "Functions",
+      "marks_obtained": 12.0,
+      "total_marks": 20.0,
+      "question_numbers": "Q1"
+    }},
+    {{
+      "topic_name": "Vectors",
+      "marks_obtained": 15.0,
+      "total_marks": 20.0,
+      "question_numbers": "Q2"
+    }}
+  ],
+  "confidence": "high/medium/low",
+  "notes": "Any observations or uncertainties"
+}}
+
+Be precise with marks extraction. Look for handwritten marks carefully."""
+        ).with_model("openai", "gpt-4o")
+        
+        # Create message with first page image
+        # Note: For production, you might want to send all pages or let AI determine relevance
+        message_text = f"""Analyze this {subject} test paper for {level} level.
+
+Extract:
+1. Each question's topic (what math concept is being tested)
+2. Marks obtained by the student (handwritten by teacher)
+3. Total marks possible for each question
+
+PDF Text Extract (for context):
+{pdf_text[:2000]}
+
+Provide your analysis in the JSON format specified."""
+
+        # For now, analyze text only (vision would require different approach with emergentintegrations)
+        # Let's use text extraction first
+        user_message = UserMessage(text=message_text)
+        
+        logger.info(f"Sending PDF analysis request for {student_name}")
+        response_text = await chat.send_message(user_message)
+        logger.info(f"Received AI response: {response_text[:500]}")
+        
+        # Parse AI response
+        # Extract JSON from response (AI might return markdown wrapped JSON)
+        import re
+        json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+        if json_match:
+            analysis_json = json.loads(json_match.group())
+        else:
+            raise HTTPException(status_code=500, detail="Failed to parse AI response")
+        
+        # Convert to our format
+        extracted_topics = []
+        for topic in analysis_json.get('topics', []):
+            extracted_topics.append({
+                'topic_name': topic['topic_name'],
+                'marks': float(topic['marks_obtained']),
+                'total_marks': float(topic['total_marks']),
+                'percentage': round((float(topic['marks_obtained']) / float(topic['total_marks']) * 100) if float(topic['total_marks']) > 0 else 0, 2)
+            })
+        
+        # Calculate overall score
+        total_marks_obtained = sum([t['marks'] for t in extracted_topics])
+        total_marks_possible = sum([t['total_marks'] for t in extracted_topics])
+        overall_score = round((total_marks_obtained / total_marks_possible * 100) if total_marks_possible > 0 else 0, 2)
+        
+        return {
+            'success': True,
+            'extracted_topics': extracted_topics,
+            'overall_score': overall_score,
+            'total_marks': total_marks_obtained,
+            'total_possible': total_marks_possible,
+            'confidence': analysis_json.get('confidence', 'medium'),
+            'notes': analysis_json.get('notes', ''),
+            'preview_text': pdf_text[:500],
+            'student_info': {
+                'name': student_name,
+                'location': location,
+                'level': level,
+                'subject': subject,
+                'exam_type': exam_type
+            }
+        }
+        
+    except json.JSONDecodeError as e:
+        logger.error(f"JSON parsing error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to parse AI response: {str(e)}")
+    except Exception as e:
+        logger.error(f"Error analyzing PDF: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@math_router.post("/save-analyzed-results")
+async def save_analyzed_results(data: ManualEntryRequest):
+    """
+    Save AI-analyzed results after tutor confirmation/editing
+    Same as manual entry but from PDF analysis
+    """
+    try:
+        # Reuse the manual entry logic
+        return await manual_entry(data)
+    except Exception as e:
+        logger.error(f"Error saving analyzed results: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
