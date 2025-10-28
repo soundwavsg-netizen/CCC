@@ -1,63 +1,52 @@
 <analysis>
-The previous AI engineer successfully established the initial corporate website using FastAPI and React, progressively enhancing an AI chat consultant to support lead capture, notification, and dynamic content. The project navigated a significant re-scoping towards a commercial-first digital agency, leading to the integration of the C³ AI Employees SaaS platform and a public Demos hub. The immediate work in this trajectory involved rebranding the RMSS tuition center demo to a generic Tuition Centre, fixing a demo connection issue, updating the AI system message with detailed Math transition and calendar information, resolving UI button contrast, and implementing a global error handler for external browser extensions. Currently, the primary focus is on meticulously extracting and structuring all tutor and class data from provided PDFs to populate a new Firebase data layer, a crucial step for the chatbot's comprehensive factual responses.
+The previous AI engineer successfully executed a multi-phase task focused on enhancing the Tuition Centre demo within the CCC corporate website. Initial efforts involved systematic data extraction from P2-J2 PDF documents, leading to a comprehensive 666-class dataset. This data was then uploaded to Firebase Firestore, with a critical fix implemented to consolidate duplicate tutor profiles. Subsequently, the FastAPI backend's  endpoint was integrated with Firebase, and the LLM's system message was refined. Multiple iterations of bug fixing addressed: query failures, exposing Querying Firebase, incorrect handling of 2026 classes, LLM not presenting all schedule details, incorrect location prompting, and ambiguity in tutor names. Frontend mobile responsiveness was also addressed. The current task involves fixing a chatbox scrolling issue, specifically adding a React ref to the input field.
 </analysis>
 
 <product_requirements>
-The overarching goal was to create a professional corporate website for Cognition & Competence Consultancy (CCC), a digital transformation agency. Key requirements included:
-1.  **Initial Website:** Core pages (Home, About Us, Services, Portfolio, Grants, Contact, Legal, Terms) with a minimal, modern corporate design.
-2.  **AI Consultant Chat Widget:** Site-wide access, sub-agent routing, lead capture with comprehensive fields, chat summaries, and email/WhatsApp notifications.
-3.  **EDG Lead-Gen Upgrade:** Dedicated homepage focus, sticky chat, lead forms, How It Works section, analytics (GA4/Meta Pixel), SEO, and CRM webhook.
-4.  **Commercial Rebranding & C³ AI Employees:** Repositioning CCC, featuring C³ AI Employees as a flagship SaaS product with a dedicated page, AI employee templates, pricing, and a playful AI aesthetic.
-5.  **Demos Hub:** A public  page showcasing live AI chatbot implementations for various industries, specifically a tuition center (initially RMSS) and e-commerce.
-6.  **Branding & Communication:** Specific CCC logo usage, standardized sizing, professional contact.
-The current work focuses on the Demos Hub, specifically the tuition center chatbot, which requires removing RMSS branding, updating AI training with 2026-2027 Math transition and calendar data, enhancing context memory, and migrating comprehensive tutor and class data to Firebase for robust querying.
+The primary objective was to expand the Demos Hub with a functional Tuition Centre chatbot. This involved:
+1.  **Rebranding:** Genericizing the RMSS demo to Tuition Centre with updated AI training.
+2.  **Data Integration:** Systematically extracting comprehensive tutor and class data from P2-J2 PDF documents and migrating it to Firebase Firestore for robust querying (666 classes, 44 unique tutors).
+3.  **Chatbot Enhancement:** Updating the AI system message with 2026-2027 Math transition and calendar data, enabling it to query Firebase for factual information. Enhancements included accurate responses for class/tutor queries, multi-level/location/session details, and internal logic for future-dated classes.
+4.  **User Experience Fixes:** Resolving UI button contrast, implementing a global error handler, ensuring mobile responsiveness for the chat interface, and refining chatbot dialogue to be precise. This also includes avoiding technical jargon, clarifying ambiguous tutor names (e.g., Sean needing disambiguation), displaying all relevant class schedules without unnecessary prompts, and preventing page scroll on chat message send.
+5.  **Data Accuracy:** Consolidating tutor profiles in Firebase to ensure one profile per unique tutor (e.g., Eugene Tan A and Eugene Tan B becoming one Eugene Tan).
 </product_requirements>
 
 <key_technical_concepts>
--   **Full-Stack:** FastAPI (Python backend), React (JavaScript frontend).
--   **UI/UX:** Tailwind CSS, Shadcn/UI.
--   **Database:** MongoDB (existing), Firebase Firestore (new for tuition data).
--   **AI Integration:** Emergent LLM Key,  (using ).
--   **WhatsApp Bot:** Node.js microservice (Baileys WhatsApp Web API).
--   **Data Management:** PDF data extraction (implicit), structured data upload (CSV to Firebase).
+-   **Full-Stack Development:** FastAPI (Python backend), React (JavaScript frontend).
+-   **Database:** Firebase Firestore (for tuition data), MongoDB (existing).
+-   **AI Integration:** Emergent LLM Key with  (using ).
+-   **Data Management:** PDF data extraction, CSV generation, programmatic data upload.
+-   **Frontend UI:** React components, CSS for styling (mobile responsiveness, ).
 </key_technical_concepts>
 
 <code_architecture>
-The application utilizes a React frontend and a FastAPI backend, designed for modularity and scalability.
+The application utilizes a React frontend and a FastAPI backend, designed for modularity and scalability, with Firebase Firestore integrated for specific data.
 
 
--   ****: Handles API routes.
-    -   **Changes**:  updated with 2026-2027 Math transition and 2025/2026 calendar. New endpoint  added for the tuition demo, formatted to match frontend requests.
--   ****: Displays tuition center AI demo.
-    -   **Changes**: Removed RMSS branding, updated to call , fixed demo connection issue.
--   ****: The AI Library content page.
-    -   **Changes**: All RMSS references replaced with Tuition Centre or generic terms.
--   ****: Component for AI Library.
-    -   **Changes**: Success stories made more generic.
--   ****: CSS for button styling.
-    -   **Changes**: Rules strengthened to improve text visibility on dark buttons (white text on dark blue).
--   ****: Main HTML file.
-    -   **Changes**: Added global error handler to suppress external browser extension errors.
--   ** (New)**: Stores Firebase service account key.
--   ** (New)**: Script for initial calendar/pricing upload.
--   ** (New)**: Script to resolve tutor duplicates in sample data.
--   ** (New)**: Partial CSV of class data, subject to full generation.
--   ** (New)**: Script to import CSV data to Firebase.
--   ****: Added .
--   ** (New)**: Detailed training document for the generic tuition center AI.
+-   ****: The central backend file handling API routes.
+    -   **Summary**: Heavily modified to integrate Firebase, retrieve class/tutor data, and refine the chatbot's LLM prompt for intelligent querying, disambiguation, and structured responses. It includes helper functions for Firebase interaction and robust error handling.
+    -   **Changes**: Firebase initialization, ,  helper functions,  update, and refactored  endpoint. Fixes for tutor name extraction, query logic, and response formatting (e.g., location-based class grouping).
+-   ****: Displays the tuition center AI chat demo.
+    -   **Summary**: Implements the chat interface and handles user interaction.
+    -   **Changes**: Modified for mobile responsiveness (message bubbles, header, content sections). Currently being updated to manage input focus and prevent page scrolling on message send.
+-   ****: Global CSS file for the frontend.
+    -   **Summary**: Defines global styles and utility classes.
+    -   **Changes**: Added  for improved text wrapping.
+-   ****: New script.
+    -   **Summary**: Handles the bulk upload of all P2-J2 class and tutor data to Firebase, including logic for tutor name normalization.
+-   ****: New script.
+    -   **Summary**: Re-runs the Firebase upload with corrected tutor normalization logic to consolidate duplicate tutor profiles.
 </code_architecture>
 
 <pending_tasks>
 -   **WhatsApp Bot Connection:** Resolve persistent Connection Failure errors in  for QR code generation and re-authentication.
--   **Full Data Extraction and Firebase Upload:** Complete systematic and accurate extraction of ALL tutor, class, and schedule data from remaining Secondary (S1-S4) and Junior College (J1-J2) PDF documents. Consolidate and upload to Firebase (tutors, classes collections).
--   **Firebase Chatbot Integration:** Update  to query Firebase for tutor, class, and schedule information.
--   **AI System Message Update:** Refine  to explicitly instruct the LLM to use Firebase for factual data.
+-   **UI Scrolling Fix:** Complete the implementation of input focus management and page scrolling prevention in .
 </pending_tasks>
 
 <current_work>
-The AI engineer is currently engaged in a meticulous, systematic data extraction process from all provided PDF documents (P2-J2 levels) to build a comprehensive database for the tuition center chatbot. This involves accurately capturing tutor names, subjects, class schedules, locations, and pricing, with a refined data structure that accounts for unique tutors and class assignments, including multiple sessions per class. The goal is to correct previous partial extractions and ensure the dataset is complete and precise. So far, Primary levels P2, P3, P4, P5, and P6 have been extracted. The process is ongoing, with the AI now extracting data for Secondary S1 level, working towards populating the Firebase Firestore with accurate, queryable information for the chatbot.
+The AI engineer is currently addressing a UI/UX issue in the  component. The user reported that when they type a message in the chatbox and press Enter, the entire page scrolls down instead of the scroll remaining within the chat messages area and focus staying on the input field. To fix this, the engineer is modifying the  function to manage input focus. The specific action being taken is to locate the input field within the  component to attach a React  to it, which will allow programmatic control over its focus.
 </current_work>
 
 <optional_next_step>
-Continue with systematic, careful data extraction of the remaining Secondary (S1-S4) and Junior College (J1-J2) levels from the provided PDF documents.
+Add a React ref to the chat input field in  to manage focus.
 </optional_next_step>
