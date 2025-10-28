@@ -281,11 +281,90 @@ const MathAnalysis = () => {
       const response = await axios.get(`${BACKEND_URL}/api/math-analysis/revision-plan/${studentId}`);
       if (response.data.success) {
         setRevisionPlan(response.data);
+        // Also fetch student's assessments
+        fetchStudentAssessments(studentId);
       }
     } catch (error) {
       setMessage('❌ Error fetching revision plan: ' + (error.response?.data?.detail || error.message));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchStudentAssessments = async (studentId) => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/math-analysis/student/${studentId}/assessments`);
+      if (response.data.success) {
+        setStudentAssessments(response.data.assessments);
+      }
+    } catch (error) {
+      console.error('Error fetching assessments:', error);
+    }
+  };
+
+  const openAssessmentGenerator = (studentId, resultId, weakTopics) => {
+    const topics = weakTopics.map(w => w.topic);
+    setAssessmentData({
+      student_id: studentId,
+      result_id: resultId,
+      selected_topics: topics,
+      selected_subtopics: [],
+      duration_minutes: 45,
+      generation_mode: 'auto'
+    });
+    fetchAvailableSubtopics(topics);
+    setShowAssessmentModal(true);
+  };
+
+  const fetchAvailableSubtopics = async (topics) => {
+    if (!revisionPlan || topics.length === 0) return;
+    
+    try {
+      const topicsStr = topics.join(',');
+      const response = await axios.get(
+        `${BACKEND_URL}/api/math-analysis/available-subtopics?level=${revisionPlan.level}&subject=${revisionPlan.subject}&topics=${topicsStr}`
+      );
+      if (response.data.success) {
+        setAvailableSubtopics(response.data.subtopics);
+      }
+    } catch (error) {
+      console.error('Error fetching subtopics:', error);
+    }
+  };
+
+  const handleGenerateAssessment = async () => {
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/math-analysis/generate-assessment`, assessmentData);
+      
+      if (response.data.success) {
+        setMessage(`✅ Assessment generated! ${response.data.question_count} questions, ${response.data.total_marks} marks`);
+        setShowAssessmentModal(false);
+        // Refresh assessments list
+        fetchStudentAssessments(assessmentData.student_id);
+      }
+    } catch (error) {
+      setMessage('❌ Error generating assessment: ' + (error.response?.data?.detail || error.message));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDownloadPDF = (studentId, assessmentId, version) => {
+    const url = `${BACKEND_URL}/api/math-analysis/assessment/${studentId}/${assessmentId}/pdf?version=${version}`;
+    window.open(url, '_blank');
+  };
+
+  const fetchImprovementData = async (studentId, resultId) => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/math-analysis/improvement-tracking/${studentId}/${resultId}`);
+      if (response.data.success) {
+        setImprovementData(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching improvement data:', error);
     }
   };
 
