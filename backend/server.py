@@ -1286,6 +1286,7 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                             firebase_context += f"Example: 'I found multiple tutors named {tutor_search}. Which one would you like to know about: {tutor_list}?'\n"
                         elif classes:
                             # Group classes by location for proper presentation
+                            # For a specific tutor query, we group by location and check if they have multiple classes
                             classes_by_location = {}
                             for cls in classes[:15]:
                                 loc = cls.get('location')
@@ -1294,30 +1295,46 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                                 classes_by_location[loc].append(cls)
                             
                             firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL BY LOCATION:**\n\n"
+                            tutor_name = classes[0].get('tutor_base_name', classes[0].get('tutor_name', ''))
                             
                             for location, location_classes in classes_by_location.items():
                                 firebase_context += f"**At {location}:**\n"
                                 
-                                # If multiple classes at same location, label them
-                                if len(location_classes) > 1:
-                                    for idx, cls in enumerate(location_classes):
-                                        variant_label = chr(65 + idx)  # A, B, C, etc.
+                                # Check if this is ONE tutor with multiple classes of same level/subject
+                                # Group by level and subject to detect multiple classes
+                                level_subject_groups = {}
+                                for cls in location_classes:
+                                    key = f"{cls.get('level')}_{cls.get('subject')}"
+                                    if key not in level_subject_groups:
+                                        level_subject_groups[key] = []
+                                    level_subject_groups[key].append(cls)
+                                
+                                # Display each level/subject group
+                                for key, group_classes in level_subject_groups.items():
+                                    level, subject = key.split('_')
+                                    firebase_context += f"  **{level} {subject}**:\n"
+                                    
+                                    # Only use Class A, B, C if there are multiple classes of SAME level/subject
+                                    if len(group_classes) > 1:
+                                        for idx, cls in enumerate(group_classes):
+                                            variant_label = chr(65 + idx)  # A, B, C, etc.
+                                            schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
+                                            firebase_context += f"    Class {variant_label}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
+                                    else:
+                                        # Single class for this level/subject
+                                        cls = group_classes[0]
                                         schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
-                                        firebase_context += f"  Class {variant_label}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
-                                else:
-                                    # Single class at this location
-                                    cls = location_classes[0]
-                                    schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
-                                    firebase_context += f"  {schedule_str} - ${cls.get('monthly_fee')}/month\n"
+                                        firebase_context += f"    {schedule_str} - ${cls.get('monthly_fee')}/month\n"
                                 firebase_context += "\n"
                             
                             firebase_context += f"**CRITICAL INSTRUCTIONS:**\n"
-                            firebase_context += f"1. Present classes grouped by LOCATION as shown above\n"
-                            firebase_context += f"2. Only use 'Class A, B, C' labels when there are MULTIPLE classes at the SAME location\n"
-                            firebase_context += f"3. If only one class per location, just show the schedule without variant labels\n"
-                            firebase_context += f"4. Always mention the location for each class\n"
-                            firebase_context += f"5. Show complete schedules with all session times\n"
-                            firebase_context += f"6. Never mention 'database' or technical terms\n"
+                            firebase_context += f"1. Present classes grouped by LOCATION and LEVEL/SUBJECT as shown above\n"
+                            firebase_context += f"2. {tutor_name} ONLY teaches at: {', '.join(sorted(classes_by_location.keys()))}\n"
+                            firebase_context += f"3. Only use 'Class A, B, C' labels when the SAME tutor has MULTIPLE classes of the SAME level/subject at the SAME location\n"
+                            firebase_context += f"4. If only one class per level/subject at a location, just show the schedule WITHOUT variant labels\n"
+                            firebase_context += f"5. Always show COMPLETE schedules with ALL session days and times (separated by +)\n"
+                            firebase_context += f"6. Never mention 'database', 'Firebase', 'querying', or any technical terms\n"
+                            firebase_context += f"7. When listing classes, show the complete schedule for each one\n"
                 elif classes:
                     logger.info(f"Found {len(classes)} classes, formatting for LLM")
                     
