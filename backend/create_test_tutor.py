@@ -61,7 +61,7 @@ def create_test_tutor():
     print(f"✅ Created test tutor: Jane Smith")
     print(f"   Login ID: janesmith")
     print(f"   Password: test123")
-    print(f"   Locations: RMSS - Tampines, RMSS - Jurong")
+    print(f"   Locations: RMSS - Punggol, RMSS - Kovan, RMSS - Jurong")
     print(f"   Levels: S1, S2, S3")
     print(f"   Subjects: Math, E Math")
     print(f"   📝 Note: This tutor should have NO student data when logging in")
