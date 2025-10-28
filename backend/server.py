@@ -1297,15 +1297,48 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                         firebase_context += f"6. Never mention 'database' or technical terms\n"
                 elif classes:
                     logger.info(f"Found {len(classes)} classes, formatting for LLM")
-                    firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL OF THESE:**\n\n"
-                    for cls in classes[:15]:  # Limit to 15 results
-                        firebase_context += f"{format_class_info(cls)}\n"
-                    firebase_context += f"\n**CRITICAL INSTRUCTIONS FOR RESPONSE:**\n"
-                    firebase_context += f"1. The data above shows {min(len(classes), 15)} class options. Present ALL of them.\n"
-                    firebase_context += f"2. If all classes are at ONE location, say '{classes[0].get('location')}' and present them directly.\n"
-                    firebase_context += f"3. Show each class's complete schedule (day + time).\n"
-                    firebase_context += f"4. Be direct and confident. Don't ask for location if only one location shown.\n"
-                    firebase_context += f"5. Never mention 'database' or technical terms.\n"
+                    
+                    # Group classes by location for proper presentation
+                    classes_by_location = {}
+                    for cls in classes[:15]:
+                        loc = cls.get('location')
+                        if loc not in classes_by_location:
+                            classes_by_location[loc] = []
+                        classes_by_location[loc].append(cls)
+                    
+                    firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL BY LOCATION:**\n\n"
+                    
+                    for location, location_classes in classes_by_location.items():
+                        firebase_context += f"**At {location}:**\n"
+                        
+                        # Group by tutor within location
+                        classes_by_tutor = {}
+                        for cls in location_classes:
+                            tutor = cls.get('tutor_base_name', cls.get('tutor_name', ''))
+                            if tutor not in classes_by_tutor:
+                                classes_by_tutor[tutor] = []
+                            classes_by_tutor[tutor].append(cls)
+                        
+                        for tutor, tutor_classes in classes_by_tutor.items():
+                            firebase_context += f"  {tutor}:\n"
+                            # If multiple classes for same tutor at same location, label them
+                            if len(tutor_classes) > 1:
+                                for idx, cls in enumerate(tutor_classes):
+                                    variant_label = chr(65 + idx)  # A, B, C, etc.
+                                    schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
+                                    firebase_context += f"    Class {variant_label}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
+                            else:
+                                cls = tutor_classes[0]
+                                schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
+                                firebase_context += f"    {schedule_str} - ${cls.get('monthly_fee')}/month\n"
+                        firebase_context += "\n"
+                    
+                    firebase_context += f"**CRITICAL INSTRUCTIONS:**\n"
+                    firebase_context += f"1. Present classes grouped by LOCATION and TUTOR as shown above\n"
+                    firebase_context += f"2. Only use 'Class A, B, C' labels when there are MULTIPLE classes from the SAME tutor at the SAME location\n"
+                    firebase_context += f"3. Always mention the location clearly\n"
+                    firebase_context += f"4. Show complete schedules for each class\n"
+                    firebase_context += f"5. Never mention 'database' or technical terms\n"
                 else:
                     logger.warning(f"No classes found for query - Level: {level}, Subject: {subject}, Location: {location}, Tutor: {tutor_search}")
             
