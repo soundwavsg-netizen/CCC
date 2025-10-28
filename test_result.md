@@ -109,6 +109,21 @@ user_problem_statement: "Fix chatbot data accuracy issues:
 4. Some tutors show only 1 timing when they should show 2 timings per class"
 
 backend:
+  - task: "Fix context-aware follow-up queries"
+    implemented: true
+    working: "needs_testing"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported: When asking follow-up question 'how bout for marine parade?' after discussing S2 Math, bot only shows 1 tutor (Jackie) instead of ALL tutors teaching S2 Math at Marine Parade."
+      - working: "needs_testing"
+        agent: "main"
+        comment: "FIXED: Enhanced context extraction logic (lines 1109-1184). Now extracts level and subject from conversation history when not present in current message. Also improved Firebase trigger detection to include location-only queries and keywords like 'list', 'show', 'available'. Bot now correctly shows ALL tutors when user asks follow-up location queries."
+  
   - task: "Fix chatbot Class A/B labeling logic"
     implemented: true
     working: true
