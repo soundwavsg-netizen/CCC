@@ -698,22 +698,6 @@ const TuitionCentreDemo = () => {
                                 <p className="text-xs text-gray-500 mt-1">{availableTutors.length} tutor(s) available</p>
                               )}
                             </div>
-                                onChange={(e) => handleEnrollmentChange('location', e.target.value)}
-                                disabled={!enrollmentData.level || !enrollmentData.subject}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
-                              >
-                                <option value="">
-                                  {!enrollmentData.level || !enrollmentData.subject 
-                                    ? 'Select level & subject first' 
-                                    : availableLocations.length === 0 
-                                      ? 'Loading...'
-                                      : 'Select'}
-                                </option>
-                                {availableLocations.map(location => (
-                                  <option key={location} value={location}>{location}</option>
-                                ))}
-                              </select>
-                            </div>
 
                             <div>
                               <label className="block text-sm font-medium text-gray-700 mb-1">Additional Notes (Optional)</label>
