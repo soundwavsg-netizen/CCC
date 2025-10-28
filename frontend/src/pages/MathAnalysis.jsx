@@ -1044,6 +1044,134 @@ const MathAnalysis = () => {
             </div>
           </div>
         )}
+
+        {/* Assessment Generation Modal */}
+        {showAssessmentModal && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-2xl font-bold text-gray-800">🎯 Generate Revision Assessment</h3>
+                  <button
+                    onClick={() => setShowAssessmentModal(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="space-y-6">
+                  {/* Duration Selection */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Assessment Duration</label>
+                    <div className="flex gap-4">
+                      <button
+                        onClick={() => setAssessmentData({...assessmentData, duration_minutes: 45})}
+                        className={`flex-1 py-3 rounded-lg border-2 ${assessmentData.duration_minutes === 45 ? 'border-blue-600 bg-blue-50 text-blue-600' : 'border-gray-300'}`}
+                      >
+                        45 Minutes
+                      </button>
+                      <button
+                        onClick={() => setAssessmentData({...assessmentData, duration_minutes: 90})}
+                        className={`flex-1 py-3 rounded-lg border-2 ${assessmentData.duration_minutes === 90 ? 'border-blue-600 bg-blue-50 text-blue-600' : 'border-gray-300'}`}
+                      >
+                        1.5 Hours (90 mins)
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Topics Selection */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Selected Topics (from weak areas)</label>
+                    <div className="bg-blue-50 p-3 rounded-lg">
+                      <div className="flex flex-wrap gap-2">
+                        {assessmentData.selected_topics.map((topic, index) => (
+                          <span key={index} className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">
+                            {topic}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Subtopics Selection */}
+                  {availableSubtopics.length > 0 && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Select Subtopics (optional - leave empty for all)
+                      </label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {availableSubtopics.map((subtopic) => (
+                          <label key={subtopic} className="flex items-center space-x-2 p-2 border rounded-lg hover:bg-gray-50">
+                            <input
+                              type="checkbox"
+                              checked={assessmentData.selected_subtopics.includes(subtopic)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setAssessmentData({
+                                    ...assessmentData,
+                                    selected_subtopics: [...assessmentData.selected_subtopics, subtopic]
+                                  });
+                                } else {
+                                  setAssessmentData({
+                                    ...assessmentData,
+                                    selected_subtopics: assessmentData.selected_subtopics.filter(s => s !== subtopic)
+                                  });
+                                }
+                              }}
+                              className="rounded"
+                            />
+                            <span className="text-sm">{subtopic}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Generation Mode */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Question Selection Mode</label>
+                    <div className="flex gap-4">
+                      <button
+                        onClick={() => setAssessmentData({...assessmentData, generation_mode: 'auto'})}
+                        className={`flex-1 py-3 rounded-lg border-2 ${assessmentData.generation_mode === 'auto' ? 'border-green-600 bg-green-50 text-green-600' : 'border-gray-300'}`}
+                      >
+                        🤖 Auto-Generate (AI Picks)
+                      </button>
+                      <button
+                        onClick={() => setAssessmentData({...assessmentData, generation_mode: 'manual'})}
+                        className={`flex-1 py-3 rounded-lg border-2 ${assessmentData.generation_mode === 'manual' ? 'border-purple-600 bg-purple-50 text-purple-600' : 'border-gray-300'}`}
+                        disabled
+                      >
+                        ✍️ Manual (Coming Soon)
+                      </button>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-2">
+                      Auto-generate will select questions based on time duration and selected topics/subtopics
+                    </p>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3 pt-4 border-t">
+                    <Button
+                      onClick={() => setShowAssessmentModal(false)}
+                      className="flex-1 bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={handleGenerateAssessment}
+                      disabled={loading}
+                      className="flex-1 bg-gradient-to-r from-green-500 to-blue-500 text-white"
+                    >
+                      {loading ? '⏳ Generating...' : '✨ Generate Assessment'}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
