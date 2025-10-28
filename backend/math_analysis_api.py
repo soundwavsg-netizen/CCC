@@ -60,7 +60,7 @@ except Exception as e:
     math_storage = None
 
 # Create router
-math_router = APIRouter(prefix="/math-analysis", tags=["Math Analysis"])
+math_router = APIRouter(prefix="/api/math-analysis", tags=["Math Analysis"])
 
 # Pydantic Models
 class TopicScore(BaseModel):
