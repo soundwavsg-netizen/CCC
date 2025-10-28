@@ -222,14 +222,20 @@ const TuitionCentreDemo = () => {
   const handleEnrollmentChange = (field, value) => {
     const updates = { [field]: value };
     
-    // If level changes, reset subject and location
+    // If level changes, reset everything after it
     if (field === 'level') {
       updates.subject = '';
       updates.location = '';
+      updates.tutor_preference = '';
     }
-    // If subject changes, reset location
+    // If subject changes, reset location and tutor
     else if (field === 'subject') {
       updates.location = '';
+      updates.tutor_preference = '';
+    }
+    // If location changes, reset tutor
+    else if (field === 'location') {
+      updates.tutor_preference = '';
     }
     
     setEnrollmentData(prev => ({
