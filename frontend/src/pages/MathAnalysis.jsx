@@ -1058,11 +1058,10 @@ const MathAnalysis = () => {
                             <p className="font-semibold text-gray-800">{revisionPlan.exam_type}</p>
                             <p className="text-sm text-gray-600">Overall Score: {revisionPlan.overall_score}%</p>
                             <div className="flex gap-2 mt-2">
-                              {revisionPlan.revision_plan.map((item, idx) => (
-                                <span key={idx} className={`text-xs px-2 py-1 rounded ${
-                                  item.current_score < 60 ? 'bg-red-100 text-red-700' : 
-                                  item.current_score < 75 ? 'bg-yellow-100 text-yellow-700' : 
-                                  'bg-green-100 text-green-700'
+                              {revisionPlan.all_topics && revisionPlan.all_topics.map((item, idx) => (
+                                <span key={idx} className={`text-xs px-2 py-1 rounded font-medium ${
+                                  item.current_score <= weakThreshold ? 'bg-red-100 text-red-700 border border-red-300' : 
+                                  'bg-green-100 text-green-700 border border-green-300'
                                 }`}>
                                   {item.topic}: {item.current_score}%
                                 </span>
