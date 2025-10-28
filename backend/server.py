@@ -106,6 +106,17 @@ class ChatResponse(BaseModel):
     message: str
     agent_mode: str
 
+class EnrollmentRequest(BaseModel):
+    parent_name: str
+    student_name: str
+    email: str
+    phone: str
+    level: str  # e.g., "S1", "P6"
+    subject: str  # e.g., "Math", "Science"
+    location: str  # e.g., "Bishan", "Marine Parade"
+    tutor_preference: str = ""  # Optional tutor name
+    message: str = ""  # Additional notes
+
 # WhatsApp Bot Models
 class WhatsAppMessage(BaseModel):
     phone_number: str
