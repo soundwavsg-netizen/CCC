@@ -99,7 +99,19 @@ const MathAnalysis = () => {
 
   // Fetch students on mount
   useEffect(() => {
-    fetchStudents();
+    // Check if tutor is logged in
+    const token = localStorage.getItem('tutor_token');
+    const storedTutorInfo = localStorage.getItem('tutor_info');
+    
+    if (token && storedTutorInfo) {
+      const parsedInfo = JSON.parse(storedTutorInfo);
+      setTutorInfo(parsedInfo);
+      setIsLoggedIn(true);
+      fetchStudents();
+    } else {
+      // Redirect to login if not authenticated
+      window.location.href = '/tutor/login';
+    }
   }, []);
 
   const fetchStudents = async () => {
