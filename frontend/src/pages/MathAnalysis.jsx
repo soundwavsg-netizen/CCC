@@ -994,6 +994,59 @@ const MathAnalysis = () => {
 
               {revisionPlan && (
                 <div className="mt-8 border-t pt-6">
+                  {/* Weak Performance Threshold Adjuster */}
+                  <div className="mb-6 bg-gradient-to-r from-purple-50 to-blue-50 border-2 border-purple-200 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <label className="block text-sm font-bold text-gray-800">
+                          ⚙️ Adjust Weak Performance Threshold
+                        </label>
+                        <p className="text-xs text-gray-600 mt-1">
+                          Topics scoring at or below this % will be marked as "weak"
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-3xl font-bold text-purple-600">{weakThreshold}%</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm text-gray-600">50%</span>
+                      <input
+                        type="range"
+                        min="50"
+                        max="90"
+                        step="5"
+                        value={weakThreshold}
+                        onChange={(e) => setWeakThreshold(parseInt(e.target.value))}
+                        className="flex-1 h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer"
+                        style={{
+                          background: `linear-gradient(to right, #dc2626 0%, #dc2626 ${(weakThreshold-50)/40*100}%, #e5e7eb ${(weakThreshold-50)/40*100}%, #e5e7eb 100%)`
+                        }}
+                      />
+                      <span className="text-sm text-gray-600">90%</span>
+                    </div>
+                    <div className="mt-3 flex gap-2">
+                      <button
+                        onClick={() => setWeakThreshold(60)}
+                        className={`px-3 py-1 rounded text-xs ${weakThreshold === 60 ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+                      >
+                        60%
+                      </button>
+                      <button
+                        onClick={() => setWeakThreshold(70)}
+                        className={`px-3 py-1 rounded text-xs ${weakThreshold === 70 ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+                      >
+                        70% (Default)
+                      </button>
+                      <button
+                        onClick={() => setWeakThreshold(80)}
+                        className={`px-3 py-1 rounded text-xs ${weakThreshold === 80 ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+                      >
+                        80%
+                      </button>
+                    </div>
+                  </div>
+
                   {/* All Test Results with Generate Assessment */}
                   <div className="mb-8">
                     <h4 className="text-xl font-bold text-gray-800 mb-4">Test Results History</h4>
