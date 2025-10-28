@@ -11,7 +11,7 @@ const TutorAdmin = () => {
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://math-mastery-12.preview.emergentagent.com';
 
-  const LOCATIONS = ['Marine Parade', 'Bishan', 'Tampines', 'Jurong', 'Woodlands', 'Ang Mo Kio'];
+  const LOCATIONS = ['Marine Parade', 'Bishan', 'Punggol', 'Kovan'];
   const LEVELS = ['S1', 'S2', 'S3', 'S4', 'J1', 'J2'];
   const SUBJECTS = ['Math', 'A Math', 'E Math'];
 
