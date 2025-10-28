@@ -351,27 +351,28 @@ async def get_students(
     subject: Optional[str] = None,
     authorization: str = Header(None)
 ):
-    """Get list of all students with optional filters (with optional tutor authentication)"""
+    """Get list of all students with optional filters (tutor authenticated)"""
     try:
-        tutor_id = None
+        # Verify tutor authentication - MANDATORY
+        if not authorization:
+            raise HTTPException(status_code=401, detail="Authorization header required")
         
-        # Try to verify tutor authentication if header is provided
-        if authorization:
-            try:
-                tutor_data = verify_tutor_token(authorization)
-                tutor_id = tutor_data.get('tutor_id')
-            except Exception as e:
-                # For demo purposes, continue without authentication but log the error
-                logger.warning(f"Authentication failed, continuing without filter: {str(e)}")
+        try:
+            tutor_data = verify_tutor_token(authorization)
+            tutor_id = tutor_data.get('tutor_id')
+            if not tutor_id:
+                raise HTTPException(status_code=401, detail="Invalid tutor token - no tutor_id")
+        except Exception as e:
+            logger.error(f"Authentication failed: {str(e)}")
+            raise HTTPException(status_code=401, detail="Authentication failed")
         
         if not math_db:
             raise HTTPException(status_code=500, detail="Firebase not initialized")
         
         query = math_db.collection('students')
         
-        # Filter by tutor_id if authenticated
-        if tutor_id:
-            query = query.where('tutor_id', '==', tutor_id)
+        # ALWAYS filter by tutor_id - this is critical for data isolation
+        query = query.where('tutor_id', '==', tutor_id)
         
         # Apply additional filters
         if location:
@@ -395,9 +396,12 @@ async def get_students(
         return {
             'success': True,
             'count': len(students),
-            'students': students
+            'students': students,
+            'tutor_id': tutor_id  # Include for debugging
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error fetching students: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
