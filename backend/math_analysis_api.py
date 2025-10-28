@@ -15,6 +15,9 @@ import json
 import logging
 from pathlib import Path
 
+# Import tutor auth
+from tutor_auth_api import verify_token
+
 # Setup logging
 logger = logging.getLogger(__name__)
 
