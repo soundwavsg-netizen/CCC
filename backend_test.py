@@ -675,11 +675,11 @@ class TuitionChatTester:
             
             # Count tutors in admin response
             tutors_in_admin = data.get("tutors", [])
-            admin_tutor_count = len(tutors_in_admin)
+            admin_tutor_count = data.get("count", len(tutors_in_admin))
             
             print(f"\n📊 ADMIN ENDPOINT ANALYSIS:")
             print(f"✅ Total tutors in Firebase: {admin_tutor_count}")
-            print(f"✅ Tutor names: {[tutor.get('name', 'Unknown') for tutor in tutors_in_admin]}")
+            print(f"✅ Tutor names: {tutors_in_admin}")
             
             # This tells us the ground truth - how many tutors actually exist
             has_sufficient_data = admin_tutor_count >= 6
@@ -688,12 +688,15 @@ class TuitionChatTester:
             print(f"❓ Firebase has sufficient tutors (>4): {has_sufficient_data}")
             print(f"❓ If chatbot shows fewer, it's a display/filtering issue")
             
+            if admin_tutor_count == 4:
+                print("ℹ️  Firebase actually only has 4 tutors - this may be a data upload issue, not chatbot issue")
+            
             self.test_results.append({
                 "test": "Admin Available Tutors - S3 AMath Marine Parade",
                 "passed": True,  # This is just data verification
                 "details": {
                     "firebase_tutor_count": admin_tutor_count,
-                    "tutor_names": [tutor.get('name', 'Unknown') for tutor in tutors_in_admin],
+                    "tutor_names": tutors_in_admin,
                     "has_sufficient_data": has_sufficient_data
                 }
             })
