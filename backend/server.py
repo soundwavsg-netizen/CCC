@@ -1289,7 +1289,7 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             
             # Query Firebase for classes
             if level or subject or location or tutor_search:
-                logger.info(f"Querying Firebase - Level: {level}, Subject: {subject}, Location: {location}, Tutor: {tutor_search}")
+                logger.info(f"Querying Firebase - Level: {level}, Subject: {subject}, Location: {location}, Tutor: {tutor_search} (from context: level={level}, subject={subject})")
                 classes = query_firebase_classes(level, subject, location, limit=30)
                 
                 # If we have a tutor search, filter classes by tutor name
