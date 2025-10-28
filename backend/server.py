@@ -1622,6 +1622,126 @@ async def tuition_demo_chat(request: TuitionChatRequest):
         logger.error(f"Error in tuition demo chat endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to process chat request: {str(e)}")
 
+
+@api_router.post("/tuition/enrollment")
+async def tuition_enrollment(enrollment: EnrollmentRequest):
+    """
+    Handle tuition class enrollment/reservation requests.
+    Collects customer details and sends notification email to admin.
+    """
+    try:
+        logger.info(f"Enrollment request: {enrollment.parent_name} for {enrollment.student_name} - {enrollment.level} {enrollment.subject} at {enrollment.location}")
+        
+        # Send email notification to admin
+        await send_enrollment_email(enrollment)
+        
+        return {
+            "success": True,
+            "message": "Enrollment request submitted successfully! Our admin team will contact you shortly."
+        }
+        
+    except Exception as e:
+        logger.error(f"Error processing enrollment: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to process enrollment request")
+
+
+async def send_enrollment_email(enrollment: EnrollmentRequest):
+    """
+    Send email notification about new enrollment request.
+    """
+    try:
+        import smtplib
+        from email.mime.text import MIMEText
+        from email.mime.multipart import MIMEMultipart
+        
+        # Email configuration
+        smtp_server = os.environ.get('SMTP_SERVER', 'smtp.gmail.com')
+        smtp_port = int(os.environ.get('SMTP_PORT', '587'))
+        sender_email = os.environ.get('SENDER_EMAIL', '')
+        sender_password = os.environ.get('SENDER_PASSWORD', '')
+        recipient_email = os.environ.get('NOTIFICATION_EMAIL', 'cognitioncompetence@gmail.com')
+        
+        if not sender_email or not sender_password:
+            logger.warning("Email credentials not configured. Notification skipped.")
+            logger.info(f"📚 New Enrollment: {enrollment.parent_name} - {enrollment.student_name} ({enrollment.email})")
+            return False
+        
+        # Create email message
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = f'📚 New Tuition Enrollment: {enrollment.student_name} - {enrollment.level} {enrollment.subject}'
+        msg['From'] = sender_email
+        msg['To'] = recipient_email
+        
+        # HTML email body
+        html_body = f"""
+        <html>
+            <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                <div style="max-width: 800px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
+                    <h2 style="color: #0FB5AE; margin-bottom: 20px;">📚 New Tuition Class Enrollment Request</h2>
+                    
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                        <h3 style="color: #333; margin-top: 0;">Class Details</h3>
+                        <p style="margin: 5px 0;"><strong>Level:</strong> {enrollment.level}</p>
+                        <p style="margin: 5px 0;"><strong>Subject:</strong> {enrollment.subject}</p>
+                        <p style="margin: 5px 0;"><strong>Location:</strong> {enrollment.location}</p>
+                        {f'<p style="margin: 5px 0;"><strong>Tutor Preference:</strong> {enrollment.tutor_preference}</p>' if enrollment.tutor_preference else ''}
+                    </div>
+                    
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                        <tr>
+                            <td style="padding: 10px; background: #f5f5f5; font-weight: bold; width: 150px;">👤 Parent Name:</td>
+                            <td style="padding: 10px;">{enrollment.parent_name}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; background: #fff; font-weight: bold;">👦 Student Name:</td>
+                            <td style="padding: 10px;">{enrollment.student_name}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">📧 Email:</td>
+                            <td style="padding: 10px;"><a href="mailto:{enrollment.email}">{enrollment.email}</a></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; background: #fff; font-weight: bold;">📱 Phone:</td>
+                            <td style="padding: 10px;"><a href="tel:{enrollment.phone}">{enrollment.phone}</a></td>
+                        </tr>
+                        {f'''<tr>
+                            <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">💬 Message:</td>
+                            <td style="padding: 10px;">{enrollment.message}</td>
+                        </tr>''' if enrollment.message else ''}
+                        <tr>
+                            <td style="padding: 10px; background: #fff; font-weight: bold;">⏰ Time:</td>
+                            <td style="padding: 10px;">{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}</td>
+                        </tr>
+                    </table>
+                    
+                    <div style="background: #e7f5f4; padding: 15px; border-radius: 5px; margin-top: 20px;">
+                        <p style="margin: 0; color: #0d6efd;">
+                            <strong>Action Required:</strong> Please contact the parent at {enrollment.phone} or {enrollment.email} 
+                            to discuss class enrollment for {enrollment.student_name}.
+                        </p>
+                    </div>
+                </div>
+            </body>
+        </html>
+        """
+        
+        # Attach HTML body
+        part = MIMEText(html_body, 'html')
+        msg.attach(part)
+        
+        # Send email
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.send_message(msg)
+        
+        logger.info(f"✅ Enrollment email sent successfully for {enrollment.student_name}")
+        return True
+        
+    except Exception as e:
+        logger.error(f"Failed to send enrollment email: {str(e)}")
+        return False
+
 # Include the router in the main app
 app.include_router(api_router)
 
