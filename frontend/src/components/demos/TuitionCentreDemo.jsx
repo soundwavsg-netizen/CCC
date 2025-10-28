@@ -710,11 +710,19 @@ const TuitionCentreDemo = () => {
                               />
                             </div>
 
-                            <div className="pt-2">
+                            <div className="pt-2 flex gap-3">
+                              <Button
+                                type="button"
+                                onClick={() => setShowEnrollmentForm(false)}
+                                variant="outline"
+                                className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
+                              >
+                                Cancel
+                              </Button>
                               <Button
                                 type="submit"
                                 disabled={isLoading}
-                                className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90"
+                                className="flex-1 bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90"
                               >
                                 {isLoading ? 'Submitting...' : 'Submit Request'}
                               </Button>
