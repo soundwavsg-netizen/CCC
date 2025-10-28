@@ -1928,6 +1928,31 @@ async def admin_search_classes(level: str = None, subject: str = None, location:
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@api_router.get("/admin/available-tutors")
+async def get_available_tutors(level: str, subject: str, location: str):
+    """
+    Get list of tutors teaching a specific level+subject at a location.
+    Returns tutor names that already exist in the database.
+    """
+    try:
+        classes_ref = firebase_db.collection('classes')
+        results = classes_ref.where('level', '==', level).where('subject', '==', subject).where('location', '==', location).stream()
+        
+        tutors = set()
+        for doc in results:
+            data = doc.to_dict()
+            # Return both the tutor_name (with title) and tutor_base_name
+            tutors.add(data.get('tutor_name', ''))
+        
+        return {
+            "tutors": sorted(list(tutors)),
+            "count": len(tutors)
+        }
+    except Exception as e:
+        logger.error(f"Error fetching available tutors: {str(e)}")
+        return {"tutors": [], "count": 0}
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
