@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Backend Testing Suite for Tuition Centre Chatbot
-Tests the /api/tuition/chat endpoint for data accuracy fixes
+Backend Testing Suite for Math Analysis System
+Tests the /api/math-analysis/analytics endpoint filtering functionality
 """
 
 import requests
@@ -12,7 +12,8 @@ import time
 
 # Configuration
 BACKEND_URL = "https://math-mastery-12.preview.emergentagent.com"
-API_ENDPOINT = f"{BACKEND_URL}/api/tuition/chat"
+TUITION_API_ENDPOINT = f"{BACKEND_URL}/api/tuition/chat"
+ANALYTICS_API_ENDPOINT = f"{BACKEND_URL}/api/math-analysis/analytics"
 
 class TuitionChatTester:
     def __init__(self):
