@@ -1716,10 +1716,14 @@ async def send_enrollment_email(enrollment: EnrollmentRequest):
                             <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">📧 Email:</td>
                             <td style="padding: 10px;"><a href="mailto:{enrollment.email}">{enrollment.email}</a></td>
                         </tr>
-                        <tr>
-                            <td style="padding: 10px; background: #fff; font-weight: bold;">📱 Phone:</td>
-                            <td style="padding: 10px;"><a href="tel:{enrollment.phone}">{enrollment.phone}</a></td>
-                        </tr>
+                        {f'''<tr>
+                            <td style="padding: 10px; background: #fff; font-weight: bold;">📱 Parent Phone:</td>
+                            <td style="padding: 10px;"><a href="tel:{enrollment.parent_phone}">{enrollment.parent_phone}</a></td>
+                        </tr>''' if enrollment.parent_phone else ''}
+                        {f'''<tr>
+                            <td style="padding: 10px; background: #{'f5f5f5' if not enrollment.parent_phone else 'fff'}; font-weight: bold;">📱 Student Phone:</td>
+                            <td style="padding: 10px;"><a href="tel:{enrollment.student_phone}">{enrollment.student_phone}</a></td>
+                        </tr>''' if enrollment.student_phone else ''}
                         {f'''<tr>
                             <td style="padding: 10px; background: #f5f5f5; font-weight: bold;">💬 Message:</td>
                             <td style="padding: 10px;">{enrollment.message}</td>
@@ -1732,7 +1736,7 @@ async def send_enrollment_email(enrollment: EnrollmentRequest):
                     
                     <div style="background: #e7f5f4; padding: 15px; border-radius: 5px; margin-top: 20px;">
                         <p style="margin: 0; color: #0d6efd;">
-                            <strong>Action Required:</strong> Please contact the parent at {enrollment.phone} or {enrollment.email} 
+                            <strong>Action Required:</strong> Please contact {enrollment.parent_phone if enrollment.parent_phone else enrollment.student_phone} or {enrollment.email} 
                             to discuss class enrollment for {enrollment.student_name}.
                         </p>
                     </div>
