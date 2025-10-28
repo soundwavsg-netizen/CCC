@@ -1408,7 +1408,19 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                 # This prevents blocking queries where context provides the missing info
                 is_too_broad = False
                 
-                if level and location and not subject and not tutor_search:
+                if level and subject and not location and not tutor_search:
+                    # Level + Subject without location - ASK FOR LOCATION
+                    # This prevents dumping all locations for something like "S3 AMath"
+                    is_too_broad = True
+                    firebase_context = f"\n\n**QUERY TOO BROAD - ASK FOR CLARIFICATION:**\n"
+                    firebase_context += f"User asked about {level} {subject} classes, but didn't specify a location.\n"
+                    firebase_context += f"We have classes at 5 locations: Bishan, Punggol, Marine Parade, Jurong, and Kovan.\n\n"
+                    firebase_context += f"**YOU MUST ASK**: 'Which location would you like to know about for {level} {subject}? We have classes at:\n"
+                    firebase_context += f"- Bishan\n- Punggol\n- Marine Parade\n- Jurong\n- Kovan\n\n"
+                    firebase_context += f"Or would you like to see all locations?'\n\n"
+                    firebase_context += f"**DO NOT query or show class data yet** - wait for location specification.\n"
+                    classes = []
+                elif level and location and not subject and not tutor_search:
                     # Level + Location without subject - check if this is from explicit query or context
                     # If both are from context (conversation history), this is acceptable
                     # Only block if user explicitly asked for "all [level] classes at [location]"
