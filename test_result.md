@@ -109,6 +109,51 @@ user_problem_statement: "Fix chatbot data accuracy issues:
 4. Some tutors show only 1 timing when they should show 2 timings per class"
 
 backend:
+  - task: "Fix chatbot Class A/B labeling logic"
+    implemented: true
+    working: "needs_testing"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported: When listing tutors for S2 Math at Marine Parade, bot shows all have Class A, B when each tutor only has 1 class. Class A/B should ONLY be used when SAME tutor has MULTIPLE classes of SAME level/subject at SAME location."
+      - working: "needs_testing"
+        agent: "main"
+        comment: "FIXED: Updated grouping logic in server.py lines 1287-1340 and 1321-1385. Now properly groups classes by tutor -> location -> level/subject. Only adds Class A, B, C labels when SAME tutor has MULTIPLE classes of EXACT SAME level AND subject at SAME location. For different subjects or single classes, no A/B labels are used."
+  
+  - task: "Fix location filtering for tutor-specific queries"
+    implemented: true
+    working: "needs_testing"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported: When asking about Sean Yeo who only teaches at Marine Parade and Bishan, bot shows ALL locations."
+      - working: "needs_testing"
+        agent: "main"
+        comment: "FIXED: Added explicit location list in Firebase context instructions (line 1318). Now tells LLM: '{tutor_name} ONLY teaches at: {locations}'. This ensures LLM knows tutor's actual locations."
+  
+  - task: "Fix schedule display - show complete timings"
+    implemented: true
+    working: "needs_testing"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported: Schedule days and timings are wrong. Some tutors show only 1 timing when should show 2 timings."
+      - working: "needs_testing"
+        agent: "main"
+        comment: "FIXED: Updated schedule formatting to use ' + '.join() to show ALL sessions (lines 1303, 1309, 1352, 1374). Added critical instruction to LLM: 'Always show COMPLETE schedules with ALL session days and times (separated by +)'. Each class document has a 'schedule' array with all sessions, now properly displayed."
+  
   - task: "Create comprehensive tuition center AI training documentation"
     implemented: true
     working: true
