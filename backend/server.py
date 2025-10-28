@@ -1116,7 +1116,11 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             'class' in user_message_lower and any(loc in user_message_lower for loc in ['bishan', 'punggol', 'marine parade', 'marine', 'jurong', 'kovan']),
             'schedule' in user_message_lower or 'when' in user_message_lower or 'time' in user_message_lower,
             any(level in user_message_lower for level in ['p2', 'p3', 'p4', 'p5', 'p6', 's1', 's2', 's3', 's4', 'j1', 'j2']),
-            any(name in user_message_lower for name in ['mr', 'ms', 'mrs', 'mdm', 'miss'])
+            any(name in user_message_lower for name in ['mr', 'ms', 'mrs', 'mdm', 'miss']),
+            # Also trigger if location is mentioned (for follow-up queries)
+            any(loc in user_message_lower for loc in ['bishan', 'punggol', 'marine parade', 'marine', 'jurong', 'kovan']),
+            # Trigger on words like "list", "show", "available", "which", "what", "who"
+            any(word in user_message_lower for word in ['list', 'show', 'available', 'which', 'what', 'who', 'all'])
         ])
         
         if needs_firebase:
@@ -1125,6 +1129,59 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             subject = None
             location = None
             tutor_search = None
+            
+            # Try to extract from conversation history if not in current message
+            if history and not any(l in user_message_lower for l in ['p2', 'p3', 'p4', 'p5', 'p6', 's1', 's2', 's3', 's4', 'j1', 'j2']):
+                # Check last user message for level
+                for msg in history[-2:]:  # Check last 2 exchanges
+                    msg_lower = msg['user'].lower()
+                    for l in ['p2', 'p3', 'p4', 'p5', 'p6', 's1', 's2', 's3', 's4', 'j1', 'j2']:
+                        if l in msg_lower:
+                            level = l.upper()
+                            break
+                    if level:
+                        break
+            
+            # Try to extract subject from conversation history if not in current message
+            subject_keywords = ['math', 'maths', 'science', 'english', 'chinese', 'emath', 'e-math', 
+                              'amath', 'a-math', 'physics', 'chemistry', 'biology', 'economics', 'econs']
+            if history and not any(subj in user_message_lower for subj in subject_keywords):
+                # Check last user message and assistant response for subject
+                for msg in history[-2:]:
+                    msg_lower = msg['user'].lower()
+                    assistant_lower = msg.get('assistant', '').lower()
+                    combined = msg_lower + ' ' + assistant_lower
+                    
+                    if 'emath' in combined or 'e-math' in combined or 'e math' in combined:
+                        subject = 'EMath'
+                        break
+                    elif 'amath' in combined or 'a-math' in combined or 'a math' in combined:
+                        subject = 'AMath'
+                        break
+                    elif 'math' in combined or 'maths' in combined:
+                        subject = 'Math'
+                        break
+                    elif 'science' in combined:
+                        subject = 'Science'
+                        break
+                    elif 'physics' in combined:
+                        subject = 'Physics'
+                        break
+                    elif 'chemistry' in combined:
+                        subject = 'Chemistry'
+                        break
+                    elif 'biology' in combined:
+                        subject = 'Biology'
+                        break
+                    elif 'english' in combined:
+                        subject = 'English'
+                        break
+                    elif 'chinese' in combined:
+                        subject = 'Chinese'
+                        break
+                    elif 'economics' in combined or 'econs' in combined:
+                        subject = 'Economics'
+                        break
             
             # Extract level
             for l in ['P2', 'P3', 'P4', 'P5', 'P6', 'S1', 'S2', 'S3', 'S4', 'J1', 'J2']:
