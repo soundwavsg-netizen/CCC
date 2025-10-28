@@ -731,6 +731,11 @@ class TuitionChatTester:
         print(f"🔗 Testing endpoint: {API_ENDPOINT}")
         print(f"🆔 Session ID: {self.session_id}")
         
+        # Run CRITICAL data accuracy investigation first
+        print("\n🔍 INVESTIGATING USER-REPORTED DATA ACCURACY ISSUE...")
+        firebase_tutor_count = self.test_available_tutors_endpoint()
+        data_accuracy_passed = self.test_data_accuracy_s3_amath_marine_parade()
+        
         # Run original test scenarios
         test1_passed = self.test_scenario_1_sean_yeo_location_filtering()
         test2_passed = self.test_scenario_2_class_ab_labeling()
@@ -758,6 +763,16 @@ class TuitionChatTester:
             print(f"{status}: {result['test']}")
             
         print(f"\n🎯 OVERALL RESULT: {passed_count}/{total_count} tests passed")
+        
+        # Special focus on data accuracy issue
+        print(f"\n🔍 DATA ACCURACY INVESTIGATION:")
+        print(f"📊 Firebase has {firebase_tutor_count} tutors for S3 AMath Marine Parade")
+        print(f"🤖 Chatbot data accuracy test: {'✅ PASSED' if data_accuracy_passed else '❌ FAILED'}")
+        
+        if firebase_tutor_count > 4 and not data_accuracy_passed:
+            print("⚠️  CRITICAL ISSUE: Firebase has more tutors than chatbot is showing!")
+        elif firebase_tutor_count <= 4:
+            print("ℹ️  Firebase only has 4 or fewer tutors - this may be a data upload issue, not chatbot issue")
         
         # Special focus on context-aware tests
         context_tests = [context1_passed, context2_passed, context3_passed]
