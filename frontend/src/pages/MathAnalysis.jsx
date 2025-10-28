@@ -96,6 +96,16 @@ const MathAnalysis = () => {
   const [studentAssessments, setStudentAssessments] = useState([]);
   const [improvementData, setImprovementData] = useState(null);
   const [weakThreshold, setWeakThreshold] = useState(70); // Default 70%
+  
+  // Revision Plans filtering and view state
+  const [revisionFilters, setRevisionFilters] = useState({
+    level: '',
+    location: ''
+  });
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+  const [studentResults, setStudentResults] = useState([]); // Store all results with scores
+  const [editingResult, setEditingResult] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   // Fetch students on mount
   useEffect(() => {
