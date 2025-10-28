@@ -17,8 +17,18 @@ from pathlib import Path
 
 # JWT token verification
 import jwt
-import secrets
 ALGORITHM = "HS256"
+
+# Import SECRET_KEY from tutor_auth_api
+def get_secret_key():
+    """Get the secret key from tutor_auth_api module"""
+    import sys
+    import importlib.util
+    
+    spec = importlib.util.spec_from_file_location("tutor_auth", "/app/backend/tutor_auth_api.py")
+    tutor_auth = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tutor_auth)
+    return tutor_auth.SECRET_KEY
 
 def verify_tutor_token(authorization_header):
     """Verify JWT token and return tutor data"""
@@ -27,9 +37,7 @@ def verify_tutor_token(authorization_header):
     
     try:
         token = authorization_header.replace("Bearer ", "")
-        # We need to use the same SECRET_KEY as tutor_auth_api
-        # For now, let's read it from environment or use a shared constant
-        SECRET_KEY = "your_secret_key_here"  # This should match tutor_auth_api
+        SECRET_KEY = get_secret_key()
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except jwt.ExpiredSignatureError:
