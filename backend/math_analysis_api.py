@@ -370,9 +370,13 @@ async def get_student_results(student_id: str):
         
         student_data = student_doc.to_dict()
         
-        # Get all results
+        # Get all results from student_results collection
         results = []
-        for result_doc in student_ref.collection('results').order_by('date', direction=firestore.Query.DESCENDING).stream():
+        results_query = math_db.collection('student_results')\
+            .where('student_id', '==', student_id)\
+            .order_by('created_at', direction=firestore.Query.DESCENDING)
+        
+        for result_doc in results_query.stream():
             result_data = result_doc.to_dict()
             result_data['result_id'] = result_doc.id
             results.append(result_data)
