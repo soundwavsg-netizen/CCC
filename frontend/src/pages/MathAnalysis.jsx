@@ -129,9 +129,22 @@ const MathAnalysis = () => {
       const response = await axios.get(`${BACKEND_URL}/api/math-analysis/students`);
       if (response.data.success) {
         setStudents(response.data.students);
+        // Also fetch all results with scores for the revision tab
+        fetchAllStudentResults();
       }
     } catch (error) {
       console.error('Error fetching students:', error);
+    }
+  };
+
+  const fetchAllStudentResults = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/math-analysis/all-results`);
+      if (response.data.success) {
+        setStudentResults(response.data.results);
+      }
+    } catch (error) {
+      console.error('Error fetching all results:', error);
     }
   };
 
