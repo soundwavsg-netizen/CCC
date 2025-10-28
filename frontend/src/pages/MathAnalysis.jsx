@@ -1315,8 +1315,8 @@ const MathAnalysis = () => {
                                   <span className="text-sm text-green-600">{topic.current_score}%</span>
                                 </label>
                               ))}
-                            {assessmentData.all_available_topics.filter(t => t.current_score >= 60).length === 0 && (
-                              <p className="text-sm text-gray-600">No additional topics available (all are weak topics)</p>
+                            {assessmentData.all_available_topics.filter(t => t.current_score > weakThreshold).length === 0 && (
+                              <p className="text-sm text-gray-600">No additional topics available (all are at or below {weakThreshold}%)</p>
                             )}
                           </div>
                         </div>
