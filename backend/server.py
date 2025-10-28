@@ -1538,8 +1538,8 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                         firebase_context += f"- {format_tutor_info(tutor)}\n"
                     firebase_context += "\nPresent this information naturally in your response.\n"
         
-        # Combine system message with context and Firebase data
-        enhanced_system_msg = TUITION_SYSTEM_MESSAGE + context_enhancement + firebase_context
+        # Combine system message with context (but NOT firebase_context - that goes in user message)
+        enhanced_system_msg = TUITION_SYSTEM_MESSAGE + context_enhancement
         
         # Initialize LLM Chat
         chat = LlmChat(
@@ -1551,8 +1551,16 @@ async def tuition_demo_chat(request: TuitionChatRequest):
         # Use gpt-4o-mini model
         chat.with_model("openai", "gpt-4o-mini")
         
-        # Create user message and send
-        user_message = UserMessage(text=request.message)
+        # Create user message - if we have firebase_context with exact response, prepend it to user query
+        actual_user_message = request.message
+        if firebase_context and "MANDATORY - PRESENT THIS EXACT RESPONSE" in firebase_context:
+            # Extract the exact response from the firebase_context
+            actual_user_message = firebase_context + "\n\n**User's query**: " + request.message
+        elif firebase_context:
+            # Regular firebase context (not exact response format)
+            actual_user_message = firebase_context + "\n\n**User's query**: " + request.message
+        
+        user_message = UserMessage(text=actual_user_message)
         assistant_response = await chat.send_message(user_message)
         
         # Extract response text
