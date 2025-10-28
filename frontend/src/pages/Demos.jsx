@@ -79,6 +79,26 @@ export default function Demos() {
       company: 'Raymond\'s Math & Science Studio'
     },
     {
+      id: 'math-analysis',
+      title: 'Math Results Analysis System',
+      description: 'Track student performance, analyze topic-wise strengths/weaknesses, and generate AI-powered revision plans.',
+      image: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&q=85&w=800&h=400',
+      features: [
+        'CSV/Excel batch upload',
+        'Manual result entry',
+        'Topic-wise performance analytics',
+        'Trend comparison (WA1→EOY)',
+        'Weak topic identification',
+        'Auto-generated revision plans'
+      ],
+      tech: ['Firebase', 'Chart.js', 'FastAPI', 'React'],
+      route: '/demo/math-analysis',
+      color: 'from-[#f093fb] to-[#f5576c]',
+      icon: BarChart3,
+      status: 'Live Demo',
+      company: 'CCC Digital Education Tools'
+    },
+    {
       id: 'ecommerce',
       title: 'E-commerce Chatbot',
       description: 'AI customer support for online stores with product guidance, order assistance, and intelligent recommendations.',
