@@ -497,8 +497,11 @@ async def get_revision_plan(student_id: str, exam_type: Optional[str] = None):
         
         student_data = student_doc.to_dict()
         
-        # Get latest or specific exam results
-        results_query = student_ref.collection('results').order_by('date', direction=firestore.Query.DESCENDING)
+        # Get latest or specific exam results from student_results collection
+        results_query = math_db.collection('student_results')\
+            .where('student_id', '==', student_id)\
+            .order_by('created_at', direction=firestore.Query.DESCENDING)
+        
         if exam_type:
             results_query = results_query.where('exam_type', '==', exam_type)
         
@@ -512,12 +515,16 @@ async def get_revision_plan(student_id: str, exam_type: Optional[str] = None):
             }
         
         latest_result = results[0].to_dict()
-        weak_topics = latest_result.get('analysis', {}).get('weaknesses', [])
+        result_id = results[0].id
+        
+        # Extract topics and identify weak ones (default threshold 70%)
+        all_topics = latest_result.get('topics', [])
+        weak_topics = [t for t in all_topics if t.get('percentage', 0) <= 70]
         
         # Get topic library resources
         revision_items = []
         for weak in weak_topics:
-            topic_name = weak['topic']
+            topic_name = weak['topic_name']
             
             # Query topic library
             topic_query = math_db.collection('topic_library')\
@@ -561,13 +568,16 @@ async def get_revision_plan(student_id: str, exam_type: Optional[str] = None):
             'exam_type': latest_result['exam_type'],
             'overall_score': latest_result['overall_score'],
             'revision_plan': revision_items,
-            'weak_topics_count': len(revision_items)
+            'weak_topics_count': len(revision_items),
+            'result_id': result_id,
+            'all_topics': all_topics  # Include all topics for frontend
         }
         
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Error generating revision plan: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
         raise HTTPException(status_code=500, detail=str(e))
 
 @math_router.get("/topic-library")
