@@ -1555,10 +1555,14 @@ async def tuition_demo_chat(request: TuitionChatRequest):
         actual_user_message = request.message
         if firebase_context and "MANDATORY - PRESENT THIS EXACT RESPONSE" in firebase_context:
             # Extract the exact response from the firebase_context
+            logger.info(f"Prepending EXACT firebase response to user message (length: {len(firebase_context)})")
             actual_user_message = firebase_context + "\n\n**User's query**: " + request.message
         elif firebase_context:
             # Regular firebase context (not exact response format)
+            logger.info(f"Prepending regular firebase context to user message (length: {len(firebase_context)})")
             actual_user_message = firebase_context + "\n\n**User's query**: " + request.message
+        else:
+            logger.info("No firebase context to prepend")
         
         user_message = UserMessage(text=actual_user_message)
         assistant_response = await chat.send_message(user_message)
