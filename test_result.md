@@ -241,28 +241,40 @@ metadata:
 
 test_plan:
   current_focus:
-    - "All tasks completed and verified"
+    - "Fix chatbot Class A/B labeling logic"
+    - "Fix location filtering for tutor-specific queries"
+    - "Fix schedule display - show complete timings"
   stuck_tasks: []
   test_all: false
-  test_priority: "completed"
+  test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
-    message: "✅ COMPLETED: All tasks completed successfully!
+    message: "🔧 CRITICAL FIXES IMPLEMENTED - Backend Chatbot Data Logic
+
+    **Problem**: Chatbot providing incorrect information about classes
+    1. Location filtering broken - showing all locations instead of tutor's actual locations
+    2. Wrong Class A/B labeling - used whenever multiple classes at location, should ONLY use when same tutor has multiple classes of same level/subject
+    3. Incomplete schedules - missing session timings
     
-    **Task 1: AI Library Update**
-    - Created comprehensive tuition training doc with 2026 data
-    - Removed ALL RMSS branding from UI (demo & AI library pages)
+    **Fixes Applied** (server.py lines 1287-1385):
+    1. **Class A/B Logic Fix**: 
+       - Now groups by tutor -> location -> level_subject
+       - Only adds 'Class A, B, C' when SAME tutor has MULTIPLE classes of EXACT SAME level AND subject at SAME location
+       - For different subjects or single classes, no A/B labels
     
-    **Task 2: Demo Connection Fix**
-    - Created dedicated `/api/tuition/chat` endpoint
-    - Fixed connection issue - chat now works perfectly
+    2. **Location Filtering Fix**:
+       - Added explicit instruction to LLM with tutor's actual locations
+       - Context now includes: '{tutor_name} ONLY teaches at: {locations}'
     
-    **Task 3: 2026-2027 Math Transition Update**
-    - Updated system message with transition information
-    - S3 EMath: NEW format (1×2hr, $343.35)
-    - S4 EMath: OLD format for existing students (2×1.5hr, $408.75)
-    - J1 Math: NEW format (1×2hr, $401.12)
-    - J2 Math: OLD format for existing students (2×1.5hr, $444.72)
-    - Added comprehensive transition explanation
-    - All 3 test scenarios verified working correctly via curl"
+    3. **Schedule Display Fix**:
+       - All schedule sessions now properly joined with ' + '
+       - Added critical instruction: 'Always show COMPLETE schedules with ALL session days and times'
+    
+    **Ready for Testing**:
+    Test scenarios:
+    1. 'Tell me about Sean Yeo S3 AMath' - should show ONLY Bishan and Marine Parade with complete schedules
+    2. 'List all tutors teaching S2 Math at Marine Parade' - should show each tutor WITHOUT Class A/B labels (unless tutor has multiple S2 Math classes)
+    3. Any class query - verify all session days/times are displayed
+    
+    Backend restarted and running. Ready for comprehensive testing."
