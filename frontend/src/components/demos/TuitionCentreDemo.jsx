@@ -667,7 +667,7 @@ const TuitionCentreDemo = () => {
                             <Button
                               type="submit"
                               disabled={isLoading}
-                              className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90"
+                              className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90 mb-4"
                             >
                               {isLoading ? 'Submitting...' : 'Submit Request'}
                             </Button>
