@@ -497,7 +497,7 @@ const TuitionCentreDemo = () => {
                             </div>
 
                             <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Parent Phone (at least one phone required)</label>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Parent Phone</label>
                               <input
                                 type="tel"
                                 value={enrollmentData.parent_phone}
@@ -508,7 +508,7 @@ const TuitionCentreDemo = () => {
                             </div>
 
                             <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Student Phone (Optional for JC levels)</label>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Student Phone</label>
                               <input
                                 type="tel"
                                 value={enrollmentData.student_phone}
@@ -516,6 +516,7 @@ const TuitionCentreDemo = () => {
                                 placeholder="e.g., +65 8123 4567"
                                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
                               />
+                              <p className="text-xs text-gray-500 mt-1">* At least 1 phone number is required</p>
                             </div>
 
                             <div className="grid grid-cols-2 gap-3">
