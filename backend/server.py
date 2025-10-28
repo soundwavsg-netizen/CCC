@@ -1816,6 +1816,118 @@ async def send_enrollment_email(enrollment: EnrollmentRequest):
         logger.error(f"Failed to send enrollment email: {str(e)}")
         return False
 
+
+@api_router.post("/admin/manage-class")
+async def admin_manage_class(request: AdminClassUpdate):
+    """
+    Admin endpoint to add, update, or delete class data.
+    Password protected in production.
+    """
+    try:
+        if request.action == "add":
+            # Add new class
+            class_data = request.class_data
+            
+            # Normalize tutor name
+            tutor_base_name = class_data.tutor_name.replace("Mr ", "").replace("Ms ", "").replace("Mrs ", "").replace("Mdm ", "")
+            if "(DY HOD)" in tutor_base_name:
+                tutor_base_name = tutor_base_name.replace("(DY HOD)", "(DY_HOD)")
+            
+            # Build schedule
+            schedule = [{'day': class_data.day1, 'time': class_data.time1}]
+            if class_data.day2 and class_data.time2:
+                schedule.append({'day': class_data.day2, 'time': class_data.time2})
+            
+            # Create class ID
+            class_id = f"{class_data.level.lower()}_{class_data.subject.lower()}_{class_data.location.lower().replace(' ', '_')}_{tutor_base_name.lower().replace(' ', '_').replace('.', '').replace('(', '').replace(')', '')}"
+            
+            # Create class document
+            class_doc = {
+                'class_id': class_id,
+                'level': class_data.level,
+                'subject': class_data.subject,
+                'location': class_data.location,
+                'tutor_name': class_data.tutor_name,
+                'tutor_base_name': tutor_base_name,
+                'schedule': schedule,
+                'monthly_fee': class_data.monthly_fee,
+                'sessions_per_week': class_data.sessions_per_week
+            }
+            
+            firebase_db.collection('classes').document(class_id).set(class_doc)
+            logger.info(f"✅ Added class: {class_id}")
+            
+            return {"success": True, "message": f"Class added: {tutor_base_name} - {class_data.level} {class_data.subject} at {class_data.location}", "class_id": class_id}
+            
+        elif request.action == "delete":
+            # Delete class
+            firebase_db.collection('classes').document(request.class_id).delete()
+            logger.info(f"🗑️  Deleted class: {request.class_id}")
+            
+            return {"success": True, "message": f"Class deleted: {request.class_id}"}
+            
+        elif request.action == "update":
+            # Update existing class
+            class_data = request.class_data
+            
+            # Build schedule
+            schedule = [{'day': class_data.day1, 'time': class_data.time1}]
+            if class_data.day2 and class_data.time2:
+                schedule.append({'day': class_data.day2, 'time': class_data.time2})
+            
+            # Update document
+            firebase_db.collection('classes').document(request.class_id).update({
+                'schedule': schedule,
+                'monthly_fee': class_data.monthly_fee,
+                'sessions_per_week': class_data.sessions_per_week
+            })
+            
+            logger.info(f"📝 Updated class: {request.class_id}")
+            
+            return {"success": True, "message": f"Class updated: {request.class_id}"}
+        
+        else:
+            raise HTTPException(status_code=400, detail="Invalid action. Use 'add', 'update', or 'delete'")
+            
+    except Exception as e:
+        logger.error(f"Error in admin class management: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@api_router.get("/admin/search-classes")
+async def admin_search_classes(level: str = None, subject: str = None, location: str = None, tutor: str = None):
+    """
+    Search for classes with optional filters.
+    """
+    try:
+        classes_ref = firebase_db.collection('classes')
+        query = classes_ref
+        
+        if level:
+            query = query.where('level', '==', level)
+        if subject:
+            query = query.where('subject', '==', subject)
+        if location:
+            query = query.where('location', '==', location)
+        
+        results = query.limit(100).stream()
+        
+        classes = []
+        for doc in results:
+            data = doc.to_dict()
+            if tutor:
+                if tutor.lower() in data.get('tutor_base_name', '').lower():
+                    classes.append(data)
+            else:
+                classes.append(data)
+        
+        return {"classes": classes, "count": len(classes)}
+        
+    except Exception as e:
+        logger.error(f"Error searching classes: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
