@@ -1529,7 +1529,7 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                                 exact_response += "\n"
                         exact_response += "\n"
                     
-                    exact_response += "Would you like more details about any specific tutor or to enroll? 😊"
+                    exact_response += "Would you like more details about any specific tutor? Or would you like to **enroll/make a reservation**? 😊"
                     
                     logger.info(f"Built exact response with {len(classes_by_tutor)} tutors")
                     logger.info(f"First 200 chars: {exact_response[:200]}")
