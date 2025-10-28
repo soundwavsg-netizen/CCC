@@ -415,6 +415,189 @@ const TuitionCentreDemo = () => {
                   </div>
                 )}
 
+                {/* Enrollment Form Button */}
+                {messages.length > 1 && !showEnrollmentForm && (
+                  <div className="p-2 bg-white/80 backdrop-blur-sm border-t border-white/20">
+                    <Button
+                      onClick={() => setShowEnrollmentForm(true)}
+                      className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90"
+                    >
+                      📚 Enrollment Form
+                    </Button>
+                  </div>
+                )}
+
+                {/* Enrollment Form Modal */}
+                {showEnrollmentForm && (
+                  <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto"
+                    >
+                      <div className="p-6">
+                        <div className="flex justify-between items-center mb-4">
+                          <h3 className="text-2xl font-bold text-gray-800">📚 Enrollment Request</h3>
+                          <Button
+                            onClick={() => setShowEnrollmentForm(false)}
+                            variant="ghost"
+                            size="sm"
+                          >
+                            <X className="h-5 w-5" />
+                          </Button>
+                        </div>
+
+                        {enrollmentSubmitted ? (
+                          <div className="text-center py-8">
+                            <div className="text-6xl mb-4">✅</div>
+                            <h4 className="text-xl font-bold text-green-600 mb-2">Request Submitted!</h4>
+                            <p className="text-gray-600">Our admin team will contact you shortly.</p>
+                          </div>
+                        ) : (
+                          <form onSubmit={handleEnrollmentSubmit} className="space-y-4">
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Parent Name *</label>
+                              <input
+                                type="text"
+                                required
+                                value={enrollmentData.parent_name}
+                                onChange={(e) => handleEnrollmentChange('parent_name', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Student Name *</label>
+                              <input
+                                type="text"
+                                required
+                                value={enrollmentData.student_name}
+                                onChange={(e) => handleEnrollmentChange('student_name', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                              <input
+                                type="email"
+                                required
+                                value={enrollmentData.email}
+                                onChange={(e) => handleEnrollmentChange('email', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+                              <input
+                                type="tel"
+                                required
+                                value={enrollmentData.phone}
+                                onChange={(e) => handleEnrollmentChange('phone', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                              />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3">
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Level *</label>
+                                <select
+                                  required
+                                  value={enrollmentData.level}
+                                  onChange={(e) => handleEnrollmentChange('level', e.target.value)}
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                                >
+                                  <option value="">Select</option>
+                                  <option value="P2">P2</option>
+                                  <option value="P3">P3</option>
+                                  <option value="P4">P4</option>
+                                  <option value="P5">P5</option>
+                                  <option value="P6">P6</option>
+                                  <option value="S1">S1</option>
+                                  <option value="S2">S2</option>
+                                  <option value="S3">S3</option>
+                                  <option value="S4">S4</option>
+                                  <option value="J1">J1</option>
+                                  <option value="J2">J2</option>
+                                </select>
+                              </div>
+
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Subject *</label>
+                                <select
+                                  required
+                                  value={enrollmentData.subject}
+                                  onChange={(e) => handleEnrollmentChange('subject', e.target.value)}
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                                >
+                                  <option value="">Select</option>
+                                  <option value="Math">Math</option>
+                                  <option value="Science">Science</option>
+                                  <option value="English">English</option>
+                                  <option value="Chinese">Chinese</option>
+                                  <option value="EMath">EMath</option>
+                                  <option value="AMath">AMath</option>
+                                  <option value="Physics">Physics</option>
+                                  <option value="Chemistry">Chemistry</option>
+                                  <option value="Biology">Biology</option>
+                                  <option value="Economics">Economics</option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+                              <select
+                                required
+                                value={enrollmentData.location}
+                                onChange={(e) => handleEnrollmentChange('location', e.target.value)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                              >
+                                <option value="">Select</option>
+                                <option value="Bishan">Bishan</option>
+                                <option value="Punggol">Punggol</option>
+                                <option value="Marine Parade">Marine Parade</option>
+                                <option value="Jurong">Jurong</option>
+                                <option value="Kovan">Kovan</option>
+                              </select>
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Tutor Preference (Optional)</label>
+                              <input
+                                type="text"
+                                value={enrollmentData.tutor_preference}
+                                onChange={(e) => handleEnrollmentChange('tutor_preference', e.target.value)}
+                                placeholder="e.g., Mr. Sean Yeo"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Additional Notes (Optional)</label>
+                              <textarea
+                                value={enrollmentData.message}
+                                onChange={(e) => handleEnrollmentChange('message', e.target.value)}
+                                rows="3"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                              />
+                            </div>
+
+                            <Button
+                              type="submit"
+                              disabled={isLoading}
+                              className="w-full bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90"
+                            >
+                              {isLoading ? 'Submitting...' : 'Submit Request'}
+                            </Button>
+                          </form>
+                        )}
+                      </div>
+                    </motion.div>
+                  </div>
+                )}
+
                 {/* Input */}
                 <div className="p-4 bg-white/90 backdrop-blur-sm border-t border-white/20">
                   <div className="flex gap-3">
