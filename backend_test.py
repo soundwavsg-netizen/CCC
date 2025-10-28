@@ -556,6 +556,154 @@ class TuitionChatTester:
         
         return test_passed
     
+    def test_data_accuracy_s3_amath_marine_parade(self):
+        """
+        CRITICAL DATA ACCURACY TEST: S3 AMath Marine Parade Tutor Count
+        User reported: Only 4 tutors showing when asking for "S3 AMath Marine Parade classes"
+        Expected: Should show more tutors (possibly 8-9 based on other locations)
+        """
+        print("\n" + "="*80)
+        print("DATA ACCURACY TEST: S3 AMath Marine Parade - Tutor Count Investigation")
+        print("="*80)
+        
+        # Test the exact query user reported
+        query = "S3 AMath Marine Parade classes"
+        print(f"Query: {query}")
+        
+        result = self.send_chat_message(query)
+        
+        if not result["success"]:
+            print(f"❌ API ERROR: {result['error']}")
+            return False
+            
+        response_text = result["data"].get("response", "")
+        print(f"\nBot Response:\n{response_text}")
+        
+        # Count tutors mentioned in the response
+        response_lower = response_text.lower()
+        
+        # Common tutor names that might teach S3 AMath at Marine Parade
+        potential_tutors = [
+            "sean yeo", "john lee", "jackie", "lim w.m.", "ng c.h.", 
+            "ronnie quek", "sean phua", "sean tan", "leonard teo",
+            "benjamin", "winston", "eugene tan", "david", "pang"
+        ]
+        
+        tutors_found = []
+        for tutor in potential_tutors:
+            # Check for tutor name (handle variations like "Sean Yeo (HOD)")
+            tutor_clean = tutor.replace(" ", "").replace(".", "")
+            response_clean = response_lower.replace(" ", "").replace(".", "").replace("(", "").replace(")", "")
+            if tutor_clean in response_clean:
+                tutors_found.append(tutor)
+        
+        # Also count class indicators (Class A, Class B, etc.)
+        class_count = 0
+        for letter in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']:
+            if f"class {letter}" in response_lower:
+                class_count += 1
+        
+        # Count schedule patterns (each tutor should have a schedule)
+        schedule_patterns = response_text.count("pm") + response_text.count("am")
+        
+        # Check for correct S3 AMath pricing
+        has_correct_price = "$397.85" in response_text
+        
+        print(f"\n📊 DETAILED ANALYSIS:")
+        print(f"✅ Tutors found by name: {len(tutors_found)} ({', '.join(tutors_found)})")
+        print(f"✅ Class labels found: {class_count}")
+        print(f"✅ Schedule time patterns: {schedule_patterns}")
+        print(f"✅ Has correct S3 AMath price ($397.85): {has_correct_price}")
+        
+        # The key question: Are we showing enough tutors?
+        sufficient_tutors = len(tutors_found) >= 6  # Expecting more than 4
+        
+        print(f"\n🎯 KEY FINDINGS:")
+        print(f"❓ Shows sufficient tutors (>4): {sufficient_tutors}")
+        print(f"❓ User reported only 4 tutors, we found: {len(tutors_found)}")
+        
+        # Test passes if we find more than 4 tutors
+        test_passed = sufficient_tutors and has_correct_price
+        
+        print(f"\n🎯 DATA ACCURACY TEST RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
+        
+        if not test_passed:
+            print("⚠️  POTENTIAL DATA ISSUE: Fewer tutors than expected for S3 AMath at Marine Parade")
+        
+        self.test_results.append({
+            "test": "S3 AMath Marine Parade - Tutor Count",
+            "passed": test_passed,
+            "details": {
+                "tutors_found": len(tutors_found),
+                "tutor_names": tutors_found,
+                "class_labels": class_count,
+                "schedule_patterns": schedule_patterns,
+                "correct_price": has_correct_price,
+                "sufficient_tutors": sufficient_tutors
+            }
+        })
+        
+        return test_passed
+    
+    def test_available_tutors_endpoint(self):
+        """
+        Test the /api/admin/available-tutors endpoint for S3 AMath Marine Parade
+        This will help us verify if the data exists in Firebase but chatbot isn't showing it all
+        """
+        print("\n" + "="*80)
+        print("ADMIN ENDPOINT TEST: Available Tutors for S3 AMath Marine Parade")
+        print("="*80)
+        
+        # Test the admin endpoint
+        admin_url = f"{BACKEND_URL}/api/admin/available-tutors"
+        params = {
+            "level": "S3",
+            "subject": "AMath", 
+            "location": "Marine Parade"
+        }
+        
+        print(f"Testing: GET {admin_url}")
+        print(f"Parameters: {params}")
+        
+        try:
+            response = requests.get(admin_url, params=params, timeout=30)
+            response.raise_for_status()
+            
+            data = response.json()
+            print(f"\nAdmin Endpoint Response:")
+            print(json.dumps(data, indent=2))
+            
+            # Count tutors in admin response
+            tutors_in_admin = data.get("tutors", [])
+            admin_tutor_count = len(tutors_in_admin)
+            
+            print(f"\n📊 ADMIN ENDPOINT ANALYSIS:")
+            print(f"✅ Total tutors in Firebase: {admin_tutor_count}")
+            print(f"✅ Tutor names: {[tutor.get('name', 'Unknown') for tutor in tutors_in_admin]}")
+            
+            # This tells us the ground truth - how many tutors actually exist
+            has_sufficient_data = admin_tutor_count >= 6
+            
+            print(f"\n🎯 GROUND TRUTH:")
+            print(f"❓ Firebase has sufficient tutors (>4): {has_sufficient_data}")
+            print(f"❓ If chatbot shows fewer, it's a display/filtering issue")
+            
+            self.test_results.append({
+                "test": "Admin Available Tutors - S3 AMath Marine Parade",
+                "passed": True,  # This is just data verification
+                "details": {
+                    "firebase_tutor_count": admin_tutor_count,
+                    "tutor_names": [tutor.get('name', 'Unknown') for tutor in tutors_in_admin],
+                    "has_sufficient_data": has_sufficient_data
+                }
+            })
+            
+            return admin_tutor_count
+            
+        except requests.exceptions.RequestException as e:
+            print(f"❌ ADMIN ENDPOINT ERROR: {str(e)}")
+            return 0
+    
     def test_additional_checks(self):
         """Additional checks for system integrity"""
         print("\n" + "="*80)
