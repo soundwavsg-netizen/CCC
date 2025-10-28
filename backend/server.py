@@ -1993,6 +1993,7 @@ async def get_available_tutors(level: str, subject: str, location: str):
 # Include the routers in the main app
 app.include_router(api_router)
 app.include_router(math_router)
+app.include_router(tutor_router)
 
 app.add_middleware(
     CORSMiddleware,
