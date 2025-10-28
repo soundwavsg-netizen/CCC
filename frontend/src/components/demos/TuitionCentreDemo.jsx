@@ -37,6 +37,7 @@ const TuitionCentreDemo = () => {
   });
   const [enrollmentSubmitted, setEnrollmentSubmitted] = useState(false);
   const [availableLocations, setAvailableLocations] = useState([]);
+  const [availableTutors, setAvailableTutors] = useState([]);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);  // Add input ref for focus management
 
