@@ -502,24 +502,38 @@ async def get_revision_plan(student_id: str, exam_type: Optional[str] = None):
         student_data = student_doc.to_dict()
         
         # Get latest or specific exam results from student_results collection
+        results = []
         results_query = math_db.collection('student_results')\
-            .where('student_id', '==', student_id)\
-            .order_by('created_at', direction=firestore.Query.DESCENDING)
+            .where('student_id', '==', student_id)
         
-        if exam_type:
-            results_query = results_query.where('exam_type', '==', exam_type)
+        # Get all results and sort in Python to avoid index requirements
+        all_results = list(results_query.stream())
         
-        results = list(results_query.limit(1).stream())
-        
-        if not results:
+        if not all_results:
             return {
                 'success': True,
                 'message': 'No results found for revision plan',
                 'revision_plan': []
             }
         
-        latest_result = results[0].to_dict()
-        result_id = results[0].id
+        # Sort by created_at in Python (most recent first)
+        sorted_results = sorted(all_results, 
+                              key=lambda x: x.to_dict().get('created_at', ''), 
+                              reverse=True)
+        
+        # Filter by exam_type if specified
+        if exam_type:
+            sorted_results = [r for r in sorted_results if r.to_dict().get('exam_type') == exam_type]
+        
+        if not sorted_results:
+            return {
+                'success': True,
+                'message': 'No results found for revision plan',
+                'revision_plan': []
+            }
+        
+        latest_result = sorted_results[0].to_dict()
+        result_id = sorted_results[0].id
         
         # Extract topics and identify weak ones (default threshold 70%)
         all_topics = latest_result.get('topics', [])
