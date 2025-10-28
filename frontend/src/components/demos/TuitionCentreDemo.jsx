@@ -526,16 +526,16 @@ const TuitionCentreDemo = () => {
 
                 {/* Enrollment Form Modal */}
                 {showEnrollmentForm && (
-                  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[85vh] flex flex-col"
+                      className="bg-white rounded-2xl shadow-2xl w-full max-w-md my-8 flex flex-col max-h-[90vh]"
                     >
                       {/* Fixed Header */}
-                      <div className="p-6 pb-4 border-b border-gray-200">
+                      <div className="p-4 border-b border-gray-200 flex-shrink-0">
                         <div className="flex justify-between items-center">
-                          <h3 className="text-2xl font-bold text-gray-800">📚 Enrollment Request</h3>
+                          <h3 className="text-xl font-bold text-gray-800">📚 Enrollment Request</h3>
                           <Button
                             onClick={() => setShowEnrollmentForm(false)}
                             variant="ghost"
