@@ -1242,25 +1242,48 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                     filtered_classes = []
                     matching_tutors = set()  # Track unique tutors that match
                     
+                    # Check if query contains multiple potential tutor names (e.g., "Sean Tan Phua")
+                    # This means user might be asking about multiple people
+                    potential_separate_tutors = []
+                    if 'tan' in tutor_search_lower and 'phua' in tutor_search_lower:
+                        # Could be "Sean Tan" OR "Sean Phua"
+                        potential_separate_tutors = ['tan', 'phua']
+                    elif 'yeo' in tutor_search_lower and 'tan' in tutor_search_lower:
+                        potential_separate_tutors = ['yeo', 'tan']
+                    
                     for cls in classes:
                         tutor_name = cls.get('tutor_base_name', cls.get('tutor_name', '')).lower()
+                        
+                        # Check if this matches
                         if tutor_search_lower in tutor_name or any(part in tutor_name for part in tutor_search_lower.split()):
                             filtered_classes.append(cls)
                             matching_tutors.add(cls.get('tutor_base_name', cls.get('tutor_name', '')))
                     
-                    classes = filtered_classes
-                    logger.info(f"Filtered to {len(classes)} classes with {len(matching_tutors)} unique tutors")
-                    
-                    # If multiple tutors match (e.g., "Sean" matches Sean Tan, Sean Yeo, Sean Phua)
-                    if len(matching_tutors) > 1:
+                    # If multiple distinct last names in query, check if they match different tutors
+                    if potential_separate_tutors and len(matching_tutors) > 1:
+                        # User might be asking about multiple people - need clarification
                         tutor_list = ", ".join(sorted(matching_tutors))
-                        firebase_context = f"\n\n**MULTIPLE TUTORS FOUND:**\n"
-                        firebase_context += f"The name '{tutor_search}' matches {len(matching_tutors)} different tutors:\n\n"
+                        firebase_context = f"\n\n**AMBIGUOUS QUERY - MULTIPLE TUTORS DETECTED:**\n"
+                        firebase_context += f"The query appears to mention multiple tutor names: '{tutor_search}'.\n"
+                        firebase_context += f"This could refer to different tutors:\n\n"
                         for tutor_name in sorted(matching_tutors):
-                            tutor_classes = [c for c in classes if c.get('tutor_base_name', c.get('tutor_name', '')) == tutor_name]
-                            firebase_context += f"• {tutor_name} ({len(tutor_classes)} classes)\n"
-                        firebase_context += f"\n**IMPORTANT**: Ask the user to clarify which tutor they mean. List the options above and ask them to specify the full name.\n"
-                        firebase_context += f"Example: 'I found multiple tutors named {tutor_search}. Which one would you like to know about: {tutor_list}?'\n"
+                            firebase_context += f"• {tutor_name}\n"
+                        firebase_context += f"\n**IMPORTANT**: Ask the user which specific tutor they mean. Example: 'I found multiple tutors that could match your query. Did you mean {tutor_list}? Please specify which one.'\n"
+                        classes = []  # Don't show classes yet
+                    else:
+                        classes = filtered_classes
+                        logger.info(f"Filtered to {len(classes)} classes with {len(matching_tutors)} unique tutors")
+                        
+                        # If multiple tutors match (e.g., "Sean" matches Sean Tan, Sean Yeo, Sean Phua)
+                        if len(matching_tutors) > 1:
+                            tutor_list = ", ".join(sorted(matching_tutors))
+                            firebase_context = f"\n\n**MULTIPLE TUTORS FOUND:**\n"
+                            firebase_context += f"The name '{tutor_search}' matches {len(matching_tutors)} different tutors:\n\n"
+                            for tutor_name in sorted(matching_tutors):
+                                tutor_classes = [c for c in classes if c.get('tutor_base_name', c.get('tutor_name', '')) == tutor_name]
+                                firebase_context += f"• {tutor_name} ({len(tutor_classes)} classes)\n"
+                            firebase_context += f"\n**IMPORTANT**: Ask the user to clarify which tutor they mean. List the options above and ask them to specify the full name.\n"
+                            firebase_context += f"Example: 'I found multiple tutors named {tutor_search}. Which one would you like to know about: {tutor_list}?'\n"
                     elif classes:
                         # Group classes by location for proper presentation
                         classes_by_location = {}
