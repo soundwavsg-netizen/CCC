@@ -515,7 +515,7 @@ const TuitionCentreDemo = () => {
                       </div>
 
                       {/* Scrollable Content */}
-                      <div className="overflow-y-auto flex-1 p-6">
+                      <div className="overflow-y-auto flex-1 p-6 pb-8">
                         {enrollmentSubmitted ? (
                           <div className="text-center py-8">
                             <div className="text-6xl mb-4">✅</div>
