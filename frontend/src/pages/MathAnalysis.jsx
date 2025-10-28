@@ -1098,35 +1098,45 @@ const MathAnalysis = () => {
                     </p>
                   </div>
 
-                  {revisionPlan.revision_plan.length > 0 ? (
+                  {revisionPlan.all_topics && revisionPlan.all_topics.filter(t => t.current_score <= weakThreshold).length > 0 ? (
                     <div className="space-y-4">
-                      <p className="text-sm text-red-600 font-medium">⚠️ Weak Topics Identified (Below 60%):</p>
-                      {revisionPlan.revision_plan.map((item, index) => (
-                        <div key={index} className="border border-red-200 bg-red-50 rounded-lg p-4">
-                          <div className="flex justify-between items-center mb-2">
-                            <h5 className="font-semibold text-gray-800">{index + 1}. {item.topic}</h5>
-                            <span className="text-sm text-red-600">Current: {item.current_score}%</span>
-                          </div>
-                          <div className="flex gap-4 text-sm">
-                            {item.resources.pdf && (
-                              <a href={item.resources.pdf} className="text-blue-600 hover:underline">📄 PDF</a>
-                            )}
-                            {item.resources.video && (
-                              <a href={item.resources.video} className="text-blue-600 hover:underline">🎥 Video</a>
-                            )}
-                            {item.resources.worksheet && (
-                              <a href={item.resources.worksheet} className="text-blue-600 hover:underline">📝 Worksheet</a>
-                            )}
-                            {item.resources.note && (
-                              <span className="text-gray-500">{item.resources.note}</span>
-                            )}
-                          </div>
-                        </div>
-                      ))}
+                      <p className="text-sm text-red-600 font-medium">
+                        ⚠️ Weak Topics Identified (At or Below {weakThreshold}%):
+                      </p>
+                      {revisionPlan.all_topics
+                        .filter(t => t.current_score <= weakThreshold)
+                        .map((item, index) => {
+                          // Find resources from revision plan if available
+                          const revisionItem = revisionPlan.revision_plan.find(r => r.topic === item.topic);
+                          return (
+                            <div key={index} className="border border-red-200 bg-red-50 rounded-lg p-4">
+                              <div className="flex justify-between items-center mb-2">
+                                <h5 className="font-semibold text-gray-800">{index + 1}. {item.topic}</h5>
+                                <span className="text-sm text-red-600">Current: {item.current_score}%</span>
+                              </div>
+                              {revisionItem && revisionItem.resources && (
+                                <div className="flex gap-4 text-sm">
+                                  {revisionItem.resources.pdf && (
+                                    <a href={revisionItem.resources.pdf} className="text-blue-600 hover:underline">📄 PDF</a>
+                                  )}
+                                  {revisionItem.resources.video && (
+                                    <a href={revisionItem.resources.video} className="text-blue-600 hover:underline">🎥 Video</a>
+                                  )}
+                                  {revisionItem.resources.worksheet && (
+                                    <a href={revisionItem.resources.worksheet} className="text-blue-600 hover:underline">📝 Worksheet</a>
+                                  )}
+                                  {revisionItem.resources.note && (
+                                    <span className="text-gray-500">{revisionItem.resources.note}</span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                     </div>
                   ) : (
                     <p className="text-green-600 text-center py-4">
-                      🎉 Great work! No weak topics found (all above 60%).
+                      🎉 Great work! No weak topics found (all above {weakThreshold}%).
                     </p>
                   )}
 
