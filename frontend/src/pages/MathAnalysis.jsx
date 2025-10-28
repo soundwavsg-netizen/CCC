@@ -280,7 +280,29 @@ const MathAnalysis = () => {
     try {
       const response = await axios.get(`${BACKEND_URL}/api/math-analysis/revision-plan/${studentId}`);
       if (response.data.success) {
-        setRevisionPlan(response.data);
+        // Get full result data to show ALL topics (not just weak ones)
+        const studentResultsResponse = await axios.get(`${BACKEND_URL}/api/math-analysis/student/${studentId}/results`);
+        
+        if (studentResultsResponse.data.success && studentResultsResponse.data.results.length > 0) {
+          const latestResult = studentResultsResponse.data.results[0];
+          
+          // Create all topics array with performance data
+          const allTopics = latestResult.topics.map(t => ({
+            topic: t.topic_name,
+            current_score: t.percentage,
+            marks: t.marks,
+            total_marks: t.total_marks
+          }));
+          
+          setRevisionPlan({
+            ...response.data,
+            all_topics: allTopics,
+            result_id: latestResult.result_id
+          });
+        } else {
+          setRevisionPlan(response.data);
+        }
+        
         // Also fetch student's assessments
         fetchStudentAssessments(studentId);
       }
