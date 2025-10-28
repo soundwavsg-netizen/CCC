@@ -58,6 +58,7 @@ export default function App() {
             <Route path="/demos" element={<Demos />} />
             <Route path="/demo/tuition" element={<TuitionCentreDemo />} />
             <Route path="/demo/ecommerce" element={<MSuppliesDemo />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/grants" element={<Grants />} />
             <Route path="/edg" element={<EDG />} />
             <Route path="/promotion" element={<Promotion />} />
