@@ -1116,3 +1116,102 @@ async def get_improvement_tracking(student_id: str, result_id: str):
     except Exception as e:
         logger.error(f"Error tracking improvement: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@math_router.get("/all-results")
+async def get_all_results():
+    """Get all student results with scores for revision planning page"""
+    try:
+        if not math_db:
+            raise HTTPException(status_code=500, detail="Firebase not initialized")
+        
+        all_results = []
+        
+        # Get all students
+        students_ref = math_db.collection('students').stream()
+        
+        for student_doc in students_ref:
+            student_data = student_doc.to_dict()
+            student_id = student_doc.id
+            
+            # Get all results for this student
+            results_ref = math_db.collection('student_results')\
+                .where('student_id', '==', student_id)\
+                .stream()
+            
+            for result_doc in results_ref:
+                result_data = result_doc.to_dict()
+                result_data['result_id'] = result_doc.id
+                result_data['student_id'] = student_id
+                all_results.append(result_data)
+        
+        return {
+            'success': True,
+            'count': len(all_results),
+            'results': all_results
+        }
+        
+    except Exception as e:
+        logger.error(f"Error fetching all results: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@math_router.delete("/result/{result_id}")
+async def delete_result(result_id: str):
+    """Delete a specific result"""
+    try:
+        if not math_db:
+            raise HTTPException(status_code=500, detail="Firebase not initialized")
+        
+        # Check if result exists
+        result_ref = math_db.collection('student_results').document(result_id)
+        result_doc = result_ref.get()
+        
+        if not result_doc.exists:
+            raise HTTPException(status_code=404, detail="Result not found")
+        
+        # Delete the result
+        result_ref.delete()
+        
+        return {
+            'success': True,
+            'message': 'Result deleted successfully'
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error deleting result: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@math_router.put("/result/{result_id}")
+async def update_result(result_id: str, update_data: dict):
+    """Update a specific result's topics and overall score"""
+    try:
+        if not math_db:
+            raise HTTPException(status_code=500, detail="Firebase not initialized")
+        
+        # Check if result exists
+        result_ref = math_db.collection('student_results').document(result_id)
+        result_doc = result_ref.get()
+        
+        if not result_doc.exists:
+            raise HTTPException(status_code=404, detail="Result not found")
+        
+        # Update the result
+        update_payload = {
+            'topics': update_data.get('topics', []),
+            'overall_score': update_data.get('overall_score', 0),
+            'last_updated': datetime.utcnow().isoformat()
+        }
+        
+        result_ref.update(update_payload)
+        
+        return {
+            'success': True,
+            'message': 'Result updated successfully'
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error updating result: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
