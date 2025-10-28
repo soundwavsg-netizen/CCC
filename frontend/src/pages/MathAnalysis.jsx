@@ -126,7 +126,12 @@ const MathAnalysis = () => {
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/math-analysis/students`);
+      const token = localStorage.getItem('tutor_token');
+      const response = await axios.get(`${BACKEND_URL}/api/math-analysis/students`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (response.data.success) {
         setStudents(response.data.students);
         // Also fetch all results with scores for the revision tab
@@ -134,17 +139,30 @@ const MathAnalysis = () => {
       }
     } catch (error) {
       console.error('Error fetching students:', error);
+      if (error.response?.status === 401) {
+        // Token expired, redirect to login
+        handleLogout();
+      }
     }
   };
 
   const fetchAllStudentResults = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/api/math-analysis/all-results`);
+      const token = localStorage.getItem('tutor_token');
+      const response = await axios.get(`${BACKEND_URL}/api/math-analysis/all-results`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (response.data.success) {
         setStudentResults(response.data.results);
       }
     } catch (error) {
       console.error('Error fetching all results:', error);
+      if (error.response?.status === 401) {
+        // Token expired, redirect to login
+        handleLogout();
+      }
     }
   };
 
