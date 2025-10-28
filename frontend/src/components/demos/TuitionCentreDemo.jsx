@@ -610,19 +610,13 @@ const TuitionCentreDemo = () => {
                                   required
                                   value={enrollmentData.subject}
                                   onChange={(e) => handleEnrollmentChange('subject', e.target.value)}
-                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                                  disabled={!enrollmentData.level}
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                                 >
-                                  <option value="">Select</option>
-                                  <option value="Math">Math</option>
-                                  <option value="Science">Science</option>
-                                  <option value="English">English</option>
-                                  <option value="Chinese">Chinese</option>
-                                  <option value="EMath">EMath</option>
-                                  <option value="AMath">AMath</option>
-                                  <option value="Physics">Physics</option>
-                                  <option value="Chemistry">Chemistry</option>
-                                  <option value="Biology">Biology</option>
-                                  <option value="Economics">Economics</option>
+                                  <option value="">{enrollmentData.level ? 'Select' : 'Select level first'}</option>
+                                  {getSubjectOptions(enrollmentData.level).map(subject => (
+                                    <option key={subject} value={subject}>{subject}</option>
+                                  ))}
                                 </select>
                               </div>
                             </div>
@@ -633,6 +627,21 @@ const TuitionCentreDemo = () => {
                                 required
                                 value={enrollmentData.location}
                                 onChange={(e) => handleEnrollmentChange('location', e.target.value)}
+                                disabled={!enrollmentData.level || !enrollmentData.subject}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                              >
+                                <option value="">
+                                  {!enrollmentData.level || !enrollmentData.subject 
+                                    ? 'Select level & subject first' 
+                                    : availableLocations.length === 0 
+                                      ? 'Loading...'
+                                      : 'Select'}
+                                </option>
+                                {availableLocations.map(location => (
+                                  <option key={location} value={location}>{location}</option>
+                                ))}
+                              </select>
+                            </div>
                                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
                               >
                                 <option value="">Select</option>
