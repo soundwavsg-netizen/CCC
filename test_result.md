@@ -102,7 +102,11 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Update the chatbot AI library for tuition centre with comprehensive 2026 data. Remove RMSS branding from demo pages and main page while keeping all data intact (locations, phone numbers, tutors, pricing). Make it generic 'Tuition Centre' chatbot rather than RMSS-specific."
+user_problem_statement: "Fix chatbot data accuracy issues:
+1. When querying tutor classes (e.g., Sean Yeo), bot shows ALL locations instead of only where tutor teaches
+2. Schedule days/timings are incorrect or incomplete
+3. Incorrect Class A/B labeling - should ONLY use when SAME tutor has MULTIPLE classes of SAME level/subject at SAME location
+4. Some tutors show only 1 timing when they should show 2 timings per class"
 
 backend:
   - task: "Create comprehensive tuition center AI training documentation"
