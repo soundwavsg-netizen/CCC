@@ -1357,10 +1357,10 @@ class TuitionChatTester:
         
         return True
     
-    def run_all_tests(self):
-        """Run all test scenarios"""
+    def run_all_tuition_tests(self):
+        """Run all tuition test scenarios"""
         print("🚀 Starting Tuition Centre Chatbot Testing Suite")
-        print(f"🔗 Testing endpoint: {API_ENDPOINT}")
+        print(f"🔗 Testing endpoint: {TUITION_API_ENDPOINT}")
         print(f"🆔 Session ID: {self.session_id}")
         
         # Run CRITICAL too broad query clarification test FIRST (this is the main focus)
@@ -1388,7 +1388,7 @@ class TuitionChatTester:
         
         # Summary
         print("\n" + "="*80)
-        print("📊 FINAL TEST SUMMARY")
+        print("📊 TUITION TESTS SUMMARY")
         print("="*80)
         
         passed_count = sum(1 for result in self.test_results if result["passed"])
@@ -1427,9 +1427,9 @@ class TuitionChatTester:
         print(f"🔥 CONTEXT-AWARE TESTS: {context_passed}/3 passed")
         
         if passed_count == total_count:
-            print("🎉 ALL TESTS PASSED! Too broad query clarification fix is working correctly.")
+            print("🎉 ALL TUITION TESTS PASSED! Too broad query clarification fix is working correctly.")
         else:
-            print("⚠️  SOME TESTS FAILED. Too broad query clarification needs attention.")
+            print("⚠️  SOME TUITION TESTS FAILED. Too broad query clarification needs attention.")
             
         return passed_count == total_count
 
