@@ -553,7 +553,16 @@ const TuitionCentreDemo = () => {
                           <div className="text-center py-8">
                             <div className="text-6xl mb-4">✅</div>
                             <h4 className="text-xl font-bold text-green-600 mb-2">Request Submitted!</h4>
-                            <p className="text-gray-600">Our admin team will contact you shortly.</p>
+                            <p className="text-gray-600 mb-6">Our admin team will contact you shortly.</p>
+                            <Button
+                              onClick={() => {
+                                setShowEnrollmentForm(false);
+                                setEnrollmentSubmitted(false);
+                              }}
+                              className="bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white hover:opacity-90"
+                            >
+                              Back to Chat
+                            </Button>
                           </div>
                         ) : (
                           <form onSubmit={handleEnrollmentSubmit} className="space-y-3">
