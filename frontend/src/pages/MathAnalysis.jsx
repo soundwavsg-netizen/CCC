@@ -78,6 +78,20 @@ const MathAnalysis = () => {
     exam_type: ''
   });
 
+  // Assessment generation state
+  const [showAssessmentModal, setShowAssessmentModal] = useState(false);
+  const [assessmentData, setAssessmentData] = useState({
+    student_id: '',
+    result_id: '',
+    selected_topics: [],
+    selected_subtopics: [],
+    duration_minutes: 45,
+    generation_mode: 'auto'
+  });
+  const [availableSubtopics, setAvailableSubtopics] = useState([]);
+  const [studentAssessments, setStudentAssessments] = useState([]);
+  const [improvementData, setImprovementData] = useState(null);
+
   // Fetch students on mount
   useEffect(() => {
     fetchStudents();
