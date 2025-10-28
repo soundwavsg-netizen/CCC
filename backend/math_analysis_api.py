@@ -3,7 +3,7 @@ Math Results Analysis System API
 Handles student result uploads, analysis, and revision plan generation
 """
 
-from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Header
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 from datetime import datetime
