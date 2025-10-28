@@ -1128,18 +1128,115 @@ const MathAnalysis = () => {
                     </div>
                   </div>
 
-                  {/* Topics Selection */}
+                  {/* Topics Selection - AI Recommended + Manual Addition */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Selected Topics (from weak areas)</label>
-                    <div className="bg-blue-50 p-3 rounded-lg">
-                      <div className="flex flex-wrap gap-2">
-                        {assessmentData.selected_topics.map((topic, index) => (
-                          <span key={index} className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">
-                            {topic}
-                          </span>
-                        ))}
-                      </div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      🤖 AI Recommended Topics (Weak Areas - Below 60%)
+                    </label>
+                    <div className="bg-red-50 border border-red-200 p-3 rounded-lg mb-4">
+                      {assessmentData.all_available_topics && assessmentData.all_available_topics.length > 0 ? (
+                        <div className="space-y-2">
+                          {assessmentData.all_available_topics
+                            .filter(t => t.current_score < 60)
+                            .map((topic) => (
+                              <label key={topic.topic} className="flex items-center justify-between p-2 hover:bg-red-100 rounded">
+                                <div className="flex items-center space-x-3">
+                                  <input
+                                    type="checkbox"
+                                    checked={assessmentData.selected_topics.includes(topic.topic)}
+                                    onChange={(e) => {
+                                      if (e.target.checked) {
+                                        const newTopics = [...assessmentData.selected_topics, topic.topic];
+                                        setAssessmentData({
+                                          ...assessmentData,
+                                          selected_topics: newTopics
+                                        });
+                                        fetchAvailableSubtopics(newTopics);
+                                      } else {
+                                        const newTopics = assessmentData.selected_topics.filter(t => t !== topic.topic);
+                                        setAssessmentData({
+                                          ...assessmentData,
+                                          selected_topics: newTopics
+                                        });
+                                        if (newTopics.length > 0) {
+                                          fetchAvailableSubtopics(newTopics);
+                                        }
+                                      }
+                                    }}
+                                    className="rounded"
+                                  />
+                                  <span className="font-medium">{topic.topic}</span>
+                                </div>
+                                <span className="text-sm text-red-600">{topic.current_score}%</span>
+                              </label>
+                            ))}
+                          {assessmentData.all_available_topics.filter(t => t.current_score < 60).length === 0 && (
+                            <p className="text-sm text-gray-600">✅ No weak topics - all above 60%!</p>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="flex flex-wrap gap-2">
+                          {assessmentData.selected_topics.map((topic, index) => (
+                            <span key={index} className="bg-red-600 text-white px-3 py-1 rounded-full text-sm">
+                              {topic}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
+
+                    {/* Additional Topics Selection */}
+                    {assessmentData.all_available_topics && assessmentData.all_available_topics.length > 0 && (
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          ➕ Add Extra Topics (Optional - Even if performing well)
+                        </label>
+                        <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg">
+                          <div className="space-y-2">
+                            {assessmentData.all_available_topics
+                              .filter(t => t.current_score >= 60) // Topics where student is doing well
+                              .map((topic) => (
+                                <label key={topic.topic} className="flex items-center justify-between p-2 hover:bg-blue-100 rounded">
+                                  <div className="flex items-center space-x-3">
+                                    <input
+                                      type="checkbox"
+                                      checked={assessmentData.selected_topics.includes(topic.topic)}
+                                      onChange={(e) => {
+                                        if (e.target.checked) {
+                                          const newTopics = [...assessmentData.selected_topics, topic.topic];
+                                          setAssessmentData({
+                                            ...assessmentData,
+                                            selected_topics: newTopics
+                                          });
+                                          fetchAvailableSubtopics(newTopics);
+                                        } else {
+                                          const newTopics = assessmentData.selected_topics.filter(t => t !== topic.topic);
+                                          setAssessmentData({
+                                            ...assessmentData,
+                                            selected_topics: newTopics
+                                          });
+                                          if (newTopics.length > 0) {
+                                            fetchAvailableSubtopics(newTopics);
+                                          }
+                                        }
+                                      }}
+                                      className="rounded"
+                                    />
+                                    <span className="font-medium">{topic.topic}</span>
+                                  </div>
+                                  <span className="text-sm text-green-600">{topic.current_score}%</span>
+                                </label>
+                              ))}
+                            {assessmentData.all_available_topics.filter(t => t.current_score >= 60).length === 0 && (
+                              <p className="text-sm text-gray-600">No additional topics available (all are weak topics)</p>
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-500 mt-2">
+                          💡 Tip: Add strong topics to ensure comprehensive understanding or for extra practice
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   {/* Subtopics Selection */}
