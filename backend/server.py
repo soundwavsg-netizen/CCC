@@ -1932,7 +1932,7 @@ async def admin_search_classes(level: str = None, subject: str = None, location:
 async def get_available_tutors(level: str, subject: str, location: str):
     """
     Get list of unique tutors teaching a specific level+subject at a location.
-    Returns only unique tutor names (no duplicates).
+    Returns only unique tutor names (no duplicates, no A/B suffixes).
     """
     try:
         classes_ref = firebase_db.collection('classes')
@@ -1941,8 +1941,8 @@ async def get_available_tutors(level: str, subject: str, location: str):
         tutors = set()
         for doc in results:
             data = doc.to_dict()
-            # Only use tutor_name (with titles like Mr, Ms)
-            tutor_name = data.get('tutor_name', '')
+            # Use tutor_base_name to avoid A/B suffixes, fallback to tutor_name
+            tutor_name = data.get('tutor_base_name', data.get('tutor_name', ''))
             if tutor_name:
                 tutors.add(tutor_name)
         
