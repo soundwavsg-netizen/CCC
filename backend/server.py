@@ -1262,15 +1262,39 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                         firebase_context += f"\n**IMPORTANT**: Ask the user to clarify which tutor they mean. List the options above and ask them to specify the full name.\n"
                         firebase_context += f"Example: 'I found multiple tutors named {tutor_search}. Which one would you like to know about: {tutor_list}?'\n"
                     elif classes:
-                        firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL OF THESE:**\n\n"
+                        # Group classes by location for proper presentation
+                        classes_by_location = {}
                         for cls in classes[:15]:
-                            firebase_context += f"{format_class_info(cls)}\n"
-                        firebase_context += f"\n**CRITICAL INSTRUCTIONS FOR RESPONSE:**\n"
-                        firebase_context += f"1. The data above shows {min(len(classes), 15)} class options. Present ALL of them.\n"
-                        firebase_context += f"2. If all classes are at ONE location, say '{classes[0].get('location')}' and present them directly.\n"
-                        firebase_context += f"3. Show each class's complete schedule (day + time).\n"
-                        firebase_context += f"4. Be direct and confident. Don't ask for location if only one location shown.\n"
-                        firebase_context += f"5. Never mention 'database' or technical terms.\n"
+                            loc = cls.get('location')
+                            if loc not in classes_by_location:
+                                classes_by_location[loc] = []
+                            classes_by_location[loc].append(cls)
+                        
+                        firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL BY LOCATION:**\n\n"
+                        
+                        for location, location_classes in classes_by_location.items():
+                            firebase_context += f"**At {location}:**\n"
+                            
+                            # If multiple classes at same location, label them
+                            if len(location_classes) > 1:
+                                for idx, cls in enumerate(location_classes):
+                                    variant_label = chr(65 + idx)  # A, B, C, etc.
+                                    schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
+                                    firebase_context += f"  Class {variant_label}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
+                            else:
+                                # Single class at this location
+                                cls = location_classes[0]
+                                schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
+                                firebase_context += f"  {schedule_str} - ${cls.get('monthly_fee')}/month\n"
+                            firebase_context += "\n"
+                        
+                        firebase_context += f"**CRITICAL INSTRUCTIONS:**\n"
+                        firebase_context += f"1. Present classes grouped by LOCATION as shown above\n"
+                        firebase_context += f"2. Only use 'Class A, B, C' labels when there are MULTIPLE classes at the SAME location\n"
+                        firebase_context += f"3. If only one class per location, just show the schedule without variant labels\n"
+                        firebase_context += f"4. Always mention the location for each class\n"
+                        firebase_context += f"5. Show complete schedules with all session times\n"
+                        firebase_context += f"6. Never mention 'database' or technical terms\n"
                 elif classes:
                     logger.info(f"Found {len(classes)} classes, formatting for LLM")
                     firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL OF THESE:**\n\n"
