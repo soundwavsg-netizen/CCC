@@ -33,23 +33,26 @@ try:
         # App doesn't exist, create it
         cred_path = str(ROOT_DIR / 'firebase-math-analysis-credentials.json')
         
-        # Load and validate JSON
+        # Load credentials directly as dict
         with open(cred_path, 'r') as f:
-            cred_data = json.load(f)
+            cred_dict = json.load(f)
+        
+        # Create credential from dict
+        math_cred = credentials.Certificate(cred_dict)
         
         # Initialize Math Analysis Firebase app (separate from tuition chatbot)
-        math_cred = credentials.Certificate(cred_path)
         math_app = firebase_admin.initialize_app(math_cred, {
             'projectId': 'student-result-analysis-c4c02',
             'storageBucket': 'student-result-analysis-c4c02.firebasestorage.app'
         }, name='math_analysis')
-        logger.info("Math Analysis Firebase initialized successfully")
+        logger.info("✅ Math Analysis Firebase initialized successfully")
     
     math_db = firestore.client(math_app)
     math_storage = storage.bucket(app=math_app)
+    logger.info("✅ Math Analysis Firestore and Storage clients ready")
     
 except Exception as e:
-    logger.error(f"Failed to initialize Math Analysis Firebase: {str(e)}")
+    logger.error(f"❌ Failed to initialize Math Analysis Firebase: {str(e)}")
     logger.error(f"Error type: {type(e).__name__}")
     import traceback
     logger.error(traceback.format_exc())
