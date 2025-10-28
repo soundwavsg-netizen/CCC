@@ -946,9 +946,24 @@ const MathAnalysis = () => {
 
               {revisionPlan && (
                 <div className="mt-8 border-t pt-6">
-                  <h4 className="text-xl font-bold text-gray-800 mb-4">
-                    Revision Plan for {revisionPlan.student_name}
-                  </h4>
+                  <div className="flex justify-between items-center mb-4">
+                    <h4 className="text-xl font-bold text-gray-800">
+                      Revision Plan for {revisionPlan.student_name}
+                    </h4>
+                    {revisionPlan.revision_plan.length > 0 && (
+                      <Button
+                        onClick={() => openAssessmentGenerator(
+                          selectedStudent.student_id,
+                          'latest',  // We'll need to track this properly
+                          revisionPlan.revision_plan
+                        )}
+                        className="bg-gradient-to-r from-green-500 to-blue-500 text-white"
+                      >
+                        🎯 Generate Assessment
+                      </Button>
+                    )}
+                  </div>
+
                   <div className="bg-blue-50 p-4 rounded-lg mb-4">
                     <p className="text-sm text-gray-700">
                       <strong>Level:</strong> {revisionPlan.level} | 
@@ -957,6 +972,7 @@ const MathAnalysis = () => {
                       <strong> Score:</strong> {revisionPlan.overall_score}%
                     </p>
                   </div>
+
                   {revisionPlan.revision_plan.length > 0 ? (
                     <div className="space-y-4">
                       {revisionPlan.revision_plan.map((item, index) => (
@@ -986,6 +1002,42 @@ const MathAnalysis = () => {
                     <p className="text-green-600 text-center py-4">
                       🎉 Great work! No weak topics found.
                     </p>
+                  )}
+
+                  {/* Generated Assessments List */}
+                  {studentAssessments.length > 0 && (
+                    <div className="mt-8 border-t pt-6">
+                      <h5 className="text-lg font-bold text-gray-800 mb-4">📋 Generated Assessments</h5>
+                      <div className="space-y-3">
+                        {studentAssessments.map((assessment) => (
+                          <div key={assessment.assessment_id} className="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <p className="font-semibold text-gray-800">Internal Assessment Test {assessment.created_date.replace(/\//g, '')}</p>
+                                <p className="text-sm text-gray-600">
+                                  {assessment.question_count} questions | {assessment.total_marks} marks | {assessment.duration_minutes} mins
+                                </p>
+                                <p className="text-xs text-gray-500">Topics: {assessment.topics.join(', ')}</p>
+                              </div>
+                              <div className="flex gap-2">
+                                <Button
+                                  onClick={() => handleDownloadPDF(selectedStudent.student_id, assessment.assessment_id, 'student')}
+                                  className="bg-blue-600 text-white text-sm px-3 py-1"
+                                >
+                                  📄 Student
+                                </Button>
+                                <Button
+                                  onClick={() => handleDownloadPDF(selectedStudent.student_id, assessment.assessment_id, 'tutor')}
+                                  className="bg-purple-600 text-white text-sm px-3 py-1"
+                                >
+                                  📝 Tutor
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </div>
               )}
