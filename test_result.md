@@ -115,6 +115,21 @@ user_problem_statement: "Investigate data accuracy issue: User reports that when
 - If no, this is a data upload issue, not a chatbot issue"
 
 backend:
+  - task: "Fix too broad query clarification for Level + Subject without Location"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "User reported: When asking 'S3 AMath' without stating location, chatbot dumps all locations and all classes instead of asking for location clarification."
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Too broad query clarification fix working perfectly. **Test Results**: All 3 test queries ('Show me S3 AMath classes', 'Tell me about S3 AMath', 'I want S3 AMath') correctly ask for location clarification instead of data dumping. Bot responds with 'Which location would you like to know about for S3 AMath?' and lists all 5 locations (Bishan, Punggol, Marine Parade, Jurong, Kovan). **CRITICAL FIX CONFIRMED**: No tutor names, schedules, or pricing details shown - bot properly asks for clarification instead of information dumping."
+
   - task: "Fix subject extraction bug for AMath vs Math queries"
     implemented: true
     working: true
