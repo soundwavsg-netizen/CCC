@@ -805,30 +805,30 @@ const MathAnalysis = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
-                      <input
-                        type="text"
+                      <select
                         required
                         value={manualForm.location}
                         onChange={(e) => setManualForm({ ...manualForm, location: e.target.value })}
-                        placeholder="e.g., RMSS Tampines"
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                      />
+                      >
+                        <option value="">Select Location</option>
+                        {tutorInfo.locations.map(loc => (
+                          <option key={loc} value={`RMSS - ${loc}`}>RMSS - {loc}</option>
+                        ))}
+                      </select>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Level *</label>
                       <select
                         required
                         value={manualForm.level}
-                        onChange={(e) => setManualForm({ ...manualForm, level: e.target.value })}
+                        onChange={(e) => setManualForm({ ...manualForm, level: e.target.value, subject: '' })}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                       >
                         <option value="">Select Level</option>
-                        <option value="S1">S1</option>
-                        <option value="S2">S2</option>
-                        <option value="S3">S3</option>
-                        <option value="S4">S4</option>
-                        <option value="J1">J1</option>
-                        <option value="J2">J2</option>
+                        {tutorInfo.levels.map(level => (
+                          <option key={level} value={level}>{level}</option>
+                        ))}
                       </select>
                     </div>
                     <div>
@@ -838,13 +838,28 @@ const MathAnalysis = () => {
                         value={manualForm.subject}
                         onChange={(e) => setManualForm({ ...manualForm, subject: e.target.value })}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                        disabled={!manualForm.level}
                       >
                         <option value="">Select Subject</option>
-                        <option value="E.Math">E.Math</option>
-                        <option value="A.Math">A.Math</option>
-                        <option value="Pure Math">Pure Math</option>
-                        <option value="Statistics">Statistics</option>
+                        {manualForm.level && (() => {
+                          // S1, S2, J1, J2 only have Math
+                          if (['S1', 'S2', 'J1', 'J2'].includes(manualForm.level)) {
+                            return tutorInfo.subjects.includes('Math') ? 
+                              <option value="Math">Math</option> : null;
+                          }
+                          // S3, S4 can have A Math or E Math
+                          else if (['S3', 'S4'].includes(manualForm.level)) {
+                            return tutorInfo.subjects.map(subj => 
+                              ['A Math', 'E Math'].includes(subj) ? 
+                                <option key={subj} value={subj}>{subj}</option> : null
+                            );
+                          }
+                          return null;
+                        })()}
                       </select>
+                      {!manualForm.level && (
+                        <p className="text-xs text-gray-500 mt-1">Please select a level first</p>
+                      )}
                     </div>
                     <div className="col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-1">Exam Type *</label>
