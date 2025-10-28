@@ -530,7 +530,8 @@ const TuitionCentreDemo = () => {
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="bg-white rounded-2xl shadow-2xl w-full max-w-md my-8 flex flex-col max-h-[90vh]"
+                      className="bg-white rounded-2xl shadow-2xl w-full max-w-md my-4 flex flex-col"
+                      style={{ maxHeight: 'calc(100vh - 80px)' }}
                     >
                       {/* Fixed Header */}
                       <div className="p-4 border-b border-gray-200 flex-shrink-0">
@@ -547,7 +548,7 @@ const TuitionCentreDemo = () => {
                       </div>
 
                       {/* Scrollable Content */}
-                      <div className="overflow-y-auto flex-1 p-4">
+                      <div className="overflow-y-auto flex-1 p-4" style={{ overflowY: 'auto' }}>
                         {enrollmentSubmitted ? (
                           <div className="text-center py-8">
                             <div className="text-6xl mb-4">✅</div>
