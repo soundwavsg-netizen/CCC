@@ -1508,16 +1508,30 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                 elif classes:
                     logger.info(f"Found {len(classes)} classes, formatting for LLM")
                     
+                    # First, remove duplicate classes (same tutor, schedule, price at same location)
+                    unique_classes = []
+                    seen = set()
+                    for cls in classes:
+                        key = f"{cls.get('tutor_base_name')}_{cls.get('location')}_{str(cls.get('schedule'))}_{cls.get('monthly_fee')}"
+                        if key not in seen:
+                            seen.add(key)
+                            unique_classes.append(cls)
+                    
+                    logger.info(f"After removing duplicates: {len(unique_classes)} unique classes")
+                    
                     # Group classes by location for proper presentation
                     classes_by_location = {}
-                    for cls in classes[:15]:
+                    for cls in unique_classes[:30]:  # Increased limit after deduplication
                         loc = cls.get('location')
                         if loc not in classes_by_location:
                             classes_by_location[loc] = []
                         classes_by_location[loc].append(cls)
                     
                     # Build the EXACT response text that must be shown
-                    exact_response = f"For **{level if level else 'this level'} {subject if subject else 'this subject'}** at **{location if location else 'this location'}**, we offer the following classes:\n\n"
+                    if location:
+                        exact_response = f"For **{level if level else 'this level'} {subject if subject else 'this subject'}** at **{location}**, we offer the following classes:\n\n"
+                    else:
+                        exact_response = f"For **{level if level else 'this level'} {subject if subject else 'this subject'}** across all locations, we offer the following classes:\n\n"
                     
                     for loc, location_classes in classes_by_location.items():
                         if len(classes_by_location) > 1:
