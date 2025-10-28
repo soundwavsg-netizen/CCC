@@ -109,6 +109,21 @@ user_problem_statement: "Fix chatbot data accuracy issues:
 4. Some tutors show only 1 timing when they should show 2 timings per class"
 
 backend:
+  - task: "Remove A/B suffixes from tutor names in dropdowns"
+    implemented: true
+    working: "needs_testing"
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported: Still seeing A and B suffixes for tutors (e.g., 'Eugene Tan A', 'Eugene Tan B') in other locations in both admin form and customer enrollment form."
+      - working: "needs_testing"
+        agent: "main"
+        comment: "FIXED: Updated `/api/admin/available-tutors` endpoint (line 1945) to return `tutor_base_name` instead of `tutor_name`. This removes A/B suffixes from tutor names in both admin and customer enrollment form dropdowns. Backend restarted successfully."
+  
   - task: "Fix context-aware follow-up queries"
     implemented: true
     working: true
