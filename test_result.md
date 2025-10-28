@@ -386,3 +386,26 @@ agent_communication:
     ✅ All relevant tutors displayed with complete information
 
     **FINAL ASSESSMENT**: Context-aware follow-up query fix is working correctly. The system successfully extracts context from conversation history and provides comprehensive tutor listings when users ask location-based follow-up questions."
+  - agent: "main"
+    message: "🔧 TUTOR NAME NORMALIZATION FIX - Remove A/B Suffixes
+    
+    **Problem Reported by User**: Tutor names still showing A/B suffixes (e.g., 'Eugene Tan A', 'Eugene Tan B') in:
+    1. Admin form tutor dropdown
+    2. Customer enrollment form tutor dropdown
+    
+    **Root Cause Identified**: 
+    - `/api/admin/available-tutors` endpoint was returning `tutor_name` field (includes A/B suffixes)
+    - Should return `tutor_base_name` field (normalized name without suffixes)
+    - Both admin and customer forms use same endpoint, so fix will apply to both
+    
+    **Fix Applied** (server.py line 1945):
+    - Changed from: `tutor_name = data.get('tutor_name', '')`
+    - Changed to: `tutor_name = data.get('tutor_base_name', data.get('tutor_name', ''))`
+    - Now returns normalized tutor names without A/B suffixes
+    
+    **Backend restarted successfully**
+    
+    **Ready for Testing**:
+    Test endpoint: GET /api/admin/available-tutors?level=S3&subject=AMath&location=Bishan
+    Expected: Should return tutors WITHOUT A/B suffixes (e.g., 'Sean Yeo (HOD)', 'John Lee (DY_HOD)', not 'Sean Yeo A', 'Sean Yeo B')
+    Verify both forms show normalized tutor names in dropdowns"
