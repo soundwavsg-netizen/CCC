@@ -18,6 +18,7 @@ import Promotion from './pages/Promotion';
 import AILibrary from './pages/AILibrary';
 import AIEmployees from './pages/AIEmployees';
 import Demos from './pages/Demos';
+import Admin from './pages/Admin';
 import TuitionCentreDemo from './components/demos/TuitionCentreDemo';
 import MSuppliesDemo from './components/demos/MSuppliesDemo';
 import WhatsAppSetup from './pages/WhatsAppSetup';
