@@ -1531,15 +1531,24 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                             classes_by_tutor[tutor].append(cls)
                         
                         for tutor, tutor_classes in classes_by_tutor.items():
-                            if len(tutor_classes) == 1:
-                                # Single class
-                                cls = tutor_classes[0]
+                            # Remove duplicate schedules (same schedule, same price)
+                            unique_classes = []
+                            seen_schedules = set()
+                            for cls in tutor_classes:
+                                schedule_key = str(cls.get('schedule')) + str(cls.get('monthly_fee'))
+                                if schedule_key not in seen_schedules:
+                                    seen_schedules.add(schedule_key)
+                                    unique_classes.append(cls)
+                            
+                            if len(unique_classes) == 1:
+                                # Single class (or duplicates removed)
+                                cls = unique_classes[0]
                                 schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
                                 exact_response += f"📚 **{tutor}**: {schedule_str} - **${cls.get('monthly_fee')}/month**\n\n"
                             else:
-                                # Multiple classes from same tutor
+                                # Multiple DIFFERENT classes from same tutor
                                 exact_response += f"📚 **{tutor}**:\n"
-                                for idx, cls in enumerate(tutor_classes):
+                                for idx, cls in enumerate(unique_classes):
                                     variant_label = chr(65 + idx)
                                     schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
                                     exact_response += f"  Class {variant_label}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
