@@ -1287,12 +1287,13 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             # Extract subject (only if not already found from context, OR if current message explicitly has it)
             logger.info(f"Checking subject extraction from current message '{user_message_lower}'")
             subject_keywords = {
+                # Check specific subjects first (AMath, EMath) before generic Math
+                'amath': 'AMath', 'a-math': 'AMath', 'a math': 'AMath',
+                'emath': 'EMath', 'e-math': 'EMath', 'e math': 'EMath',
                 'math': 'Math', 'maths': 'Math', 'mathematics': 'Math',
                 'science': 'Science',
                 'english': 'English',
                 'chinese': 'Chinese',
-                'emath': 'EMath', 'e-math': 'EMath', 'e math': 'EMath',
-                'amath': 'AMath', 'a-math': 'AMath', 'a math': 'AMath',
                 'physics': 'Physics',
                 'chemistry': 'Chemistry',
                 'biology': 'Biology',
