@@ -1186,16 +1186,29 @@ async def get_improvement_tracking(student_id: str, result_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 @math_router.get("/all-results")
-async def get_all_results():
-    """Get all student results with scores for revision planning page"""
+async def get_all_results(authorization: str = Header(None)):
+    """Get all student results with scores for revision planning page (tutor authenticated)"""
     try:
+        # Verify tutor authentication
+        if not authorization:
+            raise HTTPException(status_code=401, detail="Authorization header required")
+        
+        try:
+            token = authorization.replace("Bearer ", "")
+            tutor_data = verify_token(token)
+            tutor_id = tutor_data.get('tutor_id')
+            if not tutor_id:
+                raise HTTPException(status_code=401, detail="Invalid tutor token")
+        except Exception as e:
+            raise HTTPException(status_code=401, detail=f"Authentication failed: {str(e)}")
+        
         if not math_db:
             raise HTTPException(status_code=500, detail="Firebase not initialized")
         
         all_results = []
         
-        # Get all results directly from student_results collection
-        results_ref = math_db.collection('student_results').stream()
+        # Get all results directly from student_results collection, filtered by tutor_id
+        results_ref = math_db.collection('student_results').where('tutor_id', '==', tutor_id).stream()
         
         for result_doc in results_ref:
             result_data = result_doc.to_dict()
@@ -1208,6 +1221,8 @@ async def get_all_results():
             'results': all_results
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error fetching all results: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
