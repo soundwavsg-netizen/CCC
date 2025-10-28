@@ -946,22 +946,47 @@ const MathAnalysis = () => {
 
               {revisionPlan && (
                 <div className="mt-8 border-t pt-6">
-                  <div className="flex justify-between items-center mb-4">
-                    <h4 className="text-xl font-bold text-gray-800">
-                      Revision Plan for {revisionPlan.student_name}
-                    </h4>
-                    {revisionPlan.revision_plan.length > 0 && (
-                      <Button
-                        onClick={() => openAssessmentGenerator(
-                          selectedStudent.student_id,
-                          'latest',  // We'll need to track this properly
-                          revisionPlan.revision_plan
-                        )}
-                        className="bg-gradient-to-r from-green-500 to-blue-500 text-white"
-                      >
-                        🎯 Generate Assessment
-                      </Button>
-                    )}
+                  {/* All Test Results with Generate Assessment */}
+                  <div className="mb-8">
+                    <h4 className="text-xl font-bold text-gray-800 mb-4">Test Results History</h4>
+                    <div className="space-y-4">
+                      {/* We need to fetch and display all results here */}
+                      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <p className="font-semibold text-gray-800">{revisionPlan.exam_type}</p>
+                            <p className="text-sm text-gray-600">Overall Score: {revisionPlan.overall_score}%</p>
+                            <div className="flex gap-2 mt-2">
+                              {revisionPlan.revision_plan.map((item, idx) => (
+                                <span key={idx} className={`text-xs px-2 py-1 rounded ${
+                                  item.current_score < 60 ? 'bg-red-100 text-red-700' : 
+                                  item.current_score < 75 ? 'bg-yellow-100 text-yellow-700' : 
+                                  'bg-green-100 text-green-700'
+                                }`}>
+                                  {item.topic}: {item.current_score}%
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          <Button
+                            onClick={() => openAssessmentGeneratorFromResult(
+                              selectedStudent.student_id,
+                              revisionPlan,
+                              revisionPlan.revision_plan
+                            )}
+                            className="bg-gradient-to-r from-green-500 to-blue-500 text-white"
+                          >
+                            🎯 Generate Assessment
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Revision Recommendations */}
+                  <div className="mb-4">
+                    <h4 className="text-xl font-bold text-gray-800">📚 AI Revision Recommendations</h4>
+                    <p className="text-sm text-gray-600">Based on {revisionPlan.exam_type}</p>
                   </div>
 
                   <div className="bg-blue-50 p-4 rounded-lg mb-4">
@@ -975,8 +1000,9 @@ const MathAnalysis = () => {
 
                   {revisionPlan.revision_plan.length > 0 ? (
                     <div className="space-y-4">
+                      <p className="text-sm text-red-600 font-medium">⚠️ Weak Topics Identified (Below 60%):</p>
                       {revisionPlan.revision_plan.map((item, index) => (
-                        <div key={index} className="border border-gray-200 rounded-lg p-4">
+                        <div key={index} className="border border-red-200 bg-red-50 rounded-lg p-4">
                           <div className="flex justify-between items-center mb-2">
                             <h5 className="font-semibold text-gray-800">{index + 1}. {item.topic}</h5>
                             <span className="text-sm text-red-600">Current: {item.current_score}%</span>
@@ -1000,7 +1026,7 @@ const MathAnalysis = () => {
                     </div>
                   ) : (
                     <p className="text-green-600 text-center py-4">
-                      🎉 Great work! No weak topics found.
+                      🎉 Great work! No weak topics found (all above 60%).
                     </p>
                   )}
 
