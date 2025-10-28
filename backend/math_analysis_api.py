@@ -319,7 +319,8 @@ async def upload_csv(file: UploadFile = File(...)):
 async def get_students(
     location: Optional[str] = None,
     level: Optional[str] = None,
-    subject: Optional[str] = None
+    subject: Optional[str] = None,
+    authorization: str = Header(None)
 ):
     """Get list of all students with optional filters"""
     try:
