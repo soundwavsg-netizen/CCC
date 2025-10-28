@@ -453,29 +453,27 @@ async def get_student_results(student_id: str):
 
 @math_router.post("/analytics")
 async def get_analytics(filters: AnalyticsFilter, authorization: str = Header(None)):
-    """Get analytics data with filters for dashboard (with optional tutor authentication)"""
+    """Get analytics data with filters for dashboard (tutor authenticated)"""
     try:
-        tutor_id = None
+        # Verify tutor authentication - MANDATORY
+        if not authorization:
+            raise HTTPException(status_code=401, detail="Authorization header required")
         
-        # Try to verify tutor authentication if header is provided
-        if authorization:
-            try:
-                tutor_data = verify_tutor_token(authorization)
-                tutor_id = tutor_data.get('tutor_id')
-            except Exception as e:
-                # For demo purposes, continue without authentication but log the error
-                logger.warning(f"Authentication failed, continuing without filter: {str(e)}")
+        try:
+            tutor_data = verify_tutor_token(authorization)
+            tutor_id = tutor_data.get('tutor_id')
+            if not tutor_id:
+                raise HTTPException(status_code=401, detail="Invalid tutor token - no tutor_id")
+        except Exception as e:
+            logger.error(f"Authentication failed: {str(e)}")
+            raise HTTPException(status_code=401, detail="Authentication failed")
         
         if not math_db:
             raise HTTPException(status_code=500, detail="Firebase not initialized")
         
-        # Get results from student_results collection and filter
+        # Get results from student_results collection and filter by tutor_id FIRST
         all_results = []
-        results_query = math_db.collection('student_results')
-        
-        # Filter by tutor_id if authenticated
-        if tutor_id:
-            results_query = results_query.where('tutor_id', '==', tutor_id)
+        results_query = math_db.collection('student_results').where('tutor_id', '==', tutor_id)
         
         # Apply additional filters
         if filters.location:
