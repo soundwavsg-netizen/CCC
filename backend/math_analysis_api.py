@@ -17,6 +17,7 @@ from pathlib import Path
 
 # JWT token verification
 import jwt
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 ALGORITHM = "HS256"
 
 # Import SECRET_KEY from tutor_auth_api
@@ -40,9 +41,9 @@ def verify_tutor_token(authorization_header):
         SECRET_KEY = get_secret_key()
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
-    except jwt.ExpiredSignatureError:
+    except ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token has expired")
-    except jwt.JWTError:
+    except (InvalidTokenError, Exception) as e:
         raise HTTPException(status_code=401, detail="Could not validate credentials")
 
 # Setup logging
