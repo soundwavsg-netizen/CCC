@@ -547,7 +547,7 @@ const TuitionCentreDemo = () => {
                       </div>
 
                       {/* Scrollable Content */}
-                      <div className="overflow-y-auto flex-1 p-6 pb-8">
+                      <div className="overflow-y-auto flex-1 p-4">
                         {enrollmentSubmitted ? (
                           <div className="text-center py-8">
                             <div className="text-6xl mb-4">✅</div>
@@ -555,7 +555,7 @@ const TuitionCentreDemo = () => {
                             <p className="text-gray-600">Our admin team will contact you shortly.</p>
                           </div>
                         ) : (
-                          <form onSubmit={handleEnrollmentSubmit} className="space-y-4">
+                          <form onSubmit={handleEnrollmentSubmit} className="space-y-3">
                             <div>
                               <label className="block text-sm font-medium text-gray-700 mb-1">Parent Name *</label>
                               <input
@@ -563,7 +563,7 @@ const TuitionCentreDemo = () => {
                                 required
                                 value={enrollmentData.parent_name}
                                 onChange={(e) => handleEnrollmentChange('parent_name', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent text-sm"
                               />
                             </div>
 
@@ -574,7 +574,7 @@ const TuitionCentreDemo = () => {
                                 required
                                 value={enrollmentData.student_name}
                                 onChange={(e) => handleEnrollmentChange('student_name', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent text-sm"
                               />
                             </div>
 
@@ -585,7 +585,7 @@ const TuitionCentreDemo = () => {
                                 required
                                 value={enrollmentData.email}
                                 onChange={(e) => handleEnrollmentChange('email', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent text-sm"
                               />
                             </div>
 
@@ -596,7 +596,7 @@ const TuitionCentreDemo = () => {
                                 value={enrollmentData.parent_phone}
                                 onChange={(e) => handleEnrollmentChange('parent_phone', e.target.value)}
                                 placeholder="e.g., +65 9123 4567"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent text-sm"
                               />
                             </div>
 
@@ -607,7 +607,7 @@ const TuitionCentreDemo = () => {
                                 value={enrollmentData.student_phone}
                                 onChange={(e) => handleEnrollmentChange('student_phone', e.target.value)}
                                 placeholder="e.g., +65 8123 4567"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent text-sm"
                               />
                               <p className="text-xs text-gray-500 mt-1">* At least 1 phone number is required</p>
                             </div>
