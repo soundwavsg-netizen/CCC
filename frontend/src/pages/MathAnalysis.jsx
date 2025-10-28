@@ -316,6 +316,28 @@ const MathAnalysis = () => {
     setShowAssessmentModal(true);
   };
 
+  const openAssessmentGeneratorFromResult = (studentId, revisionPlanData, allTopicsData) => {
+    // Extract all topics from the paper (not just weak ones)
+    const allTopics = allTopicsData || [];
+    const weakTopics = allTopics.filter(t => t.current_score < 60).map(t => t.topic);
+    
+    // Set weak topics as pre-selected, but store all topics for selection
+    setAssessmentData({
+      student_id: studentId,
+      result_id: 'latest', // We'll improve this tracking later
+      selected_topics: weakTopics, // Pre-select weak topics
+      all_available_topics: allTopics, // Store all topics for tutor to choose
+      selected_subtopics: [],
+      duration_minutes: 45,
+      generation_mode: 'auto'
+    });
+    
+    if (weakTopics.length > 0) {
+      fetchAvailableSubtopics(weakTopics);
+    }
+    setShowAssessmentModal(true);
+  };
+
   const fetchAvailableSubtopics = async (topics) => {
     if (!revisionPlan || topics.length === 0) return;
     
