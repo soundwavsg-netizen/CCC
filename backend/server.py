@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 import firebase_admin
 from firebase_admin import credentials, firestore
+from math_analysis_api import math_router
 
 
 ROOT_DIR = Path(__file__).parent
