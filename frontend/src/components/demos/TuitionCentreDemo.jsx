@@ -23,6 +23,7 @@ const TuitionCentreDemo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState(null);
   const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);  // Add input ref for focus management
 
   // External backend URL
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://edubot-hub-1.preview.emergentagent.com';
