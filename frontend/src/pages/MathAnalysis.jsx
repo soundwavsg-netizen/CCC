@@ -1134,11 +1134,11 @@ const MathAnalysis = () => {
                     <div className="space-y-4">
                       {/* We need to fetch and display all results here */}
                       <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                        <div className="flex justify-between items-center">
-                          <div>
+                        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+                          <div className="flex-1">
                             <p className="font-semibold text-gray-800">{revisionPlan.exam_type}</p>
                             <p className="text-sm text-gray-600">Overall Score: {revisionPlan.overall_score}%</p>
-                            <div className="flex gap-2 mt-2">
+                            <div className="flex flex-wrap gap-2 mt-2">
                               {revisionPlan.all_topics && revisionPlan.all_topics.map((item, idx) => (
                                 <span key={idx} className={`text-xs px-2 py-1 rounded font-medium ${
                                   item.current_score <= weakThreshold ? 'bg-red-100 text-red-700 border border-red-300' : 
@@ -1155,7 +1155,7 @@ const MathAnalysis = () => {
                               revisionPlan,
                               revisionPlan.revision_plan
                             )}
-                            className="bg-gradient-to-r from-green-500 to-blue-500 text-white"
+                            className="bg-gradient-to-r from-green-500 to-blue-500 text-white whitespace-nowrap w-full md:w-auto"
                           >
                             🎯 Generate Assessment
                           </Button>
