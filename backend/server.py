@@ -1286,25 +1286,44 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             
             # Extract subject (only if not already found from context, OR if current message explicitly has it)
             logger.info(f"Checking subject extraction from current message '{user_message_lower}'")
-            subject_keywords = {
-                # Check specific subjects first (AMath, EMath) before generic Math
-                'amath': 'AMath', 'a-math': 'AMath', 'a math': 'AMath',
-                'emath': 'EMath', 'e-math': 'EMath', 'e math': 'EMath',
-                'math': 'Math', 'maths': 'Math', 'mathematics': 'Math',
-                'science': 'Science',
-                'english': 'English',
-                'chinese': 'Chinese',
-                'physics': 'Physics',
-                'chemistry': 'Chemistry',
-                'biology': 'Biology',
-                'economics': 'Economics', 'econs': 'Economics'
-            }
+            
+            # Check for specific subjects first (AMath, EMath) before generic Math
             current_message_subject = None
-            for key, val in subject_keywords.items():
-                if key in user_message_lower:
-                    current_message_subject = val
-                    logger.info(f"Found subject '{val}' from keyword '{key}' in current message")
-                    break
+            
+            # Check AMath first
+            if any(keyword in user_message_lower for keyword in ['amath', 'a-math', 'a math']):
+                current_message_subject = 'AMath'
+                logger.info(f"Found subject 'AMath' from AMath keywords in current message")
+            # Check EMath second
+            elif any(keyword in user_message_lower for keyword in ['emath', 'e-math', 'e math']):
+                current_message_subject = 'EMath'
+                logger.info(f"Found subject 'EMath' from EMath keywords in current message")
+            # Check other subjects
+            elif any(keyword in user_message_lower for keyword in ['math', 'maths', 'mathematics']):
+                current_message_subject = 'Math'
+                logger.info(f"Found subject 'Math' from Math keywords in current message")
+            elif 'science' in user_message_lower:
+                current_message_subject = 'Science'
+                logger.info(f"Found subject 'Science' in current message")
+            elif 'physics' in user_message_lower:
+                current_message_subject = 'Physics'
+                logger.info(f"Found subject 'Physics' in current message")
+            elif 'chemistry' in user_message_lower:
+                current_message_subject = 'Chemistry'
+                logger.info(f"Found subject 'Chemistry' in current message")
+            elif 'biology' in user_message_lower:
+                current_message_subject = 'Biology'
+                logger.info(f"Found subject 'Biology' in current message")
+            elif 'english' in user_message_lower:
+                current_message_subject = 'English'
+                logger.info(f"Found subject 'English' in current message")
+            elif 'chinese' in user_message_lower:
+                current_message_subject = 'Chinese'
+                logger.info(f"Found subject 'Chinese' in current message")
+            elif any(keyword in user_message_lower for keyword in ['economics', 'econs']):
+                current_message_subject = 'Economics'
+                logger.info(f"Found subject 'Economics' in current message")
+            
             if not current_message_subject:
                 logger.info("No subject found in current message")
             # Use current message subject if found, otherwise keep context subject
