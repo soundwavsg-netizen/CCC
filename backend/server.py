@@ -1245,6 +1245,7 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                         break
             
             # Extract subject (only if not already found from context, OR if current message explicitly has it)
+            logger.info(f"Checking subject extraction from current message '{user_message_lower}'")
             subject_keywords = {
                 'math': 'Math', 'maths': 'Math', 'mathematics': 'Math',
                 'science': 'Science',
@@ -1263,6 +1264,8 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                     current_message_subject = val
                     logger.info(f"Found subject '{val}' from keyword '{key}' in current message")
                     break
+            if not current_message_subject:
+                logger.info("No subject found in current message")
             # Use current message subject if found, otherwise keep context subject
             if current_message_subject:
                 subject = current_message_subject
