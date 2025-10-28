@@ -1258,8 +1258,8 @@ const MathAnalysis = () => {
                                 <span className="text-sm text-red-600">{topic.current_score}%</span>
                               </label>
                             ))}
-                          {assessmentData.all_available_topics.filter(t => t.current_score < 60).length === 0 && (
-                            <p className="text-sm text-gray-600">✅ No weak topics - all above 60%!</p>
+                          {assessmentData.all_available_topics.filter(t => t.current_score <= weakThreshold).length === 0 && (
+                            <p className="text-sm text-gray-600">✅ No weak topics - all above {weakThreshold}%!</p>
                           )}
                         </div>
                       ) : (
@@ -1277,12 +1277,12 @@ const MathAnalysis = () => {
                     {assessmentData.all_available_topics && assessmentData.all_available_topics.length > 0 && (
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          ➕ Add Extra Topics (Optional - Even if performing well)
+                          ➕ Add Extra Topics (Optional - Scoring Above {weakThreshold}%)
                         </label>
                         <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg">
                           <div className="space-y-2">
                             {assessmentData.all_available_topics
-                              .filter(t => t.current_score >= 60) // Topics where student is doing well
+                              .filter(t => t.current_score > weakThreshold) // Topics where student is doing well
                               .map((topic) => (
                                 <label key={topic.topic} className="flex items-center justify-between p-2 hover:bg-blue-100 rounded">
                                   <div className="flex items-center space-x-3">
