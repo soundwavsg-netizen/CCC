@@ -118,6 +118,24 @@ class EnrollmentRequest(BaseModel):
     tutor_preference: str = ""  # Optional tutor name
     message: str = ""  # Additional notes
 
+# Admin Tool Models
+class ClassData(BaseModel):
+    level: str
+    subject: str
+    location: str
+    tutor_name: str
+    day1: str
+    time1: str
+    day2: str = ""
+    time2: str = ""
+    monthly_fee: float
+    sessions_per_week: int
+
+class AdminClassUpdate(BaseModel):
+    action: str  # "add", "update", "delete"
+    class_data: ClassData = None
+    class_id: str = ""  # For update/delete
+
 # WhatsApp Bot Models
 class WhatsAppMessage(BaseModel):
     phone_number: str
