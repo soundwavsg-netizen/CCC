@@ -1518,7 +1518,7 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                                 # Single class
                                 cls = tutor_classes[0]
                                 schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
-                                exact_response += f"📚 **{tutor}**: {schedule_str} - **${cls.get('monthly_fee')}/month**\n"
+                                exact_response += f"📚 **{tutor}**: {schedule_str} - **${cls.get('monthly_fee')}/month**\n\n"
                             else:
                                 # Multiple classes from same tutor
                                 exact_response += f"📚 **{tutor}**:\n"
@@ -1526,6 +1526,7 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                                     variant_label = chr(65 + idx)
                                     schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
                                     exact_response += f"  Class {variant_label}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
+                                exact_response += "\n"
                         exact_response += "\n"
                     
                     exact_response += "Would you like more details about any specific tutor or to enroll? 😊"
