@@ -1931,8 +1931,8 @@ async def admin_search_classes(level: str = None, subject: str = None, location:
 @api_router.get("/admin/available-tutors")
 async def get_available_tutors(level: str, subject: str, location: str):
     """
-    Get list of tutors teaching a specific level+subject at a location.
-    Returns tutor names that already exist in the database.
+    Get list of unique tutors teaching a specific level+subject at a location.
+    Returns only unique tutor names (no duplicates).
     """
     try:
         classes_ref = firebase_db.collection('classes')
@@ -1941,9 +1941,12 @@ async def get_available_tutors(level: str, subject: str, location: str):
         tutors = set()
         for doc in results:
             data = doc.to_dict()
-            # Return both the tutor_name (with title) and tutor_base_name
-            tutors.add(data.get('tutor_name', ''))
+            # Only use tutor_name (with titles like Mr, Ms)
+            tutor_name = data.get('tutor_name', '')
+            if tutor_name:
+                tutors.add(tutor_name)
         
+        # Return sorted unique list
         return {
             "tutors": sorted(list(tutors)),
             "count": len(tutors)
