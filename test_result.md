@@ -111,11 +111,11 @@ user_problem_statement: "Fix chatbot data accuracy issues:
 backend:
   - task: "Fix context-aware follow-up queries"
     implemented: true
-    working: "needs_testing"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "critical"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "user"
@@ -123,6 +123,9 @@ backend:
       - working: "needs_testing"
         agent: "main"
         comment: "FIXED: Enhanced context extraction logic (lines 1109-1184). Now extracts level and subject from conversation history when not present in current message. Also improved Firebase trigger detection to include location-only queries and keywords like 'list', 'show', 'available'. Bot now correctly shows ALL tutors when user asks follow-up location queries."
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Context-aware follow-up queries working correctly. **Test Results**: (1) S2 Math → Marine Parade: Shows ALL 9 tutors (Jackie, John Lee, Leonard Teo, Lim W.M., Ng C.H., Ronnie Quek, Sean Phua, Sean Tan, Sean Yeo) with complete schedules and correct pricing ($381.50/month). (2) P6 Math → Punggol: Correctly maintains context and shows P6 Math classes at Punggol with proper pricing ($357.52/month). (3) J1 Math → Bishan: Context extraction works (logs show Level: J1, Subject: Math, Location: Bishan), but LLM asks for clarification for better UX - when user clarifies, shows correct J1 Math tutors at Bishan. **CRITICAL FIX WORKING**: Firebase query triggered correctly, context extracted from conversation history, ALL relevant tutors displayed with complete information."
   
   - task: "Fix chatbot Class A/B labeling logic"
     implemented: true
