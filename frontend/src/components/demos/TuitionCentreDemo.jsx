@@ -619,7 +619,7 @@ const TuitionCentreDemo = () => {
                                   required
                                   value={enrollmentData.level}
                                   onChange={(e) => handleEnrollmentChange('level', e.target.value)}
-                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent text-sm"
                                 >
                                   <option value="">Select</option>
                                   <option value="P2">P2</option>
@@ -643,9 +643,9 @@ const TuitionCentreDemo = () => {
                                   value={enrollmentData.subject}
                                   onChange={(e) => handleEnrollmentChange('subject', e.target.value)}
                                   disabled={!enrollmentData.level}
-                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
                                 >
-                                  <option value="">{enrollmentData.level ? 'Select' : 'Select level first'}</option>
+                                  <option value="">{enrollmentData.level ? 'Select' : 'Level first'}</option>
                                   {getSubjectOptions(enrollmentData.level).map(subject => (
                                     <option key={subject} value={subject}>{subject}</option>
                                   ))}
@@ -658,6 +658,46 @@ const TuitionCentreDemo = () => {
                               <select
                                 required
                                 value={enrollmentData.location}
+                                onChange={(e) => handleEnrollmentChange('location', e.target.value)}
+                                disabled={!enrollmentData.level || !enrollmentData.subject}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+                              >
+                                <option value="">
+                                  {!enrollmentData.level || !enrollmentData.subject 
+                                    ? 'Level & subject first' 
+                                    : availableLocations.length === 0 
+                                      ? 'Loading...'
+                                      : 'Select'}
+                                </option>
+                                {availableLocations.map(location => (
+                                  <option key={location} value={location}>{location}</option>
+                                ))}
+                              </select>
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Tutor (Optional)</label>
+                              <select
+                                value={enrollmentData.tutor_preference}
+                                onChange={(e) => handleEnrollmentChange('tutor_preference', e.target.value)}
+                                disabled={!enrollmentData.level || !enrollmentData.subject || !enrollmentData.location}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+                              >
+                                <option value="">
+                                  {!enrollmentData.level || !enrollmentData.subject || !enrollmentData.location
+                                    ? 'Select level/subject/location first'
+                                    : availableTutors.length === 0
+                                      ? 'No preference'
+                                      : 'No preference'}
+                                </option>
+                                {availableTutors.map(tutor => (
+                                  <option key={tutor} value={tutor}>{tutor}</option>
+                                ))}
+                              </select>
+                              {availableTutors.length > 0 && (
+                                <p className="text-xs text-gray-500 mt-1">{availableTutors.length} tutor(s) available</p>
+                              )}
+                            </div>
                                 onChange={(e) => handleEnrollmentChange('location', e.target.value)}
                                 disabled={!enrollmentData.level || !enrollmentData.subject}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
