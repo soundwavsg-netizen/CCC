@@ -1059,9 +1059,9 @@ const MathAnalysis = () => {
                   className="px-3 py-2 border border-gray-300 rounded-lg"
                 >
                   <option value="">All Locations</option>
-                  <option value="RMSS Tampines">RMSS Tampines</option>
-                  <option value="RMSS Bedok">RMSS Bedok</option>
-                  <option value="Online">Online</option>
+                  {tutorInfo.locations.map(loc => (
+                    <option key={loc} value={`RMSS - ${loc}`}>RMSS - {loc}</option>
+                  ))}
                 </select>
                 <select
                   value={filters.level}
@@ -1069,12 +1069,9 @@ const MathAnalysis = () => {
                   className="px-3 py-2 border border-gray-300 rounded-lg"
                 >
                   <option value="">All Levels</option>
-                  <option value="S1">S1</option>
-                  <option value="S2">S2</option>
-                  <option value="S3">S3</option>
-                  <option value="S4">S4</option>
-                  <option value="J1">J1</option>
-                  <option value="J2">J2</option>
+                  {tutorInfo.levels.map(level => (
+                    <option key={level} value={level}>{level}</option>
+                  ))}
                 </select>
                 <select
                   value={filters.subject}
@@ -1082,10 +1079,9 @@ const MathAnalysis = () => {
                   className="px-3 py-2 border border-gray-300 rounded-lg"
                 >
                   <option value="">All Subjects</option>
-                  <option value="E.Math">E.Math</option>
-                  <option value="A.Math">A.Math</option>
-                  <option value="Pure Math">Pure Math</option>
-                  <option value="Statistics">Statistics</option>
+                  {tutorInfo.subjects.map(subject => (
+                    <option key={subject} value={subject}>{subject}</option>
+                  ))}
                 </select>
                 <Button
                   onClick={fetchAnalytics}
