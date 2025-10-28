@@ -322,12 +322,21 @@ const MathAnalysis = () => {
   const fetchAnalytics = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/math-analysis/analytics`, filters);
+      const token = localStorage.getItem('tutor_token');
+      const response = await axios.post(`${BACKEND_URL}/api/math-analysis/analytics`, filters, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (response.data.success) {
         setAnalyticsData(response.data);
       }
     } catch (error) {
-      setMessage('❌ Error fetching analytics: ' + (error.response?.data?.detail || error.message));
+      console.error('Error fetching analytics:', error);
+      if (error.response?.status === 401) {
+        // Token expired, redirect to login
+        handleLogout();
+      }
     } finally {
       setLoading(false);
     }
