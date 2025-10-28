@@ -43,7 +43,7 @@ def verify_tutor_token(authorization_header):
         return payload
     except ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token has expired")
-    except (InvalidTokenError, Exception) as e:
+    except (InvalidTokenError, Exception):
         raise HTTPException(status_code=401, detail="Could not validate credentials")
 
 # Setup logging
