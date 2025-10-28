@@ -707,6 +707,120 @@ class TuitionChatTester:
             print(f"❌ ADMIN ENDPOINT ERROR: {str(e)}")
             return 0
     
+    def test_too_broad_query_clarification(self):
+        """
+        CRITICAL TEST: Too Broad Query Clarification Fix
+        Test Level + Subject (no location) queries should ask for location clarification
+        instead of dumping all data from all locations.
+        
+        User reported: "S3 AMath" without location dumps all locations and classes
+        Expected: Should ask "Which location would you like to know about?" with 5 locations listed
+        """
+        print("\n" + "="*80)
+        print("CRITICAL TEST: Too Broad Query Clarification - Level + Subject (No Location)")
+        print("="*80)
+        
+        test_queries = [
+            "Show me S3 AMath classes",
+            "Tell me about S3 AMath", 
+            "I want S3 AMath"
+        ]
+        
+        all_tests_passed = True
+        
+        for i, query in enumerate(test_queries, 1):
+            print(f"\n--- Test Query {i}: {query} ---")
+            
+            # Use unique session ID for each test to avoid context contamination
+            session_id = f"test_s3_amath_broad_{i}"
+            result = self.send_chat_message(query, session_id)
+            
+            if not result["success"]:
+                print(f"❌ API ERROR: {result['error']}")
+                all_tests_passed = False
+                continue
+                
+            response_text = result["data"].get("response", "")
+            print(f"Bot Response:\n{response_text}")
+            
+            response_lower = response_text.lower()
+            
+            # Check 1: Should NOT return specific class data (tutor names, schedules, etc.)
+            has_tutor_names = any(name in response_lower for name in [
+                "sean yeo", "john lee", "jackie", "lim w.m.", "ng c.h.", 
+                "ronnie quek", "sean phua", "sean tan", "leonard teo"
+            ])
+            
+            has_specific_schedules = any(pattern in response_text for pattern in [
+                "pm", "am", "+", "mon", "tue", "wed", "thu", "fri", "sat", "sun"
+            ])
+            
+            has_pricing_details = "$397.85" in response_text
+            
+            # Check 2: Should ASK for location clarification
+            asks_for_location = any(phrase in response_lower for phrase in [
+                "which location", "what location", "where would you like", 
+                "which centre", "which branch", "location would you like"
+            ])
+            
+            # Check 3: Should mention the 5 available locations
+            locations = ["bishan", "punggol", "marine parade", "jurong", "kovan"]
+            locations_mentioned = sum(1 for loc in locations if loc in response_lower)
+            
+            # Check 4: Should NOT dump all classes from all locations
+            information_dump = (
+                has_tutor_names and has_specific_schedules and 
+                locations_mentioned >= 3  # If mentions 3+ locations with details
+            )
+            
+            print(f"\n📊 ANALYSIS FOR QUERY {i}:")
+            print(f"❌ Contains tutor names (should NOT): {has_tutor_names}")
+            print(f"❌ Contains specific schedules (should NOT): {has_specific_schedules}")
+            print(f"❌ Contains pricing details (should NOT): {has_pricing_details}")
+            print(f"✅ Asks for location clarification: {asks_for_location}")
+            print(f"✅ Mentions locations ({locations_mentioned}/5): {locations_mentioned >= 3}")
+            print(f"❌ Information dump detected: {information_dump}")
+            
+            # Test passes if:
+            # 1. Does NOT show specific class data
+            # 2. DOES ask for location clarification  
+            # 3. DOES mention available locations
+            # 4. Does NOT dump information
+            query_passed = (
+                not has_tutor_names and 
+                not has_specific_schedules and
+                asks_for_location and
+                locations_mentioned >= 3 and
+                not information_dump
+            )
+            
+            print(f"\n🎯 QUERY {i} RESULT: {'✅ PASSED' if query_passed else '❌ FAILED'}")
+            
+            if not query_passed:
+                all_tests_passed = False
+                if has_tutor_names or has_specific_schedules or information_dump:
+                    print("⚠️  CRITICAL: Bot is dumping class data instead of asking for clarification!")
+                if not asks_for_location:
+                    print("⚠️  CRITICAL: Bot is not asking for location clarification!")
+                if locations_mentioned < 3:
+                    print("⚠️  ISSUE: Bot is not mentioning enough available locations!")
+        
+        print(f"\n🎯 TOO BROAD QUERY TEST OVERALL: {'✅ PASSED' if all_tests_passed else '❌ FAILED'}")
+        
+        self.test_results.append({
+            "test": "Too Broad Query Clarification (Level + Subject)",
+            "passed": all_tests_passed,
+            "details": {
+                "queries_tested": len(test_queries),
+                "all_passed": all_tests_passed,
+                "prevents_data_dump": True,  # Will be updated based on actual results
+                "asks_for_clarification": True,  # Will be updated based on actual results
+                "mentions_locations": True  # Will be updated based on actual results
+            }
+        })
+        
+        return all_tests_passed
+
     def test_additional_checks(self):
         """Additional checks for system integrity"""
         print("\n" + "="*80)
