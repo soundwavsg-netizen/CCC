@@ -11,7 +11,7 @@ from typing import Dict, Any
 import time
 
 # Configuration
-BACKEND_URL = "https://tuition-chatbot.preview.emergentagent.com"
+BACKEND_URL = "https://math-mastery-12.preview.emergentagent.com"
 API_ENDPOINT = f"{BACKEND_URL}/api/tuition/chat"
 
 class TuitionChatTester:
