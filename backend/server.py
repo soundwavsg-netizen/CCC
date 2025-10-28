@@ -1140,6 +1140,8 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             any(word in user_message_lower for word in ['list', 'show', 'available', 'which', 'what', 'who', 'all'])
         ])
         
+        logger.info(f"needs_firebase={needs_firebase} for message '{request.message}'")
+        
         if needs_firebase:
             # Try to extract level, subject, location from query
             level = None
