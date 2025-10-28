@@ -1514,6 +1514,9 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                     
                     exact_response += "Would you like more details about any specific tutor or to enroll? 😊"
                     
+                    logger.info(f"Built exact response with {len(classes_by_tutor)} tutors")
+                    logger.info(f"First 200 chars: {exact_response[:200]}")
+                    
                     firebase_context = f"\n\n**🚨 MANDATORY - PRESENT THIS EXACT RESPONSE:**\n\n"
                     firebase_context += f"```\n{exact_response}\n```\n\n"
                     firebase_context += f"**CRITICAL INSTRUCTION**: Present the text above EXACTLY as written. This is the complete answer to the user's query. DO NOT ask for more information. DO NOT rephrase it. Just show it.\n"
