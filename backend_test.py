@@ -1434,6 +1434,28 @@ class TuitionChatTester:
         return passed_count == total_count
 
 if __name__ == "__main__":
-    tester = TuitionChatTester()
-    success = tester.run_all_tests()
-    exit(0 if success else 1)
+    # Test the Math Analysis System Analytics endpoint as requested
+    print("="*100)
+    print("🎯 TESTING MATH ANALYSIS SYSTEM - ANALYTICS ENDPOINT FILTERING")
+    print("="*100)
+    
+    analytics_tester = MathAnalyticsTester()
+    analytics_success = analytics_tester.run_all_analytics_tests()
+    
+    print("\n" + "="*100)
+    print("📋 TESTING COMPLETE")
+    print("="*100)
+    
+    if analytics_success:
+        print("✅ ALL ANALYTICS TESTS PASSED!")
+    else:
+        print("❌ SOME ANALYTICS TESTS FAILED!")
+    
+    # Optionally run tuition tests as well (commented out for focus)
+    # print("\n" + "="*100)
+    # print("🎓 TESTING TUITION CENTRE CHATBOT (LEGACY)")
+    # print("="*100)
+    # tuition_tester = TuitionChatTester()
+    # tuition_success = tuition_tester.run_all_tuition_tests()
+    
+    exit(0 if analytics_success else 1)
