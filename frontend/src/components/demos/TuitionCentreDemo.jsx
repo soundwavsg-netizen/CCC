@@ -433,14 +433,15 @@ const TuitionCentreDemo = () => {
 
                 {/* Enrollment Form Modal */}
                 {showEnrollmentForm && (
-                  <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto"
+                      className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[85vh] flex flex-col"
                     >
-                      <div className="p-6">
-                        <div className="flex justify-between items-center mb-4">
+                      {/* Fixed Header */}
+                      <div className="p-6 pb-4 border-b border-gray-200">
+                        <div className="flex justify-between items-center">
                           <h3 className="text-2xl font-bold text-gray-800">📚 Enrollment Request</h3>
                           <Button
                             onClick={() => setShowEnrollmentForm(false)}
@@ -450,7 +451,10 @@ const TuitionCentreDemo = () => {
                             <X className="h-5 w-5" />
                           </Button>
                         </div>
+                      </div>
 
+                      {/* Scrollable Content */}
+                      <div className="overflow-y-auto flex-1 p-6">
                         {enrollmentSubmitted ? (
                           <div className="text-center py-8">
                             <div className="text-6xl mb-4">✅</div>
@@ -493,12 +497,23 @@ const TuitionCentreDemo = () => {
                             </div>
 
                             <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Parent Phone (at least one phone required)</label>
                               <input
                                 type="tel"
-                                required
-                                value={enrollmentData.phone}
-                                onChange={(e) => handleEnrollmentChange('phone', e.target.value)}
+                                value={enrollmentData.parent_phone}
+                                onChange={(e) => handleEnrollmentChange('parent_phone', e.target.value)}
+                                placeholder="e.g., +65 9123 4567"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Student Phone (Optional for JC levels)</label>
+                              <input
+                                type="tel"
+                                value={enrollmentData.student_phone}
+                                onChange={(e) => handleEnrollmentChange('student_phone', e.target.value)}
+                                placeholder="e.g., +65 8123 4567"
                                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#667eea] focus:border-transparent"
                               />
                             </div>
