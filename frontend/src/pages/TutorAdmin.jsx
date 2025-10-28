@@ -112,6 +112,27 @@ const TutorAdmin = () => {
     }
   };
 
+  const handleResetPassword = async (loginId, tutorName) => {
+    if (!window.confirm(`Are you sure you want to reset password for ${tutorName}? This will generate a new temporary password.`)) {
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/tutor/admin/reset-password/${loginId}`);
+      if (response.data.success) {
+        setMessage(`✅ Password reset successfully for ${tutorName}`);
+        setCreatedCredentials({
+          tutor_name: tutorName,
+          login_id: loginId,
+          temp_password: response.data.temp_password
+        });
+        fetchTutors();
+      }
+    } catch (error) {
+      setMessage('❌ ' + (error.response?.data?.detail || error.message));
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <PageHeader 
