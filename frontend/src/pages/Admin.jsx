@@ -263,14 +263,14 @@ const Admin = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Tutor Name *</label>
                   {isNewTutor ? (
-                    <div className="relative">
+                    <div className="space-y-2">
                       <input
                         type="text"
                         required
                         value={formData.tutor_name}
                         onChange={(e) => setFormData({...formData, tutor_name: e.target.value})}
                         placeholder="e.g., Mr John Lee (DY HOD)"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                       />
                       <button
                         type="button"
@@ -278,19 +278,27 @@ const Admin = () => {
                           setIsNewTutor(false);
                           setFormData({...formData, tutor_name: ''});
                         }}
-                        className="absolute right-2 top-2 text-xs text-blue-600 hover:text-blue-800"
+                        className="text-xs text-blue-600 hover:text-blue-800 underline"
                       >
-                        Choose existing
+                        Choose from existing tutors
                       </button>
                     </div>
                   ) : (
-                    <div className="relative">
+                    <div className="space-y-2">
                       <select
                         required={!isNewTutor}
                         value={formData.tutor_name}
                         onChange={(e) => handleFormChange('tutor_name', e.target.value)}
                         disabled={!formData.level || !formData.subject || !formData.location}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        className="w-full px-3 py-2 pr-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed text-sm appearance-none"
+                        style={{ 
+                          WebkitAppearance: 'none',
+                          MozAppearance: 'none',
+                          backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3e%3cpolyline points=\'6 9 12 15 18 9\'%3e%3c/polyline%3e%3c/svg%3e")',
+                          backgroundRepeat: 'no-repeat',
+                          backgroundPosition: 'right 0.5rem center',
+                          backgroundSize: '1.5em 1.5em'
+                        }}
                       >
                         <option value="">
                           {!formData.level || !formData.subject || !formData.location
@@ -310,7 +318,7 @@ const Admin = () => {
                             setIsNewTutor(true);
                             setFormData({...formData, tutor_name: ''});
                           }}
-                          className="absolute right-2 top-2 text-xs text-green-600 hover:text-green-800 font-medium"
+                          className="text-xs text-green-600 hover:text-green-800 font-medium underline"
                         >
                           + Add New Tutor
                         </button>
