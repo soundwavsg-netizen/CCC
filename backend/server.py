@@ -1297,7 +1297,32 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             # Query Firebase for classes
             if level or subject or location or tutor_search:
                 logger.info(f"Querying Firebase - Level: {level}, Subject: {subject}, Location: {location}, Tutor: {tutor_search} (from context: level={level}, subject={subject})")
-                classes = query_firebase_classes(level, subject, location, limit=30)
+                
+                # Check if query is too broad (level + location but no subject and no tutor)
+                # This would return all subjects at that level/location which is overwhelming
+                if level and location and not subject and not tutor_search:
+                    # Too broad - ask for subject specification
+                    firebase_context = f"\n\n**QUERY TOO BROAD - ASK FOR CLARIFICATION:**\n"
+                    firebase_context += f"User asked about {level} classes at {location}, but didn't specify a subject.\n"
+                    firebase_context += f"This would return classes for Math, Science, English, Chinese, Physics, Chemistry, Biology, etc. - too much information!\n\n"
+                    firebase_context += f"**YOU MUST ASK**: 'Which subject would you like to know about for {level} at {location}? For example: Math, Science, English, Chinese"
+                    if level in ['S3', 'S4']:
+                        firebase_context += f", EMath, AMath, Physics, Chemistry, Biology"
+                    elif level in ['J1', 'J2']:
+                        firebase_context += f", Math, Physics, Chemistry, Biology, Economics"
+                    firebase_context += f"?'\n\n"
+                    firebase_context += f"**DO NOT query or show class data yet** - wait for subject specification.\n"
+                    classes = []  # Don't query yet
+                elif location and not level and not subject and not tutor_search:
+                    # Only location specified - way too broad
+                    firebase_context = f"\n\n**QUERY TOO BROAD - ASK FOR CLARIFICATION:**\n"
+                    firebase_context += f"User asked about classes at {location}, but didn't specify level or subject.\n"
+                    firebase_context += f"**YOU MUST ASK**: 'Which level and subject would you like to know about at {location}? For example: P6 Math, S2 Science, J1 Physics?'\n\n"
+                    firebase_context += f"**DO NOT query or show class data yet** - wait for more specific information.\n"
+                    classes = []  # Don't query yet
+                else:
+                    # Query is specific enough
+                    classes = query_firebase_classes(level, subject, location, limit=30)
                 
                 # If we have a tutor search, filter classes by tutor name
                 if tutor_search and classes:
