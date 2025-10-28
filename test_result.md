@@ -115,6 +115,24 @@ user_problem_statement: "Investigate data accuracy issue: User reports that when
 - If no, this is a data upload issue, not a chatbot issue"
 
 backend:
+  - task: "Fix subject extraction bug for AMath vs Math queries"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "User reported: When asking chatbot for 'S3 AMath Marine Parade classes', only 4 tutors are showing. Expected more tutors based on other locations."
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL BUG IDENTIFIED: Subject extraction logic was incorrectly parsing 'AMath' as 'Math'. When users asked about 'S3 AMath', system extracted 'Math' instead of 'AMath', causing Firebase queries to search for wrong subject. Firebase has 4 tutors for S3 AMath at Marine Parade, but chatbot was querying S3 Math (which has 0 tutors)."
+      - working: true
+        agent: "testing"
+        comment: "✅ FIXED: Updated subject extraction logic in server.py lines 1287-1320 to check AMath/EMath keywords BEFORE generic Math keywords. Changed from dictionary-based matching to explicit if-elif chain to ensure proper precedence. **Test Results**: (1) 'List all tutors teaching S3 AMath at Marine Parade' now shows ALL 4 tutors (Jackie, John Lee (DY_HOD), Sean Tan, Sean Yeo (HOD)) with complete schedules and correct pricing ($397.85/month). (2) Regular Math queries still work correctly. (3) All variations of the user's original query now return complete results. **ROOT CAUSE RESOLVED**: AMath queries no longer misinterpreted as Math queries."
+
   - task: "Remove A/B suffixes from tutor names in dropdowns"
     implemented: true
     working: true
