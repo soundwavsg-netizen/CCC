@@ -373,13 +373,17 @@ async def get_student_results(student_id: str):
         # Get all results from student_results collection
         results = []
         results_query = math_db.collection('student_results')\
-            .where('student_id', '==', student_id)\
-            .order_by('created_at', direction=firestore.Query.DESCENDING)
+            .where('student_id', '==', student_id)
         
-        for result_doc in results_query.stream():
+        # Get all results and sort in Python
+        all_results = list(results_query.stream())
+        for result_doc in all_results:
             result_data = result_doc.to_dict()
             result_data['result_id'] = result_doc.id
             results.append(result_data)
+        
+        # Sort by created_at in Python (most recent first)
+        results.sort(key=lambda x: x.get('created_at', ''), reverse=True)
         
         return {
             'success': True,
