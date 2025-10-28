@@ -1126,23 +1126,13 @@ async def get_all_results():
         
         all_results = []
         
-        # Get all students
-        students_ref = math_db.collection('students').stream()
+        # Get all results directly from student_results collection
+        results_ref = math_db.collection('student_results').stream()
         
-        for student_doc in students_ref:
-            student_data = student_doc.to_dict()
-            student_id = student_doc.id
-            
-            # Get all results for this student
-            results_ref = math_db.collection('student_results')\
-                .where('student_id', '==', student_id)\
-                .stream()
-            
-            for result_doc in results_ref:
-                result_data = result_doc.to_dict()
-                result_data['result_id'] = result_doc.id
-                result_data['student_id'] = student_id
-                all_results.append(result_data)
+        for result_doc in results_ref:
+            result_data = result_doc.to_dict()
+            result_data['result_id'] = result_doc.id
+            all_results.append(result_data)
         
         return {
             'success': True,
