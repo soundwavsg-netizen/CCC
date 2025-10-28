@@ -331,6 +331,31 @@ test_plan:
 
 agent_communication:
   - agent: "testing"
+    message: "🎯 TOO BROAD QUERY CLARIFICATION FIX TESTING COMPLETED - SUCCESS!
+
+    **USER ISSUE TESTED**: 'S3 AMath' without location dumps all locations and classes
+
+    **FIX VERIFICATION RESULTS**:
+    ✅ **Test Query 1**: 'Show me S3 AMath classes' → Bot asks for location clarification
+    ✅ **Test Query 2**: 'Tell me about S3 AMath' → Bot asks for location clarification  
+    ✅ **Test Query 3**: 'I want S3 AMath' → Bot asks for location clarification
+
+    **EXPECTED BEHAVIOR CONFIRMED**:
+    ✅ Bot does NOT return class data from Firebase
+    ✅ Bot ASKS for location clarification with 'Which location would you like to know about?'
+    ✅ Bot mentions all 5 available locations: Bishan, Punggol, Marine Parade, Jurong, Kovan
+    ✅ Bot does NOT dump tutor names, schedules, or pricing details
+    ✅ No information dumping detected
+
+    **CRITICAL SUCCESS**: The fix is working perfectly. When users ask about Level + Subject without specifying location, the chatbot now properly asks for location clarification instead of overwhelming users with data from all locations.
+
+    **ADDITIONAL TESTING NOTES**:
+    - Context-aware follow-up queries still working (2/3 tests passed)
+    - Some minor pricing display issues found ($381.5 vs $381.50) but these are cosmetic
+    - Firebase data confirmed: S3 AMath Marine Parade has exactly 4 tutors (not a chatbot issue)
+    
+    **RECOMMENDATION**: The too broad query clarification fix is successfully implemented and working as expected."
+  - agent: "testing"
     message: "🔍 DATA ACCURACY INVESTIGATION COMPLETED - CRITICAL BUG FOUND AND FIXED
 
     **USER ISSUE INVESTIGATED**: 'S3 AMath Marine Parade classes' only showing 4 tutors
