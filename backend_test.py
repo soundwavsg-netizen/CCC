@@ -848,7 +848,11 @@ class TuitionChatTester:
         print(f"🔗 Testing endpoint: {API_ENDPOINT}")
         print(f"🆔 Session ID: {self.session_id}")
         
-        # Run CRITICAL data accuracy investigation first
+        # Run CRITICAL too broad query clarification test FIRST (this is the main focus)
+        print("\n🔍 TESTING TOO BROAD QUERY CLARIFICATION FIX...")
+        broad_query_passed = self.test_too_broad_query_clarification()
+        
+        # Run CRITICAL data accuracy investigation 
         print("\n🔍 INVESTIGATING USER-REPORTED DATA ACCURACY ISSUE...")
         firebase_tutor_count = self.test_available_tutors_endpoint()
         data_accuracy_passed = self.test_data_accuracy_s3_amath_marine_parade()
