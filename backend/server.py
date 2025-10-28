@@ -1360,25 +1360,50 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                             classes_by_tutor[tutor].append(cls)
                         
                         for tutor, tutor_classes in classes_by_tutor.items():
-                            firebase_context += f"  {tutor}:\n"
-                            # If multiple classes for same tutor at same location, label them
-                            if len(tutor_classes) > 1:
-                                for idx, cls in enumerate(tutor_classes):
-                                    variant_label = chr(65 + idx)  # A, B, C, etc.
-                                    schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
-                                    firebase_context += f"    Class {variant_label}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
-                            else:
+                            # Each tutor should have their classes grouped by level/subject
+                            # to correctly identify when to use Class A, B, C labels
+                            
+                            # Check if all classes are same level and subject
+                            if len(tutor_classes) == 1:
+                                # Single class - no labels needed
+                                firebase_context += f"  **{tutor}**:\n"
                                 cls = tutor_classes[0]
                                 schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
                                 firebase_context += f"    {schedule_str} - ${cls.get('monthly_fee')}/month\n"
+                            else:
+                                # Multiple classes - group by level/subject
+                                level_subject_groups = {}
+                                for cls in tutor_classes:
+                                    key = f"{cls.get('level')}_{cls.get('subject')}"
+                                    if key not in level_subject_groups:
+                                        level_subject_groups[key] = []
+                                    level_subject_groups[key].append(cls)
+                                
+                                # Check if tutor teaches multiple different subjects/levels or multiple classes of same
+                                all_same_level_subject = len(level_subject_groups) == 1
+                                
+                                if all_same_level_subject:
+                                    # All classes are same level/subject - use Class A, B, C
+                                    firebase_context += f"  **{tutor}**:\n"
+                                    for idx, cls in enumerate(tutor_classes):
+                                        variant_label = chr(65 + idx)  # A, B, C, etc.
+                                        schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
+                                        firebase_context += f"    Class {variant_label}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
+                                else:
+                                    # Different subjects/levels - show each separately without Class labels
+                                    firebase_context += f"  **{tutor}**:\n"
+                                    for cls in tutor_classes:
+                                        schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
+                                        firebase_context += f"    {cls.get('subject')}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
                         firebase_context += "\n"
                     
                     firebase_context += f"**CRITICAL INSTRUCTIONS:**\n"
                     firebase_context += f"1. Present classes grouped by LOCATION and TUTOR as shown above\n"
-                    firebase_context += f"2. Only use 'Class A, B, C' labels when there are MULTIPLE classes from the SAME tutor at the SAME location\n"
-                    firebase_context += f"3. Always mention the location clearly\n"
-                    firebase_context += f"4. Show complete schedules for each class\n"
-                    firebase_context += f"5. Never mention 'database' or technical terms\n"
+                    firebase_context += f"2. Only use 'Class A, B, C' labels when the SAME tutor has MULTIPLE classes of the EXACT SAME level AND subject at the SAME location\n"
+                    firebase_context += f"3. If a tutor teaches different subjects at the same location, list each subject separately WITHOUT Class A/B labels\n"
+                    firebase_context += f"4. Always show COMPLETE schedules with ALL session days and times (separated by +)\n"
+                    firebase_context += f"5. Never mention 'database', 'Firebase', 'querying', or any technical terms\n"
+                    firebase_context += f"6. Each class schedule should show ALL weekly sessions (e.g., 'MON 5:00pm-6:30pm + SAT 3:00pm-4:30pm' for a class with 2 sessions)\n"
                 else:
                     logger.warning(f"No classes found for query - Level: {level}, Subject: {subject}, Location: {location}, Tutor: {tutor_search}")
             
