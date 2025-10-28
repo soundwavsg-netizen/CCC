@@ -659,12 +659,6 @@ const MathAnalysis = () => {
                           <p className="text-xs text-gray-500 mt-1">Please select a level first</p>
                         )}
                       </div>
-                          <option value="E.Math">E.Math</option>
-                          <option value="A.Math">A.Math</option>
-                          <option value="Pure Math">Pure Math</option>
-                          <option value="Statistics">Statistics</option>
-                        </select>
-                      </div>
                       <div className="col-span-2">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Exam Type *</label>
                         <select
