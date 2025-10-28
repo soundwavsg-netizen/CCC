@@ -406,43 +406,43 @@ async def get_analytics(filters: AnalyticsFilter):
         if not math_db:
             raise HTTPException(status_code=500, detail="Firebase not initialized")
         
-        # Build query
-        query = math_db.collection('students')
-        
-        if filters.location:
-            query = query.where('location', '==', filters.location)
-        if filters.level:
-            query = query.where('level', '==', filters.level)
-        if filters.subject:
-            query = query.where('subject', '==', filters.subject)
-        
-        # Get students matching filter
-        students_data = []
+        # Get all results from student_results collection and filter
         all_results = []
+        results_query = math_db.collection('student_results')
         
-        for student_doc in query.stream():
-            student_info = student_doc.to_dict()
-            student_info['student_id'] = student_doc.id
-            
-            # Get results
-            results_query = student_doc.reference.collection('results')
-            if filters.exam_type:
-                results_query = results_query.where('exam_type', '==', filters.exam_type)
-            
-            student_results = []
-            for result_doc in results_query.stream():
-                result_data = result_doc.to_dict()
-                result_data['result_id'] = result_doc.id
-                student_results.append(result_data)
-                all_results.append({
-                    **result_data,
-                    'student_name': student_info['name'],
-                    'student_id': student_doc.id
-                })
-            
-            if student_results:  # Only include students with results
-                student_info['results'] = student_results
-                students_data.append(student_info)
+        # Apply filters directly to student_results
+        if filters.location:
+            results_query = results_query.where('location', '==', filters.location)
+        if filters.level:
+            results_query = results_query.where('level', '==', filters.level)
+        if filters.subject:
+            results_query = results_query.where('subject', '==', filters.subject)
+        if filters.exam_type:
+            results_query = results_query.where('exam_type', '==', filters.exam_type)
+        
+        # Get filtered results
+        for result_doc in results_query.stream():
+            result_data = result_doc.to_dict()
+            result_data['result_id'] = result_doc.id
+            all_results.append(result_data)
+        
+        # Get unique students from the results
+        unique_students = {}
+        for result in all_results:
+            student_id = result.get('student_id')
+            if student_id and student_id not in unique_students:
+                unique_students[student_id] = {
+                    'student_id': student_id,
+                    'name': result.get('student_name', ''),
+                    'location': result.get('location', ''),
+                    'level': result.get('level', ''),
+                    'subject': result.get('subject', ''),
+                    'results_count': 0
+                }
+            if student_id:
+                unique_students[student_id]['results_count'] += 1
+        
+        students_data = list(unique_students.values())
         
         # Calculate aggregate analytics
         total_students = len(students_data)
@@ -473,7 +473,23 @@ async def get_analytics(filters: AnalyticsFilter):
             }
         
         # Overall average
-        overall_avg = sum([r.get('overall_score', 0) for r in all_results]) / len(all_results) if all_results else 0
+        overall_avg = round(sum([r.get('overall_score', 0) for r in all_results]) / len(all_results), 2) if all_results else 0
+        
+        return {
+            'success': True,
+            'total_students': total_students,
+            'total_results': total_results,
+            'overall_average': overall_avg,
+            'topic_averages': topic_averages,
+            'students': students_data,
+            'filtered_results': all_results
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching analytics: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
         
         return {
             'success': True,
