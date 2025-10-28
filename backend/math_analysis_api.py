@@ -348,8 +348,7 @@ async def get_students(
             raise HTTPException(status_code=401, detail="Authorization header required")
         
         try:
-            token = authorization.replace("Bearer ", "")
-            tutor_data = verify_token(token)
+            tutor_data = verify_tutor_token(authorization)
             tutor_id = tutor_data.get('tutor_id')
             if not tutor_id:
                 raise HTTPException(status_code=401, detail="Invalid tutor token")
@@ -447,8 +446,7 @@ async def get_analytics(filters: AnalyticsFilter, authorization: str = Header(No
             raise HTTPException(status_code=401, detail="Authorization header required")
         
         try:
-            token = authorization.replace("Bearer ", "")
-            tutor_data = verify_token(token)
+            tutor_data = verify_tutor_token(authorization)
             tutor_id = tutor_data.get('tutor_id')
             if not tutor_id:
                 raise HTTPException(status_code=401, detail="Invalid tutor token")
@@ -1226,8 +1224,7 @@ async def get_all_results(authorization: str = Header(None)):
             raise HTTPException(status_code=401, detail="Authorization header required")
         
         try:
-            token = authorization.replace("Bearer ", "")
-            tutor_data = verify_token(token)
+            tutor_data = verify_tutor_token(authorization)
             tutor_id = tutor_data.get('tutor_id')
             if not tutor_id:
                 raise HTTPException(status_code=401, detail="Invalid tutor token")
