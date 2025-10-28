@@ -42,6 +42,10 @@ const MathAnalysis = () => {
   const [revisionPlan, setRevisionPlan] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  
+  // Tutor authentication
+  const [tutorInfo, setTutorInfo] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://math-mastery-12.preview.emergentagent.com';
 
