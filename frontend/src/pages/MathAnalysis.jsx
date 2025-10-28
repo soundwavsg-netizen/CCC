@@ -1740,6 +1740,106 @@ const MathAnalysis = () => {
             </div>
           </div>
         )}
+
+        {/* Edit Result Modal */}
+        {showEditModal && editingResult && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6 border-b border-gray-200 sticky top-0 bg-white">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-2xl font-bold text-gray-800">✏️ Edit Result</h3>
+                  <button
+                    onClick={() => {
+                      setShowEditModal(false);
+                      setEditingResult(null);
+                    }}
+                    className="text-gray-500 hover:text-gray-700 text-2xl"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <div className="mt-2 text-sm text-gray-600">
+                  <p><strong>{editingResult.student_name}</strong> - {editingResult.exam_type}</p>
+                  <p>{editingResult.level} {editingResult.subject} | {editingResult.location}</p>
+                </div>
+              </div>
+
+              <div className="p-6">
+                <p className="text-sm text-gray-600 mb-4">Edit topic scores below. Percentages will be recalculated automatically.</p>
+                
+                <div className="space-y-4">
+                  {editingResult.topics.map((topic, index) => (
+                    <div key={index} className="p-4 border border-gray-300 rounded-lg bg-gray-50">
+                      <div className="grid grid-cols-4 gap-4 items-center">
+                        <div className="col-span-2">
+                          <label className="block text-xs font-medium text-gray-700 mb-1">Topic Name</label>
+                          <input
+                            type="text"
+                            value={topic.topic_name}
+                            onChange={(e) => {
+                              const newTopics = [...editingResult.topics];
+                              newTopics[index].topic_name = e.target.value;
+                              setEditingResult({ ...editingResult, topics: newTopics });
+                            }}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-700 mb-1">Marks Scored</label>
+                          <input
+                            type="number"
+                            step="0.5"
+                            value={topic.marks}
+                            onChange={(e) => updateEditingTopic(index, 'marks', e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-700 mb-1">Total Marks</label>
+                          <input
+                            type="number"
+                            step="0.5"
+                            value={topic.total_marks}
+                            onChange={(e) => updateEditingTopic(index, 'total_marks', e.target.value)}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                          />
+                        </div>
+                      </div>
+                      <div className="mt-2 text-right">
+                        <span className={`text-lg font-bold ${
+                          topic.percentage >= 75 ? 'text-green-600' :
+                          topic.percentage >= 50 ? 'text-yellow-600' :
+                          'text-red-600'
+                        }`}>
+                          {topic.percentage}%
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex gap-3">
+                  <Button
+                    onClick={() => {
+                      setShowEditModal(false);
+                      setEditingResult(null);
+                    }}
+                    className="flex-1 bg-gray-300 text-gray-700 hover:bg-gray-400"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleSaveEditedResult}
+                    disabled={loading}
+                    className="flex-1 bg-gradient-to-r from-green-500 to-blue-500 text-white"
+                  >
+                    {loading ? '⏳ Saving...' : '💾 Save Changes'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
