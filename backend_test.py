@@ -15,6 +15,520 @@ BACKEND_URL = "https://math-mastery-12.preview.emergentagent.com"
 TUITION_API_ENDPOINT = f"{BACKEND_URL}/api/tuition/chat"
 ANALYTICS_API_ENDPOINT = f"{BACKEND_URL}/api/math-analysis/analytics"
 
+class MathAnalyticsTester:
+    def __init__(self):
+        self.session_id = str(uuid.uuid4())
+        self.test_results = []
+        
+    def send_analytics_request(self, filters: Dict[str, Any]) -> Dict[str, Any]:
+        """Send a POST request to the analytics endpoint with filters"""
+        try:
+            response = requests.post(ANALYTICS_API_ENDPOINT, json=filters, timeout=30)
+            response.raise_for_status()
+            return {
+                "success": True,
+                "status_code": response.status_code,
+                "data": response.json(),
+                "error": None
+            }
+        except requests.exceptions.RequestException as e:
+            return {
+                "success": False,
+                "status_code": getattr(e.response, 'status_code', None) if hasattr(e, 'response') else None,
+                "data": None,
+                "error": str(e)
+            }
+    
+    def test_analytics_all_data(self):
+        """
+        Test 1: Analytics endpoint with no filters (all data)
+        Expected: 3 students, overall average 72.67%
+        Demo data context:
+        - John Tan: S3 A Math, RMSS - Marine Parade, 72%
+        - Emily Lim: S2 Math, RMSS - Bishan, 81% 
+        - Ryan Wong: J1 Math, RMSS - Marine Parade, 65%
+        """
+        print("\n" + "="*80)
+        print("TEST 1: Analytics - All Data (No Filters)")
+        print("="*80)
+        
+        filters = {
+            "location": "",
+            "level": "",
+            "subject": "",
+            "exam_type": ""
+        }
+        
+        print(f"Request: POST {ANALYTICS_API_ENDPOINT}")
+        print(f"Filters: {json.dumps(filters, indent=2)}")
+        
+        result = self.send_analytics_request(filters)
+        
+        if not result["success"]:
+            print(f"❌ API ERROR: {result['error']}")
+            return False
+            
+        data = result["data"]
+        print(f"\nAPI Response:\n{json.dumps(data, indent=2)}")
+        
+        # Expected results for all data
+        expected_students = 3
+        expected_avg = 72.67  # (72 + 81 + 65) / 3 = 72.67
+        
+        # Extract actual results
+        actual_students = data.get("total_students", 0)
+        actual_avg = data.get("overall_average", 0)
+        
+        # Tolerance for floating point comparison
+        avg_tolerance = 0.1
+        avg_matches = abs(actual_avg - expected_avg) <= avg_tolerance
+        
+        print(f"\n📊 ANALYSIS:")
+        print(f"✅ Expected students: {expected_students}")
+        print(f"✅ Actual students: {actual_students}")
+        print(f"✅ Students match: {actual_students == expected_students}")
+        print(f"✅ Expected average: {expected_avg}%")
+        print(f"✅ Actual average: {actual_avg}%")
+        print(f"✅ Average matches (±{avg_tolerance}): {avg_matches}")
+        
+        test_passed = (actual_students == expected_students) and avg_matches
+        
+        print(f"\n🎯 TEST 1 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
+        
+        self.test_results.append({
+            "test": "Analytics - All Data",
+            "passed": test_passed,
+            "details": {
+                "expected_students": expected_students,
+                "actual_students": actual_students,
+                "expected_avg": expected_avg,
+                "actual_avg": actual_avg,
+                "students_match": actual_students == expected_students,
+                "avg_matches": avg_matches
+            }
+        })
+        
+        return test_passed
+    
+    def test_analytics_s3_filter(self):
+        """
+        Test 2: Analytics endpoint with S3 level filter
+        Expected: 1 student (John), average 72%
+        """
+        print("\n" + "="*80)
+        print("TEST 2: Analytics - S3 Level Filter")
+        print("="*80)
+        
+        filters = {
+            "location": "",
+            "level": "S3",
+            "subject": "",
+            "exam_type": ""
+        }
+        
+        print(f"Request: POST {ANALYTICS_API_ENDPOINT}")
+        print(f"Filters: {json.dumps(filters, indent=2)}")
+        
+        result = self.send_analytics_request(filters)
+        
+        if not result["success"]:
+            print(f"❌ API ERROR: {result['error']}")
+            return False
+            
+        data = result["data"]
+        print(f"\nAPI Response:\n{json.dumps(data, indent=2)}")
+        
+        # Expected results for S3 filter only
+        expected_students = 1  # Only John Tan
+        expected_avg = 72.0    # John's score
+        
+        # Extract actual results
+        actual_students = data.get("total_students", 0)
+        actual_avg = data.get("overall_average", 0)
+        
+        # Check if John Tan is in the results
+        students = data.get("students", [])
+        john_found = any("john" in student.get("name", "").lower() for student in students)
+        
+        # Tolerance for floating point comparison
+        avg_tolerance = 0.1
+        avg_matches = abs(actual_avg - expected_avg) <= avg_tolerance
+        
+        print(f"\n📊 ANALYSIS:")
+        print(f"✅ Expected students: {expected_students}")
+        print(f"✅ Actual students: {actual_students}")
+        print(f"✅ Students match: {actual_students == expected_students}")
+        print(f"✅ John Tan found in results: {john_found}")
+        print(f"✅ Expected average: {expected_avg}%")
+        print(f"✅ Actual average: {actual_avg}%")
+        print(f"✅ Average matches (±{avg_tolerance}): {avg_matches}")
+        
+        test_passed = (actual_students == expected_students) and avg_matches and john_found
+        
+        print(f"\n🎯 TEST 2 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
+        
+        self.test_results.append({
+            "test": "Analytics - S3 Filter",
+            "passed": test_passed,
+            "details": {
+                "expected_students": expected_students,
+                "actual_students": actual_students,
+                "expected_avg": expected_avg,
+                "actual_avg": actual_avg,
+                "john_found": john_found,
+                "students_match": actual_students == expected_students,
+                "avg_matches": avg_matches
+            }
+        })
+        
+        return test_passed
+    
+    def test_analytics_marine_parade_filter(self):
+        """
+        Test 3: Analytics endpoint with Marine Parade location filter
+        Expected: 2 students (John+Ryan), average 68.5%
+        """
+        print("\n" + "="*80)
+        print("TEST 3: Analytics - Marine Parade Location Filter")
+        print("="*80)
+        
+        filters = {
+            "location": "RMSS - Marine Parade",
+            "level": "",
+            "subject": "",
+            "exam_type": ""
+        }
+        
+        print(f"Request: POST {ANALYTICS_API_ENDPOINT}")
+        print(f"Filters: {json.dumps(filters, indent=2)}")
+        
+        result = self.send_analytics_request(filters)
+        
+        if not result["success"]:
+            print(f"❌ API ERROR: {result['error']}")
+            return False
+            
+        data = result["data"]
+        print(f"\nAPI Response:\n{json.dumps(data, indent=2)}")
+        
+        # Expected results for Marine Parade filter
+        expected_students = 2    # John Tan + Ryan Wong
+        expected_avg = 68.5      # (72 + 65) / 2 = 68.5
+        
+        # Extract actual results
+        actual_students = data.get("total_students", 0)
+        actual_avg = data.get("overall_average", 0)
+        
+        # Check if John and Ryan are in the results
+        students = data.get("students", [])
+        john_found = any("john" in student.get("name", "").lower() for student in students)
+        ryan_found = any("ryan" in student.get("name", "").lower() for student in students)
+        
+        # Tolerance for floating point comparison
+        avg_tolerance = 0.1
+        avg_matches = abs(actual_avg - expected_avg) <= avg_tolerance
+        
+        print(f"\n📊 ANALYSIS:")
+        print(f"✅ Expected students: {expected_students}")
+        print(f"✅ Actual students: {actual_students}")
+        print(f"✅ Students match: {actual_students == expected_students}")
+        print(f"✅ John Tan found in results: {john_found}")
+        print(f"✅ Ryan Wong found in results: {ryan_found}")
+        print(f"✅ Expected average: {expected_avg}%")
+        print(f"✅ Actual average: {actual_avg}%")
+        print(f"✅ Average matches (±{avg_tolerance}): {avg_matches}")
+        
+        test_passed = (actual_students == expected_students) and avg_matches and john_found and ryan_found
+        
+        print(f"\n🎯 TEST 3 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
+        
+        self.test_results.append({
+            "test": "Analytics - Marine Parade Filter",
+            "passed": test_passed,
+            "details": {
+                "expected_students": expected_students,
+                "actual_students": actual_students,
+                "expected_avg": expected_avg,
+                "actual_avg": actual_avg,
+                "john_found": john_found,
+                "ryan_found": ryan_found,
+                "students_match": actual_students == expected_students,
+                "avg_matches": avg_matches
+            }
+        })
+        
+        return test_passed
+    
+    def test_analytics_s2_filter(self):
+        """
+        Test 4: Analytics endpoint with S2 level filter
+        Expected: 1 student (Emily), average 81%
+        """
+        print("\n" + "="*80)
+        print("TEST 4: Analytics - S2 Level Filter")
+        print("="*80)
+        
+        filters = {
+            "location": "",
+            "level": "S2",
+            "subject": "",
+            "exam_type": ""
+        }
+        
+        print(f"Request: POST {ANALYTICS_API_ENDPOINT}")
+        print(f"Filters: {json.dumps(filters, indent=2)}")
+        
+        result = self.send_analytics_request(filters)
+        
+        if not result["success"]:
+            print(f"❌ API ERROR: {result['error']}")
+            return False
+            
+        data = result["data"]
+        print(f"\nAPI Response:\n{json.dumps(data, indent=2)}")
+        
+        # Expected results for S2 filter only
+        expected_students = 1  # Only Emily Lim
+        expected_avg = 81.0    # Emily's score
+        
+        # Extract actual results
+        actual_students = data.get("total_students", 0)
+        actual_avg = data.get("overall_average", 0)
+        
+        # Check if Emily Lim is in the results
+        students = data.get("students", [])
+        emily_found = any("emily" in student.get("name", "").lower() for student in students)
+        
+        # Tolerance for floating point comparison
+        avg_tolerance = 0.1
+        avg_matches = abs(actual_avg - expected_avg) <= avg_tolerance
+        
+        print(f"\n📊 ANALYSIS:")
+        print(f"✅ Expected students: {expected_students}")
+        print(f"✅ Actual students: {actual_students}")
+        print(f"✅ Students match: {actual_students == expected_students}")
+        print(f"✅ Emily Lim found in results: {emily_found}")
+        print(f"✅ Expected average: {expected_avg}%")
+        print(f"✅ Actual average: {actual_avg}%")
+        print(f"✅ Average matches (±{avg_tolerance}): {avg_matches}")
+        
+        test_passed = (actual_students == expected_students) and avg_matches and emily_found
+        
+        print(f"\n🎯 TEST 4 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
+        
+        self.test_results.append({
+            "test": "Analytics - S2 Filter",
+            "passed": test_passed,
+            "details": {
+                "expected_students": expected_students,
+                "actual_students": actual_students,
+                "expected_avg": expected_avg,
+                "actual_avg": actual_avg,
+                "emily_found": emily_found,
+                "students_match": actual_students == expected_students,
+                "avg_matches": avg_matches
+            }
+        })
+        
+        return test_passed
+    
+    def test_analytics_combined_filters(self):
+        """
+        Test 5: Analytics endpoint with combined filters (level + location)
+        Test S3 + Marine Parade: Should return John Tan only
+        """
+        print("\n" + "="*80)
+        print("TEST 5: Analytics - Combined Filters (S3 + Marine Parade)")
+        print("="*80)
+        
+        filters = {
+            "location": "RMSS - Marine Parade",
+            "level": "S3",
+            "subject": "",
+            "exam_type": ""
+        }
+        
+        print(f"Request: POST {ANALYTICS_API_ENDPOINT}")
+        print(f"Filters: {json.dumps(filters, indent=2)}")
+        
+        result = self.send_analytics_request(filters)
+        
+        if not result["success"]:
+            print(f"❌ API ERROR: {result['error']}")
+            return False
+            
+        data = result["data"]
+        print(f"\nAPI Response:\n{json.dumps(data, indent=2)}")
+        
+        # Expected results for S3 + Marine Parade filter
+        expected_students = 1  # Only John Tan (S3 A Math at Marine Parade)
+        expected_avg = 72.0    # John's score
+        
+        # Extract actual results
+        actual_students = data.get("total_students", 0)
+        actual_avg = data.get("overall_average", 0)
+        
+        # Check if John Tan is in the results (and no one else)
+        students = data.get("students", [])
+        john_found = any("john" in student.get("name", "").lower() for student in students)
+        emily_found = any("emily" in student.get("name", "").lower() for student in students)
+        ryan_found = any("ryan" in student.get("name", "").lower() for student in students)
+        
+        # Tolerance for floating point comparison
+        avg_tolerance = 0.1
+        avg_matches = abs(actual_avg - expected_avg) <= avg_tolerance
+        
+        print(f"\n📊 ANALYSIS:")
+        print(f"✅ Expected students: {expected_students}")
+        print(f"✅ Actual students: {actual_students}")
+        print(f"✅ Students match: {actual_students == expected_students}")
+        print(f"✅ John Tan found in results: {john_found}")
+        print(f"❌ Emily Lim found (should NOT): {emily_found}")
+        print(f"❌ Ryan Wong found (should NOT): {ryan_found}")
+        print(f"✅ Expected average: {expected_avg}%")
+        print(f"✅ Actual average: {actual_avg}%")
+        print(f"✅ Average matches (±{avg_tolerance}): {avg_matches}")
+        
+        test_passed = (actual_students == expected_students) and avg_matches and john_found and not emily_found and not ryan_found
+        
+        print(f"\n🎯 TEST 5 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
+        
+        self.test_results.append({
+            "test": "Analytics - Combined Filters (S3 + Marine Parade)",
+            "passed": test_passed,
+            "details": {
+                "expected_students": expected_students,
+                "actual_students": actual_students,
+                "expected_avg": expected_avg,
+                "actual_avg": actual_avg,
+                "john_found": john_found,
+                "emily_excluded": not emily_found,
+                "ryan_excluded": not ryan_found,
+                "students_match": actual_students == expected_students,
+                "avg_matches": avg_matches
+            }
+        })
+        
+        return test_passed
+    
+    def test_analytics_endpoint_structure(self):
+        """
+        Test 6: Verify the analytics endpoint returns the expected data structure
+        """
+        print("\n" + "="*80)
+        print("TEST 6: Analytics - Response Structure Validation")
+        print("="*80)
+        
+        filters = {
+            "location": "",
+            "level": "",
+            "subject": "",
+            "exam_type": ""
+        }
+        
+        print(f"Request: POST {ANALYTICS_API_ENDPOINT}")
+        print(f"Filters: {json.dumps(filters, indent=2)}")
+        
+        result = self.send_analytics_request(filters)
+        
+        if not result["success"]:
+            print(f"❌ API ERROR: {result['error']}")
+            return False
+            
+        data = result["data"]
+        print(f"\nAPI Response Structure:")
+        print(f"Keys: {list(data.keys())}")
+        
+        # Expected structure fields
+        expected_fields = [
+            "success",
+            "total_students", 
+            "total_results",
+            "overall_average",
+            "topic_averages",
+            "students",
+            "filtered_results"
+        ]
+        
+        # Check if all expected fields are present
+        fields_present = {}
+        for field in expected_fields:
+            fields_present[field] = field in data
+            
+        # Check data types
+        type_checks = {}
+        if "total_students" in data:
+            type_checks["total_students_is_int"] = isinstance(data["total_students"], int)
+        if "overall_average" in data:
+            type_checks["overall_average_is_number"] = isinstance(data["overall_average"], (int, float))
+        if "students" in data:
+            type_checks["students_is_list"] = isinstance(data["students"], list)
+        if "topic_averages" in data:
+            type_checks["topic_averages_is_dict"] = isinstance(data["topic_averages"], dict)
+            
+        print(f"\n📊 STRUCTURE ANALYSIS:")
+        for field, present in fields_present.items():
+            print(f"✅ Has '{field}': {present}")
+            
+        print(f"\n📊 TYPE VALIDATION:")
+        for check, valid in type_checks.items():
+            print(f"✅ {check}: {valid}")
+        
+        # Test passes if all expected fields are present and types are correct
+        all_fields_present = all(fields_present.values())
+        all_types_valid = all(type_checks.values())
+        test_passed = all_fields_present and all_types_valid
+        
+        print(f"\n🎯 TEST 6 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
+        
+        self.test_results.append({
+            "test": "Analytics - Response Structure",
+            "passed": test_passed,
+            "details": {
+                "fields_present": fields_present,
+                "type_checks": type_checks,
+                "all_fields_present": all_fields_present,
+                "all_types_valid": all_types_valid
+            }
+        })
+        
+        return test_passed
+    
+    def run_all_analytics_tests(self):
+        """Run all analytics endpoint tests"""
+        print("🚀 Starting Math Analysis System Analytics Testing Suite")
+        print(f"🔗 Testing endpoint: {ANALYTICS_API_ENDPOINT}")
+        
+        # Run all analytics tests
+        test1_passed = self.test_analytics_all_data()
+        test2_passed = self.test_analytics_s3_filter()
+        test3_passed = self.test_analytics_marine_parade_filter()
+        test4_passed = self.test_analytics_s2_filter()
+        test5_passed = self.test_analytics_combined_filters()
+        test6_passed = self.test_analytics_endpoint_structure()
+        
+        # Summary
+        print("\n" + "="*80)
+        print("📊 ANALYTICS TESTS SUMMARY")
+        print("="*80)
+        
+        passed_count = sum(1 for result in self.test_results if result["passed"])
+        total_count = len(self.test_results)
+        
+        for result in self.test_results:
+            status = "✅ PASSED" if result["passed"] else "❌ FAILED"
+            print(f"{status}: {result['test']}")
+            
+        print(f"\n🎯 OVERALL RESULT: {passed_count}/{total_count} analytics tests passed")
+        
+        if passed_count == total_count:
+            print("🎉 ALL ANALYTICS TESTS PASSED! Filtering functionality is working correctly.")
+        else:
+            print("⚠️  SOME ANALYTICS TESTS FAILED. Check the filtering logic and calculations.")
+            
+        return passed_count == total_count
+
+
 class TuitionChatTester:
     def __init__(self):
         self.session_id = str(uuid.uuid4())
