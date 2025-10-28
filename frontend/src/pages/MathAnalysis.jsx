@@ -1219,13 +1219,13 @@ const MathAnalysis = () => {
                   {/* Topics Selection - AI Recommended + Manual Addition */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      🤖 AI Recommended Topics (Weak Areas - Below 60%)
+                      🤖 AI Recommended Topics (Weak Areas - At or Below {weakThreshold}%)
                     </label>
                     <div className="bg-red-50 border border-red-200 p-3 rounded-lg mb-4">
                       {assessmentData.all_available_topics && assessmentData.all_available_topics.length > 0 ? (
                         <div className="space-y-2">
                           {assessmentData.all_available_topics
-                            .filter(t => t.current_score < 60)
+                            .filter(t => t.current_score <= weakThreshold)
                             .map((topic) => (
                               <label key={topic.topic} className="flex items-center justify-between p-2 hover:bg-red-100 rounded">
                                 <div className="flex items-center space-x-3">
