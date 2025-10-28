@@ -1200,6 +1200,29 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                         subject = 'Economics'
                         break
             
+            # Try to extract location from conversation history if not in current message
+            location_keywords = ['bishan', 'punggol', 'marine', 'jurong', 'kovan']
+            if history and not any(loc in user_message_lower for loc in location_keywords):
+                # Check last user message and assistant response for location
+                location_map = {
+                    'bishan': 'Bishan',
+                    'punggol': 'Punggol',
+                    'marine': 'Marine Parade',
+                    'jurong': 'Jurong',
+                    'kovan': 'Kovan'
+                }
+                for msg in history[-2:]:
+                    msg_lower = msg['user'].lower()
+                    assistant_lower = msg.get('assistant', '').lower()
+                    combined = msg_lower + ' ' + assistant_lower
+                    
+                    for key, val in location_map.items():
+                        if key in combined:
+                            location = val
+                            break
+                    if location:
+                        break
+            
             # Extract level
             for l in ['P2', 'P3', 'P4', 'P5', 'P6', 'S1', 'S2', 'S3', 'S4', 'J1', 'J2']:
                 if l.lower() in user_message_lower:
