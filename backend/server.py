@@ -1482,7 +1482,41 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                             classes_by_location[loc] = []
                         classes_by_location[loc].append(cls)
                     
-                    firebase_context = "\n\n**AVAILABLE CLASSES - SHOW ALL BY LOCATION:**\n\n"
+                    # Build the EXACT response text that must be shown
+                    exact_response = f"For **{level if level else 'this level'} {subject if subject else 'this subject'}** at **{location if location else 'this location'}**, we offer the following classes:\n\n"
+                    
+                    for loc, location_classes in classes_by_location.items():
+                        if len(classes_by_location) > 1:
+                            exact_response += f"**At {loc}:**\n"
+                        
+                        # Group by tutor
+                        classes_by_tutor = {}
+                        for cls in location_classes:
+                            tutor = cls.get('tutor_base_name', cls.get('tutor_name', ''))
+                            if tutor not in classes_by_tutor:
+                                classes_by_tutor[tutor] = []
+                            classes_by_tutor[tutor].append(cls)
+                        
+                        for tutor, tutor_classes in classes_by_tutor.items():
+                            if len(tutor_classes) == 1:
+                                # Single class
+                                cls = tutor_classes[0]
+                                schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
+                                exact_response += f"📚 **{tutor}**: {schedule_str} - **${cls.get('monthly_fee')}/month**\n"
+                            else:
+                                # Multiple classes from same tutor
+                                exact_response += f"📚 **{tutor}**:\n"
+                                for idx, cls in enumerate(tutor_classes):
+                                    variant_label = chr(65 + idx)
+                                    schedule_str = " + ".join([f"{s.get('day')} {s.get('time')}" for s in cls.get('schedule', [])])
+                                    exact_response += f"  Class {variant_label}: {schedule_str} - ${cls.get('monthly_fee')}/month\n"
+                        exact_response += "\n"
+                    
+                    exact_response += "Would you like more details about any specific tutor or to enroll? 😊"
+                    
+                    firebase_context = f"\n\n**🚨 MANDATORY - PRESENT THIS EXACT RESPONSE:**\n\n"
+                    firebase_context += f"```\n{exact_response}\n```\n\n"
+                    firebase_context += f"**CRITICAL INSTRUCTION**: Present the text above EXACTLY as written. This is the complete answer to the user's query. DO NOT ask for more information. DO NOT rephrase it. Just show it.\n"
                     
                     for location, location_classes in classes_by_location.items():
                         firebase_context += f"**At {location}:**\n"
