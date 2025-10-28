@@ -165,7 +165,7 @@ export default function Demos() {
       {/* Demo Categories */}
       <section className="section-spacing bg-gradient-to-br from-white to-[#f8fafc]">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-3 gap-8">
             {demoCategories.map((demo, index) => (
               <FadeUp key={demo.id} delay={index * 0.2}>
                 <motion.div
