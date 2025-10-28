@@ -15,7 +15,8 @@ import {
   CheckCircle2,
   ArrowRight,
   Target,
-  Zap
+  Zap,
+  BarChart3
 } from 'lucide-react';
 import { trackEvent } from '../utils/analytics';
 
