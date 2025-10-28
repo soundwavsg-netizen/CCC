@@ -43,7 +43,7 @@ def create_test_tutor():
         'password_hash': hash_password('test123'),  # Password: test123
         'temp_password': 'test123',  # Store for admin viewing
         'must_change_password': False,
-        'locations': ['Tampines', 'Jurong'],
+        'locations': ['Punggol', 'Kovan'],
         'levels': ['S1', 'S2', 'S3'],
         'subjects': ['Math', 'E Math'],
         'created_at': datetime.utcnow().isoformat(),
