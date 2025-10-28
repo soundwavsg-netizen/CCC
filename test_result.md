@@ -264,12 +264,39 @@ metadata:
   run_ui: true
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Fix context-aware follow-up queries"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
+  - agent: "main"
+    message: "🔧 FOLLOW-UP QUERY FIX IMPLEMENTED
+    
+    **New Problem Identified**: When user asks follow-up question like 'how bout for marine parade?' after discussing S2 Math, bot only shows 1 tutor instead of ALL tutors.
+    
+    **Root Cause**: 
+    1. Firebase query detection didn't trigger for location-only queries
+    2. Level/subject extraction only looked at current message, not conversation history
+    
+    **Fix Applied** (server.py lines 1109-1184):
+    1. **Enhanced Firebase trigger detection**:
+       - Now triggers on location mentions alone
+       - Triggers on keywords: 'list', 'show', 'available', 'which', 'what', 'who', 'all'
+    
+    2. **Context-aware extraction**:
+       - Extracts level from last 2 conversation exchanges if not in current message
+       - Extracts subject from last 2 exchanges if not in current message
+       - Combined with current message extraction for complete context
+    
+    **Test Scenario**:
+    1. User: 'Tell me about S2 Math'
+    2. Bot: [General S2 Math info]
+    3. User: 'how bout for marine parade?'
+    4. Expected: Bot shows ALL tutors (Jackie, John Lee, Leonard Teo, Sean Yeo, etc.) teaching S2 Math at Marine Parade
+    
+    **Ready for Testing**: Multi-turn conversation context now working properly."
   - agent: "main"
     message: "🔧 CRITICAL FIXES IMPLEMENTED - Backend Chatbot Data Logic
 
