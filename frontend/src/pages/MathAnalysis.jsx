@@ -35,7 +35,7 @@ ChartJS.register(
 
 const MathAnalysis = () => {
   const [activeTab, setActiveTab] = useState('upload'); // upload, analytics, revision
-  const [uploadMethod, setUploadMethod] = useState('csv'); // csv or manual
+  const [uploadMethod, setUploadMethod] = useState('pdf'); // pdf, csv or manual
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [analyticsData, setAnalyticsData] = useState(null);
@@ -57,6 +57,18 @@ const MathAnalysis = () => {
 
   // CSV upload state
   const [csvFile, setCsvFile] = useState(null);
+
+  // PDF upload state
+  const [pdfFile, setPdfFile] = useState(null);
+  const [pdfStudentInfo, setPdfStudentInfo] = useState({
+    student_name: '',
+    location: '',
+    level: '',
+    subject: '',
+    exam_type: ''
+  });
+  const [analyzedResults, setAnalyzedResults] = useState(null);
+  const [showPreview, setShowPreview] = useState(false);
 
   // Filter state
   const [filters, setFilters] = useState({
