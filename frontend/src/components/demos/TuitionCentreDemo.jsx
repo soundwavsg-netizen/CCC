@@ -36,11 +36,37 @@ const TuitionCentreDemo = () => {
     message: ''
   });
   const [enrollmentSubmitted, setEnrollmentSubmitted] = useState(false);
+  const [availableLocations, setAvailableLocations] = useState([]);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);  // Add input ref for focus management
 
   // External backend URL
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://tutor-chat-scroll.preview.emergentagent.com';
+
+  // Fetch available locations when level and subject are selected
+  useEffect(() => {
+    const fetchAvailableLocations = async () => {
+      if (enrollmentData.level && enrollmentData.subject) {
+        try {
+          const response = await axios.get(`${BACKEND_URL}/api/tuition/available-locations`, {
+            params: {
+              level: enrollmentData.level,
+              subject: enrollmentData.subject
+            }
+          });
+          setAvailableLocations(response.data.locations || []);
+        } catch (error) {
+          console.error('Error fetching locations:', error);
+          // Fallback to all locations
+          setAvailableLocations(['Bishan', 'Punggol', 'Marine Parade', 'Jurong', 'Kovan']);
+        }
+      } else {
+        setAvailableLocations([]);
+      }
+    };
+    
+    fetchAvailableLocations();
+  }, [enrollmentData.level, enrollmentData.subject, BACKEND_URL]);
 
   // Initialize demo
   useEffect(() => {
