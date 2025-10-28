@@ -338,15 +338,15 @@ const MathAnalysis = () => {
     setShowAssessmentModal(true);
   };
 
-  const openAssessmentGeneratorFromResult = (studentId, revisionPlanData, allTopicsData) => {
-    // Extract all topics from the paper (not just weak ones)
-    const allTopics = allTopicsData || [];
+  const openAssessmentGeneratorFromResult = (studentId, revisionPlanData, weakTopicsData) => {
+    // Use all_topics from revision plan which has full performance data
+    const allTopics = revisionPlanData.all_topics || [];
     const weakTopics = allTopics.filter(t => t.current_score < 60).map(t => t.topic);
     
     // Set weak topics as pre-selected, but store all topics for selection
     setAssessmentData({
       student_id: studentId,
-      result_id: 'latest', // We'll improve this tracking later
+      result_id: revisionPlanData.result_id || 'latest',
       selected_topics: weakTopics, // Pre-select weak topics
       all_available_topics: allTopics, // Store all topics for tutor to choose
       selected_subtopics: [],
@@ -356,6 +356,9 @@ const MathAnalysis = () => {
     
     if (weakTopics.length > 0) {
       fetchAvailableSubtopics(weakTopics);
+    } else if (allTopics.length > 0) {
+      // If no weak topics, fetch subtopics for all topics
+      fetchAvailableSubtopics(allTopics.map(t => t.topic));
     }
     setShowAssessmentModal(true);
   };
