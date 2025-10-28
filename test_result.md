@@ -102,11 +102,17 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Fix chatbot data accuracy issues:
-1. When querying tutor classes (e.g., Sean Yeo), bot shows ALL locations instead of only where tutor teaches
-2. Schedule days/timings are incorrect or incomplete
-3. Incorrect Class A/B labeling - should ONLY use when SAME tutor has MULTIPLE classes of SAME level/subject at SAME location
-4. Some tutors show only 1 timing when they should show 2 timings per class"
+user_problem_statement: "Investigate data accuracy issue: User reports that when asking chatbot for 'S3 AMath Marine Parade classes', only 4 tutors are showing.
+
+**Need to verify**:
+1. **Check Firebase Data**: How many tutors actually teach S3 AMath at Marine Parade in the database?
+2. **Test the Chatbot Endpoint**: Test `/api/tuition/chat` endpoint with query: 'Show me S3 AMath classes at Marine Parade'
+3. **Compare with Available Tutors Endpoint**: Test GET `/api/admin/available-tutors?level=S3&subject=AMath&location=Marine Parade`
+
+**Key Question**: 
+- Does Firebase actually have more than 4 tutors for S3 AMath at Marine Parade?
+- If yes, why is the chatbot only showing 4?
+- If no, this is a data upload issue, not a chatbot issue"
 
 backend:
   - task: "Remove A/B suffixes from tutor names in dropdowns"
