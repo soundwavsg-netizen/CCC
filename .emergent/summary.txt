@@ -1,52 +1,89 @@
 <analysis>
-The previous AI engineer successfully executed a multi-phase task focused on enhancing the Tuition Centre demo within the CCC corporate website. Initial efforts involved systematic data extraction from P2-J2 PDF documents, leading to a comprehensive 666-class dataset. This data was then uploaded to Firebase Firestore, with a critical fix implemented to consolidate duplicate tutor profiles. Subsequently, the FastAPI backend's  endpoint was integrated with Firebase, and the LLM's system message was refined. Multiple iterations of bug fixing addressed: query failures, exposing Querying Firebase, incorrect handling of 2026 classes, LLM not presenting all schedule details, incorrect location prompting, and ambiguity in tutor names. Frontend mobile responsiveness was also addressed. The current task involves fixing a chatbox scrolling issue, specifically adding a React ref to the input field.
+The AI engineer's work spanned several iterations, initially fixing data consistency and UI issues in the Tuition Centre chatbot. Key accomplishments included normalizing tutor names (removing A/B suffixes), refining LLM context handling to prevent information dumps, and enhancing the enrollment form with proper scrolling and navigation buttons. A major new project, the Math Results Analysis System, was then initiated and built from the ground up, featuring Firebase integration, CSV/PDF result uploads, an analytics dashboard, and a revision plan generator. Subsequent enhancements to this system focused on AI-powered PDF analysis (using GPT-4o vision), a comprehensive assessment generation flow with a dummy question bank, and a dynamic weak performance threshold for tutors. The process was iterative, responding directly to user feedback and progressively adding functionality while ensuring data integrity and a positive user experience.
 </analysis>
 
 <product_requirements>
-The primary objective was to expand the Demos Hub with a functional Tuition Centre chatbot. This involved:
-1.  **Rebranding:** Genericizing the RMSS demo to Tuition Centre with updated AI training.
-2.  **Data Integration:** Systematically extracting comprehensive tutor and class data from P2-J2 PDF documents and migrating it to Firebase Firestore for robust querying (666 classes, 44 unique tutors).
-3.  **Chatbot Enhancement:** Updating the AI system message with 2026-2027 Math transition and calendar data, enabling it to query Firebase for factual information. Enhancements included accurate responses for class/tutor queries, multi-level/location/session details, and internal logic for future-dated classes.
-4.  **User Experience Fixes:** Resolving UI button contrast, implementing a global error handler, ensuring mobile responsiveness for the chat interface, and refining chatbot dialogue to be precise. This also includes avoiding technical jargon, clarifying ambiguous tutor names (e.g., Sean needing disambiguation), displaying all relevant class schedules without unnecessary prompts, and preventing page scroll on chat message send.
-5.  **Data Accuracy:** Consolidating tutor profiles in Firebase to ensure one profile per unique tutor (e.g., Eugene Tan A and Eugene Tan B becoming one Eugene Tan).
+The project involved two main products:
+
+**1. Tuition Centre Chatbot Enhancement:**
+*   **Data Accuracy:** Ensure tutor/class data from P2-J2 PDFs is accurate in Firebase, consolidating tutor profiles (e.g., Eugene Tan A into Eugene Tan). Fix specific data discrepancies (e.g., S3 AMath Bishan).
+*   **Chatbot Intelligence:** Update LLM with 2026-2027 academic data. Enable Firebase querying for schedules, disambiguate tutors, maintain multi-turn context, prevent information dumps, and ask clarifying questions for broad queries (e.g., for missing location).
+*   **UI/UX:** Resolve button contrast, ensure mobile responsiveness (chat bubbles, header), prevent page scrolling on message send. Improve enrollment form with a Cancel button and proper mobile scrolling.
+*   **New Features:** Implement an enrollment/reservation form (user particulars, email notifications). Create a basic admin UI for class data management with progressive dropdowns.
+
+**2. Math Results Analysis System (New Project):**
+*   **Purpose:** A web-based system for tutors to upload, store, and analyze student math performance (S1-S4, J1-J2). No login, remembers student details, tracks trends, generates revision plans.
+*   **Input:** Manual entry or Excel/CSV template for results (Student Name, Location, Level, Subject, Exam Type, Topic, Marks, Total Marks).
+*   **AI PDF Analysis (Phase 2):** Allow tutors to upload scanned PDF test papers. AI (GPT-4o vision) will extract questions, marks, and infer topics. Preview and manual editing of extracted data, autosave to Firebase.
+*   **Persistent Data:** Store all uploads in a new Firebase Firestore database. Retain history, track improvements/declines, cumulative averages.
+*   **Analysis Engine:** Calculate per-topic/overall averages, identify weak (<60%) and strong (>75%) topics (threshold adjustable by tutor). Display with Radar, Bar, Line charts, and Summary Table. Compare current vs. past results.
+*   **Revision Plan Generator:** Cross-reference weak/selected topics with a  to suggest PDFs/videos/worksheets. Generate Internal Assessment Tests based on weak or selected topics/subtopics and duration (45min/1.5hr), producing two PDF documents (student/tutor).
+*   **Tutor Dashboard:** Filter panel, Analytics View, Revision Plan, Performance History.
+*   **Embedding:** Embed under  with consistent styling.
 </product_requirements>
 
 <key_technical_concepts>
--   **Full-Stack Development:** FastAPI (Python backend), React (JavaScript frontend).
--   **Database:** Firebase Firestore (for tuition data), MongoDB (existing).
--   **AI Integration:** Emergent LLM Key with  (using ).
--   **Data Management:** PDF data extraction, CSV generation, programmatic data upload.
--   **Frontend UI:** React components, CSS for styling (mobile responsiveness, ).
+-   **Full-Stack Development:** FastAPI (Python), React (JavaScript).
+-   **Database:** Firebase Firestore (new for Math Analysis, existing for Tuition chatbot), MongoDB (existing).
+-   **AI/LLM:** Emergent LLM Key with  using  (chatbot),  with vision (PDF analysis).
+-   **Frontend UI:** React components, state management, Chart.js/ECharts for visualization.
+-   **Data Processing:** PDF/CSV parsing (, , ),  for PDF generation.
+-   **Deployment:** Kubernetes environment, supervisorctl for service management.
 </key_technical_concepts>
 
 <code_architecture>
-The application utilizes a React frontend and a FastAPI backend, designed for modularity and scalability, with Firebase Firestore integrated for specific data.
+The application consists of a React frontend and a FastAPI backend.
 
 
--   ****: The central backend file handling API routes.
-    -   **Summary**: Heavily modified to integrate Firebase, retrieve class/tutor data, and refine the chatbot's LLM prompt for intelligent querying, disambiguation, and structured responses. It includes helper functions for Firebase interaction and robust error handling.
-    -   **Changes**: Firebase initialization, ,  helper functions,  update, and refactored  endpoint. Fixes for tutor name extraction, query logic, and response formatting (e.g., location-based class grouping).
--   ****: Displays the tuition center AI chat demo.
-    -   **Summary**: Implements the chat interface and handles user interaction.
-    -   **Changes**: Modified for mobile responsiveness (message bubbles, header, content sections). Currently being updated to manage input focus and prevent page scrolling on message send.
--   ****: Global CSS file for the frontend.
-    -   **Summary**: Defines global styles and utility classes.
-    -   **Changes**: Added  for improved text wrapping.
--   ****: New script.
-    -   **Summary**: Handles the bulk upload of all P2-J2 class and tutor data to Firebase, including logic for tutor name normalization.
--   ****: New script.
-    -   **Summary**: Re-runs the Firebase upload with corrected tutor normalization logic to consolidate duplicate tutor profiles.
+-   ****: Main FastAPI entry point.
+    -   **Summary**: Handles general API routing, LLM interactions, and Firebase for the tuition chatbot.
+    -   **Changes**: Fixed  endpoint to use . Updated LLM logic for S3 AMath queries to ask clarifying questions about location instead of dumping all results. Integrated  router.
+-   ** (NEW)**: Dedicated FastAPI router for the Math Results Analysis System.
+    -   **Summary**: Contains all API endpoints for student result upload (CSV/PDF), data analysis, revision plan generation, assessment generation, and Firebase Firestore interactions for the new system.
+    -   **Changes**: New file created. Implemented endpoints for student/topic data management, PDF analysis using GPT-4o, and assessment paper generation using . Manages connection to the new Firebase project.
+-   ** (NEW)**: Helper file for dummy question data.
+    -   **Summary**: Holds placeholder questions for the assessment generation feature.
+    -   **Changes**: New file created.
+-   ****: Tuition Centre chatbot demo UI.
+    -   **Summary**: Implements the chat interface and the enrollment form.
+    -   **Changes**: Fixed a frontend compilation error related to a dangling form tag. Added Cancel and Back to Chat buttons to the enrollment form. Improved mobile scrolling and responsiveness for the enrollment modal by adjusting CSS and adding padding.
+-   ****: Admin page for managing tuition class data.
+    -   **Summary**: Provides forms for adding/updating/deleting class information.
+    -   **Changes**: Fixed mobile display issues for the tutor selection dropdown (overlapping text) by adjusting button positioning, spacing, font size, and custom dropdown arrow styling.
+-   ****: Main React routing.
+    -   **Summary**: Defines application routes.
+    -   **Changes**: Added a new route for  pointing to .
+-   ****: Displays demo project cards.
+    -   **Summary**: Landing page for various application demos.
+    -   **Changes**: Added a new demo card for the Math Results Analysis System and updated the grid layout to accommodate three demo cards.
+-   ** (NEW)**: Frontend UI for the Math Results Analysis System.
+    -   **Summary**: Provides UI for student result uploads (manual/CSV/PDF), displays analytics (charts, tables), manages revision plans, and generates assessments.
+    -   **Changes**: New file created. Implemented UI for CSV and AI PDF analysis upload, student/topic/assessment data display, dynamic revision plans, and an assessment generation modal with subtopic selection and duration. Added a dynamic slider for tutors to adjust the weak performance threshold.
+-   ** (NEW)**: Stores Firebase service account key.
+    -   **Summary**: JSON file containing credentials for the Math Results Analysis System's dedicated Firebase project.
+    -   **Changes**: New file created and populated with user-provided credentials.
 </code_architecture>
 
 <pending_tasks>
--   **WhatsApp Bot Connection:** Resolve persistent Connection Failure errors in  for QR code generation and re-authentication.
--   **UI Scrolling Fix:** Complete the implementation of input focus management and page scrolling prevention in .
+-   **WhatsApp Bot Connection:** Resolve persistent Connection Failure errors in  for QR code generation and re-authentication (from initial system prompt). This has not been addressed in the trajectory.
+-   **Topic Library Population:** The master topic file for S1-S4, J1-J2 with real links (PDF, video, worksheet) still needs to be provided by the user and integrated into the  collection in Firebase.
 </pending_tasks>
 
 <current_work>
-The AI engineer is currently addressing a UI/UX issue in the  component. The user reported that when they type a message in the chatbox and press Enter, the entire page scrolls down instead of the scroll remaining within the chat messages area and focus staying on the input field. To fix this, the engineer is modifying the  function to manage input focus. The specific action being taken is to locate the input field within the  component to attach a React  to it, which will allow programmatic control over its focus.
+Immediately before this summary request, the AI engineer was working on enhancing the Math Results Analysis System. Specifically, the last completed feature was the implementation of a **dynamic weak performance threshold** in the frontend ().
+
+This feature allows tutors to adjust the percentage (defaulting to 70%) that defines a weak performance for topics in a student's assessment. As the tutor adjusts this slider, the system dynamically updates the identification and categorization of weak and strong topics within the displayed revision plans and assessment generation modal.
+
+**Key changes in  for this feature include:**
+-   Adding state for the  (e.g., ).
+-   Integrating a slider UI element in the Revision Plans section to allow tutors to modify this percentage.
+-   Updating the logic for  to respect the  when initially populating recommended weak topics.
+-   Modifying the display logic for topic scores and performance indicators (e.g., color-coding) to reflect the  dynamically.
+-   Ensuring the assessment generation modal also considers this dynamic threshold when tutors are selecting topics for a new assessment.
+
+The frontend ( and  commands) was restarted after these changes, and a summary was provided, indicating the successful completion of this specific feature.
 </current_work>
 
 <optional_next_step>
-Add a React ref to the chat input field in  to manage focus.
+Confirm with the user if the dynamic weak performance threshold is working as expected.
 </optional_next_step>

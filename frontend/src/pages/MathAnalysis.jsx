@@ -43,7 +43,7 @@ const MathAnalysis = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://tuition-chatbot.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://math-mastery-12.preview.emergentagent.com';
 
   // Manual entry form state
   const [manualForm, setManualForm] = useState({
