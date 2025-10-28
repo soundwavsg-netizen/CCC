@@ -301,6 +301,261 @@ class TuitionChatTester:
         
         return test_passed
     
+    def test_context_scenario_1_s2_math_marine_parade(self):
+        """
+        CRITICAL TEST: Multi-turn Conversation Context - S2 Math follow-up with location
+        1. First message: "Tell me about S2 Math" (session_id: "test_context_s2")
+        2. Second message: "how bout for marine parade" (same session_id)
+        Expected: Should show ALL tutors teaching S2 Math at Marine Parade (~9 tutors)
+        """
+        print("\n" + "="*80)
+        print("CONTEXT TEST 1: S2 Math → Marine Parade Follow-up")
+        print("="*80)
+        
+        session_id = "test_context_s2"
+        
+        # First message
+        query1 = "Tell me about S2 Math"
+        print(f"Message 1: {query1}")
+        result1 = self.send_chat_message(query1, session_id)
+        
+        if not result1["success"]:
+            print(f"❌ API ERROR on first message: {result1['error']}")
+            return False
+            
+        print(f"Bot Response 1:\n{result1['data'].get('response', '')}")
+        
+        # Wait a moment for context to be stored
+        time.sleep(2)
+        
+        # Second message (follow-up with location)
+        query2 = "how bout for marine parade"
+        print(f"\nMessage 2: {query2}")
+        result2 = self.send_chat_message(query2, session_id)
+        
+        if not result2["success"]:
+            print(f"❌ API ERROR on second message: {result2['error']}")
+            return False
+            
+        response2_text = result2['data'].get('response', '')
+        print(f"Bot Response 2:\n{response2_text}")
+        
+        # Analysis of second response
+        response2_lower = response2_text.lower()
+        
+        # Check for expected tutors (should show ALL S2 Math tutors at Marine Parade)
+        expected_tutors = ["jackie", "john lee", "leonard teo", "lim w.m.", "ng c.h.", 
+                          "ronnie quek", "sean phua", "sean tan", "sean yeo"]
+        tutors_found = [tutor for tutor in expected_tutors if tutor.replace(" ", "").replace(".", "") in response2_lower.replace(" ", "").replace(".", "")]
+        
+        # Check for complete schedules with '+' separator
+        has_complete_schedules = "+" in response2_text
+        
+        # Check for correct S2 Math pricing
+        has_correct_price = "$381.50" in response2_text
+        
+        # Check that it shows multiple tutors (not just 1)
+        tutor_count = len(tutors_found)
+        shows_multiple_tutors = tutor_count >= 3  # Should show many tutors
+        
+        print(f"\n📊 ANALYSIS:")
+        print(f"✅ Tutors found: {tutor_count} ({', '.join(tutors_found)})")
+        print(f"✅ Shows multiple tutors (not just 1): {shows_multiple_tutors}")
+        print(f"✅ Has complete schedules with '+': {has_complete_schedules}")
+        print(f"✅ Has correct S2 Math price ($381.50): {has_correct_price}")
+        
+        # Test passes if shows multiple tutors with complete info
+        test_passed = shows_multiple_tutors and has_complete_schedules and has_correct_price
+        
+        print(f"\n🎯 CONTEXT TEST 1 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
+        
+        self.test_results.append({
+            "test": "S2 Math → Marine Parade Context",
+            "passed": test_passed,
+            "details": {
+                "tutors_found": tutor_count,
+                "shows_multiple": shows_multiple_tutors,
+                "complete_schedules": has_complete_schedules,
+                "correct_price": has_correct_price
+            }
+        })
+        
+        return test_passed
+    
+    def test_context_scenario_2_p6_math_punggol(self):
+        """
+        CRITICAL TEST: Different level/subject follow-up
+        1. First message: "Tell me about P6 Math" (session_id: "test_context_p6")
+        2. Second message: "what about Punggol?" (same session_id)
+        Expected: Should show ALL tutors teaching P6 Math at Punggol with complete schedules
+        """
+        print("\n" + "="*80)
+        print("CONTEXT TEST 2: P6 Math → Punggol Follow-up")
+        print("="*80)
+        
+        session_id = "test_context_p6"
+        
+        # First message
+        query1 = "Tell me about P6 Math"
+        print(f"Message 1: {query1}")
+        result1 = self.send_chat_message(query1, session_id)
+        
+        if not result1["success"]:
+            print(f"❌ API ERROR on first message: {result1['error']}")
+            return False
+            
+        print(f"Bot Response 1:\n{result1['data'].get('response', '')}")
+        
+        # Wait a moment for context to be stored
+        time.sleep(2)
+        
+        # Second message (follow-up with location)
+        query2 = "what about Punggol?"
+        print(f"\nMessage 2: {query2}")
+        result2 = self.send_chat_message(query2, session_id)
+        
+        if not result2["success"]:
+            print(f"❌ API ERROR on second message: {result2['error']}")
+            return False
+            
+        response2_text = result2['data'].get('response', '')
+        print(f"Bot Response 2:\n{response2_text}")
+        
+        # Analysis of second response
+        response2_lower = response2_text.lower()
+        
+        # Check for P6 Math context awareness
+        has_p6_context = "p6" in response2_lower and "math" in response2_lower
+        
+        # Check for Punggol location
+        has_punggol = "punggol" in response2_lower
+        
+        # Check for complete schedules (P6 Math has 2 sessions per week)
+        has_complete_schedules = "+" in response2_text
+        
+        # Check for correct P6 Math pricing
+        has_correct_price = "$357.52" in response2_text
+        
+        # Check that it shows tutors (not just general info)
+        has_tutor_info = any(indicator in response2_lower for indicator in 
+                           ["tutor", "teacher", "mr", "ms", "class a", "class b", "schedule"])
+        
+        print(f"\n📊 ANALYSIS:")
+        print(f"✅ Maintains P6 Math context: {has_p6_context}")
+        print(f"✅ Shows Punggol location: {has_punggol}")
+        print(f"✅ Has complete schedules with '+': {has_complete_schedules}")
+        print(f"✅ Has correct P6 Math price ($357.52): {has_correct_price}")
+        print(f"✅ Shows tutor information: {has_tutor_info}")
+        
+        # Test passes if maintains context and shows relevant info
+        test_passed = has_p6_context and has_punggol and has_correct_price
+        
+        print(f"\n🎯 CONTEXT TEST 2 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
+        
+        self.test_results.append({
+            "test": "P6 Math → Punggol Context",
+            "passed": test_passed,
+            "details": {
+                "maintains_context": has_p6_context,
+                "shows_location": has_punggol,
+                "complete_schedules": has_complete_schedules,
+                "correct_price": has_correct_price,
+                "shows_tutors": has_tutor_info
+            }
+        })
+        
+        return test_passed
+    
+    def test_context_scenario_3_j1_math_bishan(self):
+        """
+        CRITICAL TEST: Tutor-specific follow-up
+        1. First message: "Show me J1 Math classes" (session_id: "test_context_j1")
+        2. Second message: "list all tutors at Bishan" (same session_id)
+        Expected: Should show ALL J1 Math tutors at Bishan with new 2026 format (1 session/week)
+        """
+        print("\n" + "="*80)
+        print("CONTEXT TEST 3: J1 Math → Bishan Tutors Follow-up")
+        print("="*80)
+        
+        session_id = "test_context_j1"
+        
+        # First message
+        query1 = "Show me J1 Math classes"
+        print(f"Message 1: {query1}")
+        result1 = self.send_chat_message(query1, session_id)
+        
+        if not result1["success"]:
+            print(f"❌ API ERROR on first message: {result1['error']}")
+            return False
+            
+        print(f"Bot Response 1:\n{result1['data'].get('response', '')}")
+        
+        # Wait a moment for context to be stored
+        time.sleep(2)
+        
+        # Second message (follow-up with location and tutor request)
+        query2 = "list all tutors at Bishan"
+        print(f"\nMessage 2: {query2}")
+        result2 = self.send_chat_message(query2, session_id)
+        
+        if not result2["success"]:
+            print(f"❌ API ERROR on second message: {result2['error']}")
+            return False
+            
+        response2_text = result2['data'].get('response', '')
+        print(f"Bot Response 2:\n{response2_text}")
+        
+        # Analysis of second response
+        response2_lower = response2_text.lower()
+        
+        # Check for J1 Math context awareness
+        has_j1_context = "j1" in response2_lower and "math" in response2_lower
+        
+        # Check for Bishan location
+        has_bishan = "bishan" in response2_lower
+        
+        # Check for new 2026 format (1 session per week)
+        has_new_format = any(phrase in response2_lower for phrase in 
+                           ["1 session", "new 2026", "1 lesson/week", "2 hours"])
+        
+        # Check for correct J1 Math pricing
+        has_correct_price = "$401.12" in response2_text
+        
+        # Check that it shows tutors
+        has_tutor_listings = any(indicator in response2_lower for indicator in 
+                               ["tutor", "teacher", "mr", "ms", "teaches"])
+        
+        # Should NOT have multiple sessions (no + separator for J1 2026)
+        has_multiple_sessions = "+" in response2_text
+        
+        print(f"\n📊 ANALYSIS:")
+        print(f"✅ Maintains J1 Math context: {has_j1_context}")
+        print(f"✅ Shows Bishan location: {has_bishan}")
+        print(f"✅ Mentions new 2026 format: {has_new_format}")
+        print(f"✅ Has correct J1 Math price ($401.12): {has_correct_price}")
+        print(f"✅ Shows tutor listings: {has_tutor_listings}")
+        print(f"❌ Has multiple sessions (should NOT for J1 2026): {has_multiple_sessions}")
+        
+        # Test passes if maintains context and shows J1-specific info
+        test_passed = has_j1_context and has_bishan and has_correct_price
+        
+        print(f"\n🎯 CONTEXT TEST 3 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
+        
+        self.test_results.append({
+            "test": "J1 Math → Bishan Tutors Context",
+            "passed": test_passed,
+            "details": {
+                "maintains_context": has_j1_context,
+                "shows_location": has_bishan,
+                "new_format": has_new_format,
+                "correct_price": has_correct_price,
+                "shows_tutors": has_tutor_listings,
+                "single_session": not has_multiple_sessions
+            }
+        })
+        
+        return test_passed
+    
     def test_additional_checks(self):
         """Additional checks for system integrity"""
         print("\n" + "="*80)
@@ -319,25 +574,6 @@ class TuitionChatTester:
             
             if has_technical_exposure:
                 print(f"Technical terms found in response: {response_text}")
-        
-        # Test 2: Multi-turn conversation with session_id
-        print(f"\n🔄 Testing multi-turn conversation...")
-        session_id = str(uuid.uuid4())
-        
-        # First message
-        result1 = self.send_chat_message("Tell me about P6 Math", session_id)
-        if result1["success"]:
-            print("✅ First message sent successfully")
-        
-        # Follow-up message (should remember context)
-        time.sleep(1)  # Small delay
-        result2 = self.send_chat_message("What about at Bishan?", session_id)
-        if result2["success"]:
-            response2 = result2["data"].get("response", "").lower()
-            context_aware = "p6" in response2 or "math" in response2
-            print(f"✅ Context awareness in follow-up: {context_aware}")
-            if context_aware:
-                print("Bot correctly remembered P6 Math context")
         
         return True
     
