@@ -22,6 +22,19 @@ const TuitionCentreDemo = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState(null);
+  const [showEnrollmentForm, setShowEnrollmentForm] = useState(false);
+  const [enrollmentData, setEnrollmentData] = useState({
+    parent_name: '',
+    student_name: '',
+    email: '',
+    phone: '',
+    level: '',
+    subject: '',
+    location: '',
+    tutor_preference: '',
+    message: ''
+  });
+  const [enrollmentSubmitted, setEnrollmentSubmitted] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);  // Add input ref for focus management
 
