@@ -1,0 +1,350 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Button } from '../components/ui/button';
+import PageHeader from '../components/PageHeader';
+
+const Admin = () => {
+  const [formData, setFormData] = useState({
+    level: '',
+    subject: '',
+    location: '',
+    tutor_name: '',
+    day1: '',
+    time1: '',
+    day2: '',
+    time2: '',
+    monthly_fee: '',
+    sessions_per_week: 2
+  });
+  
+  const [searchResults, setSearchResults] = useState([]);
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://tutor-chat-scroll.preview.emergentagent.com';
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage('');
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/admin/manage-class`, {
+        action: 'add',
+        class_data: {
+          ...formData,
+          monthly_fee: parseFloat(formData.monthly_fee),
+          sessions_per_week: parseInt(formData.sessions_per_week)
+        }
+      });
+
+      setMessage(`✅ ${response.data.message}`);
+      
+      // Reset form
+      setFormData({
+        level: '',
+        subject: '',
+        location: '',
+        tutor_name: '',
+        day1: '',
+        time1: '',
+        day2: '',
+        time2: '',
+        monthly_fee: '',
+        sessions_per_week: 2
+      });
+    } catch (error) {
+      setMessage(`❌ Error: ${error.response?.data?.detail || error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSearch = async () => {
+    setIsLoading(true);
+    try {
+      const params = {};
+      if (formData.level) params.level = formData.level;
+      if (formData.subject) params.subject = formData.subject;
+      if (formData.location) params.location = formData.location;
+
+      const response = await axios.get(`${BACKEND_URL}/api/admin/search-classes`, { params });
+      setSearchResults(response.data.classes || []);
+      setMessage(`Found ${response.data.count} classes`);
+    } catch (error) {
+      setMessage(`❌ Search error: ${error.message}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async (classId) => {
+    if (!window.confirm('Are you sure you want to delete this class?')) return;
+
+    try {
+      await axios.post(`${BACKEND_URL}/api/admin/manage-class`, {
+        action: 'delete',
+        class_id: classId
+      });
+      setMessage(`✅ Class deleted: ${classId}`);
+      handleSearch(); // Refresh results
+    } catch (error) {
+      setMessage(`❌ Delete error: ${error.message}`);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <PageHeader 
+        title="Admin Panel"
+        subtitle="Manage Tuition Class Data"
+      />
+
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          
+          {/* Add Class Form */}
+          <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800">➕ Add New Class</h2>
+            
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Level *</label>
+                  <select
+                    required
+                    value={formData.level}
+                    onChange={(e) => setFormData({...formData, level: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Select</option>
+                    <option value="P2">P2</option>
+                    <option value="P3">P3</option>
+                    <option value="P4">P4</option>
+                    <option value="P5">P5</option>
+                    <option value="P6">P6</option>
+                    <option value="S1">S1</option>
+                    <option value="S2">S2</option>
+                    <option value="S3">S3</option>
+                    <option value="S4">S4</option>
+                    <option value="J1">J1</option>
+                    <option value="J2">J2</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Subject *</label>
+                  <select
+                    required
+                    value={formData.subject}
+                    onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Select</option>
+                    <option value="Math">Math</option>
+                    <option value="Science">Science</option>
+                    <option value="English">English</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="EMath">EMath</option>
+                    <option value="AMath">AMath</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Economics">Economics</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+                  <select
+                    required
+                    value={formData.location}
+                    onChange={(e) => setFormData({...formData, location: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Select</option>
+                    <option value="Bishan">Bishan</option>
+                    <option value="Punggol">Punggol</option>
+                    <option value="Marine Parade">Marine Parade</option>
+                    <option value="Jurong">Jurong</option>
+                    <option value="Kovan">Kovan</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Tutor Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.tutor_name}
+                    onChange={(e) => setFormData({...formData, tutor_name: e.target.value})}
+                    placeholder="e.g., Mr John Lee (DY HOD)"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-4 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Day 1 *</label>
+                  <select
+                    required
+                    value={formData.day1}
+                    onChange={(e) => setFormData({...formData, day1: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Select</option>
+                    <option value="MON">MON</option>
+                    <option value="TUE">TUE</option>
+                    <option value="WED">WED</option>
+                    <option value="THU">THU</option>
+                    <option value="FRI">FRI</option>
+                    <option value="SAT">SAT</option>
+                    <option value="SUN">SUN</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Time 1 *</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.time1}
+                    onChange={(e) => setFormData({...formData, time1: e.target.value})}
+                    placeholder="5:00pm-6:30pm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Day 2</label>
+                  <select
+                    value={formData.day2}
+                    onChange={(e) => setFormData({...formData, day2: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Select</option>
+                    <option value="MON">MON</option>
+                    <option value="TUE">TUE</option>
+                    <option value="WED">WED</option>
+                    <option value="THU">THU</option>
+                    <option value="FRI">FRI</option>
+                    <option value="SAT">SAT</option>
+                    <option value="SUN">SUN</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Time 2</label>
+                  <input
+                    type="text"
+                    value={formData.time2}
+                    onChange={(e) => setFormData({...formData, time2: e.target.value})}
+                    placeholder="12:00pm-1:30pm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Fee ($) *</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    required
+                    value={formData.monthly_fee}
+                    onChange={(e) => setFormData({...formData, monthly_fee: e.target.value})}
+                    placeholder="397.85"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Sessions/Week *</label>
+                  <input
+                    type="number"
+                    required
+                    value={formData.sessions_per_week}
+                    onChange={(e) => setFormData({...formData, sessions_per_week: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:opacity-90"
+              >
+                {isLoading ? 'Adding...' : '➕ Add Class'}
+              </Button>
+            </form>
+
+            {message && (
+              <div className={`mt-4 p-4 rounded-lg ${message.startsWith('✅') ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800'}`}>
+                {message}
+              </div>
+            )}
+          </div>
+
+          {/* Search Section */}
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800">🔍 Search Classes</h2>
+            
+            <div className="flex gap-4 mb-6">
+              <Button
+                onClick={handleSearch}
+                disabled={isLoading}
+                className="bg-gradient-to-r from-purple-500 to-purple-600 text-white"
+              >
+                {isLoading ? 'Searching...' : 'Search'}
+              </Button>
+              <Button
+                onClick={() => setSearchResults([])}
+                variant="outline"
+              >
+                Clear Results
+              </Button>
+            </div>
+
+            {searchResults.length > 0 && (
+              <div className="space-y-4">
+                <p className="text-sm text-gray-600 font-medium">Found {searchResults.length} classes:</p>
+                {searchResults.map((cls, idx) => (
+                  <div key={idx} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <h3 className="font-bold text-lg text-gray-800">
+                          {cls.level} {cls.subject} - {cls.tutor_base_name}
+                        </h3>
+                        <p className="text-sm text-gray-600">📍 {cls.location}</p>
+                        <p className="text-sm text-gray-600">
+                          📅 {cls.schedule.map(s => `${s.day} ${s.time}`).join(' + ')}
+                        </p>
+                        <p className="text-sm text-gray-600">💰 ${cls.monthly_fee}/month</p>
+                        <p className="text-xs text-gray-400 mt-1">ID: {cls.class_id}</p>
+                      </div>
+                      <Button
+                        onClick={() => handleDelete(cls.class_id)}
+                        variant="destructive"
+                        size="sm"
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Admin;
