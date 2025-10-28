@@ -22,7 +22,7 @@ from math_analysis_api import math_db
 logger = logging.getLogger(__name__)
 
 # JWT Configuration
-SECRET_KEY = secrets.token_urlsafe(32)  # Generate secure secret key
+SECRET_KEY = "math_analysis_secret_key_2024"  # Use consistent secret key
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 hours
 
