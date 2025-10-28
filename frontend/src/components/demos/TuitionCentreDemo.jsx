@@ -64,6 +64,11 @@ const TuitionCentreDemo = () => {
     setInputMessage('');
     setIsLoading(true);
 
+    // Keep focus on input after sending
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+
     try {
       const response = await axios.post(`${BACKEND_URL}/api/tuition/chat`, {
         message: cleanText(inputMessage),
@@ -90,6 +95,8 @@ const TuitionCentreDemo = () => {
       setMessages(prev => [...prev, errorMsg]);
     } finally {
       setIsLoading(false);
+      // Refocus input after loading completes
+      inputRef.current?.focus();
     }
   };
 
