@@ -1385,13 +1385,15 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                                 firebase_context += "\n"
                             
                             firebase_context += f"**CRITICAL INSTRUCTIONS:**\n"
-                            firebase_context += f"1. Present classes grouped by LOCATION and LEVEL/SUBJECT as shown above\n"
-                            firebase_context += f"2. {tutor_name} ONLY teaches at: {', '.join(sorted(classes_by_location.keys()))}\n"
-                            firebase_context += f"3. Only use 'Class A, B, C' labels when the SAME tutor has MULTIPLE classes of the SAME level/subject at the SAME location\n"
-                            firebase_context += f"4. If only one class per level/subject at a location, just show the schedule WITHOUT variant labels\n"
-                            firebase_context += f"5. Always show COMPLETE schedules with ALL session days and times (separated by +)\n"
-                            firebase_context += f"6. Never mention 'database', 'Firebase', 'querying', or any technical terms\n"
-                            firebase_context += f"7. When listing classes, show the complete schedule for each one\n"
+                            firebase_context += f"1. **YOU MUST USE THIS DATA** - The above schedule information is from our live database. Show this data to the user immediately.\n"
+                            firebase_context += f"2. Present classes grouped by LOCATION and LEVEL/SUBJECT as shown above\n"
+                            firebase_context += f"3. {tutor_name} ONLY teaches at: {', '.join(sorted(classes_by_location.keys()))}\n"
+                            firebase_context += f"4. Only use 'Class A, B, C' labels when the SAME tutor has MULTIPLE classes of the SAME level/subject at the SAME location\n"
+                            firebase_context += f"5. If only one class per level/subject at a location, just show the schedule WITHOUT variant labels\n"
+                            firebase_context += f"6. Always show COMPLETE schedules with ALL session days and times (separated by +)\n"
+                            firebase_context += f"7. Never mention 'database', 'Firebase', 'querying', or any technical terms\n"
+                            firebase_context += f"8. When listing classes, show the complete schedule for each one with tutor names\n"
+                            firebase_context += f"9. **DO NOT ask for more clarification** if you have this data - present it directly!\n"
                 elif classes:
                     logger.info(f"Found {len(classes)} classes, formatting for LLM")
                     
