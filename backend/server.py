@@ -1522,15 +1522,16 @@ async def tuition_demo_chat(request: TuitionChatRequest):
                         firebase_context += "\n"
                     
                     firebase_context += f"**CRITICAL INSTRUCTIONS:**\n"
-                    firebase_context += f"1. **YOU MUST USE THIS DATA** - The above schedule information is from our live database. Present ALL tutors listed above to the user.\n"
-                    firebase_context += f"2. Present classes grouped by LOCATION and TUTOR as shown above\n"
-                    firebase_context += f"3. Only use 'Class A, B, C' labels when the SAME tutor has MULTIPLE classes of the EXACT SAME level AND subject at the SAME location\n"
-                    firebase_context += f"4. If a tutor teaches different subjects at the same location, list each subject separately WITHOUT Class A/B labels\n"
-                    firebase_context += f"5. Always show COMPLETE schedules with ALL session days and times (separated by +)\n"
-                    firebase_context += f"6. Never mention 'database', 'Firebase', 'querying', or any technical terms\n"
-                    firebase_context += f"7. Each class schedule should show ALL weekly sessions (e.g., 'MON 5:00pm-6:30pm + SAT 3:00pm-4:30pm' for a class with 2 sessions)\n"
-                    firebase_context += f"8. **SHOW ALL TUTORS** listed above - do not ask for clarification if data is provided\n"
+                    firebase_context += f"1. **YOU MUST SHOW THIS DATA IMMEDIATELY** - The above tutor information is from our live database. Present ALL {len(classes_by_location)} tutors listed above RIGHT NOW.\n"
+                    firebase_context += f"2. **DO NOT ask if user wants to see tutors** - They already asked for this information, so SHOW IT DIRECTLY.\n"
+                    firebase_context += f"3. Present classes grouped by LOCATION and TUTOR as shown above\n"
+                    firebase_context += f"4. Only use 'Class A, B, C' labels when the SAME tutor has MULTIPLE classes of the EXACT SAME level AND subject at the SAME location\n"
+                    firebase_context += f"5. If a tutor teaches different subjects at the same location, list each subject separately WITHOUT Class A/B labels\n"
+                    firebase_context += f"6. Always show COMPLETE schedules with ALL session days and times (separated by +)\n"
+                    firebase_context += f"7. Never mention 'database', 'Firebase', 'querying', or any technical terms\n"
+                    firebase_context += f"8. Each class schedule should show ALL weekly sessions (e.g., 'MON 5:00pm-6:30pm + SAT 3:00pm-4:30pm' for a class with 2 sessions)\n"
                     firebase_context += f"9. List tutor names prominently (e.g., '**Jackie**: MON 6:30pm-8:00pm + SAT 1:30pm-3:00pm - $XXX/month')\n"
+                    firebase_context += f"10. **FORMAT EXAMPLE**: '**Jackie**: WED 4:30pm-6:00pm + SUN 12:30pm-2:00pm - $370.60/month'\n"
                 else:
                     logger.warning(f"No classes found for query - Level: {level}, Subject: {subject}, Location: {location}, Tutor: {tutor_search}")
             
