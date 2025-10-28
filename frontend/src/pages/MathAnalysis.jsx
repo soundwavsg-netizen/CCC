@@ -499,6 +499,86 @@ const MathAnalysis = () => {
     localStorage.removeItem('tutor_info');
     window.location.href = '/tutor/login';
   };
+
+  const handleDeleteResult = async (resultId, studentName, examType) => {
+    if (!window.confirm(`Are you sure you want to delete the result for ${studentName} - ${examType}?`)) {
+      return;
+    }
+
+    try {
+      const response = await axios.delete(`${BACKEND_URL}/api/math-analysis/result/${resultId}`);
+      if (response.data.success) {
+        setMessage(`✅ Result deleted successfully`);
+        fetchAllStudentResults();
+        fetchStudents();
+        // Clear selected student if it was deleted
+        if (selectedStudent && revisionPlan && revisionPlan.result_id === resultId) {
+          setSelectedStudent(null);
+          setRevisionPlan(null);
+        }
+      }
+    } catch (error) {
+      setMessage('❌ Error deleting result: ' + (error.response?.data?.detail || error.message));
+    }
+  };
+
+  const handleEditResult = (result) => {
+    setEditingResult({
+      ...result,
+      topics: result.topics.map(t => ({ ...t })) // Deep copy topics
+    });
+    setShowEditModal(true);
+  };
+
+  const handleSaveEditedResult = async () => {
+    if (!editingResult) return;
+
+    setLoading(true);
+    try {
+      const response = await axios.put(
+        `${BACKEND_URL}/api/math-analysis/result/${editingResult.result_id}`,
+        {
+          topics: editingResult.topics,
+          overall_score: Math.round(
+            editingResult.topics.reduce((sum, t) => sum + (t.marks / t.total_marks * 100), 0) / editingResult.topics.length
+          )
+        }
+      );
+
+      if (response.data.success) {
+        setMessage('✅ Result updated successfully');
+        setShowEditModal(false);
+        setEditingResult(null);
+        fetchAllStudentResults();
+        fetchStudents();
+      }
+    } catch (error) {
+      setMessage('❌ Error updating result: ' + (error.response?.data?.detail || error.message));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateEditingTopic = (index, field, value) => {
+    const newTopics = [...editingResult.topics];
+    newTopics[index][field] = parseFloat(value) || 0;
+    // Recalculate percentage
+    if (field === 'marks' || field === 'total_marks') {
+      newTopics[index].percentage = newTopics[index].total_marks > 0 
+        ? Math.round((newTopics[index].marks / newTopics[index].total_marks * 100) * 100) / 100
+        : 0;
+    }
+    setEditingResult({ ...editingResult, topics: newTopics });
+  };
+  
+  // Filter student results based on revision filters
+  const getFilteredResults = () => {
+    return studentResults.filter(result => {
+      if (revisionFilters.level && result.level !== revisionFilters.level) return false;
+      if (revisionFilters.location && result.location !== revisionFilters.location) return false;
+      return true;
+    });
+  };
   
   // Show loading while checking authentication
   if (!isLoggedIn || !tutorInfo) {
