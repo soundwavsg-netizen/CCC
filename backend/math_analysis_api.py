@@ -15,8 +15,27 @@ import json
 import logging
 from pathlib import Path
 
-# Import tutor auth
-from tutor_auth_api import verify_token
+# JWT token verification
+import jwt
+import secrets
+ALGORITHM = "HS256"
+
+def verify_tutor_token(authorization_header):
+    """Verify JWT token and return tutor data"""
+    if not authorization_header:
+        raise HTTPException(status_code=401, detail="Authorization header required")
+    
+    try:
+        token = authorization_header.replace("Bearer ", "")
+        # We need to use the same SECRET_KEY as tutor_auth_api
+        # For now, let's read it from environment or use a shared constant
+        SECRET_KEY = "your_secret_key_here"  # This should match tutor_auth_api
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token has expired")
+    except jwt.JWTError:
+        raise HTTPException(status_code=401, detail="Could not validate credentials")
 
 # Setup logging
 logger = logging.getLogger(__name__)
