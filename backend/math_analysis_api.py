@@ -420,17 +420,30 @@ async def get_student_results(student_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 @math_router.post("/analytics")
-async def get_analytics(filters: AnalyticsFilter):
-    """Get analytics data with filters for dashboard"""
+async def get_analytics(filters: AnalyticsFilter, authorization: str = Header(None)):
+    """Get analytics data with filters for dashboard (tutor authenticated)"""
     try:
+        # Verify tutor authentication
+        if not authorization:
+            raise HTTPException(status_code=401, detail="Authorization header required")
+        
+        try:
+            token = authorization.replace("Bearer ", "")
+            tutor_data = verify_token(token)
+            tutor_id = tutor_data.get('tutor_id')
+            if not tutor_id:
+                raise HTTPException(status_code=401, detail="Invalid tutor token")
+        except Exception as e:
+            raise HTTPException(status_code=401, detail=f"Authentication failed: {str(e)}")
+        
         if not math_db:
             raise HTTPException(status_code=500, detail="Firebase not initialized")
         
-        # Get all results from student_results collection and filter
+        # Get all results from student_results collection and filter by tutor_id
         all_results = []
-        results_query = math_db.collection('student_results')
+        results_query = math_db.collection('student_results').where('tutor_id', '==', tutor_id)
         
-        # Apply filters directly to student_results
+        # Apply additional filters
         if filters.location:
             results_query = results_query.where('location', '==', filters.location)
         if filters.level:
