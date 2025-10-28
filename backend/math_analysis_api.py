@@ -859,3 +859,260 @@ async def save_analyzed_results(data: ManualEntryRequest):
     except Exception as e:
         logger.error(f"Error saving analyzed results: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# Question Bank & Assessment Generation
+from question_bank import (
+    get_dummy_questions,
+    generate_assessment_pdf,
+    AssessmentRequest,
+    DUMMY_QUESTION_BANK
+)
+from fastapi.responses import StreamingResponse
+
+@math_router.get("/available-subtopics")
+async def get_available_subtopics(level: str, subject: str, topics: str):
+    """Get available subtopics for selected topics"""
+    try:
+        topic_list = topics.split(',') if topics else []
+        bank_key = f"{level}_{subject.replace('.', '').replace(' ', '')}"
+        
+        if bank_key not in DUMMY_QUESTION_BANK:
+            return {"success": True, "subtopics": []}
+        
+        subtopics = set()
+        question_bank = DUMMY_QUESTION_BANK[bank_key]
+        
+        for topic in topic_list:
+            if topic in question_bank:
+                subtopics.update(question_bank[topic].keys())
+        
+        return {
+            "success": True,
+            "subtopics": sorted(list(subtopics))
+        }
+    except Exception as e:
+        logger.error(f"Error fetching subtopics: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@math_router.post("/generate-assessment")
+async def generate_assessment(request: AssessmentRequest):
+    """Generate revision assessment based on weak topics"""
+    try:
+        if not math_db:
+            raise HTTPException(status_code=500, detail="Firebase not initialized")
+        
+        # Get student info
+        student_ref = math_db.collection('students').document(request.student_id)
+        student_doc = student_ref.get()
+        
+        if not student_doc.exists:
+            raise HTTPException(status_code=404, detail="Student not found")
+        
+        student_data = student_doc.to_dict()
+        
+        # Get questions from dummy bank
+        if request.generation_mode == "auto":
+            # Auto-generate from weak topics
+            questions = get_dummy_questions(
+                student_data['level'],
+                student_data['subject'],
+                topics=request.selected_topics,
+                subtopics=request.selected_subtopics if request.selected_subtopics else None
+            )
+            
+            # Filter by time
+            selected_questions = []
+            total_time = 0
+            
+            # Shuffle for randomness
+            random.shuffle(questions)
+            
+            for q in questions:
+                if total_time + q['estimated_time_minutes'] <= request.duration_minutes:
+                    selected_questions.append(q)
+                    total_time += q['estimated_time_minutes']
+                
+                if total_time >= request.duration_minutes * 0.9:  # Use 90% of time
+                    break
+        else:
+            # Manual selection
+            all_questions = get_dummy_questions(student_data['level'], student_data['subject'])
+            selected_questions = [q for q in all_questions if q['question_id'] in request.manual_question_ids]
+        
+        if not selected_questions:
+            raise HTTPException(status_code=400, detail="No questions available for selected criteria")
+        
+        # Calculate total marks
+        total_marks = sum([q['marks'] for q in selected_questions])
+        
+        # Create assessment ID
+        assessment_id = f"assess_{datetime.now().strftime('%d%m%Y_%H%M%S')}"
+        
+        # Save assessment to Firebase
+        assessment_data = {
+            'assessment_id': assessment_id,
+            'student_id': request.student_id,
+            'result_id': request.result_id,
+            'questions': selected_questions,
+            'total_marks': total_marks,
+            'duration_minutes': request.duration_minutes,
+            'created_date': datetime.now().strftime('%d/%m/%Y'),
+            'created_timestamp': datetime.now().isoformat(),
+            'status': 'generated',  # generated, completed
+            'topics': request.selected_topics,
+            'subtopics': request.selected_subtopics
+        }
+        
+        # Save to student's assessments subcollection
+        student_ref.collection('assessments').document(assessment_id).set(assessment_data)
+        
+        return {
+            'success': True,
+            'assessment_id': assessment_id,
+            'total_marks': total_marks,
+            'question_count': len(selected_questions),
+            'estimated_time': sum([q['estimated_time_minutes'] for q in selected_questions]),
+            'message': 'Assessment generated successfully'
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error generating assessment: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@math_router.get("/assessment/{student_id}/{assessment_id}/pdf")
+async def download_assessment_pdf(student_id: str, assessment_id: str, version: str = "student"):
+    """Download assessment PDF (student or tutor version)"""
+    try:
+        if not math_db:
+            raise HTTPException(status_code=500, detail="Firebase not initialized")
+        
+        # Get assessment from Firebase
+        assessment_ref = math_db.collection('students').document(student_id)\
+            .collection('assessments').document(assessment_id)
+        assessment_doc = assessment_ref.get()
+        
+        if not assessment_doc.exists:
+            raise HTTPException(status_code=404, detail="Assessment not found")
+        
+        assessment_data = assessment_doc.to_dict()
+        
+        # Generate PDF
+        include_solutions = (version == "tutor")
+        pdf_bytes = generate_assessment_pdf(assessment_data, include_solutions)
+        
+        filename = f"Internal_Assessment_Test_{assessment_data['created_date'].replace('/', '')}"
+        if include_solutions:
+            filename += "_Solutions"
+        filename += ".pdf"
+        
+        return StreamingResponse(
+            io.BytesIO(pdf_bytes),
+            media_type="application/pdf",
+            headers={"Content-Disposition": f"attachment; filename={filename}"}
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error generating PDF: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@math_router.get("/student/{student_id}/assessments")
+async def get_student_assessments(student_id: str):
+    """Get all assessments for a student"""
+    try:
+        if not math_db:
+            raise HTTPException(status_code=500, detail="Firebase not initialized")
+        
+        assessments = []
+        assessments_ref = math_db.collection('students').document(student_id).collection('assessments')
+        
+        for doc in assessments_ref.order_by('created_timestamp', direction=firestore.Query.DESCENDING).stream():
+            assessment_data = doc.to_dict()
+            # Don't include full questions in list, just summary
+            assessments.append({
+                'assessment_id': assessment_data['assessment_id'],
+                'created_date': assessment_data['created_date'],
+                'total_marks': assessment_data['total_marks'],
+                'duration_minutes': assessment_data['duration_minutes'],
+                'question_count': len(assessment_data['questions']),
+                'status': assessment_data.get('status', 'generated'),
+                'topics': assessment_data.get('topics', []),
+                'result_id': assessment_data.get('result_id')
+            })
+        
+        return {
+            'success': True,
+            'assessments': assessments
+        }
+        
+    except Exception as e:
+        logger.error(f"Error fetching assessments: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@math_router.get("/improvement-tracking/{student_id}/{result_id}")
+async def get_improvement_tracking(student_id: str, result_id: str):
+    """Get improvement metrics comparing original test with internal assessments"""
+    try:
+        if not math_db:
+            raise HTTPException(status_code=500, detail="Firebase not initialized")
+        
+        # Get original result
+        student_ref = math_db.collection('students').document(student_id)
+        original_result = student_ref.collection('results').document(result_id).get()
+        
+        if not original_result.exists:
+            raise HTTPException(status_code=404, detail="Original result not found")
+        
+        original_data = original_result.to_dict()
+        
+        # Get internal assessments for this result
+        assessments_ref = student_ref.collection('assessments')\
+            .where('result_id', '==', result_id)\
+            .where('status', '==', 'completed')
+        
+        assessment_results = []
+        for doc in assessments_ref.stream():
+            assessment_data = doc.to_dict()
+            if 'completion_data' in assessment_data:
+                assessment_results.append(assessment_data)
+        
+        # Calculate improvement metrics
+        original_topics = {t['topic_name']: t['percentage'] for t in original_data['topics']}
+        
+        improvement_data = []
+        for topic_name, original_score in original_topics.items():
+            # Find latest assessment score for this topic
+            latest_score = None
+            for assessment in assessment_results:
+                completion = assessment.get('completion_data', {})
+                for topic in completion.get('topics', []):
+                    if topic['topic_name'] == topic_name:
+                        latest_score = topic['percentage']
+            
+            if latest_score is not None:
+                improvement = latest_score - original_score
+                improvement_data.append({
+                    'topic': topic_name,
+                    'original_score': original_score,
+                    'latest_score': latest_score,
+                    'improvement': improvement,
+                    'improvement_percentage': round((improvement / original_score * 100) if original_score > 0 else 0, 2)
+                })
+        
+        return {
+            'success': True,
+            'original_exam': original_data['exam_type'],
+            'original_date': original_data['date'],
+            'original_overall': original_data['overall_score'],
+            'assessment_count': len(assessment_results),
+            'improvements': improvement_data
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error tracking improvement: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
