@@ -1640,6 +1640,10 @@ async def tuition_enrollment(enrollment: EnrollmentRequest):
     Collects customer details and sends notification email to admin.
     """
     try:
+        # Validate at least one phone number is provided
+        if not enrollment.parent_phone and not enrollment.student_phone:
+            raise HTTPException(status_code=400, detail="At least one phone number (parent or student) is required")
+        
         logger.info(f"Enrollment request: {enrollment.parent_name} for {enrollment.student_name} - {enrollment.level} {enrollment.subject} at {enrollment.location}")
         
         # Send email notification to admin
@@ -1650,6 +1654,8 @@ async def tuition_enrollment(enrollment: EnrollmentRequest):
             "message": "Enrollment request submitted successfully! Our admin team will contact you shortly."
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error processing enrollment: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to process enrollment request")
