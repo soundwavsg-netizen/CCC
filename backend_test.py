@@ -546,7 +546,7 @@ class TuitionChatTester:
         }
         
         try:
-            response = requests.post(API_ENDPOINT, json=payload, timeout=30)
+            response = requests.post(TUITION_API_ENDPOINT, json=payload, timeout=30)
             response.raise_for_status()
             return {
                 "success": True,
