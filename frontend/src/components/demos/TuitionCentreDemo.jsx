@@ -120,6 +120,56 @@ const TuitionCentreDemo = () => {
     }
   };
 
+  const handleEnrollmentSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/tuition/enrollment`, enrollmentData);
+      
+      if (response.data.success) {
+        setEnrollmentSubmitted(true);
+        // Add confirmation message to chat
+        const confirmMsg = {
+          id: Date.now().toString(),
+          text: '✅ Thank you! Your enrollment request has been submitted successfully. Our admin team will contact you shortly at ' + enrollmentData.email + ' or ' + enrollmentData.phone + '. 😊',
+          sender: 'bot',
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, confirmMsg]);
+        
+        // Reset form after 2 seconds
+        setTimeout(() => {
+          setShowEnrollmentForm(false);
+          setEnrollmentSubmitted(false);
+          setEnrollmentData({
+            parent_name: '',
+            student_name: '',
+            email: '',
+            phone: '',
+            level: '',
+            subject: '',
+            location: '',
+            tutor_preference: '',
+            message: ''
+          });
+        }, 2000);
+      }
+    } catch (error) {
+      console.error('Enrollment error:', error);
+      alert('Failed to submit enrollment. Please try again or call 6222 8222.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleEnrollmentChange = (field, value) => {
+    setEnrollmentData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
   const quickReplies = [
     "What courses do you offer?",
     "P6 Math pricing at Marine Parade?",
