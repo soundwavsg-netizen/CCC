@@ -69,6 +69,31 @@ const TuitionCentreDemo = () => {
     fetchAvailableLocations();
   }, [enrollmentData.level, enrollmentData.subject, BACKEND_URL]);
 
+  // Fetch available tutors when level, subject, and location are selected
+  useEffect(() => {
+    const fetchAvailableTutors = async () => {
+      if (enrollmentData.level && enrollmentData.subject && enrollmentData.location) {
+        try {
+          const response = await axios.get(`${BACKEND_URL}/api/admin/available-tutors`, {
+            params: {
+              level: enrollmentData.level,
+              subject: enrollmentData.subject,
+              location: enrollmentData.location
+            }
+          });
+          setAvailableTutors(response.data.tutors || []);
+        } catch (error) {
+          console.error('Error fetching tutors:', error);
+          setAvailableTutors([]);
+        }
+      } else {
+        setAvailableTutors([]);
+      }
+    };
+    
+    fetchAvailableTutors();
+  }, [enrollmentData.level, enrollmentData.subject, enrollmentData.location, BACKEND_URL]);
+
   // Initialize demo
   useEffect(() => {
     if (isOpen && !sessionId) {
