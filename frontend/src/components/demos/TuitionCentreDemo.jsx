@@ -728,7 +728,7 @@ const TuitionCentreDemo = () => {
                               />
                             </div>
 
-                            <div className="pt-2 flex gap-3">
+                            <div className="pt-2 pb-4 flex gap-3">
                               <Button
                                 type="button"
                                 onClick={() => setShowEnrollmentForm(false)}
