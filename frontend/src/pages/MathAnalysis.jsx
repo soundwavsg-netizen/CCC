@@ -1152,28 +1152,179 @@ const MathAnalysis = () => {
 
         {/* Revision Plans Tab */}
         {activeTab === 'revision' && (
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Select Student for Revision Plan</h3>
-              {students.length > 0 ? (
-                <div className="grid grid-cols-2 gap-4">
-                  {students.map((student) => (
-                    <div
-                      key={student.student_id}
-                      onClick={() => {
-                        setSelectedStudent(student);
-                        fetchRevisionPlan(student.student_id);
-                      }}
-                      className="p-4 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer"
+              <h3 className="text-2xl font-bold text-gray-800 mb-6">📚 Student Results & Revision Plans</h3>
+              
+              {/* Filters and View Toggle */}
+              <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <div className="flex flex-wrap items-center gap-4">
+                  {/* Level Filter */}
+                  <div className="flex-1 min-w-[200px]">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Filter by Level</label>
+                    <select
+                      value={revisionFilters.level}
+                      onChange={(e) => setRevisionFilters({ ...revisionFilters, level: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
                     >
-                      <p className="font-semibold text-gray-800">{student.name}</p>
-                      <p className="text-sm text-gray-600">{student.level} {student.subject}</p>
-                      <p className="text-xs text-gray-500">{student.location}</p>
+                      <option value="">All Levels</option>
+                      {tutorInfo.levels.map(level => (
+                        <option key={level} value={level}>{level}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Location Filter */}
+                  <div className="flex-1 min-w-[200px]">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Filter by Location</label>
+                    <select
+                      value={revisionFilters.location}
+                      onChange={(e) => setRevisionFilters({ ...revisionFilters, location: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    >
+                      <option value="">All Locations</option>
+                      {tutorInfo.locations.map(loc => (
+                        <option key={loc} value={`RMSS - ${loc}`}>RMSS - {loc}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* View Toggle */}
+                  <div className="flex-1 min-w-[200px]">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">View Mode</label>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setViewMode('grid')}
+                        className={`flex-1 px-4 py-2 rounded-lg font-medium ${
+                          viewMode === 'grid' 
+                            ? 'bg-blue-600 text-white' 
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        }`}
+                      >
+                        📱 Grid
+                      </button>
+                      <button
+                        onClick={() => setViewMode('list')}
+                        className={`flex-1 px-4 py-2 rounded-lg font-medium ${
+                          viewMode === 'list' 
+                            ? 'bg-blue-600 text-white' 
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        }`}
+                      >
+                        📋 List
+                      </button>
                     </div>
-                  ))}
+                  </div>
                 </div>
+              </div>
+
+              {/* Results Display */}
+              {getFilteredResults().length > 0 ? (
+                viewMode === 'grid' ? (
+                  // Grid View
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {getFilteredResults().map((result) => (
+                      <div
+                        key={result.result_id}
+                        className="p-4 border-2 border-gray-300 rounded-lg hover:border-blue-500 transition-all"
+                      >
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex-1">
+                            <p className="font-bold text-gray-800">{result.student_name}</p>
+                            <p className="text-sm text-gray-600">{result.level} {result.subject}</p>
+                            <p className="text-xs text-gray-500">{result.location}</p>
+                          </div>
+                          <div className={`text-2xl font-bold ${
+                            result.overall_score >= 75 ? 'text-green-600' :
+                            result.overall_score >= 50 ? 'text-yellow-600' :
+                            'text-red-600'
+                          }`}>
+                            {result.overall_score}%
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-500 mb-3">{result.exam_type}</p>
+                        
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              setSelectedStudent({ student_id: result.student_id, name: result.student_name });
+                              fetchRevisionPlan(result.student_id);
+                            }}
+                            className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700"
+                          >
+                            📊 View Details
+                          </button>
+                          <button
+                            onClick={() => handleEditResult(result)}
+                            className="px-3 py-2 bg-yellow-500 text-white text-sm rounded-lg hover:bg-yellow-600"
+                          >
+                            ✏️
+                          </button>
+                          <button
+                            onClick={() => handleDeleteResult(result.result_id, result.student_name, result.exam_type)}
+                            className="px-3 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600"
+                          >
+                            🗑️
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  // List View
+                  <div className="space-y-3">
+                    {getFilteredResults().map((result) => (
+                      <div
+                        key={result.result_id}
+                        className="p-4 border border-gray-300 rounded-lg hover:bg-gray-50 flex items-center gap-4"
+                      >
+                        <div className="flex-1">
+                          <div className="flex items-center gap-4">
+                            <div className="flex-1">
+                              <p className="font-bold text-gray-800">{result.student_name}</p>
+                              <p className="text-sm text-gray-600">{result.level} {result.subject} | {result.location}</p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500">{result.exam_type}</p>
+                              <p className={`text-2xl font-bold ${
+                                result.overall_score >= 75 ? 'text-green-600' :
+                                result.overall_score >= 50 ? 'text-yellow-600' :
+                                'text-red-600'
+                              }`}>
+                                {result.overall_score}%
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              setSelectedStudent({ student_id: result.student_id, name: result.student_name });
+                              fetchRevisionPlan(result.student_id);
+                            }}
+                            className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 whitespace-nowrap"
+                          >
+                            📊 View Details
+                          </button>
+                          <button
+                            onClick={() => handleEditResult(result)}
+                            className="px-3 py-2 bg-yellow-500 text-white text-sm rounded-lg hover:bg-yellow-600"
+                          >
+                            ✏️ Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteResult(result.result_id, result.student_name, result.exam_type)}
+                            className="px-3 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600"
+                          >
+                            🗑️ Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )
               ) : (
-                <p className="text-gray-600 text-center py-8">No students found. Please upload results first.</p>
+                <p className="text-gray-600 text-center py-8">No results found. {revisionFilters.level || revisionFilters.location ? 'Try adjusting your filters.' : 'Please upload results first.'}</p>
               )}
 
               {revisionPlan && (
