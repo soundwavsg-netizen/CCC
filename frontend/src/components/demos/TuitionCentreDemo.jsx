@@ -168,11 +168,46 @@ const TuitionCentreDemo = () => {
   };
 
   const handleEnrollmentChange = (field, value) => {
+    const updates = { [field]: value };
+    
+    // If level changes, reset subject and location
+    if (field === 'level') {
+      updates.subject = '';
+      updates.location = '';
+    }
+    // If subject changes, reset location
+    else if (field === 'subject') {
+      updates.location = '';
+    }
+    
     setEnrollmentData(prev => ({
       ...prev,
-      [field]: value
+      ...updates
     }));
   };
+
+  // Subject options based on selected level
+  const getSubjectOptions = (level) => {
+    if (!level) return [];
+    
+    if (level.startsWith('P')) {
+      // Primary: Math, Science, English, Chinese
+      return ['Math', 'Science', 'English', 'Chinese'];
+    } else if (level === 'S1' || level === 'S2') {
+      // S1-S2: Math, Science, English, Chinese
+      return ['Math', 'Science', 'English', 'Chinese'];
+    } else if (level === 'S3' || level === 'S4') {
+      // S3-S4: EMath, AMath, Physics, Chemistry, Biology, English, Chinese
+      return ['EMath', 'AMath', 'Physics', 'Chemistry', 'Biology', 'English', 'Chinese'];
+    } else if (level === 'J1' || level === 'J2') {
+      // JC: Math, Physics, Chemistry, Biology, Economics
+      return ['Math', 'Physics', 'Chemistry', 'Biology', 'Economics'];
+    }
+    return [];
+  };
+
+  // All locations
+  const allLocations = ['Bishan', 'Punggol', 'Marine Parade', 'Jurong', 'Kovan'];
 
   const quickReplies = [
     "What courses do you offer?",
