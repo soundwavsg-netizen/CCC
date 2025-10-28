@@ -1137,7 +1137,9 @@ async def tuition_demo_chat(request: TuitionChatRequest):
             # Also trigger if location is mentioned (for follow-up queries)
             any(loc in user_message_lower for loc in ['bishan', 'punggol', 'marine parade', 'marine', 'jurong', 'kovan']),
             # Trigger on words like "list", "show", "available", "which", "what", "who"
-            any(word in user_message_lower for word in ['list', 'show', 'available', 'which', 'what', 'who', 'all'])
+            any(word in user_message_lower for word in ['list', 'show', 'available', 'which', 'what', 'who', 'all']),
+            # Trigger if subject keywords are mentioned (for follow-up queries like "math" after level+location)
+            any(subj in user_message_lower for subj in ['math', 'maths', 'science', 'english', 'chinese', 'physics', 'chemistry', 'biology', 'emath', 'amath', 'economics', 'econs'])
         ])
         
         logger.info(f"needs_firebase={needs_firebase} for message '{request.message}'")
