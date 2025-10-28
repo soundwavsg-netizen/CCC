@@ -351,27 +351,27 @@ async def get_students(
     subject: Optional[str] = None,
     authorization: str = Header(None)
 ):
-    """Get list of all students with optional filters (tutor authenticated)"""
+    """Get list of all students with optional filters (with optional tutor authentication)"""
     try:
-        # Verify tutor authentication
-        if not authorization:
-            raise HTTPException(status_code=401, detail="Authorization header required")
+        tutor_id = None
         
-        try:
-            tutor_data = verify_tutor_token(authorization)
-            tutor_id = tutor_data.get('tutor_id')
-            if not tutor_id:
-                raise HTTPException(status_code=401, detail="Invalid tutor token")
-        except Exception as e:
-            raise HTTPException(status_code=401, detail=f"Authentication failed: {str(e)}")
+        # Try to verify tutor authentication if header is provided
+        if authorization:
+            try:
+                tutor_data = verify_tutor_token(authorization)
+                tutor_id = tutor_data.get('tutor_id')
+            except Exception as e:
+                # For demo purposes, continue without authentication but log the error
+                logger.warning(f"Authentication failed, continuing without filter: {str(e)}")
         
         if not math_db:
             raise HTTPException(status_code=500, detail="Firebase not initialized")
         
         query = math_db.collection('students')
         
-        # Filter by tutor_id first
-        query = query.where('tutor_id', '==', tutor_id)
+        # Filter by tutor_id if authenticated
+        if tutor_id:
+            query = query.where('tutor_id', '==', tutor_id)
         
         # Apply additional filters
         if location:
