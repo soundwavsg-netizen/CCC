@@ -111,11 +111,11 @@ user_problem_statement: "Fix chatbot data accuracy issues:
 backend:
   - task: "Remove A/B suffixes from tutor names in dropdowns"
     implemented: true
-    working: "needs_testing"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "user"
@@ -123,6 +123,9 @@ backend:
       - working: "needs_testing"
         agent: "main"
         comment: "FIXED: Updated `/api/admin/available-tutors` endpoint (line 1945) to return `tutor_base_name` instead of `tutor_name`. This removes A/B suffixes from tutor names in both admin and customer enrollment form dropdowns. Backend restarted successfully."
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED: Tutor name normalization fix working perfectly. **Test Results**: (1) S3 AMath at Bishan: Returns 8 tutors including 'Sean Yeo (HOD)', 'John Lee (DY_HOD)', 'Jackie', 'Lim W.M.' - NO A/B suffixes found. (2) S2 Math at Marine Parade: Returns 9 tutors - NO A/B suffixes found. (3) P6 Math at Punggol: Returns 3 tutors including 'Eugene Tan (HOD)' - NO A/B suffixes found. **CRITICAL FIX WORKING**: `/api/admin/available-tutors` endpoint now correctly returns `tutor_base_name` field, successfully removing A/B suffixes from both admin and customer enrollment form dropdowns. All tutors show proper titles/designations like (HOD), (DY_HOD) without duplicate entries."
   
   - task: "Fix context-aware follow-up queries"
     implemented: true
