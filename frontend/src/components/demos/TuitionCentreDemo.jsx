@@ -131,9 +131,10 @@ const TuitionCentreDemo = () => {
       if (response.data.success) {
         setEnrollmentSubmitted(true);
         // Add confirmation message to chat
+        const phone = enrollmentData.parent_phone || enrollmentData.student_phone;
         const confirmMsg = {
           id: Date.now().toString(),
-          text: '✅ Thank you! Your enrollment request has been submitted successfully. Our admin team will contact you shortly at ' + enrollmentData.email + ' or ' + enrollmentData.phone + '. 😊',
+          text: '✅ Thank you! Your enrollment request has been submitted successfully. Our admin team will contact you shortly at ' + enrollmentData.email + (phone ? ' or ' + phone : '') + '. 😊',
           sender: 'bot',
           time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
@@ -147,7 +148,8 @@ const TuitionCentreDemo = () => {
             parent_name: '',
             student_name: '',
             email: '',
-            phone: '',
+            parent_phone: '',
+            student_phone: '',
             level: '',
             subject: '',
             location: '',
@@ -158,7 +160,8 @@ const TuitionCentreDemo = () => {
       }
     } catch (error) {
       console.error('Enrollment error:', error);
-      alert('Failed to submit enrollment. Please try again or call 6222 8222.');
+      const errorMsg = error.response?.data?.detail || 'Failed to submit enrollment. Please try again or call 6222 8222.';
+      alert(errorMsg);
     } finally {
       setIsLoading(false);
     }
