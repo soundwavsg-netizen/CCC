@@ -342,13 +342,13 @@ const MathAnalysis = () => {
   const openAssessmentGeneratorFromResult = (studentId, revisionPlanData, weakTopicsData) => {
     // Use all_topics from revision plan which has full performance data
     const allTopics = revisionPlanData.all_topics || [];
-    const weakTopics = allTopics.filter(t => t.current_score < 60).map(t => t.topic);
+    const weakTopics = allTopics.filter(t => t.current_score <= weakThreshold).map(t => t.topic);
     
     // Set weak topics as pre-selected, but store all topics for selection
     setAssessmentData({
       student_id: studentId,
       result_id: revisionPlanData.result_id || 'latest',
-      selected_topics: weakTopics, // Pre-select weak topics
+      selected_topics: weakTopics, // Pre-select weak topics based on threshold
       all_available_topics: allTopics, // Store all topics for tutor to choose
       selected_subtopics: [],
       duration_minutes: 45,
