@@ -110,7 +110,8 @@ class EnrollmentRequest(BaseModel):
     parent_name: str
     student_name: str
     email: str
-    phone: str
+    parent_phone: str = ""  # Parent phone (optional)
+    student_phone: str = ""  # Student phone (optional)
     level: str  # e.g., "S1", "P6"
     subject: str  # e.g., "Math", "Science"
     location: str  # e.g., "Bishan", "Marine Parade"
