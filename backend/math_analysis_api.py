@@ -20,17 +20,8 @@ from pathlib import Path
 import jwt
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 ALGORITHM = "HS256"
-
-# Import SECRET_KEY from tutor_auth_api
-def get_secret_key():
-    """Get the secret key from tutor_auth_api module"""
-    import sys
-    import importlib.util
-    
-    spec = importlib.util.spec_from_file_location("tutor_auth", "/app/backend/tutor_auth_api.py")
-    tutor_auth = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(tutor_auth)
-    return tutor_auth.SECRET_KEY
+# Use a consistent SECRET_KEY - this should match tutor_auth_api
+SECRET_KEY = "math_analysis_secret_key_2024"
 
 def verify_tutor_token(authorization_header):
     """Verify JWT token and return tutor data"""
@@ -39,12 +30,12 @@ def verify_tutor_token(authorization_header):
     
     try:
         token = authorization_header.replace("Bearer ", "")
-        SECRET_KEY = get_secret_key()
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token has expired")
-    except (InvalidTokenError, Exception):
+    except (InvalidTokenError, Exception) as e:
+        logger.error(f"JWT decode error: {str(e)}")
         raise HTTPException(status_code=401, detail="Could not validate credentials")
 
 # Setup logging
