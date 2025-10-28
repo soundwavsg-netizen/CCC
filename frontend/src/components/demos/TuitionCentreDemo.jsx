@@ -26,7 +26,7 @@ const TuitionCentreDemo = () => {
   const inputRef = useRef(null);  // Add input ref for focus management
 
   // External backend URL
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://edubot-hub-1.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://tutor-chat-scroll.preview.emergentagent.com';
 
   // Initialize demo
   useEffect(() => {

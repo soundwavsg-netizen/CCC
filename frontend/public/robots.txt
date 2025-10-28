@@ -20,4 +20,4 @@ Disallow: /api/
 Disallow: /backend/
 
 # Allow search engines to access sitemap
-Sitemap: https://edubot-hub-1.preview.emergentagent.com/sitemap.xml
+Sitemap: https://tutor-chat-scroll.preview.emergentagent.com/sitemap.xml
