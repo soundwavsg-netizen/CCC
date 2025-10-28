@@ -494,15 +494,32 @@ const MathAnalysis = () => {
       <PageHeader />
       
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
+        {/* Header with Tutor Info */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            📊 Math Results Analysis System
-          </h1>
+          <div className="flex justify-between items-center mb-4">
+            <div></div>
+            <h1 className="text-4xl font-bold text-gray-800">
+              📊 Math Results Analysis System
+            </h1>
+            <div className="text-right">
+              <p className="text-sm text-gray-600">Welcome, <strong>{tutorInfo.tutor_name}</strong></p>
+              <button 
+                onClick={handleLogout}
+                className="text-xs text-blue-600 hover:text-blue-800 underline"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Upload, analyze, and track student performance across assessments. 
             Get AI-powered insights and revision plans for weak topics.
           </p>
+          <div className="mt-3 flex justify-center gap-4 text-sm text-gray-500">
+            <span>📍 {tutorInfo.locations.join(', ')}</span>
+            <span>📚 {tutorInfo.levels.join(', ')}</span>
+            <span>🎓 {tutorInfo.subjects.join(', ')}</span>
+          </div>
         </div>
 
         {/* Tabs */}
