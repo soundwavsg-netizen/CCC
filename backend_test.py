@@ -583,11 +583,16 @@ class TuitionChatTester:
         print(f"🔗 Testing endpoint: {API_ENDPOINT}")
         print(f"🆔 Session ID: {self.session_id}")
         
-        # Run all test scenarios
+        # Run original test scenarios
         test1_passed = self.test_scenario_1_sean_yeo_location_filtering()
         test2_passed = self.test_scenario_2_class_ab_labeling()
         test3_passed = self.test_scenario_3_complete_schedule_display()
         test4_passed = self.test_scenario_4_single_session_j1_format()
+        
+        # Run CRITICAL context-aware follow-up tests
+        context1_passed = self.test_context_scenario_1_s2_math_marine_parade()
+        context2_passed = self.test_context_scenario_2_p6_math_punggol()
+        context3_passed = self.test_context_scenario_3_j1_math_bishan()
         
         # Additional system checks
         self.test_additional_checks()
@@ -606,10 +611,15 @@ class TuitionChatTester:
             
         print(f"\n🎯 OVERALL RESULT: {passed_count}/{total_count} tests passed")
         
+        # Special focus on context-aware tests
+        context_tests = [context1_passed, context2_passed, context3_passed]
+        context_passed = sum(context_tests)
+        print(f"🔥 CONTEXT-AWARE TESTS: {context_passed}/3 passed")
+        
         if passed_count == total_count:
-            print("🎉 ALL TESTS PASSED! Chatbot data accuracy fixes are working correctly.")
+            print("🎉 ALL TESTS PASSED! Chatbot context-aware follow-up queries are working correctly.")
         else:
-            print("⚠️  SOME TESTS FAILED. Issues need to be addressed.")
+            print("⚠️  SOME TESTS FAILED. Context-aware querying needs attention.")
             
         return passed_count == total_count
 
