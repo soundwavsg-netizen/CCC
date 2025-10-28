@@ -526,17 +526,20 @@ const TuitionCentreDemo = () => {
 
                 {/* Enrollment Form Modal */}
                 {showEnrollmentForm && (
-                  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
+                  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-start sm:items-center justify-center z-50 overflow-y-auto">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="bg-white rounded-2xl shadow-2xl w-full max-w-md my-4 flex flex-col"
-                      style={{ maxHeight: 'calc(100vh - 80px)' }}
+                      className="bg-white rounded-2xl shadow-2xl w-full max-w-md m-4 sm:my-8 flex flex-col"
+                      style={{ 
+                        maxHeight: 'calc(100vh - 32px)',
+                        height: 'auto'
+                      }}
                     >
                       {/* Fixed Header */}
-                      <div className="p-4 border-b border-gray-200 flex-shrink-0">
+                      <div className="p-3 sm:p-4 border-b border-gray-200 flex-shrink-0">
                         <div className="flex justify-between items-center">
-                          <h3 className="text-xl font-bold text-gray-800">📚 Enrollment Request</h3>
+                          <h3 className="text-lg sm:text-xl font-bold text-gray-800">📚 Enrollment Request</h3>
                           <Button
                             onClick={() => setShowEnrollmentForm(false)}
                             variant="ghost"
@@ -548,7 +551,13 @@ const TuitionCentreDemo = () => {
                       </div>
 
                       {/* Scrollable Content */}
-                      <div className="overflow-y-auto flex-1 p-4" style={{ overflowY: 'auto' }}>
+                      <div 
+                        className="overflow-y-auto flex-1 p-3 sm:p-4" 
+                        style={{ 
+                          WebkitOverflowScrolling: 'touch',
+                          overscrollBehavior: 'contain'
+                        }}
+                      >
                         {enrollmentSubmitted ? (
                           <div className="text-center py-8">
                             <div className="text-6xl mb-4">✅</div>
