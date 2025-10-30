@@ -75,38 +75,44 @@ export default function App() {
   }, []);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-            <Route path="/ai-employees" element={<AIEmployees />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services-solutions" element={<ServicesSolutions />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/demos" element={<Demos />} />
-            <Route path="/demo/tuition" element={<TuitionCentreDemo />} />
-            <Route path="/demo/ecommerce" element={<MSuppliesDemo />} />
-            <Route path="/demo/math-analysis" element={<MathAnalysis />} />
-            <Route path="/tutor/login" element={<TutorLogin />} />
-            <Route path="/admin/tutors" element={<TutorAdmin />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/project62" element={<Project62Landing />} />
-            <Route path="/project62/checkout/digital/:productId" element={<DigitalCheckout />} />
-            <Route path="/project62/checkout/meal-prep" element={<MealPrepCheckout />} />
-            <Route path="/project62/checkout/success" element={<PaymentSuccess />} />
-            <Route path="/project62/checkout/cancel" element={<PaymentCancel />} />
-            <Route path="/grants" element={<Grants />} />
-            <Route path="/edg" element={<EDG />} />
-            <Route path="/promotion" element={<Promotion />} />
-            <Route path="/AILibrary" element={<AILibrary />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/whatsapp-setup" element={<WhatsAppSetup />} />
-            <Route path="/pdpa" element={<PDPA />} />
-            <Route path="/terms" element={<Terms />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <ScrollToTop />
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+              <Route path="/ai-employees" element={<AIEmployees />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/services-solutions" element={<ServicesSolutions />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/demos" element={<Demos />} />
+              <Route path="/demo/tuition" element={<TuitionCentreDemo />} />
+              <Route path="/demo/ecommerce" element={<MSuppliesDemo />} />
+              <Route path="/demo/math-analysis" element={<MathAnalysis />} />
+              <Route path="/tutor/login" element={<TutorLogin />} />
+              <Route path="/admin/tutors" element={<TutorAdmin />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/project62" element={<Project62Landing />} />
+              <Route path="/project62/login" element={<CustomerLogin />} />
+              <Route path="/project62/auth/verify" element={<CustomerLogin />} />
+              <Route path="/project62/dashboard" element={<CustomerDashboard />} />
+              <Route path="/project62/admin" element={<AdminDashboard />} />
+              <Route path="/project62/checkout/digital/:productId" element={<DigitalCheckout />} />
+              <Route path="/project62/checkout/meal-prep" element={<MealPrepCheckout />} />
+              <Route path="/project62/checkout/success" element={<PaymentSuccess />} />
+              <Route path="/project62/checkout/cancel" element={<PaymentCancel />} />
+              <Route path="/grants" element={<Grants />} />
+              <Route path="/edg" element={<EDG />} />
+              <Route path="/promotion" element={<Promotion />} />
+              <Route path="/AILibrary" element={<AILibrary />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/whatsapp-setup" element={<WhatsAppSetup />} />
+              <Route path="/pdpa" element={<PDPA />} />
+              <Route path="/terms" element={<Terms />} />
+          </Routes>
+        </Layout>
+      </Router>
+    </AuthProvider>
   );
 }
