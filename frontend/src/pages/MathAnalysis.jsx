@@ -47,7 +47,7 @@ const MathAnalysis = () => {
   const [tutorInfo, setTutorInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://math-mastery-12.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://education-analytics.preview.emergentagent.com';
 
   // Manual entry form state
   const [manualForm, setManualForm] = useState({

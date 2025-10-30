@@ -20,4 +20,4 @@ Disallow: /api/
 Disallow: /backend/
 
 # Allow search engines to access sitemap
-Sitemap: https://math-mastery-12.preview.emergentagent.com/sitemap.xml
+Sitemap: https://education-analytics.preview.emergentagent.com/sitemap.xml

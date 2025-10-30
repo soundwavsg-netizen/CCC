@@ -14,7 +14,7 @@ const TutorLogin = () => {
   const [tempToken, setTempToken] = useState('');
 
   const navigate = useNavigate();
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://math-mastery-12.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://education-analytics.preview.emergentagent.com';
 
   const handleLogin = async (e) => {
     e.preventDefault();
