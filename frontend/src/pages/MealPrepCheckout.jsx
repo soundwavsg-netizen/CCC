@@ -24,7 +24,10 @@ const MealPrepCheckout = () => {
     name: '',
     email: '',
     phone: '',
-    address: '',
+    addressLine1: '',
+    addressLine2: '',
+    postalCode: '',
+    country: 'Singapore',
     startDate: ''
   });
   const [loading, setLoading] = useState(false);
@@ -56,10 +59,42 @@ const MealPrepCheckout = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  // Check if a date is Saturday or Sunday
+  const isWeekend = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDay();
+    return day === 0 || day === 6; // 0 = Sunday, 6 = Saturday
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    // Validate Singapore delivery only
+    if (formData.country !== 'Singapore') {
+      setError('We currently only deliver within Singapore. Please ensure your delivery address is in Singapore.');
+      setLoading(false);
+      return;
+    }
+
+    // Validate postal code (Singapore format: 6 digits)
+    const postalCodeRegex = /^\d{6}$/;
+    if (!postalCodeRegex.test(formData.postalCode)) {
+      setError('Please enter a valid 6-digit Singapore postal code.');
+      setLoading(false);
+      return;
+    }
+
+    // Validate start date (no weekends)
+    if (isWeekend(formData.startDate)) {
+      setError('Delivery is not available on Saturdays and Sundays. Please select a weekday.');
+      setLoading(false);
+      return;
+    }
+
+    // Construct full address
+    const fullAddress = `${formData.addressLine1}${formData.addressLine2 ? ', ' + formData.addressLine2 : ''}, Singapore ${formData.postalCode}`;
 
     try {
       const originUrl = window.location.origin;
@@ -67,7 +102,11 @@ const MealPrepCheckout = () => {
         duration: duration,
         meals_per_day: mealsPerDay,
         origin_url: originUrl,
-        ...formData
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        address: fullAddress,
+        start_date: formData.startDate
       });
 
       // Redirect to Stripe checkout
@@ -81,10 +120,25 @@ const MealPrepCheckout = () => {
     }
   };
 
-  // Set minimum date to tomorrow
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const minDate = tomorrow.toISOString().split('T')[0];
+  // Set minimum date to 3 business days from now (excluding weekends)
+  const getMinimumDate = () => {
+    const today = new Date();
+    let daysAdded = 0;
+    let minDate = new Date(today);
+
+    while (daysAdded < 3) {
+      minDate.setDate(minDate.getDate() + 1);
+      const dayOfWeek = minDate.getDay();
+      // Skip weekends
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        daysAdded++;
+      }
+    }
+
+    return minDate.toISOString().split('T')[0];
+  };
+
+  const minDate = getMinimumDate();
 
   return (
     <div className="meal-prep-checkout-page">
