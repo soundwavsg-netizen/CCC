@@ -856,7 +856,7 @@ async def update_customer_address(req: UpdateAddressRequest, current_user: dict 
 # ========================
 
 @router.get("/admin/leads")
-async def get_all_leads():
+async def get_all_leads(current_user: dict = Depends(get_current_admin)):
     """Get all leads for admin dashboard"""
     try:
         leads_ref = db.collection("project62").document("leads").collection("all")
