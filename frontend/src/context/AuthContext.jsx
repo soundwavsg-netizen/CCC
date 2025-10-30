@@ -158,7 +158,8 @@ export const AuthProvider = ({ children }) => {
     sendMagicLink,
     verifyMagicLink,
     logout,
-    isAuthenticated: !!user
+    isAuthenticated: !!user,
+    isAdmin: user?.role === 'admin'
   };
 
   return (
