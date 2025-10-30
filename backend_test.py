@@ -218,26 +218,28 @@ class Project62Tester:
         
         return test_passed
     
-    def test_analytics_marine_parade_filter(self):
+    def test_verify_token(self):
         """
-        Test 3: Analytics endpoint with Marine Parade location filter
-        Expected: 2 students (John+Ryan), average 68.5%
+        Test 3: Verify Token
+        GET /api/project62/auth/verify
         """
         print("\n" + "="*80)
-        print("TEST 3: Analytics - Marine Parade Location Filter")
+        print("TEST 3: Verify Token")
         print("="*80)
         
-        filters = {
-            "location": "RMSS - Marine Parade",
-            "level": "",
-            "subject": "",
-            "exam_type": ""
+        if not self.auth_token:
+            print("❌ No auth token available from previous tests")
+            return False
+        
+        headers = {
+            "Authorization": f"Bearer {self.auth_token}",
+            "Content-Type": "application/json"
         }
         
-        print(f"Request: POST {ANALYTICS_API_ENDPOINT}")
-        print(f"Filters: {json.dumps(filters, indent=2)}")
+        print(f"Request: GET {PROJECT62_BASE_URL}/auth/verify")
+        print(f"Headers: Authorization: Bearer ***")
         
-        result = self.send_analytics_request(filters)
+        result = self.send_request("GET", "/auth/verify", headers=headers)
         
         if not result["success"]:
             print(f"❌ API ERROR: {result['error']}")
@@ -246,49 +248,38 @@ class Project62Tester:
         data = result["data"]
         print(f"\nAPI Response:\n{json.dumps(data, indent=2)}")
         
-        # Expected results for Marine Parade filter
-        expected_students = 2    # John Tan + Ryan Wong
-        expected_avg = 68.5      # (72 + 65) / 2 = 68.5
+        # Check response structure
+        has_status = data.get("status") == "success"
+        has_user = "user" in data and data["user"]
         
-        # Extract actual results
-        actual_students = data.get("total_students", 0)
-        actual_avg = data.get("overall_average", 0)
-        
-        # Check if John and Ryan are in the results
-        students = data.get("students", [])
-        john_found = any("john" in student.get("name", "").lower() for student in students)
-        ryan_found = any("ryan" in student.get("name", "").lower() for student in students)
-        
-        # Tolerance for floating point comparison
-        avg_tolerance = 0.1
-        avg_matches = abs(actual_avg - expected_avg) <= avg_tolerance
+        if has_user:
+            user_data = data["user"]
+            correct_email = user_data.get("email") == TEST_EMAIL
+            correct_name = user_data.get("name") == TEST_NAME
+            has_uid = "uid" in user_data
+        else:
+            correct_email = correct_name = has_uid = False
         
         print(f"\n📊 ANALYSIS:")
-        print(f"✅ Expected students: {expected_students}")
-        print(f"✅ Actual students: {actual_students}")
-        print(f"✅ Students match: {actual_students == expected_students}")
-        print(f"✅ John Tan found in results: {john_found}")
-        print(f"✅ Ryan Wong found in results: {ryan_found}")
-        print(f"✅ Expected average: {expected_avg}%")
-        print(f"✅ Actual average: {actual_avg}%")
-        print(f"✅ Average matches (±{avg_tolerance}): {avg_matches}")
+        print(f"✅ Status success: {has_status}")
+        print(f"✅ Has user object: {has_user}")
+        print(f"✅ Correct email: {correct_email}")
+        print(f"✅ Correct name: {correct_name}")
+        print(f"✅ Has Firebase UID: {has_uid}")
         
-        test_passed = (actual_students == expected_students) and avg_matches and john_found and ryan_found
+        test_passed = has_status and has_user and correct_email and has_uid
         
         print(f"\n🎯 TEST 3 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
         
         self.test_results.append({
-            "test": "Analytics - Marine Parade Filter",
+            "test": "Verify Token",
             "passed": test_passed,
             "details": {
-                "expected_students": expected_students,
-                "actual_students": actual_students,
-                "expected_avg": expected_avg,
-                "actual_avg": actual_avg,
-                "john_found": john_found,
-                "ryan_found": ryan_found,
-                "students_match": actual_students == expected_students,
-                "avg_matches": avg_matches
+                "has_status": has_status,
+                "has_user": has_user,
+                "correct_email": correct_email,
+                "correct_name": correct_name,
+                "has_uid": has_uid
             }
         })
         
