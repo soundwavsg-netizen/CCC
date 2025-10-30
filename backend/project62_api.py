@@ -997,6 +997,10 @@ async def update_product(product_id: str, product: ProductUpdateRequest, current
             update_data["description"] = product.description
         if product.price is not None:
             update_data["price"] = product.price
+        if product.delivery_charge is not None:
+            update_data["delivery_charge"] = product.delivery_charge
+        if product.stock_quantity is not None:
+            update_data["stock_quantity"] = product.stock_quantity
         if product.active is not None:
             update_data["active"] = product.active
         
