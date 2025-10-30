@@ -550,8 +550,8 @@ class Project62Tester:
 
 
 # Legacy class removed - now using Project62Tester
-        
-    def send_chat_message(self, message: str, session_id: str = None) -> Dict[str, Any]:
+
+if __name__ == "__main__":
         """Send a message to the tuition chat endpoint"""
         if not session_id:
             session_id = self.session_id
