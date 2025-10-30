@@ -9,7 +9,7 @@ import json
 from typing import Dict, Any
 
 # Configuration
-BACKEND_URL = "https://education-analytics.preview.emergentagent.com"
+BACKEND_URL = "https://fitness-nutrition-5.preview.emergentagent.com"
 API_ENDPOINT = f"{BACKEND_URL}/api/admin/available-tutors"
 
 class TutorNormalizationTester:
