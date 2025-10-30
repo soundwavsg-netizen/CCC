@@ -904,7 +904,7 @@ async def get_all_customers(current_user: dict = Depends(get_current_admin)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.put("/admin/delivery/{delivery_id}/status")
-async def update_delivery_status(delivery_id: str, status: str):
+async def update_delivery_status(delivery_id: str, status: str, current_user: dict = Depends(get_current_admin)):
     """Update delivery status (pending/delivered)"""
     try:
         delivery_ref = db.collection("project62").document("deliveries").collection("all").document(delivery_id)
