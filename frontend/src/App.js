@@ -111,6 +111,8 @@ export default function App() {
             <Route path="/whatsapp-setup" element={<WhatsAppSetup />} />
             <Route path="/pdpa" element={<PDPA />} />
             <Route path="/terms" element={<Terms />} />
+            </>
+          )}
           </Routes>
         </Layout>
       </Router>
