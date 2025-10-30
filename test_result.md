@@ -339,7 +339,13 @@ metadata:
   run_ui: true
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Project 62 - Magic Link Authentication Backend"
+    - "Project 62 - Customer Login Page with Email/Password + Magic Link"
+    - "Project 62 - Auth Context Provider"
+    - "Project 62 - Customer Dashboard Page"
+    - "Project 62 - Admin Dashboard Page"
+    - "Project 62 - Login Button on Landing Page"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
