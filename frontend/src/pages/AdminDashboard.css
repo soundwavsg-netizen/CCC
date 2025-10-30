@@ -167,6 +167,12 @@
   overflow: hidden;
 }
 
+.products-tab {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
 .section-header {
   display: flex;
   justify-content: space-between;
