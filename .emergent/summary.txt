@@ -1,89 +1,83 @@
 <analysis>
-The AI engineer's work spanned several iterations, initially fixing data consistency and UI issues in the Tuition Centre chatbot. Key accomplishments included normalizing tutor names (removing A/B suffixes), refining LLM context handling to prevent information dumps, and enhancing the enrollment form with proper scrolling and navigation buttons. A major new project, the Math Results Analysis System, was then initiated and built from the ground up, featuring Firebase integration, CSV/PDF result uploads, an analytics dashboard, and a revision plan generator. Subsequent enhancements to this system focused on AI-powered PDF analysis (using GPT-4o vision), a comprehensive assessment generation flow with a dummy question bank, and a dynamic weak performance threshold for tutors. The process was iterative, responding directly to user feedback and progressively adding functionality while ensuring data integrity and a positive user experience.
+The AI engineer's work primarily focused on the Math Results Analysis System and enhancing the Tuition Centre Chatbot. Key initial tasks included fixing data issues in the chatbot and creating the foundational Math Analysis System. Subsequent efforts centered on implementing a dynamic weak performance threshold, then a major undertaking to build out tutor authentication and management features. This involved creating admin and login pages, setting up JWT-based authentication, ensuring tutor-specific data isolation, and enabling admin password resets. Several rounds of debugging addressed data fetching inconsistencies, circular imports, JWT errors, and incorrect data filtering, ultimately achieving robust tutor data isolation and correct analytics. The final tasks involved refining the admin's tutor creation form with accurate location options.
 </analysis>
 
 <product_requirements>
-The project involved two main products:
+The project consists of two core products:
+**1. Tuition Centre Chatbot:** Focuses on data accuracy (tutor/class consolidation, S3 AMath Bishan fix), chatbot intelligence (2026-2027 data, Firebase querying, multi-turn context, clarifying questions), UI/UX improvements (button contrast, mobile responsiveness, enrollment form enhancements with Cancel button and scrolling), and new features (enrollment/reservation form, basic admin UI for class data).
 
-**1. Tuition Centre Chatbot Enhancement:**
-*   **Data Accuracy:** Ensure tutor/class data from P2-J2 PDFs is accurate in Firebase, consolidating tutor profiles (e.g., Eugene Tan A into Eugene Tan). Fix specific data discrepancies (e.g., S3 AMath Bishan).
-*   **Chatbot Intelligence:** Update LLM with 2026-2027 academic data. Enable Firebase querying for schedules, disambiguate tutors, maintain multi-turn context, prevent information dumps, and ask clarifying questions for broad queries (e.g., for missing location).
-*   **UI/UX:** Resolve button contrast, ensure mobile responsiveness (chat bubbles, header), prevent page scrolling on message send. Improve enrollment form with a Cancel button and proper mobile scrolling.
-*   **New Features:** Implement an enrollment/reservation form (user particulars, email notifications). Create a basic admin UI for class data management with progressive dropdowns.
-
-**2. Math Results Analysis System (New Project):**
-*   **Purpose:** A web-based system for tutors to upload, store, and analyze student math performance (S1-S4, J1-J2). No login, remembers student details, tracks trends, generates revision plans.
-*   **Input:** Manual entry or Excel/CSV template for results (Student Name, Location, Level, Subject, Exam Type, Topic, Marks, Total Marks).
-*   **AI PDF Analysis (Phase 2):** Allow tutors to upload scanned PDF test papers. AI (GPT-4o vision) will extract questions, marks, and infer topics. Preview and manual editing of extracted data, autosave to Firebase.
-*   **Persistent Data:** Store all uploads in a new Firebase Firestore database. Retain history, track improvements/declines, cumulative averages.
-*   **Analysis Engine:** Calculate per-topic/overall averages, identify weak (<60%) and strong (>75%) topics (threshold adjustable by tutor). Display with Radar, Bar, Line charts, and Summary Table. Compare current vs. past results.
-*   **Revision Plan Generator:** Cross-reference weak/selected topics with a  to suggest PDFs/videos/worksheets. Generate Internal Assessment Tests based on weak or selected topics/subtopics and duration (45min/1.5hr), producing two PDF documents (student/tutor).
-*   **Tutor Dashboard:** Filter panel, Analytics View, Revision Plan, Performance History.
-*   **Embedding:** Embed under  with consistent styling.
+**2. Math Results Analysis System (New Project):** A web-based system for tutors to upload (manual, CSV, AI PDF analysis via GPT-4o vision), store (Firebase Firestore), and analyze student math results (S1-S4, J1-J2). It tracks trends, generates revision plans (using ), creates internal assessment tests (PDFs via ), and provides a tutor dashboard with filtering and analytics (charts, tables, weak/strong topic identification with adjustable thresholds). Recent requirements extended to include:
+*   A dedicated **Admin Page for Tutor Management** where administrators can add new tutors, define their teaching locations, levels, and subjects via checkboxes, and generate initial login credentials (login ID based on tutor name, temporary password).
+*   A **Tutor Login Page** where tutors log in, are prompted to change their temporary password upon first login, and access a personalized dashboard.
+*   The system must ensure **data isolation**, meaning tutors only see results and manage students associated with their assigned profile.
+*   The **tutor dashboard** should dynamically show locations, levels, and subjects based on the tutor's configured profile.
+*   The **Revision Planning page** needs filters by level and location, a toggle for grid/list view, display of overall scores on student cards, and functionality to delete or edit individual result records.
+*   The **Analytics tab** should correctly calculate averages, especially when filtered by tutor-specific criteria.
+*   **Password recovery**: Admins should be able to view initial temporary passwords and reset forgotten passwords for any tutor, forcing a password change on next login.
+*   The **Admin tutor creation form** should strictly use a predefined list of 5 locations (Marine Parade, Bishan, Punggol, Kovan, Jurong).
 </product_requirements>
 
 <key_technical_concepts>
 -   **Full-Stack Development:** FastAPI (Python), React (JavaScript).
--   **Database:** Firebase Firestore (new for Math Analysis, existing for Tuition chatbot), MongoDB (existing).
--   **AI/LLM:** Emergent LLM Key with  using  (chatbot),  with vision (PDF analysis).
--   **Frontend UI:** React components, state management, Chart.js/ECharts for visualization.
--   **Data Processing:** PDF/CSV parsing (, , ),  for PDF generation.
--   **Deployment:** Kubernetes environment, supervisorctl for service management.
+-   **Database:** Firebase Firestore (for Math Analysis), MongoDB (existing for chatbot).
+-   **AI/LLM:** GPT-4o for PDF analysis,  for chatbot.
+-   **Authentication:** JWT (PyJWT library) for tutor login.
+-   **Frontend UI:** React components, state management, Chart.js.
+-   **Data Processing:**  for PDF generation, data seeding.
+-   **Deployment:** Kubernetes, supervisorctl.
 </key_technical_concepts>
 
 <code_architecture>
-The application consists of a React frontend and a FastAPI backend.
 
-
--   ****: Main FastAPI entry point.
-    -   **Summary**: Handles general API routing, LLM interactions, and Firebase for the tuition chatbot.
-    -   **Changes**: Fixed  endpoint to use . Updated LLM logic for S3 AMath queries to ask clarifying questions about location instead of dumping all results. Integrated  router.
--   ** (NEW)**: Dedicated FastAPI router for the Math Results Analysis System.
-    -   **Summary**: Contains all API endpoints for student result upload (CSV/PDF), data analysis, revision plan generation, assessment generation, and Firebase Firestore interactions for the new system.
-    -   **Changes**: New file created. Implemented endpoints for student/topic data management, PDF analysis using GPT-4o, and assessment paper generation using . Manages connection to the new Firebase project.
--   ** (NEW)**: Helper file for dummy question data.
-    -   **Summary**: Holds placeholder questions for the assessment generation feature.
-    -   **Changes**: New file created.
--   ****: Tuition Centre chatbot demo UI.
-    -   **Summary**: Implements the chat interface and the enrollment form.
-    -   **Changes**: Fixed a frontend compilation error related to a dangling form tag. Added Cancel and Back to Chat buttons to the enrollment form. Improved mobile scrolling and responsiveness for the enrollment modal by adjusting CSS and adding padding.
--   ****: Admin page for managing tuition class data.
-    -   **Summary**: Provides forms for adding/updating/deleting class information.
-    -   **Changes**: Fixed mobile display issues for the tutor selection dropdown (overlapping text) by adjusting button positioning, spacing, font size, and custom dropdown arrow styling.
+-   ****: Main FastAPI entry.
+    -   Summary: Handles general routing and integrates other routers.
+    -   Changes: Included  router.
+-   ****: Dedicated FastAPI router for Math Analysis.
+    -   Summary: Manages student result upload, analysis, revision plans, and assessment generation.
+    -   Changes: Added endpoints for , , . Updated , , , , and  endpoints to query  collection directly (not subcollections) and require  filtering with JWT authentication. Fixed JWT import error by using .
+-   ** (NEW)**: Handles tutor authentication and management.
+    -   Summary: New router for tutor creation, login, JWT token generation/validation, and password reset.
+    -   Changes: New file created. Implemented endpoints for tutor creation, login, JWT token verification, and an admin endpoint for resetting tutor passwords. Defines  for JWT.
+-   ** (NEW)**: Script to populate initial demo data.
+    -   Summary: Creates a demo tutor (Sean Yeo) and sample student results for testing.
+    -   Changes: New file created. Updated to store student data with correct RMSS - Location format and associated with .
+-   ** (NEW)**: Script for creating additional test tutors.
+    -   Summary: Used for isolated testing of new tutor accounts.
+    -   Changes: New file created. Modified to avoid circular import issues and to create a new tutor (Jane Smith) with specific locations and levels.
+-   ** (NEW)**: Temporary script to fix missing .
+    -   Summary: Used once to backfill  for existing seed data.
+    -   Changes: New file created.
 -   ****: Main React routing.
-    -   **Summary**: Defines application routes.
-    -   **Changes**: Added a new route for  pointing to .
--   ****: Displays demo project cards.
-    -   **Summary**: Landing page for various application demos.
-    -   **Changes**: Added a new demo card for the Math Results Analysis System and updated the grid layout to accommodate three demo cards.
--   ** (NEW)**: Frontend UI for the Math Results Analysis System.
-    -   **Summary**: Provides UI for student result uploads (manual/CSV/PDF), displays analytics (charts, tables), manages revision plans, and generates assessments.
-    -   **Changes**: New file created. Implemented UI for CSV and AI PDF analysis upload, student/topic/assessment data display, dynamic revision plans, and an assessment generation modal with subtopic selection and duration. Added a dynamic slider for tutors to adjust the weak performance threshold.
--   ** (NEW)**: Stores Firebase service account key.
-    -   **Summary**: JSON file containing credentials for the Math Results Analysis System's dedicated Firebase project.
-    -   **Changes**: New file created and populated with user-provided credentials.
+    -   Summary: Defines application routes.
+    -   Changes: Added new routes for  (TutorAdmin) and  (TutorLogin).
+-   ****: Frontend UI for Math Analysis System.
+    -   Summary: Provides UI for result uploads, analytics, revision plans, and assessment generation.
+    -   Changes: Integrated authentication logic (tutor context, login/logout). Replaced static dropdowns with dynamic, tutor-filtered cascading dropdowns for location, level, and subject in both PDF and Manual Entry forms. Fixed mobile alignment for Generate Assessment button. Added filtering (Level, Location), view mode toggle (Grid/List), overall score display, and CRUD operations (delete, edit modal) to Revision Plans. Updated Analytics tab filters to use dynamic .
+-   ** (NEW)**: Admin UI for managing tutors.
+    -   Summary: Provides forms for adding new tutors, selecting their attributes, and generating credentials.
+    -   Changes: New file created. Implemented UI for adding/editing tutors, showing temporary passwords, and a Reset Password button. Updated location options to the predefined 5.
+-   ** (NEW)**: Tutor login UI.
+    -   Summary: Allows tutors to log in to the system.
+    -   Changes: New file created.
 </code_architecture>
 
 <pending_tasks>
--   **WhatsApp Bot Connection:** Resolve persistent Connection Failure errors in  for QR code generation and re-authentication (from initial system prompt). This has not been addressed in the trajectory.
+-   **WhatsApp Bot Connection:** Resolve persistent Connection Failure errors in  for QR code generation and re-authentication.
 -   **Topic Library Population:** The master topic file for S1-S4, J1-J2 with real links (PDF, video, worksheet) still needs to be provided by the user and integrated into the  collection in Firebase.
 </pending_tasks>
 
 <current_work>
-Immediately before this summary request, the AI engineer was working on enhancing the Math Results Analysis System. Specifically, the last completed feature was the implementation of a **dynamic weak performance threshold** in the frontend ().
+Immediately before this summary, the AI engineer successfully resolved critical issues related to tutor data isolation and the correct display of locations in the Admin panel.
 
-This feature allows tutors to adjust the percentage (defaulting to 70%) that defines a weak performance for topics in a student's assessment. As the tutor adjusts this slider, the system dynamically updates the identification and categorization of weak and strong topics within the displayed revision plans and assessment generation modal.
-
-**Key changes in  for this feature include:**
--   Adding state for the  (e.g., ).
--   Integrating a slider UI element in the Revision Plans section to allow tutors to modify this percentage.
--   Updating the logic for  to respect the  when initially populating recommended weak topics.
--   Modifying the display logic for topic scores and performance indicators (e.g., color-coding) to reflect the  dynamically.
--   Ensuring the assessment generation modal also considers this dynamic threshold when tutors are selecting topics for a new assessment.
-
-The frontend ( and  commands) was restarted after these changes, and a summary was provided, indicating the successful completion of this specific feature.
+Specifically:
+1.  **Tutor Data Isolation:** The system now correctly isolates student results per tutor. Initial issues where new tutors inherited Sean Yeo's data were resolved by:
+    *   Implementing a script () to correctly tag existing seed student data with .
+    *   Making authentication **mandatory** again across all relevant backend endpoints (, ,  in ).
+    *   Ensuring consistent  usage for JWT validation in  and .
+    *   As a result, logging in as a new tutor (e.g., Jane Smith) now displays an empty dashboard with No results found, confirming that she does not see Sean Yeo's students. Sean Yeo, in turn, only sees his 3 students.
+2.  **Admin Tutor Creation Locations:** The admin form for creating new tutor profiles () has been updated to precisely use the 5 specified teaching locations: Marine Parade, Bishan, Punggol, Kovan, and Jurong. This ensures data consistency and adherence to product requirements for tutor location selection.
 </current_work>
 
 <optional_next_step>
-Confirm with the user if the dynamic weak performance threshold is working as expected.
+Address the pending WhatsApp Bot connection issue as outlined in the pending tasks.
 </optional_next_step>
