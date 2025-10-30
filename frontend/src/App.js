@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from './components/ui/sonner';
+import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
@@ -27,6 +28,9 @@ import DigitalCheckout from './pages/DigitalCheckout';
 import MealPrepCheckout from './pages/MealPrepCheckout';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
+import CustomerLogin from './pages/CustomerLogin';
+import CustomerDashboard from './pages/CustomerDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 import TuitionCentreDemo from './components/demos/TuitionCentreDemo';
 import MSuppliesDemo from './components/demos/MSuppliesDemo';
 import WhatsAppSetup from './pages/WhatsAppSetup';
