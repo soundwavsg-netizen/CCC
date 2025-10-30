@@ -549,35 +549,25 @@ class Project62Tester:
         return passed_count == total_count
 
 
-# Legacy class removed - now using Project62Tester
-
 if __name__ == "__main__":
-        """Send a message to the tuition chat endpoint"""
-        if not session_id:
-            session_id = self.session_id
-            
-        payload = {
-            "message": message,
-            "session_id": session_id,
-            "user_type": "demo_visitor"
-        }
-        
-        try:
-            response = requests.post(TUITION_API_ENDPOINT, json=payload, timeout=30)
-            response.raise_for_status()
-            return {
-                "success": True,
-                "status_code": response.status_code,
-                "data": response.json(),
-                "error": None
-            }
-        except requests.exceptions.RequestException as e:
-            return {
-                "success": False,
-                "status_code": getattr(e.response, 'status_code', None) if hasattr(e, 'response') else None,
-                "data": None,
-                "error": str(e)
-            }
+    # Test Project 62 Authentication and Dashboard endpoints
+    print("="*100)
+    print("🎯 TESTING PROJECT 62 - AUTHENTICATION & DASHBOARD ENDPOINTS")
+    print("="*100)
+    
+    project62_tester = Project62Tester()
+    project62_success = project62_tester.run_all_project62_tests()
+    
+    print("\n" + "="*100)
+    print("📋 TESTING COMPLETE")
+    print("="*100)
+    
+    if project62_success:
+        print("✅ ALL PROJECT 62 TESTS PASSED!")
+    else:
+        print("❌ SOME PROJECT 62 TESTS FAILED!")
+    
+    exit(0 if project62_success else 1)
     
     def test_scenario_1_sean_yeo_location_filtering(self):
         """
