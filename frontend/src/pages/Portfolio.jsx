@@ -148,7 +148,7 @@ export default function Portfolio() {
     }
   ];
 
-  const categories = ['All', 'Web & App', 'AI', 'E-Commerce', 'Training/Grants'];
+  const categories = ['All', 'Web & App', 'AI', 'E-Commerce', 'Health & Fitness'];
 
   const filteredProjects = filter === 'All' 
     ? projects 
