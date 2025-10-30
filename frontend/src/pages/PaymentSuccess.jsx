@@ -102,7 +102,7 @@ const PaymentSuccess = () => {
         <div className="success-icon">✓</div>
         <h1>Payment Successful!</h1>
         <p className="success-subtitle">
-          Thank you for your purchase. Redirecting you back to Project 62...
+          Thank you for your purchase. You will be redirected in 5 seconds...
         </p>
 
         <div className="order-details">
