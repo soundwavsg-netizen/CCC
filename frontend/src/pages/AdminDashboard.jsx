@@ -125,7 +125,12 @@ const AdminDashboard = () => {
           <h1>Project 62 Admin Dashboard</h1>
           <p className="header-subtitle">Manage leads, orders, deliveries & customers</p>
         </div>
-        <button onClick={handleLogout} className="logout-btn">Logout</button>
+        <div className="header-actions">
+          <button onClick={() => navigate('/project62/dashboard')} className="customer-link-btn">
+            Customer View
+          </button>
+          <button onClick={handleLogout} className="logout-btn">Logout</button>
+        </div>
       </div>
 
       {error && <div className="error-banner">{error}</div>}
