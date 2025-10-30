@@ -581,7 +581,8 @@ async def register_customer(req: CustomerRegisterRequest):
             "user": {
                 "uid": user.uid,
                 "email": req.email,
-                "name": req.name
+                "name": req.name,
+                "role": "customer"
             }
         }
     except firebase_auth.EmailAlreadyExistsError:
