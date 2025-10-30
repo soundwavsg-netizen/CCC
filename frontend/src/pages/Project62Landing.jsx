@@ -121,25 +121,25 @@ const Project62Landing = () => {
       {/* The 60-20-20 Philosophy */}
       <section className="philosophy-section">
         <h2>The 60-20-20 Philosophy</h2>
-        <p className="philosophy-intro">Two intertwined principles drive Project 62</p>
+        <p className="philosophy-intro">The proven framework behind Project 62</p>
         
         <div className="philosophy-grid">
           <div className="philosophy-card">
             <div className="card-icon">60%</div>
             <h3>Diet</h3>
-            <p>The core of success. We provide healthy, balanced meal-prep plans with clear portions and taste. This is where most results come from.</p>
+            <p>The core of success. We provide healthy, balanced meal-prep plans with clear portions and great taste. This is where most results come from.</p>
           </div>
           
           <div className="philosophy-card">
             <div className="card-icon">20%</div>
-            <h3>Consistency</h3>
-            <p>People often quit when preparation gets hard. We remove that barrier by delivering meals to your doorstep, keeping you consistent week after week.</p>
+            <h3>Consistency & Sustainability</h3>
+            <p>People often quit when meal prep gets hard. We remove that barrier by delivering meals to your doorstep, keeping you consistent week after week.</p>
           </div>
           
           <div className="philosophy-card">
             <div className="card-icon">20%</div>
-            <h3>Exercise</h3>
-            <p>We offer simple tips for movement to support the journey — but exercise is not the focus. Food and consistency lead.</p>
+            <h3>Movement & Activity</h3>
+            <p>We offer simple tips for staying active to support your journey — but movement is not the main focus. Food and consistency lead the way.</p>
           </div>
         </div>
         
