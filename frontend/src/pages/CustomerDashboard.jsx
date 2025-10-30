@@ -86,6 +86,16 @@ const CustomerDashboard = () => {
 
   const handleUpdateAddress = async () => {
     try {
+      // Validate postal code (Singapore format: 6 digits)
+      const postalCodeRegex = /^\d{6}$/;
+      if (!postalCodeRegex.test(addressForm.postalCode)) {
+        setError('Please enter a valid 6-digit Singapore postal code.');
+        return;
+      }
+
+      // Construct full address
+      const fullAddress = `${addressForm.addressLine1}${addressForm.addressLine2 ? ', ' + addressForm.addressLine2 : ''}, Singapore ${addressForm.postalCode}`;
+
       const response = await fetch(`${BACKEND_URL}/api/project62/customer/address`, {
         method: 'PUT',
         headers: {
@@ -93,8 +103,8 @@ const CustomerDashboard = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          address: newAddress,
-          phone: newPhone
+          address: fullAddress,
+          phone: addressForm.phone
         })
       });
 
@@ -104,6 +114,7 @@ const CustomerDashboard = () => {
 
       setUpdateSuccess('Address updated successfully!');
       setAddressEdit(false);
+      setError('');
       fetchDashboardData();
       setTimeout(() => setUpdateSuccess(''), 3000);
     } catch (err) {
