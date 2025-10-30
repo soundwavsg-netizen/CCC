@@ -38,8 +38,8 @@ except:
     logger = logging.getLogger(__name__)
     logger.info("Firebase initialized successfully")
 
-# Emergent Universal Key
-EMERGENT_API_KEY = "sk-emergent-c97712cF4BaD07b816"
+# Emergent Universal Key (from environment)
+EMERGENT_API_KEY = os.getenv("EMERGENT_LLM_KEY")
 
 # Create the main app without a prefix
 app = FastAPI()
