@@ -115,6 +115,9 @@ class AdminResetPasswordRequest(BaseModel):
     customer_id: str
     new_password: str
 
+class MagicLinkRequest(BaseModel):
+    email: EmailStr
+
 # ========================
 # Helper Functions
 # ========================
