@@ -179,8 +179,8 @@ const CustomerDashboard = () => {
               {addressEdit ? (
                 <input
                   type="tel"
-                  value={newPhone}
-                  onChange={(e) => setNewPhone(e.target.value)}
+                  value={addressForm.phone}
+                  onChange={(e) => setAddressForm({ ...addressForm, phone: e.target.value })}
                   className="edit-input"
                   placeholder="+65 9123 4567"
                 />
@@ -189,15 +189,38 @@ const CustomerDashboard = () => {
               )}
             </div>
             <div className="info-row">
-              <span className="label">Address:</span>
+              <span className="label">Delivery Address:</span>
               {addressEdit ? (
-                <textarea
-                  value={newAddress}
-                  onChange={(e) => setNewAddress(e.target.value)}
-                  className="edit-input"
-                  rows="3"
-                  placeholder="Your delivery address"
-                />
+                <div className="address-form">
+                  <input
+                    type="text"
+                    value={addressForm.addressLine1}
+                    onChange={(e) => setAddressForm({ ...addressForm, addressLine1: e.target.value })}
+                    className="edit-input"
+                    placeholder="Address Line 1 (e.g., Block 123, #01-45)"
+                    required
+                  />
+                  <input
+                    type="text"
+                    value={addressForm.addressLine2}
+                    onChange={(e) => setAddressForm({ ...addressForm, addressLine2: e.target.value })}
+                    className="edit-input"
+                    placeholder="Address Line 2 (Optional)"
+                  />
+                  <input
+                    type="text"
+                    value={addressForm.postalCode}
+                    onChange={(e) => setAddressForm({ ...addressForm, postalCode: e.target.value })}
+                    className="edit-input"
+                    placeholder="Postal Code (6 digits)"
+                    maxLength="6"
+                    pattern="\d{6}"
+                    required
+                  />
+                  <div className="country-display">
+                    <span>🇸🇬 Singapore</span>
+                  </div>
+                </div>
               ) : (
                 <span className="value">{dashboardData?.customer?.address || 'Not set'}</span>
               )}
