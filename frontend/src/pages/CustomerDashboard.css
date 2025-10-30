@@ -121,6 +121,26 @@
   border-color: #00b894;
 }
 
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.country-display {
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  color: #666;
+  font-weight: 600;
+}
+
+.country-display span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .edit-actions {
   display: flex;
   gap: 12px;
