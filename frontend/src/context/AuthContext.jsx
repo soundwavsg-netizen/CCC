@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
         if (response.ok) {
           const data = await response.json();
-          setUser(data.user);
+          setUser(data.user); // Now includes role field
           setToken(storedToken);
         } else {
           localStorage.removeItem('project62_token');
