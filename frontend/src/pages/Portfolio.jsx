@@ -262,6 +262,8 @@ export default function Portfolio() {
                             <p className="text-white/90 mb-4">
                               {project.name.includes('RMSS') 
                                 ? 'Experience this AI assistant in action with real RMSS data.'
+                                : project.name.includes('Project 62')
+                                ? 'Explore the fitness & nutrition platform with meal-prep subscription system.'
                                 : 'Explore the complete e-commerce platform with real products and AI chat.'
                               }
                             </p>
