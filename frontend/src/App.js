@@ -66,6 +66,7 @@ export default function App() {
             <Route path="/tutor/login" element={<TutorLogin />} />
             <Route path="/admin/tutors" element={<TutorAdmin />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/project62" element={<Project62Landing />} />
             <Route path="/grants" element={<Grants />} />
             <Route path="/edg" element={<EDG />} />
             <Route path="/promotion" element={<Promotion />} />
