@@ -94,11 +94,7 @@ export default function App() {
             <Route path="/pdpa" element={<PDPA />} />
             <Route path="/terms" element={<Terms />} />
           </Routes>
-        </main>
-        <Footer />
-        <ChatWidget />
-        <Toaster position="top-right" />
-      </div>
-    </Router>
-  );
-}
+        </Layout>
+      </Router>
+    );
+  }
