@@ -969,9 +969,10 @@ async def create_product(product: ProductCreateRequest, current_user: dict = Dep
             "description": product.description,
             "price": product.price,
             "product_type": product.product_type,  # "digital" or "physical"
-            "delivery_charge": product.delivery_charge if product.product_type == "physical" else 0,
-            "stock_quantity": product.stock_quantity if product.product_type == "physical" else None,
+            "delivery_charge": float(product.delivery_charge) if product.delivery_charge else 0.0,
+            "stock_quantity": int(product.stock_quantity) if product.stock_quantity else None,
             "file_url": None if product.product_type == "digital" else "N/A",  # Physical products don't need PDF
+            "images": [],  # Array of image URLs
             "active": True,
             "created_at": datetime.utcnow().isoformat(),
             "updated_at": datetime.utcnow().isoformat()
@@ -982,6 +983,8 @@ async def create_product(product: ProductCreateRequest, current_user: dict = Dep
         return {"status": "success", "product_id": product_id, "product": product_data}
     except Exception as e:
         print(f"Create product error: {e}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.put("/admin/products/{product_id}")
