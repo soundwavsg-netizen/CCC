@@ -122,12 +122,16 @@ class ProductCreateRequest(BaseModel):
     name: str
     description: str
     price: float
-    category: str  # "digital" or "meal_prep"
+    product_type: str  # "digital" or "physical"
+    delivery_charge: Optional[float] = 0  # Only for physical products
+    stock_quantity: Optional[int] = None  # Only for physical products
 
 class ProductUpdateRequest(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     price: Optional[float] = None
+    delivery_charge: Optional[float] = None
+    stock_quantity: Optional[int] = None
     active: Optional[bool] = None
 
 class DiscountCodeRequest(BaseModel):
