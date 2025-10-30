@@ -43,7 +43,11 @@ const ScrollToTop = () => {
 // Layout wrapper to conditionally show Header/Footer
 const Layout = ({ children }) => {
   const location = useLocation();
-  const isProject62 = location.pathname.startsWith('/project62');
+  
+  // Check if it's Project 62 subdomain or /project62 route
+  const isProject62Subdomain = window.location.hostname.includes('project62.');
+  const isProject62Route = location.pathname.startsWith('/project62');
+  const isProject62 = isProject62Subdomain || isProject62Route;
   
   if (isProject62) {
     return <div className="flex flex-col min-h-screen">{children}</div>;
@@ -66,12 +70,26 @@ export default function App() {
     initializeTracking();
   }, []);
 
+  // Check if we're on project62 subdomain
+  const isProject62Subdomain = window.location.hostname.includes('project62.');
+
   return (
     <Router>
       <ScrollToTop />
       <Layout>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* If on project62 subdomain, show Project62Landing at root */}
+          {isProject62Subdomain ? (
+            <>
+              <Route path="/" element={<Project62Landing />} />
+              <Route path="/customer/login" element={<div>Customer Login (Coming Soon)</div>} />
+              <Route path="/customer/dashboard" element={<div>Customer Dashboard (Coming Soon)</div>} />
+              <Route path="/admin" element={<div>Admin Dashboard (Coming Soon)</div>} />
+              <Route path="/checkout/*" element={<div>Checkout (Coming Soon)</div>} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<Home />} />
             <Route path="/ai-employees" element={<AIEmployees />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
