@@ -20,7 +20,7 @@ TEST_PASSWORD = "testpass123"
 TEST_NAME = "Test User"
 TEST_PHONE = "+65 9123 4567"
 
-class MathAnalyticsTester:
+class Project62Tester:
     def __init__(self):
         self.session_id = str(uuid.uuid4())
         self.test_results = []
