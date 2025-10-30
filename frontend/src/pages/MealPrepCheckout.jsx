@@ -319,7 +319,7 @@ const MealPrepCheckout = () => {
                   type="date"
                   name="startDate"
                   value={formData.startDate}
-                  onChange={handleInputChange}
+                  onChange={handleDateChange}
                   required
                   min={minDate}
                 />
