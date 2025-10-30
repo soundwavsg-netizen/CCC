@@ -663,6 +663,107 @@ async def verify_token(current_user: dict = Depends(get_current_user)):
         print(f"Token verification error: {e}")
         raise HTTPException(status_code=401, detail="Invalid token")
 
+@router.post("/auth/magic-link")
+async def send_magic_link(req: MagicLinkRequest):
+    """Send magic link for passwordless login"""
+    try:
+        # Check if customer exists
+        customer_id = req.email.replace("@", "_at_").replace(".", "_")
+        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+        customer_doc = customer_ref.get()
+        
+        if not customer_doc.exists:
+            # Create a new customer record without password
+            firebase_user = firebase_auth.get_user_by_email(req.email, app=project62_app)
+            customer_data = {
+                "customer_id": customer_id,
+                "firebase_uid": firebase_user.uid,
+                "email": req.email,
+                "name": firebase_user.display_name or req.email.split("@")[0],
+                "role": "customer",
+                "created_at": datetime.utcnow().isoformat()
+            }
+            customer_ref.set(customer_data)
+        
+        # Generate magic link token (expires in 15 minutes)
+        magic_token = generate_jwt_token(customer_id, req.email)
+        magic_link = f"https://cccdigital.sg/project62/auth/verify?token={magic_token}"
+        
+        # Send email with magic link
+        html_content = f"""
+        <html>
+            <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #111111;">Login to Project 62</h2>
+                <p>Click the button below to securely log in to your Project 62 account:</p>
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="{magic_link}" 
+                       style="background-color: #00b894; color: white; padding: 15px 30px; 
+                              text-decoration: none; border-radius: 5px; display: inline-block; 
+                              font-weight: bold;">
+                        Log In to Project 62
+                    </a>
+                </div>
+                <p style="color: #666; font-size: 14px;">
+                    This link will expire in 15 minutes for security reasons.
+                </p>
+                <p style="color: #666; font-size: 14px;">
+                    If you didn't request this login link, please ignore this email.
+                </p>
+                <p style="margin-top: 30px; color: #666;">
+                    Best regards,<br>
+                    <strong>Project 62 Team</strong>
+                </p>
+            </body>
+        </html>
+        """
+        
+        message = Mail(
+            from_email=SENDGRID_FROM_EMAIL,
+            to_emails=req.email,
+            subject='Your Magic Login Link - Project 62',
+            html_content=html_content
+        )
+        
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        
+        print(f"✅ Magic link sent to {req.email} - Status: {response.status_code}")
+        
+        return {
+            "status": "success",
+            "message": "Magic link sent to your email. Please check your inbox."
+        }
+    except firebase_auth.UserNotFoundError:
+        # For security, return success even if user doesn't exist
+        return {
+            "status": "success",
+            "message": "If an account exists, a magic link has been sent to your email."
+        }
+    except Exception as e:
+        print(f"Magic link error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to send magic link")
+
+@router.get("/auth/verify-magic-link")
+async def verify_magic_link(token: str):
+    """Verify magic link token and return JWT"""
+    try:
+        payload = verify_jwt_token(token)
+        
+        # Token is valid, return it for frontend to store
+        return {
+            "status": "success",
+            "token": token,
+            "user": {
+                "uid": payload["user_id"],
+                "email": payload["email"]
+            }
+        }
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        print(f"Magic link verification error: {e}")
+        raise HTTPException(status_code=400, detail="Invalid or expired magic link")
+
 # ========================
 # Customer Portal Endpoints
 # ========================
