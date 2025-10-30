@@ -86,10 +86,13 @@ export default function App() {
           {isProject62Subdomain ? (
             <>
               <Route path="/" element={<Project62Landing />} />
+              <Route path="/checkout/digital/:productId" element={<DigitalCheckout />} />
+              <Route path="/checkout/meal-prep" element={<MealPrepCheckout />} />
+              <Route path="/checkout/success" element={<PaymentSuccess />} />
+              <Route path="/checkout/cancel" element={<PaymentCancel />} />
               <Route path="/customer/login" element={<div>Customer Login (Coming Soon)</div>} />
               <Route path="/customer/dashboard" element={<div>Customer Dashboard (Coming Soon)</div>} />
               <Route path="/admin" element={<div>Admin Dashboard (Coming Soon)</div>} />
-              <Route path="/checkout/*" element={<div>Checkout (Coming Soon)</div>} />
             </>
           ) : (
             <>
