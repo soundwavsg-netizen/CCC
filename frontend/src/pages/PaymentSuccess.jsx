@@ -40,10 +40,10 @@ const PaymentSuccess = () => {
         if (response.data.payment_status === 'paid') {
           setPaymentData(response.data);
           setStatus('success');
-          // Redirect to Project 62 landing page after 3 seconds
+          // Redirect to Project 62 landing page after 5 seconds
           setTimeout(() => {
-            navigate('/project62');
-          }, 3000);
+            window.location.href = '/project62';
+          }, 5000);
         } else if (response.data.status === 'expired') {
           setStatus('error');
         } else {
