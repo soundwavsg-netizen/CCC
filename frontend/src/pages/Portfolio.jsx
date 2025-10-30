@@ -92,19 +92,24 @@ export default function Portfolio() {
     },
     {
       id: 5,
-      name: 'Grant Application Platform',
-      category: 'Training/Grants',
-      description: 'Streamlined platform for EDG grant applications',
-      longDescription: 'A comprehensive platform that simplifies the grant application process for SMEs. Features include document templates, eligibility checkers, application tracking, and compliance monitoring.',
-      image: 'https://images.unsplash.com/photo-1577548696089-f7bcbc22f70e?auto=format&fit=crop&q=85&w=800',
-      technologies: ['React', 'FastAPI', 'PostgreSQL', 'AWS S3', 'PDF Generation'],
+      name: 'Project 62',
+      category: 'Health & Fitness',
+      description: 'Fitness & nutrition platform with meal-prep subscription and delivery system',
+      longDescription: 'A comprehensive health and fitness platform built around the 60-20-20 philosophy (60% diet, 20% consistency, 20% movement). Features meal-prep subscriptions with tiered pricing, weekly delivery scheduling, customer portal for plan management, and admin dashboard for order tracking. Integrated with Stripe for payments and SendGrid for automated communications.',
+      image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=85&w=800',
+      technologies: ['React', 'FastAPI', 'Firebase', 'Stripe', 'SendGrid', 'JWT Auth'],
       features: [
-        'Eligibility assessment tools',
-        'Document template library',
-        'Application progress tracking',
-        'Compliance checking',
-        'Automated reporting'
-      ]
+        'Meal-prep subscription with dynamic pricing',
+        'Weekly delivery scheduling system',
+        'Customer authentication and portal',
+        'Admin dashboard with order management',
+        'Automated email campaigns',
+        'Lead capture with PDF delivery',
+        'Payment processing with Stripe',
+        'Real-time order tracking'
+      ],
+      demoLink: '/project62',
+      isLiveDemo: true
     },
     {
       id: 6,
