@@ -230,6 +230,20 @@
   margin: 12px 0;
 }
 
+.delivery-charge {
+  font-size: 14px;
+  color: #ff9800;
+  font-weight: 600;
+  margin: 4px 0;
+}
+
+.stock {
+  font-size: 14px;
+  color: #666;
+  font-weight: 600;
+  margin: 4px 0;
+}
+
 .file-status {
   margin-top: 12px;
 }
