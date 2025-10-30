@@ -960,7 +960,7 @@ async def get_all_products(current_user: dict = Depends(get_current_admin)):
 
 @router.post("/admin/products")
 async def create_product(product: ProductCreateRequest, current_user: dict = Depends(get_current_admin)):
-    """Create a new digital product"""
+    """Create a new product (digital or physical)"""
     try:
         product_id = str(uuid.uuid4())
         product_data = {
@@ -968,8 +968,10 @@ async def create_product(product: ProductCreateRequest, current_user: dict = Dep
             "name": product.name,
             "description": product.description,
             "price": product.price,
-            "category": product.category,
-            "file_url": None,  # Will be uploaded separately
+            "product_type": product.product_type,  # "digital" or "physical"
+            "delivery_charge": product.delivery_charge if product.product_type == "physical" else 0,
+            "stock_quantity": product.stock_quantity if product.product_type == "physical" else None,
+            "file_url": None if product.product_type == "digital" else "N/A",  # Physical products don't need PDF
             "active": True,
             "created_at": datetime.utcnow().isoformat(),
             "updated_at": datetime.utcnow().isoformat()
