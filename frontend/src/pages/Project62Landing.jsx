@@ -239,8 +239,8 @@ const Project62Landing = () => {
       <section className="why-section">
         <h2>Why Project 62 Works</h2>
         <p className="why-quote">
-          "We deliver the 60%, keep you on the next 20%, and coach you through the last 20%.<br />
-          That's the formula — no crash diets, no gym guilt, just progress you can live with."
+          "We deliver the 60% (your meals), keep you on the next 20% (consistency through weekly delivery), and support you through the last 20% (simple activity tips).<br />
+          That's the formula — no crash diets, no complicated workouts, just progress you can live with."
         </p>
       </section>
 
