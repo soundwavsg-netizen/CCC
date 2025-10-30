@@ -379,19 +379,34 @@ const AdminProducts = () => {
             {products.map((product) => (
               <div key={product.product_id} className="product-card">
                 <div className="product-info">
+                  <div className="product-type-badge">
+                    {product.product_type === 'digital' ? '📄 Digital' : '📦 Physical'}
+                  </div>
                   <h3>{product.name}</h3>
                   <p>{product.description}</p>
                   <p className="price">${product.price.toFixed(2)}</p>
-                  <p className="file-status">
-                    {product.file_url ? (
-                      <span className="has-file">✅ PDF Uploaded</span>
-                    ) : (
-                      <span className="no-file">⚠️ No PDF</span>
-                    )}
-                  </p>
+                  
+                  {product.product_type === 'physical' && (
+                    <>
+                      <p className="delivery-charge">+ ${product.delivery_charge?.toFixed(2) || '0.00'} delivery</p>
+                      {product.stock_quantity !== null && (
+                        <p className="stock">Stock: {product.stock_quantity || 'Unlimited'}</p>
+                      )}
+                    </>
+                  )}
+                  
+                  {product.product_type === 'digital' && (
+                    <p className="file-status">
+                      {product.file_url && product.file_url !== 'N/A' ? (
+                        <span className="has-file">✅ PDF Uploaded</span>
+                      ) : (
+                        <span className="no-file">⚠️ No PDF</span>
+                      )}
+                    </p>
+                  )}
                 </div>
                 <div className="product-actions">
-                  {!product.file_url && (
+                  {product.product_type === 'digital' && !product.file_url && (
                     <div className="upload-section">
                       <input
                         type="file"
