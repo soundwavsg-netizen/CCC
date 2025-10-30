@@ -794,3 +794,14 @@ async def handle_stripe_webhook(request: Request):
     except Exception as e:
         print(f"Webhook error: {e}")
         raise HTTPException(status_code=400, detail=str(e))
+
+# Serve PayNow QR Code Image
+@router.get("/assets/paynow-qr")
+async def get_paynow_qr():
+    """Serve the PayNow QR code image"""
+    from fastapi.responses import FileResponse
+    qr_path = "/app/backend/project62_assets/ccc_paynow_qr.png"
+    if os.path.exists(qr_path):
+        return FileResponse(qr_path, media_type="image/png")
+    else:
+        raise HTTPException(status_code=404, detail="QR code not found")
