@@ -178,7 +178,7 @@ async def send_free_guide_email(name: str, email: str):
                     </ul>
                 </div>
                 <p><strong>Ready for more?</strong></p>
-                <p>Explore our <a href="https://project62.cccdigital.sg" style="color: #00b894;">meal-prep subscription plans</a> to take the next step.</p>
+                <p>Explore our <a href="https://cccdigital.sg/project62" style="color: #00b894;">meal-prep subscription plans</a> to take the next step.</p>
                 <p style="margin-top: 30px; color: #666;">
                     Best regards,<br>
                     <strong>Ian Tang</strong><br>
