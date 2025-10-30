@@ -658,7 +658,8 @@ async def verify_token(current_user: dict = Depends(get_current_user)):
             "user": {
                 "uid": current_user["user_id"],
                 "email": current_user["email"],
-                "name": customer_data.get("name", "")
+                "name": customer_data.get("name", ""),
+                "role": customer_data.get("role", "customer")
             }
         }
     except Exception as e:
