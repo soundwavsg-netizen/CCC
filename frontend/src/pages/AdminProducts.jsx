@@ -140,6 +140,52 @@ const AdminProducts = () => {
     }
   };
 
+  const handleUploadImage = async (productId, imageFile) => {
+    if (!imageFile) return;
+
+    setUploadingImageProductId(productId);
+    const formData = new FormData();
+    formData.append('file', imageFile);
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/project62/admin/products/${productId}/upload-image`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) throw new Error('Failed to upload image');
+
+      const data = await response.json();
+      setSuccess(`Image uploaded successfully! Total: ${data.total_images}`);
+      fetchProducts();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setUploadingImageProductId(null);
+    }
+  };
+
+  const handleDeleteImage = async (productId, imageUrl) => {
+    if (!window.confirm('Delete this image?')) return;
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/project62/admin/products/${productId}/image?image_url=${encodeURIComponent(imageUrl)}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (!response.ok) throw new Error('Failed to delete image');
+
+      setSuccess('Image deleted successfully!');
+      fetchProducts();
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   const handleToggleProduct = async (productId, currentActive) => {
     try {
       const response = await fetch(`${BACKEND_URL}/api/project62/admin/products/${productId}`, {
