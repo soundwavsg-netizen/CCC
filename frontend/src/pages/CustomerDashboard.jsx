@@ -43,8 +43,40 @@ const CustomerDashboard = () => {
 
       const data = await response.json();
       setDashboardData(data);
-      setNewAddress(data.customer?.address || '');
-      setNewPhone(data.customer?.phone || '');
+      
+      // Parse existing address if available
+      if (data.customer?.address) {
+        const addr = data.customer.address;
+        // Try to parse address format: "Line1, Line2, Singapore 123456"
+        const postalMatch = addr.match(/Singapore\s+(\d{6})/);
+        const postalCode = postalMatch ? postalMatch[1] : '';
+        
+        if (postalCode) {
+          const addressWithoutPostal = addr.replace(/, Singapore \d{6}/, '');
+          const parts = addressWithoutPostal.split(',').map(p => p.trim());
+          setAddressForm({
+            addressLine1: parts[0] || '',
+            addressLine2: parts[1] || '',
+            postalCode: postalCode,
+            phone: data.customer?.phone || ''
+          });
+        } else {
+          // Fallback if address format is different
+          setAddressForm({
+            addressLine1: addr,
+            addressLine2: '',
+            postalCode: '',
+            phone: data.customer?.phone || ''
+          });
+        }
+      } else {
+        setAddressForm({
+          addressLine1: '',
+          addressLine2: '',
+          postalCode: '',
+          phone: data.customer?.phone || ''
+        });
+      }
     } catch (err) {
       setError(err.message);
     } finally {
