@@ -18,6 +18,31 @@
   font-family: 'Montserrat', 'Poppins', -apple-system, sans-serif;
   color: var(--p62-text);
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Floating Login Button */
+.floating-login-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--p62-green);
+  color: var(--p62-white);
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 184, 148, 0.3);
+  transition: all 0.3s ease;
+}
+
+.floating-login-btn:hover {
+  background: #009f7f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 184, 148, 0.4);
 }
 
 /* Hero Section */
