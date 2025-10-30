@@ -102,11 +102,11 @@ const PaymentSuccess = () => {
         <div className="success-icon">✓</div>
         <h1>Payment Successful!</h1>
         <p className="success-subtitle">
-          Thank you for your purchase. Your order has been confirmed.
+          Thank you for your purchase. Redirecting you back to Project 62...
         </p>
 
         <div className="order-details">
-          <h2>Order Summary</h2>
+          <h2>Order Confirmed</h2>
           <div className="detail-row">
             <span>Amount Paid:</span>
             <span className="amount">
@@ -119,37 +119,13 @@ const PaymentSuccess = () => {
           </div>
         </div>
 
-        <div className="next-steps">
-          <h3>What Happens Next?</h3>
-          <div className="step">
-            <span className="step-number">1</span>
-            <div className="step-content">
-              <h4>Check Your Email</h4>
-              <p>You'll receive an order confirmation email within 5 minutes.</p>
-            </div>
-          </div>
-          <div className="step">
-            <span className="step-number">2</span>
-            <div className="step-content">
-              <h4>Access Your Account</h4>
-              <p>Create or log in to your customer account to track your order.</p>
-            </div>
-          </div>
-          <div className="step">
-            <span className="step-number">3</span>
-            <div className="step-content">
-              <h4>Get Support</h4>
-              <p>Contact us at project62@gmail.com if you have any questions.</p>
-            </div>
-          </div>
-        </div>
+        <p style={{ marginTop: '30px', color: '#666' }}>
+          Check your email for order confirmation and details.
+        </p>
 
         <div className="action-buttons">
-          <button className="btn-primary" onClick={() => navigate('/project62/customer/login')}>
-            Go to Customer Portal
-          </button>
-          <button className="btn-secondary" onClick={() => navigate('/project62')}>
-            Return to Home
+          <button className="btn-primary" onClick={() => navigate('/project62')}>
+            Return to Project 62 Now
           </button>
         </div>
       </div>
