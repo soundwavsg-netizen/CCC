@@ -355,26 +355,34 @@ class Project62Tester:
         
         return test_passed
     
-    def test_analytics_combined_filters(self):
+    def test_update_address(self):
         """
-        Test 5: Analytics endpoint with combined filters (level + location)
-        Test S3 + Marine Parade: Should return John Tan only
+        Test 5: Update Customer Address
+        PUT /api/project62/customer/address
         """
         print("\n" + "="*80)
-        print("TEST 5: Analytics - Combined Filters (S3 + Marine Parade)")
+        print("TEST 5: Update Customer Address")
         print("="*80)
         
-        filters = {
-            "location": "RMSS - Marine Parade",
-            "level": "S3",
-            "subject": "",
-            "exam_type": ""
+        if not self.auth_token:
+            print("❌ No auth token available from previous tests")
+            return False
+        
+        address_data = {
+            "address": "123 Test St, Singapore 123456",
+            "phone": "+65 9999 8888"
         }
         
-        print(f"Request: POST {ANALYTICS_API_ENDPOINT}")
-        print(f"Filters: {json.dumps(filters, indent=2)}")
+        headers = {
+            "Authorization": f"Bearer {self.auth_token}",
+            "Content-Type": "application/json"
+        }
         
-        result = self.send_analytics_request(filters)
+        print(f"Request: PUT {PROJECT62_BASE_URL}/customer/address")
+        print(f"Headers: Authorization: Bearer ***")
+        print(f"Data: {json.dumps(address_data, indent=2)}")
+        
+        result = self.send_request("PUT", "/customer/address", address_data, headers)
         
         if not result["success"]:
             print(f"❌ API ERROR: {result['error']}")
@@ -383,52 +391,24 @@ class Project62Tester:
         data = result["data"]
         print(f"\nAPI Response:\n{json.dumps(data, indent=2)}")
         
-        # Expected results for S3 + Marine Parade filter
-        expected_students = 1  # Only John Tan (S3 A Math at Marine Parade)
-        expected_avg = 72.0    # John's score
-        
-        # Extract actual results
-        actual_students = data.get("total_students", 0)
-        actual_avg = data.get("overall_average", 0)
-        
-        # Check if John Tan is in the results (and no one else)
-        students = data.get("students", [])
-        john_found = any("john" in student.get("name", "").lower() for student in students)
-        emily_found = any("emily" in student.get("name", "").lower() for student in students)
-        ryan_found = any("ryan" in student.get("name", "").lower() for student in students)
-        
-        # Tolerance for floating point comparison
-        avg_tolerance = 0.1
-        avg_matches = abs(actual_avg - expected_avg) <= avg_tolerance
+        # Check response structure
+        has_status = data.get("status") == "success"
+        has_message = "message" in data and data["message"]
         
         print(f"\n📊 ANALYSIS:")
-        print(f"✅ Expected students: {expected_students}")
-        print(f"✅ Actual students: {actual_students}")
-        print(f"✅ Students match: {actual_students == expected_students}")
-        print(f"✅ John Tan found in results: {john_found}")
-        print(f"❌ Emily Lim found (should NOT): {emily_found}")
-        print(f"❌ Ryan Wong found (should NOT): {ryan_found}")
-        print(f"✅ Expected average: {expected_avg}%")
-        print(f"✅ Actual average: {actual_avg}%")
-        print(f"✅ Average matches (±{avg_tolerance}): {avg_matches}")
+        print(f"✅ Status success: {has_status}")
+        print(f"✅ Has success message: {has_message}")
         
-        test_passed = (actual_students == expected_students) and avg_matches and john_found and not emily_found and not ryan_found
+        test_passed = has_status and has_message
         
         print(f"\n🎯 TEST 5 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
         
         self.test_results.append({
-            "test": "Analytics - Combined Filters (S3 + Marine Parade)",
+            "test": "Update Customer Address",
             "passed": test_passed,
             "details": {
-                "expected_students": expected_students,
-                "actual_students": actual_students,
-                "expected_avg": expected_avg,
-                "actual_avg": actual_avg,
-                "john_found": john_found,
-                "emily_excluded": not emily_found,
-                "ryan_excluded": not ryan_found,
-                "students_match": actual_students == expected_students,
-                "avg_matches": avg_matches
+                "has_status": has_status,
+                "has_message": has_message
             }
         })
         
