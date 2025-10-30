@@ -144,18 +144,6 @@ const DigitalCheckout = () => {
             </div>
           </div>
         </div>
-
-        {/* Alternative Payment */}
-        <div className="alternative-payment">
-          <h3>Alternative Payment: PayNow</h3>
-          <p>Prefer to pay via PayNow? Scan the QR code below and email us at project62@gmail.com with your payment confirmation.</p>
-          <img 
-            src="/api/project62/assets/paynow-qr" 
-            alt="PayNow QR Code" 
-            className="paynow-qr"
-            onError={(e) => e.target.style.display = 'none'}
-          />
-        </div>
       </div>
     </div>
   );
