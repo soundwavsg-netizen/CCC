@@ -414,84 +414,49 @@ class Project62Tester:
         
         return test_passed
     
-    def test_analytics_endpoint_structure(self):
+    def test_send_magic_link(self):
         """
-        Test 6: Verify the analytics endpoint returns the expected data structure
+        Test 6: Send Magic Link
+        POST /api/project62/auth/magic-link
         """
         print("\n" + "="*80)
-        print("TEST 6: Analytics - Response Structure Validation")
+        print("TEST 6: Send Magic Link")
         print("="*80)
         
-        filters = {
-            "location": "",
-            "level": "",
-            "subject": "",
-            "exam_type": ""
+        magic_link_data = {
+            "email": TEST_EMAIL
         }
         
-        print(f"Request: POST {ANALYTICS_API_ENDPOINT}")
-        print(f"Filters: {json.dumps(filters, indent=2)}")
+        print(f"Request: POST {PROJECT62_BASE_URL}/auth/magic-link")
+        print(f"Data: {json.dumps(magic_link_data, indent=2)}")
         
-        result = self.send_analytics_request(filters)
+        result = self.send_request("POST", "/auth/magic-link", magic_link_data)
         
         if not result["success"]:
             print(f"❌ API ERROR: {result['error']}")
             return False
             
         data = result["data"]
-        print(f"\nAPI Response Structure:")
-        print(f"Keys: {list(data.keys())}")
+        print(f"\nAPI Response:\n{json.dumps(data, indent=2)}")
         
-        # Expected structure fields
-        expected_fields = [
-            "success",
-            "total_students", 
-            "total_results",
-            "overall_average",
-            "topic_averages",
-            "students",
-            "filtered_results"
-        ]
+        # Check response structure
+        has_status = data.get("status") == "success"
+        has_message = "message" in data and "magic link" in data["message"].lower()
         
-        # Check if all expected fields are present
-        fields_present = {}
-        for field in expected_fields:
-            fields_present[field] = field in data
-            
-        # Check data types
-        type_checks = {}
-        if "total_students" in data:
-            type_checks["total_students_is_int"] = isinstance(data["total_students"], int)
-        if "overall_average" in data:
-            type_checks["overall_average_is_number"] = isinstance(data["overall_average"], (int, float))
-        if "students" in data:
-            type_checks["students_is_list"] = isinstance(data["students"], list)
-        if "topic_averages" in data:
-            type_checks["topic_averages_is_dict"] = isinstance(data["topic_averages"], dict)
-            
-        print(f"\n📊 STRUCTURE ANALYSIS:")
-        for field, present in fields_present.items():
-            print(f"✅ Has '{field}': {present}")
-            
-        print(f"\n📊 TYPE VALIDATION:")
-        for check, valid in type_checks.items():
-            print(f"✅ {check}: {valid}")
+        print(f"\n📊 ANALYSIS:")
+        print(f"✅ Status success: {has_status}")
+        print(f"✅ Has magic link message: {has_message}")
         
-        # Test passes if all expected fields are present and types are correct
-        all_fields_present = all(fields_present.values())
-        all_types_valid = all(type_checks.values())
-        test_passed = all_fields_present and all_types_valid
+        test_passed = has_status and has_message
         
         print(f"\n🎯 TEST 6 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
         
         self.test_results.append({
-            "test": "Analytics - Response Structure",
+            "test": "Send Magic Link",
             "passed": test_passed,
             "details": {
-                "fields_present": fields_present,
-                "type_checks": type_checks,
-                "all_fields_present": all_fields_present,
-                "all_types_valid": all_types_valid
+                "has_status": has_status,
+                "has_message": has_message
             }
         })
         
