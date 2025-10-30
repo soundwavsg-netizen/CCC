@@ -236,15 +236,53 @@ const MealPrepCheckout = () => {
               </div>
 
               <div className="form-group">
-                <label>Delivery Address *</label>
-                <textarea
-                  name="address"
-                  value={formData.address}
+                <label>Address Line 1 *</label>
+                <input
+                  type="text"
+                  name="addressLine1"
+                  value={formData.addressLine1}
                   onChange={handleInputChange}
                   required
-                  rows="3"
-                  placeholder="Enter your full delivery address including postal code"
+                  placeholder="Street address, building name, unit number"
                 />
+              </div>
+
+              <div className="form-group">
+                <label>Address Line 2 (Optional)</label>
+                <input
+                  type="text"
+                  name="addressLine2"
+                  value={formData.addressLine2}
+                  onChange={handleInputChange}
+                  placeholder="Additional address information"
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Postal Code *</label>
+                <input
+                  type="text"
+                  name="postalCode"
+                  value={formData.postalCode}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="6-digit postal code"
+                  maxLength="6"
+                  pattern="\d{6}"
+                />
+                <small>Singapore postal code only (6 digits)</small>
+              </div>
+
+              <div className="form-group">
+                <label>Country</label>
+                <input
+                  type="text"
+                  name="country"
+                  value="Singapore"
+                  disabled
+                  style={{ background: '#f5f5f5', cursor: 'not-allowed' }}
+                />
+                <small>We currently deliver within Singapore only</small>
               </div>
 
               <div className="form-group">
@@ -257,7 +295,7 @@ const MealPrepCheckout = () => {
                   required
                   min={minDate}
                 />
-                <small>First delivery will be on this date</small>
+                <small>Earliest delivery: 3 business days from today (No Saturday/Sunday delivery)</small>
               </div>
 
               {error && (
