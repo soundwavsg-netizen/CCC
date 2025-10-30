@@ -22,6 +22,7 @@ import Admin from './pages/Admin';
 import MathAnalysis from './pages/MathAnalysis';
 import TutorAdmin from './pages/TutorAdmin';
 import TutorLogin from './pages/TutorLogin';
+import Project62Landing from './pages/Project62Landing';
 import TuitionCentreDemo from './components/demos/TuitionCentreDemo';
 import MSuppliesDemo from './components/demos/MSuppliesDemo';
 import WhatsAppSetup from './pages/WhatsAppSetup';
