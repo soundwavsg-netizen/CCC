@@ -939,6 +939,259 @@ async def update_delivery_status(delivery_id: str, status: str, current_user: di
         raise HTTPException(status_code=500, detail=str(e))
 
 # ========================
+# Product Management Endpoints (Admin)
+# ========================
+
+@router.get("/admin/products")
+async def get_all_products(current_user: dict = Depends(get_current_admin)):
+    """Get all digital products"""
+    try:
+        products_ref = db.collection("project62").document("digital_products").collection("all")
+        products = [doc.to_dict() for doc in products_ref.stream()]
+        products.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+        return {"products": products}
+    except Exception as e:
+        print(f"Get products error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/admin/products")
+async def create_product(product: ProductCreateRequest, current_user: dict = Depends(get_current_admin)):
+    """Create a new digital product"""
+    try:
+        product_id = str(uuid.uuid4())
+        product_data = {
+            "product_id": product_id,
+            "name": product.name,
+            "description": product.description,
+            "price": product.price,
+            "category": product.category,
+            "file_url": None,  # Will be uploaded separately
+            "active": True,
+            "created_at": datetime.utcnow().isoformat(),
+            "updated_at": datetime.utcnow().isoformat()
+        }
+        
+        db.collection("project62").document("digital_products").collection("all").document(product_id).set(product_data)
+        
+        return {"status": "success", "product_id": product_id, "product": product_data}
+    except Exception as e:
+        print(f"Create product error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.put("/admin/products/{product_id}")
+async def update_product(product_id: str, product: ProductUpdateRequest, current_user: dict = Depends(get_current_admin)):
+    """Update product details"""
+    try:
+        product_ref = db.collection("project62").document("digital_products").collection("all").document(product_id)
+        
+        update_data = {"updated_at": datetime.utcnow().isoformat()}
+        if product.name is not None:
+            update_data["name"] = product.name
+        if product.description is not None:
+            update_data["description"] = product.description
+        if product.price is not None:
+            update_data["price"] = product.price
+        if product.active is not None:
+            update_data["active"] = product.active
+        
+        product_ref.update(update_data)
+        
+        return {"status": "success", "message": "Product updated successfully"}
+    except Exception as e:
+        print(f"Update product error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/admin/products/{product_id}/upload")
+async def upload_product_file(product_id: str, request: Request, current_user: dict = Depends(get_current_admin)):
+    """Upload PDF file for a product"""
+    try:
+        from fastapi import File, UploadFile, Form
+        
+        # Get the uploaded file from request
+        form = await request.form()
+        file = form.get("file")
+        
+        if not file:
+            raise HTTPException(status_code=400, detail="No file provided")
+        
+        # Read file content
+        file_content = await file.read()
+        
+        # Upload to Firebase Storage
+        blob = bucket.blob(f"digital_products/{product_id}/{file.filename}")
+        blob.upload_from_string(file_content, content_type=file.content_type)
+        blob.make_public()
+        
+        # Update product with file URL
+        product_ref = db.collection("project62").document("digital_products").collection("all").document(product_id)
+        product_ref.update({
+            "file_url": blob.public_url,
+            "file_name": file.filename,
+            "updated_at": datetime.utcnow().isoformat()
+        })
+        
+        return {"status": "success", "file_url": blob.public_url}
+    except Exception as e:
+        print(f"Upload file error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/admin/products/{product_id}")
+async def delete_product(product_id: str, current_user: dict = Depends(get_current_admin)):
+    """Delete a product"""
+    try:
+        db.collection("project62").document("digital_products").collection("all").document(product_id).delete()
+        return {"status": "success", "message": "Product deleted successfully"}
+    except Exception as e:
+        print(f"Delete product error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ========================
+# Discount Code Management (Admin)
+# ========================
+
+@router.get("/admin/discount-codes")
+async def get_all_discount_codes(current_user: dict = Depends(get_current_admin)):
+    """Get all discount codes"""
+    try:
+        codes_ref = db.collection("project62").document("discount_codes").collection("all")
+        codes = [doc.to_dict() for doc in codes_ref.stream()]
+        codes.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+        return {"discount_codes": codes}
+    except Exception as e:
+        print(f"Get discount codes error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/admin/discount-codes")
+async def create_discount_code(discount: DiscountCodeRequest, current_user: dict = Depends(get_current_admin)):
+    """Create a new discount code"""
+    try:
+        code_id = discount.code.upper().replace(" ", "")
+        
+        # Check if code already exists
+        existing_code = db.collection("project62").document("discount_codes").collection("all").document(code_id).get()
+        if existing_code.exists:
+            raise HTTPException(status_code=400, detail="Discount code already exists")
+        
+        code_data = {
+            "code_id": code_id,
+            "code": code_id,
+            "percentage": discount.percentage,
+            "description": discount.description or "",
+            "expires_at": discount.expires_at,
+            "max_uses": discount.max_uses,
+            "current_uses": 0,
+            "active": discount.active,
+            "created_at": datetime.utcnow().isoformat(),
+            "updated_at": datetime.utcnow().isoformat()
+        }
+        
+        db.collection("project62").document("discount_codes").collection("all").document(code_id).set(code_data)
+        
+        return {"status": "success", "code_id": code_id, "discount_code": code_data}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Create discount code error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.put("/admin/discount-codes/{code_id}")
+async def update_discount_code(code_id: str, active: bool, current_user: dict = Depends(get_current_admin)):
+    """Update discount code (toggle active status)"""
+    try:
+        code_ref = db.collection("project62").document("discount_codes").collection("all").document(code_id.upper())
+        code_ref.update({
+            "active": active,
+            "updated_at": datetime.utcnow().isoformat()
+        })
+        
+        return {"status": "success", "message": "Discount code updated successfully"}
+    except Exception as e:
+        print(f"Update discount code error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/admin/discount-codes/{code_id}")
+async def delete_discount_code(code_id: str, current_user: dict = Depends(get_current_admin)):
+    """Delete a discount code"""
+    try:
+        db.collection("project62").document("discount_codes").collection("all").document(code_id.upper()).delete()
+        return {"status": "success", "message": "Discount code deleted successfully"}
+    except Exception as e:
+        print(f"Delete discount code error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ========================
+# Customer Discount Code Validation
+# ========================
+
+@router.post("/validate-discount")
+async def validate_discount_code(request: ValidateDiscountRequest):
+    """Validate a discount code and return discount amount"""
+    try:
+        code_id = request.code.upper().replace(" ", "")
+        
+        code_ref = db.collection("project62").document("discount_codes").collection("all").document(code_id)
+        code_doc = code_ref.get()
+        
+        if not code_doc.exists:
+            raise HTTPException(status_code=404, detail="Invalid discount code")
+        
+        code_data = code_doc.to_dict()
+        
+        # Check if active
+        if not code_data.get("active", False):
+            raise HTTPException(status_code=400, detail="This discount code is no longer active")
+        
+        # Check expiry
+        if code_data.get("expires_at"):
+            expiry_date = datetime.fromisoformat(code_data["expires_at"])
+            if datetime.utcnow() > expiry_date:
+                raise HTTPException(status_code=400, detail="This discount code has expired")
+        
+        # Check usage limit
+        if code_data.get("max_uses"):
+            if code_data.get("current_uses", 0) >= code_data["max_uses"]:
+                raise HTTPException(status_code=400, detail="This discount code has reached its usage limit")
+        
+        # Calculate discount
+        percentage = code_data.get("percentage", 0)
+        discount_amount = (request.amount * percentage) / 100
+        final_amount = request.amount - discount_amount
+        
+        return {
+            "status": "success",
+            "valid": True,
+            "percentage": percentage,
+            "discount_amount": round(discount_amount, 2),
+            "final_amount": round(final_amount, 2),
+            "code": code_id
+        }
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Validate discount code error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/apply-discount/{code_id}")
+async def apply_discount_code(code_id: str):
+    """Increment usage count for a discount code (called after successful payment)"""
+    try:
+        code_ref = db.collection("project62").document("discount_codes").collection("all").document(code_id.upper())
+        code_doc = code_ref.get()
+        
+        if code_doc.exists:
+            current_uses = code_doc.to_dict().get("current_uses", 0)
+            code_ref.update({
+                "current_uses": current_uses + 1,
+                "last_used_at": datetime.utcnow().isoformat()
+            })
+        
+        return {"status": "success"}
+    except Exception as e:
+        print(f"Apply discount code error: {e}")
+        return {"status": "error", "message": str(e)}
+
+# ========================
 # Stripe Webhook Handler
 # ========================
 
