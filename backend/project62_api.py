@@ -461,6 +461,40 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
         }
         db.collection("project62").document("orders").collection("all").document(order_id).set(order_data)
         
+        # Send notification email to admin
+        try:
+            admin_email_content = f"""
+            <html>
+                <body style="font-family: Arial, sans-serif;">
+                    <h2>🎉 New Meal-Prep Subscription Order!</h2>
+                    <p><strong>Order ID:</strong> {order_id}</p>
+                    <p><strong>Customer:</strong> {transaction_data["customer_name"]}</p>
+                    <p><strong>Email:</strong> {transaction_data["customer_email"]}</p>
+                    <p><strong>Phone:</strong> {transaction_data["customer_phone"]}</p>
+                    <p><strong>Delivery Address:</strong> {transaction_data["delivery_address"]}</p>
+                    <p><strong>Duration:</strong> {transaction_data["duration"].replace('_', ' ').title()}</p>
+                    <p><strong>Meals per Day:</strong> {transaction_data["meals_per_day"]}</p>
+                    <p><strong>Total Amount:</strong> ${transaction_data["total_amount"]} SGD</p>
+                    <p><strong>Start Date:</strong> {transaction_data["start_date"]}</p>
+                    <hr>
+                    <p>Please prepare the meal deliveries accordingly.</p>
+                </body>
+            </html>
+            """
+            
+            admin_message = Mail(
+                from_email=SENDGRID_FROM_EMAIL,
+                to_emails='project62sg@gmail.com',
+                subject=f'New Order: {order_id} - {transaction_data["customer_name"]}',
+                html_content=admin_email_content
+            )
+            
+            sg = SendGridAPIClient(SENDGRID_API_KEY)
+            sg.send(admin_message)
+            print(f"✅ Admin notification sent for order {order_id}")
+        except Exception as e:
+            print(f"❌ Admin email error: {e}")
+        
         # Create customer record (or update if exists)
         customer_id = transaction_data["customer_email"].replace("@", "_at_").replace(".", "_")
         customer_data = {
