@@ -66,6 +66,34 @@ const MealPrepCheckout = () => {
     return day === 0 || day === 6; // 0 = Sunday, 6 = Saturday
   };
 
+  // Check if date is within minimum 3 business days
+  const isDateTooSoon = (dateString) => {
+    const selectedDate = new Date(dateString);
+    const minDateObj = new Date(getMinimumDate());
+    return selectedDate < minDateObj;
+  };
+
+  const handleDateChange = (e) => {
+    const selectedDate = e.target.value;
+    
+    // Validate: not too soon
+    if (isDateTooSoon(selectedDate)) {
+      setError('Please select a date at least 3 business days from today.');
+      return;
+    }
+    
+    // Validate: not weekend
+    if (isWeekend(selectedDate)) {
+      setError('Delivery is not available on Saturdays and Sundays. Please select a weekday.');
+      setFormData(prev => ({ ...prev, startDate: '' }));
+      return;
+    }
+    
+    // Valid date
+    setError('');
+    setFormData(prev => ({ ...prev, startDate: selectedDate }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
