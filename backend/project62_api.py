@@ -1048,6 +1048,75 @@ async def upload_product_file(product_id: str, request: Request, current_user: d
         print(f"Upload file error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.post("/admin/products/{product_id}/upload-image")
+async def upload_product_image(product_id: str, request: Request, current_user: dict = Depends(get_current_admin)):
+    """Upload product image"""
+    try:
+        from fastapi import File, UploadFile, Form
+        
+        # Get the uploaded file from request
+        form = await request.form()
+        file = form.get("file")
+        
+        if not file:
+            raise HTTPException(status_code=400, detail="No file provided")
+        
+        # Read file content
+        file_content = await file.read()
+        
+        # Upload to Firebase Storage
+        blob = bucket.blob(f"product_images/{product_id}/{file.filename}")
+        blob.upload_from_string(file_content, content_type=file.content_type)
+        blob.make_public()
+        
+        # Get product and update images array
+        product_ref = db.collection("project62").document("digital_products").collection("all").document(product_id)
+        product_doc = product_ref.get()
+        
+        if not product_doc.exists:
+            raise HTTPException(status_code=404, detail="Product not found")
+        
+        product_data = product_doc.to_dict()
+        images = product_data.get("images", [])
+        images.append(blob.public_url)
+        
+        product_ref.update({
+            "images": images,
+            "updated_at": datetime.utcnow().isoformat()
+        })
+        
+        return {"status": "success", "image_url": blob.public_url, "total_images": len(images)}
+    except Exception as e:
+        print(f"Upload image error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/admin/products/{product_id}/image")
+async def delete_product_image(product_id: str, image_url: str, current_user: dict = Depends(get_current_admin)):
+    """Delete a product image"""
+    try:
+        product_ref = db.collection("project62").document("digital_products").collection("all").document(product_id)
+        product_doc = product_ref.get()
+        
+        if not product_doc.exists:
+            raise HTTPException(status_code=404, detail="Product not found")
+        
+        product_data = product_doc.to_dict()
+        images = product_data.get("images", [])
+        
+        if image_url in images:
+            images.remove(image_url)
+            product_ref.update({
+                "images": images,
+                "updated_at": datetime.utcnow().isoformat()
+            })
+        
+        return {"status": "success", "message": "Image deleted successfully"}
+    except Exception as e:
+        print(f"Delete image error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.delete("/admin/products/{product_id}")
 async def delete_product(product_id: str, current_user: dict = Depends(get_current_admin)):
     """Delete a product"""
