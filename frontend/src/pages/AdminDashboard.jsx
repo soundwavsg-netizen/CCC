@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import AdminProducts from './AdminProducts';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
