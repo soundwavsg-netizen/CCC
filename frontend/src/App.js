@@ -40,6 +40,26 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Layout wrapper to conditionally show Header/Footer
+const Layout = ({ children }) => {
+  const location = useLocation();
+  const isProject62 = location.pathname.startsWith('/project62');
+  
+  if (isProject62) {
+    return <div className="flex flex-col min-h-screen">{children}</div>;
+  }
+  
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
+      <ChatWidget />
+      <Toaster position="top-right" />
+    </div>
+  );
+};
+
 export default function App() {
   // Initialize analytics on app load
   useEffect(() => {
@@ -49,11 +69,9 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
             <Route path="/ai-employees" element={<AIEmployees />} />
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
