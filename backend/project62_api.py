@@ -630,7 +630,8 @@ async def login_customer(req: CustomerLoginRequest):
             "user": {
                 "uid": auth_data["localId"],
                 "email": req.email,
-                "name": customer_data.get("name", "")
+                "name": customer_data.get("name", ""),
+                "role": customer_data.get("role", "customer")
             }
         }
     except HTTPException:
