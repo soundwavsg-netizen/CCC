@@ -156,7 +156,12 @@ const CustomerDashboard = () => {
           <h1>Welcome back, {user?.name || 'Customer'}!</h1>
           <p className="header-subtitle">Your Project 62 Dashboard</p>
         </div>
-        <button onClick={handleLogout} className="logout-btn">Logout</button>
+        <div className="header-actions">
+          <button onClick={() => navigate('/project62/admin')} className="admin-link-btn">
+            Admin Panel
+          </button>
+          <button onClick={handleLogout} className="logout-btn">Logout</button>
+        </div>
       </div>
 
       {updateSuccess && <div className="success-banner">{updateSuccess}</div>}
