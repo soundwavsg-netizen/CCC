@@ -110,6 +110,10 @@ export default function App() {
             <Route path="/admin/tutors" element={<TutorAdmin />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/project62" element={<Project62Landing />} />
+            <Route path="/project62/checkout/digital/:productId" element={<DigitalCheckout />} />
+            <Route path="/project62/checkout/meal-prep" element={<MealPrepCheckout />} />
+            <Route path="/project62/checkout/success" element={<PaymentSuccess />} />
+            <Route path="/project62/checkout/cancel" element={<PaymentCancel />} />
             <Route path="/grants" element={<Grants />} />
             <Route path="/edg" element={<EDG />} />
             <Route path="/promotion" element={<Promotion />} />
