@@ -35,11 +35,15 @@ const AdminDashboard = () => {
   const fetchAllData = async () => {
     setLoading(true);
     try {
+      const headers = {
+        'Authorization': `Bearer ${token}`
+      };
+      
       const [leadsRes, ordersRes, deliveriesRes, customersRes] = await Promise.all([
-        fetch(`${BACKEND_URL}/api/project62/admin/leads`),
-        fetch(`${BACKEND_URL}/api/project62/admin/orders`),
-        fetch(`${BACKEND_URL}/api/project62/admin/deliveries`),
-        fetch(`${BACKEND_URL}/api/project62/admin/customers`)
+        fetch(`${BACKEND_URL}/api/project62/admin/leads`, { headers }),
+        fetch(`${BACKEND_URL}/api/project62/admin/orders`, { headers }),
+        fetch(`${BACKEND_URL}/api/project62/admin/deliveries`, { headers }),
+        fetch(`${BACKEND_URL}/api/project62/admin/customers`, { headers })
       ]);
 
       const [leadsData, ordersData, deliveriesData, customersData] = await Promise.all([
