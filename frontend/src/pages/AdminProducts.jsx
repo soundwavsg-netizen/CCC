@@ -17,7 +17,9 @@ const AdminProducts = () => {
     name: '',
     description: '',
     price: '',
-    category: 'digital'
+    product_type: 'digital',
+    delivery_charge: '',
+    stock_quantity: ''
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadingProductId, setUploadingProductId] = useState(null);
