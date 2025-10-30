@@ -425,6 +425,24 @@ const AdminProducts = () => {
           <div className="products-list">
             {products.map((product) => (
               <div key={product.product_id} className="product-card">
+                {/* Product Images Gallery */}
+                {product.images && product.images.length > 0 && (
+                  <div className="product-images-gallery">
+                    {product.images.map((img, idx) => (
+                      <div key={idx} className="product-image-item">
+                        <img src={img} alt={`${product.name} ${idx + 1}`} />
+                        <button
+                          className="delete-image-btn"
+                          onClick={() => handleDeleteImage(product.product_id, img)}
+                          title="Delete image"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
                 <div className="product-info">
                   <div className="product-type-badge">
                     {product.product_type === 'digital' ? '📄 Digital' : '📦 Physical'}
@@ -453,6 +471,25 @@ const AdminProducts = () => {
                   )}
                 </div>
                 <div className="product-actions">
+                  {/* Upload Product Images */}
+                  <div className="upload-section">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        if (e.target.files[0]) {
+                          handleUploadImage(product.product_id, e.target.files[0]);
+                        }
+                      }}
+                      id={`image-${product.product_id}`}
+                      style={{ display: 'none' }}
+                    />
+                    <label htmlFor={`image-${product.product_id}`} className="upload-btn">
+                      {uploadingImageProductId === product.product_id ? 'Uploading...' : '+ Add Photo'}
+                    </label>
+                  </div>
+                  
+                  {/* Upload PDF for digital products */}
                   {product.product_type === 'digital' && !product.file_url && (
                     <div className="upload-section">
                       <input
@@ -471,11 +508,12 @@ const AdminProducts = () => {
                           className="upload-btn"
                           disabled={uploadingProductId === product.product_id}
                         >
-                          {uploadingProductId === product.product_id ? 'Uploading...' : 'Upload'}
+                          {uploadingProductId === product.product_id ? 'Uploading...' : 'Upload PDF'}
                         </button>
                       )}
                     </div>
                   )}
+                  
                   <button
                     onClick={() => handleToggleProduct(product.product_id, product.active)}
                     className={product.active ? 'toggle-btn active' : 'toggle-btn'}
