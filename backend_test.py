@@ -148,26 +148,24 @@ class Project62Tester:
         
         return test_passed
     
-    def test_analytics_s3_filter(self):
+    def test_login_customer(self):
         """
-        Test 2: Analytics endpoint with S3 level filter
-        Expected: 1 student (John), average 72%
+        Test 2: Login Customer
+        POST /api/project62/auth/login
         """
         print("\n" + "="*80)
-        print("TEST 2: Analytics - S3 Level Filter")
+        print("TEST 2: Login Customer")
         print("="*80)
         
-        filters = {
-            "location": "",
-            "level": "S3",
-            "subject": "",
-            "exam_type": ""
+        login_data = {
+            "email": TEST_EMAIL,
+            "password": TEST_PASSWORD
         }
         
-        print(f"Request: POST {ANALYTICS_API_ENDPOINT}")
-        print(f"Filters: {json.dumps(filters, indent=2)}")
+        print(f"Request: POST {PROJECT62_BASE_URL}/auth/login")
+        print(f"Data: {json.dumps({k: v if k != 'password' else '***' for k, v in login_data.items()}, indent=2)}")
         
-        result = self.send_analytics_request(filters)
+        result = self.send_request("POST", "/auth/login", login_data)
         
         if not result["success"]:
             print(f"❌ API ERROR: {result['error']}")
@@ -176,46 +174,45 @@ class Project62Tester:
         data = result["data"]
         print(f"\nAPI Response:\n{json.dumps(data, indent=2)}")
         
-        # Expected results for S3 filter only
-        expected_students = 1  # Only John Tan
-        expected_avg = 72.0    # John's score
+        # Check response structure
+        has_status = data.get("status") == "success"
+        has_token = "token" in data and data["token"]
+        has_user = "user" in data and data["user"]
         
-        # Extract actual results
-        actual_students = data.get("total_students", 0)
-        actual_avg = data.get("overall_average", 0)
-        
-        # Check if John Tan is in the results
-        students = data.get("students", [])
-        john_found = any("john" in student.get("name", "").lower() for student in students)
-        
-        # Tolerance for floating point comparison
-        avg_tolerance = 0.1
-        avg_matches = abs(actual_avg - expected_avg) <= avg_tolerance
+        if has_user:
+            user_data = data["user"]
+            correct_email = user_data.get("email") == TEST_EMAIL
+            correct_name = user_data.get("name") == TEST_NAME
+            has_uid = "uid" in user_data
+        else:
+            correct_email = correct_name = has_uid = False
         
         print(f"\n📊 ANALYSIS:")
-        print(f"✅ Expected students: {expected_students}")
-        print(f"✅ Actual students: {actual_students}")
-        print(f"✅ Students match: {actual_students == expected_students}")
-        print(f"✅ John Tan found in results: {john_found}")
-        print(f"✅ Expected average: {expected_avg}%")
-        print(f"✅ Actual average: {actual_avg}%")
-        print(f"✅ Average matches (±{avg_tolerance}): {avg_matches}")
+        print(f"✅ Status success: {has_status}")
+        print(f"✅ Has JWT token: {has_token}")
+        print(f"✅ Has user object: {has_user}")
+        print(f"✅ Correct email: {correct_email}")
+        print(f"✅ Correct name: {correct_name}")
+        print(f"✅ Has Firebase UID: {has_uid}")
         
-        test_passed = (actual_students == expected_students) and avg_matches and john_found
+        test_passed = has_status and has_token and has_user and correct_email and has_uid
+        
+        if test_passed and not self.auth_token:
+            self.auth_token = data["token"]
+            print(f"✅ Auth token saved for subsequent tests")
         
         print(f"\n🎯 TEST 2 RESULT: {'✅ PASSED' if test_passed else '❌ FAILED'}")
         
         self.test_results.append({
-            "test": "Analytics - S3 Filter",
+            "test": "Login Customer",
             "passed": test_passed,
             "details": {
-                "expected_students": expected_students,
-                "actual_students": actual_students,
-                "expected_avg": expected_avg,
-                "actual_avg": actual_avg,
-                "john_found": john_found,
-                "students_match": actual_students == expected_students,
-                "avg_matches": avg_matches
+                "has_status": has_status,
+                "has_token": has_token,
+                "has_user": has_user,
+                "correct_email": correct_email,
+                "correct_name": correct_name,
+                "has_uid": has_uid
             }
         })
         
