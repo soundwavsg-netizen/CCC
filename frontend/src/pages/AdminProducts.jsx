@@ -281,11 +281,23 @@ const AdminProducts = () => {
                 <h3>Create New Product</h3>
                 <form onSubmit={handleCreateProduct}>
                   <div className="form-group">
+                    <label>Product Type</label>
+                    <select
+                      value={productForm.product_type}
+                      onChange={(e) => setProductForm({ ...productForm, product_type: e.target.value })}
+                      required
+                    >
+                      <option value="digital">Digital Product (PDF)</option>
+                      <option value="physical">Physical Product (Requires Delivery)</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
                     <label>Product Name</label>
                     <input
                       type="text"
                       value={productForm.name}
                       onChange={(e) => setProductForm({ ...productForm, name: e.target.value })}
+                      placeholder="e.g., 6 Days Free Plan"
                       required
                     />
                   </div>
@@ -295,6 +307,7 @@ const AdminProducts = () => {
                       value={productForm.description}
                       onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
                       rows="3"
+                      placeholder="Describe what this product includes..."
                       required
                     />
                   </div>
@@ -305,17 +318,50 @@ const AdminProducts = () => {
                       step="0.01"
                       value={productForm.price}
                       onChange={(e) => setProductForm({ ...productForm, price: e.target.value })}
+                      placeholder="0.00 for free products"
                       required
                     />
                   </div>
-                  <div className="form-group">
-                    <label>PDF File (Optional - can upload later)</label>
-                    <input
-                      type="file"
-                      accept=".pdf"
-                      onChange={(e) => setSelectedFile(e.target.files[0])}
-                    />
-                  </div>
+                  
+                  {/* Physical Product Fields */}
+                  {productForm.product_type === 'physical' && (
+                    <>
+                      <div className="form-group">
+                        <label>Delivery Charge (SGD)</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={productForm.delivery_charge}
+                          onChange={(e) => setProductForm({ ...productForm, delivery_charge: e.target.value })}
+                          placeholder="e.g., 5.00"
+                          required
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label>Stock Quantity (Optional)</label>
+                        <input
+                          type="number"
+                          min="0"
+                          value={productForm.stock_quantity}
+                          onChange={(e) => setProductForm({ ...productForm, stock_quantity: e.target.value })}
+                          placeholder="Leave empty for unlimited"
+                        />
+                      </div>
+                    </>
+                  )}
+                  
+                  {/* Digital Product Fields */}
+                  {productForm.product_type === 'digital' && (
+                    <div className="form-group">
+                      <label>PDF File (Optional - can upload later)</label>
+                      <input
+                        type="file"
+                        accept=".pdf"
+                        onChange={(e) => setSelectedFile(e.target.files[0])}
+                      />
+                    </div>
+                  )}
+                  
                   <div className="form-actions">
                     <button type="submit" className="submit-btn" disabled={loading}>
                       {loading ? 'Creating...' : 'Create Product'}
