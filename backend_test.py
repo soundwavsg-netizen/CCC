@@ -22,26 +22,45 @@ TEST_PHONE = "+65 9123 4567"
 
 class Project62Tester:
     def __init__(self):
-        self.session_id = str(uuid.uuid4())
         self.test_results = []
+        self.auth_token = None
         
-    def send_analytics_request(self, filters: Dict[str, Any]) -> Dict[str, Any]:
-        """Send a POST request to the analytics endpoint with filters"""
+    def send_request(self, method: str, endpoint: str, data: Dict[str, Any] = None, headers: Dict[str, str] = None) -> Dict[str, Any]:
+        """Send HTTP request to Project 62 API"""
         try:
-            response = requests.post(ANALYTICS_API_ENDPOINT, json=filters, timeout=30)
-            response.raise_for_status()
+            url = f"{PROJECT62_BASE_URL}{endpoint}"
+            
+            if headers is None:
+                headers = {"Content-Type": "application/json"}
+            
+            if method.upper() == "GET":
+                response = requests.get(url, headers=headers, timeout=30)
+            elif method.upper() == "POST":
+                response = requests.post(url, json=data, headers=headers, timeout=30)
+            elif method.upper() == "PUT":
+                response = requests.put(url, json=data, headers=headers, timeout=30)
+            else:
+                raise ValueError(f"Unsupported method: {method}")
+            
             return {
-                "success": True,
+                "success": response.status_code < 400,
                 "status_code": response.status_code,
-                "data": response.json(),
+                "data": response.json() if response.content else {},
                 "error": None
             }
         except requests.exceptions.RequestException as e:
+            error_detail = str(e)
+            if hasattr(e, 'response') and e.response is not None:
+                try:
+                    error_detail = e.response.json().get('detail', str(e))
+                except:
+                    error_detail = str(e)
+            
             return {
                 "success": False,
                 "status_code": getattr(e.response, 'status_code', None) if hasattr(e, 'response') else None,
                 "data": None,
-                "error": str(e)
+                "error": error_detail
             }
     
     def test_analytics_all_data(self):
