@@ -118,6 +118,30 @@ class AdminResetPasswordRequest(BaseModel):
 class MagicLinkRequest(BaseModel):
     email: EmailStr
 
+class ProductCreateRequest(BaseModel):
+    name: str
+    description: str
+    price: float
+    category: str  # "digital" or "meal_prep"
+
+class ProductUpdateRequest(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    price: Optional[float] = None
+    active: Optional[bool] = None
+
+class DiscountCodeRequest(BaseModel):
+    code: str
+    percentage: float  # 10 for 10% off
+    description: Optional[str] = None
+    expires_at: Optional[str] = None  # ISO date string
+    max_uses: Optional[int] = None
+    active: bool = True
+
+class ValidateDiscountRequest(BaseModel):
+    code: str
+    amount: float
+
 # ========================
 # Helper Functions
 # ========================
