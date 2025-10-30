@@ -24,8 +24,13 @@ const AdminDashboard = () => {
       navigate('/project62/login');
       return;
     }
+    if (!isAdmin) {
+      // Not an admin, redirect to customer dashboard
+      navigate('/project62/dashboard');
+      return;
+    }
     fetchAllData();
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, isAdmin, navigate]);
 
   const fetchAllData = async () => {
     setLoading(true);
