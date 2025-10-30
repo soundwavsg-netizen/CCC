@@ -157,9 +157,11 @@ const CustomerDashboard = () => {
           <p className="header-subtitle">Your Project 62 Dashboard</p>
         </div>
         <div className="header-actions">
-          <button onClick={() => navigate('/project62/admin')} className="admin-link-btn">
-            Admin Panel
-          </button>
+          {isAdmin && (
+            <button onClick={() => navigate('/project62/admin')} className="admin-link-btn">
+              Admin Panel
+            </button>
+          )}
           <button onClick={handleLogout} className="logout-btn">Logout</button>
         </div>
       </div>
