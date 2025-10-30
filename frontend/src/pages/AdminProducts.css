@@ -200,6 +200,17 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.product-type-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #f0f0f0;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 8px;
+}
+
 .product-info h3 {
   font-size: 18px;
   color: #111111;
