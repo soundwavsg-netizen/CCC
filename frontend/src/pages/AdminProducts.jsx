@@ -90,11 +90,18 @@ const AdminProducts = () => {
       const data = await response.json();
       setSuccess('Product created successfully!');
       setShowProductForm(false);
-      setProductForm({ name: '', description: '', price: '', category: 'digital' });
+      setProductForm({ 
+        name: '', 
+        description: '', 
+        price: '', 
+        product_type: 'digital',
+        delivery_charge: '',
+        stock_quantity: ''
+      });
       fetchProducts();
       
-      // If file selected, upload it
-      if (selectedFile && data.product_id) {
+      // If digital product and file selected, upload it
+      if (selectedFile && data.product_id && productForm.product_type === 'digital') {
         await handleUploadFile(data.product_id);
       }
     } catch (err) {
