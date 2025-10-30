@@ -93,8 +93,8 @@ const Project62Landing = () => {
         <div className="journey-content">
           <div className="journey-text">
             <p className="journey-quote">
-              "Consistency is key. I trained 5 days a week, ate 2 meals a day, and still enjoyed nights out.
-              Project 62 is about balance, not punishment."
+              "Consistency is key. I ate 2 balanced meals a day, 6 days a week, and still enjoyed life.
+              Project 62 is about balance and sustainability — we handle the meal prep, you focus on showing up."
             </p>
             <div className="journey-stats">
               <div className="stat">
@@ -110,8 +110,8 @@ const Project62Landing = () => {
                 <span className="stat-value">80→62 kg</span>
               </div>
               <div className="stat">
-                <span className="stat-label">Training</span>
-                <span className="stat-value">5 days/week</span>
+                <span className="stat-label">System</span>
+                <span className="stat-value">6 days/2 meals</span>
               </div>
             </div>
           </div>
