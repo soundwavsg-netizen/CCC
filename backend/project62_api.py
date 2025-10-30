@@ -892,7 +892,7 @@ async def get_all_deliveries(current_user: dict = Depends(get_current_admin)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/admin/customers")
-async def get_all_customers():
+async def get_all_customers(current_user: dict = Depends(get_current_admin)):
     """Get all customers for admin dashboard"""
     try:
         customers_ref = db.collection("project62").document("customers").collection("all")
