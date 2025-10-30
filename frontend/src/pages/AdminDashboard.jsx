@@ -203,6 +203,12 @@ const AdminDashboard = () => {
         >
           Customers ({data.customers.length})
         </button>
+        <button 
+          className={activeTab === 'products' ? 'tab active' : 'tab'}
+          onClick={() => setActiveTab('products')}
+        >
+          Products & Discounts
+        </button>
       </div>
 
       {/* Tab Content */}
