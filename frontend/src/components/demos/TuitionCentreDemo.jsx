@@ -42,7 +42,7 @@ const TuitionCentreDemo = () => {
   const inputRef = useRef(null);  // Add input ref for focus management
 
   // External backend URL
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://education-analytics.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://fitness-nutrition-5.preview.emergentagent.com';
 
   // Fetch available locations when level and subject are selected
   useEffect(() => {

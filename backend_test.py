@@ -11,7 +11,7 @@ from typing import Dict, Any
 import time
 
 # Configuration
-BACKEND_URL = "https://education-analytics.preview.emergentagent.com"
+BACKEND_URL = "https://fitness-nutrition-5.preview.emergentagent.com"
 TUITION_API_ENDPOINT = f"{BACKEND_URL}/api/tuition/chat"
 ANALYTICS_API_ENDPOINT = f"{BACKEND_URL}/api/math-analysis/analytics"
 
