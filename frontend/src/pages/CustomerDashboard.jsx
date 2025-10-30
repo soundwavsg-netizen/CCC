@@ -5,7 +5,7 @@ import './CustomerDashboard.css';
 
 const CustomerDashboard = () => {
   const navigate = useNavigate();
-  const { user, token, logout, isAuthenticated } = useAuth();
+  const { user, token, logout, isAuthenticated, isAdmin } = useAuth();
   
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
