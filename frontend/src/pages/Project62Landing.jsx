@@ -72,6 +72,10 @@ const Project62Landing = () => {
             "I dropped from 80kg to 62kg in 7 months — no crash diets, no fads.<br />
             Project 62 is how I did it — and how you can too."
           </p>
+          <p className="hero-explanation">
+            <strong>Project 62</strong> = Ian's achieved weight of 62kg + our proven system:<br />
+            <span className="highlight-text">6 days of planned meals · 2 meals a day · Delivered to your door</span>
+          </p>
           <div className="hero-buttons">
             <button className="btn-primary" onClick={() => setShowLeadForm(true)}>
               Get Free 6-Day Guide
