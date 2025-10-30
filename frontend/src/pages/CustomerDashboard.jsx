@@ -11,8 +11,12 @@ const CustomerDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [addressEdit, setAddressEdit] = useState(false);
-  const [newAddress, setNewAddress] = useState('');
-  const [newPhone, setNewPhone] = useState('');
+  const [addressForm, setAddressForm] = useState({
+    addressLine1: '',
+    addressLine2: '',
+    postalCode: '',
+    phone: ''
+  });
   const [updateSuccess, setUpdateSuccess] = useState('');
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
