@@ -549,10 +549,7 @@ class Project62Tester:
         return passed_count == total_count
 
 
-class MathAnalyticsTester:
-    def __init__(self):
-        self.session_id = str(uuid.uuid4())
-        self.test_results = []
+# Legacy class removed - now using Project62Tester
         
     def send_chat_message(self, message: str, session_id: str = None) -> Dict[str, Any]:
         """Send a message to the tuition chat endpoint"""
