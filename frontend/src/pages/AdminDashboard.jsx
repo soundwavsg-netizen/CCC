@@ -5,7 +5,7 @@ import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const { user, token, logout, isAuthenticated } = useAuth();
+  const { user, token, logout, isAuthenticated, isAdmin } = useAuth();
   
   const [activeTab, setActiveTab] = useState('leads');
   const [data, setData] = useState({
