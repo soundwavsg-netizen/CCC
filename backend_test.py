@@ -462,22 +462,74 @@ class Project62Tester:
         
         return test_passed
     
-    def run_all_analytics_tests(self):
-        """Run all analytics endpoint tests"""
-        print("🚀 Starting Math Analysis System Analytics Testing Suite")
-        print(f"🔗 Testing endpoint: {ANALYTICS_API_ENDPOINT}")
+    def test_admin_endpoints(self):
+        """
+        Test 7-10: Admin Endpoints (no auth required for now)
+        """
+        print("\n" + "="*80)
+        print("TEST 7-10: Admin Endpoints")
+        print("="*80)
         
-        # Run all analytics tests
-        test1_passed = self.test_analytics_all_data()
-        test2_passed = self.test_analytics_s3_filter()
-        test3_passed = self.test_analytics_marine_parade_filter()
-        test4_passed = self.test_analytics_s2_filter()
-        test5_passed = self.test_analytics_combined_filters()
-        test6_passed = self.test_analytics_endpoint_structure()
+        admin_endpoints = [
+            "/admin/leads",
+            "/admin/orders", 
+            "/admin/deliveries",
+            "/admin/customers"
+        ]
+        
+        all_passed = True
+        
+        for i, endpoint in enumerate(admin_endpoints, 7):
+            print(f"\n--- Test {i}: GET {PROJECT62_BASE_URL}{endpoint} ---")
+            
+            result = self.send_request("GET", endpoint)
+            
+            if not result["success"]:
+                print(f"❌ API ERROR: {result['error']}")
+                all_passed = False
+                continue
+                
+            data = result["data"]
+            print(f"Response keys: {list(data.keys())}")
+            
+            # Check if response has expected structure
+            endpoint_name = endpoint.split("/")[-1]  # leads, orders, deliveries, customers
+            has_data_array = endpoint_name in data and isinstance(data[endpoint_name], list)
+            
+            print(f"✅ Has {endpoint_name} array: {has_data_array}")
+            
+            if not has_data_array:
+                all_passed = False
+            
+            self.test_results.append({
+                "test": f"Admin {endpoint_name.title()}",
+                "passed": has_data_array,
+                "details": {
+                    "has_data_array": has_data_array,
+                    "endpoint": endpoint
+                }
+            })
+        
+        print(f"\n🎯 ADMIN ENDPOINTS RESULT: {'✅ PASSED' if all_passed else '❌ FAILED'}")
+        return all_passed
+
+    def run_all_project62_tests(self):
+        """Run all Project 62 authentication and dashboard tests"""
+        print("🚀 Starting Project 62 Authentication & Dashboard Testing Suite")
+        print(f"🔗 Testing base URL: {PROJECT62_BASE_URL}")
+        
+        # Run authentication flow tests
+        test1_passed = self.test_register_customer()
+        test2_passed = self.test_login_customer()
+        test3_passed = self.test_verify_token()
+        test4_passed = self.test_customer_dashboard()
+        test5_passed = self.test_update_address()
+        test6_passed = self.test_send_magic_link()
+        test7_passed = self.test_admin_endpoints()
         
         # Summary
         print("\n" + "="*80)
-        print("📊 ANALYTICS TESTS SUMMARY")
+        print("📊 PROJECT 62 TESTS SUMMARY")
         print("="*80)
         
         passed_count = sum(1 for result in self.test_results if result["passed"])
@@ -487,12 +539,12 @@ class Project62Tester:
             status = "✅ PASSED" if result["passed"] else "❌ FAILED"
             print(f"{status}: {result['test']}")
             
-        print(f"\n🎯 OVERALL RESULT: {passed_count}/{total_count} analytics tests passed")
+        print(f"\n🎯 OVERALL RESULT: {passed_count}/{total_count} Project 62 tests passed")
         
         if passed_count == total_count:
-            print("🎉 ALL ANALYTICS TESTS PASSED! Filtering functionality is working correctly.")
+            print("🎉 ALL PROJECT 62 TESTS PASSED! Authentication and dashboard endpoints working correctly.")
         else:
-            print("⚠️  SOME ANALYTICS TESTS FAILED. Check the filtering logic and calculations.")
+            print("⚠️  SOME PROJECT 62 TESTS FAILED. Check the authentication flow and endpoint implementations.")
             
         return passed_count == total_count
 
