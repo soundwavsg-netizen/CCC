@@ -325,11 +325,15 @@ const MealPrepCheckout = () => {
           <h3>📦 Delivery Information</h3>
           <ul>
             <li>Meals are delivered once a week on your scheduled day</li>
-            <li>Each delivery contains meals for 6 days (one rest day)</li>
-            <li>All meals are freshly prepared and properly packaged</li>
-            <li>Storage instructions included with each delivery</li>
-            <li>You can pause or modify your subscription anytime</li>
+            <li>Each delivery contains meals for 6 days (one rest day per week)</li>
+            <li>All meals are freshly prepared and properly packaged for freshness</li>
+            <li>Storage and heating-up instructions included with each delivery</li>
+            <li>Deliveries available Monday-Friday only (No weekend delivery)</li>
+            <li>Minimum 3 business days' notice required for first delivery</li>
           </ul>
+          <p style={{ marginTop: '20px', padding: '15px', background: '#f0fff9', borderLeft: '4px solid #00b894', borderRadius: '8px' }}>
+            <strong>Note:</strong> Need to pause or modify your subscription? Contact us at <a href="mailto:project62@gmail.com" style={{ color: '#00b894' }}>project62@gmail.com</a> at least 2 days before your next delivery.
+          </p>
         </div>
       </div>
     </div>
