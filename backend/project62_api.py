@@ -147,6 +147,26 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     payload = verify_jwt_token(token)
     return payload
 
+async def get_current_admin(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Dependency to get current user and verify admin role"""
+    token = credentials.credentials
+    payload = verify_jwt_token(token)
+    
+    # Get user from Firestore to check role
+    customer_id = payload["email"].replace("@", "_at_").replace(".", "_")
+    customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+    customer_doc = customer_ref.get()
+    
+    if not customer_doc.exists:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    customer_data = customer_doc.to_dict()
+    
+    if customer_data.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    return payload
+
 async def send_free_guide_email(name: str, email: str):
     """Send free 6-Day Guide via SendGrid with PDF attachment"""
     try:
