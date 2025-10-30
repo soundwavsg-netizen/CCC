@@ -23,6 +23,7 @@ const AdminProducts = () => {
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadingProductId, setUploadingProductId] = useState(null);
+  const [uploadingImageProductId, setUploadingImageProductId] = useState(null);
   
   // Discount form
   const [showDiscountForm, setShowDiscountForm] = useState(false);
