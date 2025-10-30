@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Backend Testing Suite for Math Analysis System
-Tests the /api/math-analysis/analytics endpoint filtering functionality
+Backend Testing Suite for Project 62 Authentication and Dashboard Endpoints
+Tests authentication flow, customer dashboard, and admin endpoints
 """
 
 import requests
@@ -12,8 +12,13 @@ import time
 
 # Configuration
 BACKEND_URL = "https://fitness-nutrition-5.preview.emergentagent.com"
-TUITION_API_ENDPOINT = f"{BACKEND_URL}/api/tuition/chat"
-ANALYTICS_API_ENDPOINT = f"{BACKEND_URL}/api/math-analysis/analytics"
+PROJECT62_BASE_URL = f"{BACKEND_URL}/api/project62"
+
+# Test user credentials
+TEST_EMAIL = "testuser@project62.com"
+TEST_PASSWORD = "testpass123"
+TEST_NAME = "Test User"
+TEST_PHONE = "+65 9123 4567"
 
 class MathAnalyticsTester:
     def __init__(self):
