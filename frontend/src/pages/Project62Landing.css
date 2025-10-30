@@ -50,8 +50,26 @@
 .hero-subtitle {
   font-size: 1.2rem;
   line-height: 1.8;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
   opacity: 0.9;
+}
+
+.hero-explanation {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  padding: 20px;
+  background: rgba(0, 184, 148, 0.1);
+  border-left: 4px solid var(--p62-green);
+  border-radius: 8px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.highlight-text {
+  color: var(--p62-green);
+  font-weight: 600;
 }
 
 .hero-buttons {
