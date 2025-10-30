@@ -29,6 +29,27 @@
   margin: 0;
 }
 
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.admin-link-btn {
+  background: #f0f0f0;
+  color: #111111;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-link-btn:hover {
+  background: #e0e0e0;
+  transform: translateY(-2px);
+}
+
 .logout-btn {
   background: #111111;
   color: white;
