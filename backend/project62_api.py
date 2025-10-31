@@ -850,7 +850,9 @@ async def login_customer(req: CustomerLoginRequest):
         })
         
         if response.status_code != 200:
-            raise HTTPException(status_code=401, detail="Invalid email or password")
+            error_detail = response.text
+            print(f"Firebase Auth Error: Status {response.status_code}, Response: {error_detail}")
+            raise HTTPException(status_code=401, detail=f"Firebase Auth Error: {error_detail}")
         
         auth_data = response.json()
         
