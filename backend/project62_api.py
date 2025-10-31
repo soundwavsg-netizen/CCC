@@ -843,11 +843,17 @@ async def login_customer(req: CustomerLoginRequest):
         firebase_api_key = os.getenv("FIREBASE_WEB_API_KEY")
         auth_url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={firebase_api_key}"
         
+        # Add referer header to match Firebase configuration
+        headers = {
+            "Referer": "https://emergentai.app/",
+            "Content-Type": "application/json"
+        }
+        
         response = requests.post(auth_url, json={
             "email": req.email,
             "password": req.password,
             "returnSecureToken": True
-        })
+        }, headers=headers)
         
         if response.status_code != 200:
             error_detail = response.text
