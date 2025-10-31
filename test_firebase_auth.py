@@ -7,7 +7,7 @@ import requests
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv("/app/backend/.env")
 
 firebase_api_key = os.getenv("FIREBASE_WEB_API_KEY")
 print(f"Firebase API Key: {firebase_api_key}")
