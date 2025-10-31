@@ -1384,6 +1384,177 @@ async def delete_product(product_id: str, current_user: dict = Depends(get_curre
         raise HTTPException(status_code=500, detail=str(e))
 
 # ========================
+# Category Management (Admin)
+# ========================
+
+@router.get("/admin/categories")
+async def get_all_categories(current_user: dict = Depends(get_current_admin)):
+    """Get all product categories"""
+    try:
+        categories_ref = db.collection("project62").document("categories").collection("all")
+        categories = [doc.to_dict() for doc in categories_ref.stream()]
+        categories.sort(key=lambda x: x.get("name", ""))
+        return {"categories": categories, "count": len(categories)}
+    except Exception as e:
+        print(f"Get categories error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/admin/categories")
+async def create_category(category: CategoryRequest, current_user: dict = Depends(get_current_admin)):
+    """Create a new category"""
+    try:
+        # Generate slug from name if not provided
+        slug = category.slug or category.name.lower().replace(" ", "-").replace("'", "").replace(",", "")
+        category_id = str(uuid.uuid4())
+        
+        # Check if slug already exists
+        categories_ref = db.collection("project62").document("categories").collection("all")
+        existing_categories = [doc.to_dict() for doc in categories_ref.stream()]
+        if any(c.get("slug") == slug for c in existing_categories):
+            raise HTTPException(status_code=400, detail="Category with this slug already exists")
+        
+        category_data = {
+            "category_id": category_id,
+            "name": category.name,
+            "slug": slug,
+            "created_at": datetime.utcnow().isoformat()
+        }
+        
+        db.collection("project62").document("categories").collection("all").document(category_id).set(category_data)
+        
+        print(f"✅ Category created: {category.name} (slug: {slug})")
+        return {"status": "success", "category_id": category_id, "category": category_data}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Create category error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.put("/admin/categories/{category_id}")
+async def update_category(category_id: str, category: CategoryRequest, current_user: dict = Depends(get_current_admin)):
+    """Update a category"""
+    try:
+        category_ref = db.collection("project62").document("categories").collection("all").document(category_id)
+        category_doc = category_ref.get()
+        
+        if not category_doc.exists:
+            raise HTTPException(status_code=404, detail="Category not found")
+        
+        update_data = {
+            "name": category.name,
+            "slug": category.slug or category.name.lower().replace(" ", "-").replace("'", "").replace(",", "")
+        }
+        
+        category_ref.update(update_data)
+        return {"status": "success", "message": "Category updated successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Update category error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/admin/categories/{category_id}")
+async def delete_category(category_id: str, current_user: dict = Depends(get_current_admin)):
+    """Delete a category"""
+    try:
+        db.collection("project62").document("categories").collection("all").document(category_id).delete()
+        return {"status": "success", "message": "Category deleted successfully"}
+    except Exception as e:
+        print(f"Delete category error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ========================
+# Public Products Endpoint (for Shop Page)
+# ========================
+
+@router.get("/products")
+async def get_public_products(
+    category: Optional[str] = None,
+    type: Optional[str] = None,
+    search: Optional[str] = None,
+    sort_by: Optional[str] = "newest",  # newest, price_low, price_high, name
+    limit: Optional[int] = 12,
+    offset: Optional[int] = 0
+):
+    """Get public products with filtering, searching, sorting, and pagination"""
+    try:
+        # Get all public and member-only products (hidden excluded)
+        products_ref = db.collection("project62").document("products").collection("all")
+        products = [doc.to_dict() for doc in products_ref.stream()]
+        
+        # Filter: only active products with public or member-only visibility
+        products = [p for p in products if p.get("active", True) and p.get("visibility") in ["public", "member-only"]]
+        
+        # Apply category filter
+        if category:
+            products = [p for p in products if p.get("category") == category]
+        
+        # Apply type filter
+        if type:
+            products = [p for p in products if p.get("type") == type]
+        
+        # Apply search filter (name, description, tags)
+        if search:
+            search_lower = search.lower()
+            products = [
+                p for p in products 
+                if search_lower in p.get("name", "").lower() 
+                or search_lower in p.get("description", "").lower()
+                or any(search_lower in tag.lower() for tag in p.get("tags", []))
+            ]
+        
+        # Sort products
+        if sort_by == "price_low":
+            products.sort(key=lambda x: x.get("price", 0))
+        elif sort_by == "price_high":
+            products.sort(key=lambda x: x.get("price", 0), reverse=True)
+        elif sort_by == "name":
+            products.sort(key=lambda x: x.get("name", "").lower())
+        else:  # newest (default)
+            products.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+        
+        # Get total count before pagination
+        total_count = len(products)
+        
+        # Apply pagination
+        products = products[offset:offset+limit]
+        
+        return {
+            "products": products,
+            "count": len(products),
+            "total": total_count,
+            "offset": offset,
+            "limit": limit
+        }
+    except Exception as e:
+        print(f"Get public products error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/products/featured")
+async def get_featured_products():
+    """Get featured products for landing page"""
+    try:
+        products_ref = db.collection("project62").document("products").collection("all")
+        products = [doc.to_dict() for doc in products_ref.stream()]
+        
+        # Filter: only active, featured, public products
+        featured_products = [
+            p for p in products 
+            if p.get("active", True) 
+            and p.get("is_featured", False) 
+            and p.get("visibility") == "public"
+        ]
+        
+        # Sort by featured_order
+        featured_products.sort(key=lambda x: x.get("featured_order", 999))
+        
+        return {"products": featured_products, "count": len(featured_products)}
+    except Exception as e:
+        print(f"Get featured products error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ========================
 # Discount Code Management (Admin)
 # ========================
 
