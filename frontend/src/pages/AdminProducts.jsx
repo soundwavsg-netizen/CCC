@@ -21,6 +21,7 @@ const AdminProducts = () => {
     delivery_charge: '',
     stock_quantity: ''
   });
+  const [editingProduct, setEditingProduct] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadingProductId, setUploadingProductId] = useState(null);
   const [uploadingImageProductId, setUploadingImageProductId] = useState(null);
