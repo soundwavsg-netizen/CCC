@@ -1272,7 +1272,7 @@ async def update_product(product_id: str, product: ProductUpdateRequest, current
 
 @router.post("/admin/products/{product_id}/upload")
 async def upload_product_file(product_id: str, request: Request, current_user: dict = Depends(get_current_admin)):
-    """Upload PDF file for a product"""
+    """Upload PDF file for a digital product"""
     try:
         from fastapi import File, UploadFile, Form
         
@@ -1287,12 +1287,12 @@ async def upload_product_file(product_id: str, request: Request, current_user: d
         file_content = await file.read()
         
         # Upload to Firebase Storage
-        blob = bucket.blob(f"digital_products/{product_id}/{file.filename}")
+        blob = bucket.blob(f"products/digital/{product_id}/{file.filename}")
         blob.upload_from_string(file_content, content_type=file.content_type)
         blob.make_public()
         
         # Update product with file URL
-        product_ref = db.collection("project62").document("digital_products").collection("all").document(product_id)
+        product_ref = db.collection("project62").document("products").collection("all").document(product_id)
         product_ref.update({
             "file_url": blob.public_url,
             "file_name": file.filename,
@@ -1321,12 +1321,12 @@ async def upload_product_image(product_id: str, request: Request, current_user: 
         file_content = await file.read()
         
         # Upload to Firebase Storage
-        blob = bucket.blob(f"product_images/{product_id}/{file.filename}")
+        blob = bucket.blob(f"products/images/{product_id}/{file.filename}")
         blob.upload_from_string(file_content, content_type=file.content_type)
         blob.make_public()
         
         # Get product and update images array
-        product_ref = db.collection("project62").document("digital_products").collection("all").document(product_id)
+        product_ref = db.collection("project62").document("products").collection("all").document(product_id)
         product_doc = product_ref.get()
         
         if not product_doc.exists:
@@ -1352,7 +1352,7 @@ async def upload_product_image(product_id: str, request: Request, current_user: 
 async def delete_product_image(product_id: str, image_url: str, current_user: dict = Depends(get_current_admin)):
     """Delete a product image"""
     try:
-        product_ref = db.collection("project62").document("digital_products").collection("all").document(product_id)
+        product_ref = db.collection("project62").document("products").collection("all").document(product_id)
         product_doc = product_ref.get()
         
         if not product_doc.exists:
@@ -1377,7 +1377,7 @@ async def delete_product_image(product_id: str, image_url: str, current_user: di
 async def delete_product(product_id: str, current_user: dict = Depends(get_current_admin)):
     """Delete a product"""
     try:
-        db.collection("project62").document("digital_products").collection("all").document(product_id).delete()
+        db.collection("project62").document("products").collection("all").document(product_id).delete()
         return {"status": "success", "message": "Product deleted successfully"}
     except Exception as e:
         print(f"Delete product error: {e}")
