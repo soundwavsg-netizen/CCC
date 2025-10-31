@@ -290,15 +290,18 @@ backend:
 
   - task: "Project 62 Shop - Phase 1: Enhanced Product Model & API"
     implemented: true
-    working: "needs_testing"
+    working: false
     file: "/app/backend/project62_api.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "critical"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "needs_testing"
         agent: "main"
         comment: "IMPLEMENTED: Enhanced Pydantic models (ProductCreateRequest, ProductUpdateRequest, CategoryRequest) with new fields: type (digital/physical/subscription), category, tags[], is_featured, featured_order, visibility (public/member-only/hidden), stripe_product_id, inventory, image_url. Updated all product endpoints to use new 'products' collection instead of 'digital_products'. Added filtering support to GET /admin/products (category, type, visibility, featured)."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE: Admin authentication blocked by Firebase Web API key configuration. Firebase returns 'Requests from referer <empty> are blocked' (HTTP 403). **Root Cause**: Firebase Web API key has HTTP referrer restrictions that block server-side requests. **Admin endpoints cannot be tested** due to authentication failure. **Implementation appears correct** - admin user exists, JWT tokens work, but Firebase Auth REST API blocks backend requests. **REQUIRES**: Firebase project configuration update to allow server-side authentication or alternative auth method."
 
   - task: "Project 62 Shop - Phase 1: Category Management API"
     implemented: true
