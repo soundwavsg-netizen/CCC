@@ -1305,6 +1305,11 @@ async def handle_stripe_webhook(request: Request):
                     "updated_at": datetime.utcnow().isoformat()
                 })
                 
+                # Process digital product order
+                if transaction_data.get("product_type") == "digital" and not transaction_data.get("order_processed"):
+                    await process_digital_product_order(transaction_data, webhook_response.session_id)
+                    transaction_ref.update({"order_processed": True})
+                
                 # Process meal-prep order if not already processed
                 if transaction_data.get("product_type") == "meal_prep" and not transaction_data.get("order_processed"):
                     await process_meal_prep_order(transaction_data, webhook_response.session_id)
