@@ -75,23 +75,35 @@ const AdminProducts = () => {
     setSuccess('');
 
     try {
-      const response = await fetch(`${BACKEND_URL}/api/project62/admin/products`, {
-        method: 'POST',
+      const url = editingProduct 
+        ? `${BACKEND_URL}/api/project62/admin/products/${editingProduct.product_id}`
+        : `${BACKEND_URL}/api/project62/admin/products`;
+      
+      const method = editingProduct ? 'PUT' : 'POST';
+      
+      const response = await fetch(url, {
+        method: method,
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           ...productForm,
-          price: parseFloat(productForm.price)
+          price: parseFloat(productForm.price),
+          delivery_charge: productForm.delivery_charge ? parseFloat(productForm.delivery_charge) : 0,
+          stock_quantity: productForm.stock_quantity ? parseInt(productForm.stock_quantity) : null
         })
       });
 
-      if (!response.ok) throw new Error('Failed to create product');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Failed to save product');
+      }
 
       const data = await response.json();
-      setSuccess('Product created successfully!');
+      setSuccess(editingProduct ? 'Product updated successfully!' : 'Product created successfully!');
       setShowProductForm(false);
+      setEditingProduct(null);
       setProductForm({ 
         name: '', 
         description: '', 
@@ -103,14 +115,28 @@ const AdminProducts = () => {
       fetchProducts();
       
       // If digital product and file selected, upload it
-      if (selectedFile && data.product_id && productForm.product_type === 'digital') {
+      if (!editingProduct && selectedFile && data.product_id && productForm.product_type === 'digital') {
         await handleUploadFile(data.product_id);
       }
     } catch (err) {
       setError(err.message);
+      console.error('Product save error:', err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleEditProduct = (product) => {
+    setEditingProduct(product);
+    setProductForm({
+      name: product.name,
+      description: product.description,
+      price: product.price.toString(),
+      product_type: product.product_type,
+      delivery_charge: product.delivery_charge ? product.delivery_charge.toString() : '',
+      stock_quantity: product.stock_quantity ? product.stock_quantity.toString() : ''
+    });
+    setShowProductForm(true);
   };
 
   const handleUploadFile = async (productId) => {
