@@ -122,17 +122,36 @@ class ProductCreateRequest(BaseModel):
     name: str
     description: str
     price: float
-    product_type: str  # "digital" or "physical"
-    delivery_charge: Optional[float] = 0  # Only for physical products
-    stock_quantity: Optional[int] = None  # Only for physical products
+    type: str  # "digital", "physical", "subscription"
+    category: str
+    tags: Optional[List[str]] = []
+    is_featured: Optional[bool] = False
+    featured_order: Optional[int] = 999
+    visibility: Optional[str] = "public"  # "public", "member-only", "hidden"
+    stripe_product_id: Optional[str] = None
+    inventory: Optional[int] = None  # For physical products
+    image_url: Optional[str] = None  # Single featured image
+    delivery_charge: Optional[float] = 0  # For physical products
 
 class ProductUpdateRequest(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     price: Optional[float] = None
+    type: Optional[str] = None
+    category: Optional[str] = None
+    tags: Optional[List[str]] = None
+    is_featured: Optional[bool] = None
+    featured_order: Optional[int] = None
+    visibility: Optional[str] = None
+    stripe_product_id: Optional[str] = None
+    inventory: Optional[int] = None
+    image_url: Optional[str] = None
     delivery_charge: Optional[float] = None
-    stock_quantity: Optional[int] = None
     active: Optional[bool] = None
+
+class CategoryRequest(BaseModel):
+    name: str
+    slug: Optional[str] = None
 
 class DiscountCodeRequest(BaseModel):
     code: str
