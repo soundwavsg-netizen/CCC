@@ -41,6 +41,13 @@ def create_admin_user():
         try:
             existing_user = firebase_auth.get_user_by_email(admin_email, app=project62_app)
             print(f"✅ Admin user already exists: {existing_user.uid}")
+            # Update the password to ensure it's correct
+            firebase_auth.update_user(
+                existing_user.uid,
+                password=admin_password,
+                app=project62_app
+            )
+            print(f"✅ Admin password updated")
             firebase_uid = existing_user.uid
         except firebase_auth.UserNotFoundError:
             # Create Firebase user
