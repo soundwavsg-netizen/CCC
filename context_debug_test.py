@@ -7,7 +7,7 @@ import requests
 import json
 import time
 
-BACKEND_URL = "https://fitness-nutrition-5.preview.emergentagent.com"
+BACKEND_URL = "https://project62-app.preview.emergentagent.com"
 API_ENDPOINT = f"{BACKEND_URL}/api/tuition/chat"
 
 def send_message(message, session_id):

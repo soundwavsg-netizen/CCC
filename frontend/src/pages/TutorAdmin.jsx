@@ -9,7 +9,7 @@ const TutorAdmin = () => {
   const [message, setMessage] = useState('');
   const [createdCredentials, setCreatedCredentials] = useState(null);
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://fitness-nutrition-5.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://project62-app.preview.emergentagent.com';
 
   const LOCATIONS = ['Marine Parade', 'Bishan', 'Punggol', 'Kovan', 'Jurong'];
   const LEVELS = ['S1', 'S2', 'S3', 'S4', 'J1', 'J2'];
