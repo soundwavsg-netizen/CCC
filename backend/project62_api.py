@@ -1229,25 +1229,43 @@ async def create_product(product: ProductCreateRequest, current_user: dict = Dep
 async def update_product(product_id: str, product: ProductUpdateRequest, current_user: dict = Depends(get_current_admin)):
     """Update product details"""
     try:
-        product_ref = db.collection("project62").document("digital_products").collection("all").document(product_id)
+        product_ref = db.collection("project62").document("products").collection("all").document(product_id)
         
         update_data = {"updated_at": datetime.utcnow().isoformat()}
         if product.name is not None:
             update_data["name"] = product.name
+            # Update slug when name changes
+            update_data["product_id_slug"] = product.name.lower().replace(" ", "-").replace("'", "").replace(",", "")
         if product.description is not None:
             update_data["description"] = product.description
         if product.price is not None:
-            update_data["price"] = product.price
+            update_data["price"] = float(product.price)
+        if product.type is not None:
+            update_data["type"] = product.type
+        if product.category is not None:
+            update_data["category"] = product.category
+        if product.tags is not None:
+            update_data["tags"] = product.tags
+        if product.is_featured is not None:
+            update_data["is_featured"] = product.is_featured
+        if product.featured_order is not None:
+            update_data["featured_order"] = product.featured_order
+        if product.visibility is not None:
+            update_data["visibility"] = product.visibility
+        if product.stripe_product_id is not None:
+            update_data["stripe_product_id"] = product.stripe_product_id
+        if product.inventory is not None:
+            update_data["inventory"] = product.inventory
+        if product.image_url is not None:
+            update_data["image_url"] = product.image_url
         if product.delivery_charge is not None:
-            update_data["delivery_charge"] = product.delivery_charge
-        if product.stock_quantity is not None:
-            update_data["stock_quantity"] = product.stock_quantity
+            update_data["delivery_charge"] = float(product.delivery_charge)
         if product.active is not None:
             update_data["active"] = product.active
         
         product_ref.update(update_data)
         
-        return {"status": "success", "message": "Product updated successfully"}
+        return {"status": "success", "message": "Product updated successfully", "updates": update_data}
     except Exception as e:
         print(f"Update product error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
