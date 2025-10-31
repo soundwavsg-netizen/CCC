@@ -489,6 +489,182 @@ async def check_payment_status(session_id: str, origin_url: str = Header(None, a
         print(f"Payment status check error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+async def process_digital_product_order(transaction_data: dict, session_id: str):
+    """Process digital product order after successful payment - send PDF link"""
+    try:
+        # Get product details from slug
+        product_id_slug = transaction_data.get("product_id")
+        
+        # Get product from Firestore to get the PDF URL
+        products_ref = db.collection("project62").document("digital_products").collection("all")
+        product_query = products_ref.where("product_id_slug", "==", product_id_slug).limit(1).stream()
+        product_docs = list(product_query)
+        
+        pdf_link = None
+        product_name = transaction_data.get("product_name", "Digital Product")
+        
+        if product_docs:
+            product_data = product_docs[0].to_dict()
+            pdf_link = product_data.get("file_url")
+            product_name = product_data.get("name", product_name)
+        
+        # Check if this is the Custom Plan with Ian
+        is_custom_plan = "custom" in product_id_slug.lower() or "custom" in product_name.lower()
+        
+        # Get customer email from metadata
+        customer_email = transaction_data.get("customer_email") or transaction_data.get("email")
+        customer_name = transaction_data.get("customer_name", "Customer")
+        
+        if not customer_email:
+            print(f"⚠️ No customer email found in transaction data for session {session_id}")
+            return
+        
+        # Send appropriate email based on product type
+        if is_custom_plan:
+            # Custom Plan - Send consultation instructions
+            html_content = f"""
+            <html>
+                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                    <h2 style="color: #111111;">Thank You for Your Purchase!</h2>
+                    <p>Hi {customer_name},</p>
+                    <p>You've successfully purchased the <strong>Custom Plan with Ian</strong>!</p>
+                    
+                    <div style="background: #e6fff9; padding: 20px; border-radius: 8px; border-left: 4px solid #00b894; margin: 20px 0;">
+                        <h3 style="color: #00b894; margin-top: 0;">📋 What Happens Next?</h3>
+                        <ol style="line-height: 1.8;">
+                            <li><strong>Schedule Your Consultation:</strong> Contact Ian via WhatsApp at <a href="https://wa.me/6589821301" style="color: #00b894;">+65 8982 1301</a></li>
+                            <li><strong>Prepare Your Info:</strong> Think about:
+                                <ul>
+                                    <li>Your current fitness level and goals</li>
+                                    <li>Daily schedule and meal timing preferences</li>
+                                    <li>Food preferences and dietary restrictions</li>
+                                    <li>Any health conditions or concerns</li>
+                                </ul>
+                            </li>
+                            <li><strong>Consultation Call:</strong> Ian will create your personalized plan during a 30-minute consultation</li>
+                            <li><strong>Receive Your Plan:</strong> Get your custom meal and fitness plan within 48 hours</li>
+                        </ol>
+                    </div>
+                    
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                        <p style="margin: 0;"><strong>📱 Contact Ian Now:</strong></p>
+                        <p style="margin: 5px 0 0 0;">WhatsApp: <a href="https://wa.me/6589821301" style="color: #00b894;">+65 8982 1301</a></p>
+                        <p style="margin: 5px 0 0 0;">Email: project62sg@gmail.com</p>
+                    </div>
+                    
+                    <p>Ian is excited to work with you on your transformation journey!</p>
+                    
+                    <p style="margin-top: 30px; color: #666;">
+                        Best regards,<br>
+                        <strong>Project 62 Team</strong>
+                    </p>
+                </body>
+            </html>
+            """
+            subject = "Your Custom Plan - Let's Schedule Your Consultation!"
+        else:
+            # Regular digital product - Send PDF link
+            pdf_section = ""
+            if pdf_link:
+                pdf_section = f"""
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="{pdf_link}" 
+                       style="background-color: #00b894; color: white; padding: 15px 30px; 
+                              text-decoration: none; border-radius: 8px; display: inline-block; 
+                              font-weight: bold;">
+                        📥 Download Your Plan (PDF)
+                    </a>
+                </div>
+                """
+            else:
+                pdf_section = """
+                <div style="background: #ffe6e6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <p style="margin: 0; color: #d63031;">⚠️ PDF is being prepared and will be sent to you within 24 hours.</p>
+                </div>
+                """
+            
+            html_content = f"""
+            <html>
+                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                    <h2 style="color: #111111;">Thank You for Your Purchase!</h2>
+                    <p>Hi {customer_name},</p>
+                    <p>You've successfully purchased <strong>{product_name}</strong>!</p>
+                    
+                    {pdf_section}
+                    
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                        <h3 style="color: #111111; margin-top: 0;">📖 What's Inside:</h3>
+                        <p style="line-height: 1.6; color: #666;">
+                            Your complete guide includes meal plans, nutrition tips, grocery lists, 
+                            and everything you need to start your transformation journey.
+                        </p>
+                    </div>
+                    
+                    <div style="background: #e6fff9; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #00b894;">
+                        <p style="margin: 0;"><strong>💡 Need More Support?</strong></p>
+                        <p style="margin: 5px 0 0 0;">Join our meal-prep subscription for weekly pre-made meals delivered to your door!</p>
+                        <p style="margin: 5px 0 0 0;"><a href="https://cccdigital.sg/project62#meal-prep" style="color: #00b894;">View Meal-Prep Plans →</a></p>
+                    </div>
+                    
+                    <p style="margin-top: 30px; color: #666;">
+                        Best regards,<br>
+                        <strong>Project 62 Team</strong>
+                    </p>
+                </body>
+            </html>
+            """
+            subject = f"Your {product_name} is Ready!"
+        
+        # Send email to customer
+        try:
+            message = Mail(
+                from_email=SENDGRID_FROM_EMAIL,
+                to_emails=customer_email,
+                subject=subject,
+                html_content=html_content
+            )
+            
+            sg = SendGridAPIClient(SENDGRID_API_KEY)
+            response = sg.send(message)
+            print(f"✅ Digital product email sent to {customer_email} - Status: {response.status_code}")
+        except Exception as e:
+            print(f"❌ Email sending error: {e}")
+        
+        # Also notify admin
+        try:
+            admin_content = f"""
+            <html>
+                <body style="font-family: Arial, sans-serif;">
+                    <h2>🎉 New Digital Product Purchase!</h2>
+                    <p><strong>Product:</strong> {product_name}</p>
+                    <p><strong>Customer:</strong> {customer_name}</p>
+                    <p><strong>Email:</strong> {customer_email}</p>
+                    <p><strong>Amount:</strong> ${transaction_data.get('amount', 0)} SGD</p>
+                    <p><strong>Session ID:</strong> {session_id}</p>
+                    <hr>
+                    {f'<p><strong>Action Required:</strong> Schedule consultation call with customer!</p>' if is_custom_plan else '<p>PDF link sent to customer automatically.</p>'}
+                </body>
+            </html>
+            """
+            
+            admin_message = Mail(
+                from_email=SENDGRID_FROM_EMAIL,
+                to_emails='project62sg@gmail.com',
+                subject=f'New Purchase: {product_name} - {customer_name}',
+                html_content=admin_content
+            )
+            
+            sg = SendGridAPIClient(SENDGRID_API_KEY)
+            sg.send(admin_message)
+            print(f"✅ Admin notification sent for digital product purchase")
+        except Exception as e:
+            print(f"❌ Admin email error: {e}")
+            
+    except Exception as e:
+        print(f"❌ Process digital product error: {e}")
+        import traceback
+        traceback.print_exc()
+
 async def process_meal_prep_order(transaction_data: dict, session_id: str):
     """Process meal-prep order after successful payment"""
     try:
