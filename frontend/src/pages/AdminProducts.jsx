@@ -352,7 +352,7 @@ const AdminProducts = () => {
           {showProductForm && (
             <div className="form-modal">
               <div className="form-content">
-                <h3>Create New Product</h3>
+                <h3>{editingProduct ? 'Edit Product' : 'Create New Product'}</h3>
                 <form onSubmit={handleCreateProduct}>
                   <div className="form-group">
                     <label>Product Type</label>
