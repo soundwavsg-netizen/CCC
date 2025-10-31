@@ -14,8 +14,8 @@ load_dotenv()
 
 # Initialize Firebase
 try:
-    firebase_cred_path = os.getenv("FIREBASE_CREDENTIALS_PATH")
-    if not firebase_cred_path or not os.path.exists(firebase_cred_path):
+    firebase_cred_path = "/app/backend/project62_assets/project62-firebase-credentials.json"
+    if not os.path.exists(firebase_cred_path):
         raise Exception(f"Firebase credentials not found at {firebase_cred_path}")
     
     try:
