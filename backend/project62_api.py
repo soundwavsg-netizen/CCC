@@ -1142,48 +1142,79 @@ async def update_delivery_status(delivery_id: str, status: str, current_user: di
 # ========================
 
 @router.get("/admin/products")
-async def get_all_products(current_user: dict = Depends(get_current_admin)):
-    """Get all digital products"""
+async def get_all_products(
+    current_user: dict = Depends(get_current_admin),
+    category: Optional[str] = None,
+    type: Optional[str] = None,
+    visibility: Optional[str] = None,
+    featured: Optional[bool] = None
+):
+    """Get all products with optional filters"""
     try:
-        products_ref = db.collection("project62").document("digital_products").collection("all")
+        products_ref = db.collection("project62").document("products").collection("all")
         products = [doc.to_dict() for doc in products_ref.stream()]
-        products.sort(key=lambda x: x.get("created_at", ""), reverse=True)
-        return {"products": products}
+        
+        # Apply filters
+        if category:
+            products = [p for p in products if p.get("category") == category]
+        if type:
+            products = [p for p in products if p.get("type") == type]
+        if visibility:
+            products = [p for p in products if p.get("visibility") == visibility]
+        if featured is not None:
+            products = [p for p in products if p.get("is_featured") == featured]
+        
+        # Sort by created_at (newest first) or featured_order if featured
+        if featured:
+            products.sort(key=lambda x: x.get("featured_order", 999))
+        else:
+            products.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+        
+        return {"products": products, "count": len(products)}
     except Exception as e:
         print(f"Get products error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/admin/products")
 async def create_product(product: ProductCreateRequest, current_user: dict = Depends(get_current_admin)):
-    """Create a new product (digital or physical)"""
+    """Create a new product (digital, physical, or subscription)"""
     try:
         product_id = str(uuid.uuid4())
         
         # Generate slug from name
-        product_slug = product.name.lower().replace(" ", "-").replace("'", "")
+        product_slug = product.name.lower().replace(" ", "-").replace("'", "").replace(",", "")
         
         product_data = {
             "product_id": product_id,
             "product_id_slug": product_slug,
             "name": product.name,
             "description": product.description,
-            "price": product.price,
-            "product_type": product.product_type,  # "digital" or "physical"
+            "price": float(product.price),
+            "type": product.type,  # "digital", "physical", "subscription"
+            "category": product.category,
+            "tags": product.tags or [],
+            "is_featured": product.is_featured or False,
+            "featured_order": product.featured_order or 999,
+            "visibility": product.visibility or "public",
+            "stripe_product_id": product.stripe_product_id,
+            "inventory": int(product.inventory) if product.inventory else None,
+            "image_url": product.image_url or None,
             "delivery_charge": float(product.delivery_charge) if product.delivery_charge else 0.0,
-            "stock_quantity": int(product.stock_quantity) if product.stock_quantity else None,
-            "file_url": None if product.product_type == "digital" else "N/A",  # Physical products don't need PDF
-            "images": [],  # Array of image URLs
+            "file_url": None,  # Will be uploaded separately for digital products
+            "images": [],  # Additional images array
             "active": True,
             "created_at": datetime.utcnow().isoformat(),
             "updated_at": datetime.utcnow().isoformat()
         }
         
         print(f"📦 Creating product: {product.name}")
-        print(f"   Type: {product.product_type}")
+        print(f"   Type: {product.type}")
+        print(f"   Category: {product.category}")
         print(f"   Price: ${product.price}")
-        print(f"   Delivery: ${product_data['delivery_charge']}")
+        print(f"   Featured: {product_data['is_featured']} (Order: {product_data['featured_order']})")
+        print(f"   Visibility: {product_data['visibility']}")
         
-        db.collection("project62").document("digital_products").collection("all").document(product_id).set(product_data)
+        db.collection("project62").document("products").collection("all").document(product_id).set(product_data)
         
         print(f"✅ Product created successfully: {product_id}")
         
