@@ -102,17 +102,24 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Investigate data accuracy issue: User reports that when asking chatbot for 'S3 AMath Marine Parade classes', only 4 tutors are showing.
+user_problem_statement: "PROJECT 62 SHOP SYSTEM - Full E-Commerce Platform Implementation
 
-**Need to verify**:
-1. **Check Firebase Data**: How many tutors actually teach S3 AMath at Marine Parade in the database?
-2. **Test the Chatbot Endpoint**: Test `/api/tuition/chat` endpoint with query: 'Show me S3 AMath classes at Marine Parade'
-3. **Compare with Available Tutors Endpoint**: Test GET `/api/admin/available-tutors?level=S3&subject=AMath&location=Marine Parade`
+**Phase 1-2 Implementation (Current)**:
+Build comprehensive product management and shop system with:
+1. Enhanced product model (type, category, tags, featured, visibility, Stripe integration)
+2. Category management system
+3. Public products API with filters, search, sorting, pagination
+4. Admin product CRUD with image uploads
+5. Seed 4 flagship products (6-Day Starter, 6-Week Transformation, Custom Plan, Meal Prep)
+6. Admin Dashboard Products tab UI
 
-**Key Question**: 
-- Does Firebase actually have more than 4 tutors for S3 AMath at Marine Parade?
-- If yes, why is the chatbot only showing 4?
-- If no, this is a data upload issue, not a chatbot issue"
+**Technical Requirements**:
+- Firestore collections: /project62/products and /project62/categories
+- Product types: digital, physical, subscription
+- Visibility levels: public, member-only, hidden
+- Featured products with ordering
+- Stripe product ID integration
+- Image uploads to Firebase Storage"
 
 backend:
   - task: "Fix too broad query clarification for Level + Subject without Location"
