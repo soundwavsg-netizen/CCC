@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Backend Testing Suite for Project 62 Authentication and Dashboard Endpoints
-Tests authentication flow, customer dashboard, and admin endpoints
+Backend Testing Suite for Project 62 Shop System - Phase 1 Comprehensive Testing
+Tests admin authentication, category management, product management, and public products API
 """
 
 import requests
@@ -13,6 +13,10 @@ import time
 # Configuration
 BACKEND_URL = "https://project62-app.preview.emergentagent.com"
 PROJECT62_BASE_URL = f"{BACKEND_URL}/api/project62"
+
+# Admin credentials (as specified in review request)
+ADMIN_EMAIL = "admin@project62.com"
+ADMIN_PASSWORD = "admin123"
 
 # Test user credentials
 TEST_EMAIL = "testuser@project62.com"
