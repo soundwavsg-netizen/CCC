@@ -548,6 +548,12 @@ const AdminProducts = () => {
                     {product.active ? 'Active' : 'Inactive'}
                   </button>
                   <button
+                    onClick={() => handleEditProduct(product)}
+                    className="edit-btn"
+                  >
+                    Edit
+                  </button>
+                  <button
                     onClick={() => handleDeleteProduct(product.product_id)}
                     className="delete-btn"
                   >
