@@ -1139,8 +1139,13 @@ async def create_product(product: ProductCreateRequest, current_user: dict = Dep
     """Create a new product (digital or physical)"""
     try:
         product_id = str(uuid.uuid4())
+        
+        # Generate slug from name
+        product_slug = product.name.lower().replace(" ", "-").replace("'", "")
+        
         product_data = {
             "product_id": product_id,
+            "product_id_slug": product_slug,
             "name": product.name,
             "description": product.description,
             "price": product.price,
@@ -1154,11 +1159,18 @@ async def create_product(product: ProductCreateRequest, current_user: dict = Dep
             "updated_at": datetime.utcnow().isoformat()
         }
         
+        print(f"📦 Creating product: {product.name}")
+        print(f"   Type: {product.product_type}")
+        print(f"   Price: ${product.price}")
+        print(f"   Delivery: ${product_data['delivery_charge']}")
+        
         db.collection("project62").document("digital_products").collection("all").document(product_id).set(product_data)
+        
+        print(f"✅ Product created successfully: {product_id}")
         
         return {"status": "success", "product_id": product_id, "product": product_data}
     except Exception as e:
-        print(f"Create product error: {e}")
+        print(f"❌ Create product error: {e}")
         import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
