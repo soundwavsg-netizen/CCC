@@ -438,9 +438,20 @@ const AdminProducts = () => {
                   
                   <div className="form-actions">
                     <button type="submit" className="submit-btn" disabled={loading}>
-                      {loading ? 'Creating...' : 'Create Product'}
+                      {loading ? (editingProduct ? 'Updating...' : 'Creating...') : (editingProduct ? 'Update Product' : 'Create Product')}
                     </button>
-                    <button type="button" onClick={() => setShowProductForm(false)} className="cancel-btn">
+                    <button type="button" onClick={() => {
+                      setShowProductForm(false);
+                      setEditingProduct(null);
+                      setProductForm({ 
+                        name: '', 
+                        description: '', 
+                        price: '', 
+                        product_type: 'digital',
+                        delivery_charge: '',
+                        stock_quantity: ''
+                      });
+                    }} className="cancel-btn">
                       Cancel
                     </button>
                   </div>
