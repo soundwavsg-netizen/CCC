@@ -154,10 +154,14 @@ class CategoryRequest(BaseModel):
     slug: Optional[str] = None
 
 
+class PricingTier(BaseModel):
+    weeks: int
+    price_per_meal: float
+
 class SubscriptionConfigRequest(BaseModel):
     plan_name: str
-    weeks_available: List[int]  # e.g. [1, 2, 3, 4, 6]
-    price_per_meal: float
+    pricing_tiers: List[dict]  # [{"weeks": 1, "price_per_meal": 15}, ...]
+    meals_per_day: int  # 1 or 2
     delivery_fee: float
     description: str
     is_active: Optional[bool] = True
@@ -167,8 +171,8 @@ class SubscriptionConfigRequest(BaseModel):
 
 class SubscriptionConfigUpdateRequest(BaseModel):
     plan_name: Optional[str] = None
-    weeks_available: Optional[List[int]] = None
-    price_per_meal: Optional[float] = None
+    pricing_tiers: Optional[List[dict]] = None
+    meals_per_day: Optional[int] = None
     delivery_fee: Optional[float] = None
     description: Optional[str] = None
     is_active: Optional[bool] = None
