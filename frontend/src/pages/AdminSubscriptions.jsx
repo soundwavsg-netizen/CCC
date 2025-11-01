@@ -13,8 +13,8 @@ const AdminSubscriptions = () => {
   const [showForm, setShowForm] = useState(false);
   const [subscriptionForm, setSubscriptionForm] = useState({
     plan_name: '',
-    weeks_available: '1,2,3,4,6',
-    price_per_meal: '',
+    meals_per_day: 1,
+    pricing_tiers: [{ weeks: 1, price_per_meal: '' }],
     delivery_fee: '',
     description: '',
     is_active: true,
