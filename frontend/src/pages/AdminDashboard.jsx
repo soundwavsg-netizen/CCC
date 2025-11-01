@@ -399,6 +399,13 @@ const AdminDashboard = () => {
             <AdminProducts />
           </div>
         )}
+
+        {/* Subscriptions Tab */}
+        {activeTab === 'subscriptions' && (
+          <div className="content-section subscriptions-tab">
+            <AdminSubscriptions />
+          </div>
+        )}
       </div>
     </div>
   );
