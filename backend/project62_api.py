@@ -1190,6 +1190,10 @@ async def create_product(product: ProductCreateRequest, current_user: dict = Dep
         # Generate slug from name
         product_slug = product.name.lower().replace(" ", "-").replace("'", "").replace(",", "")
         
+        # If featured and featured_order is set, reorder existing products
+        if product.is_featured and product.featured_order:
+            await reorder_featured_products(product.featured_order, None)
+        
         product_data = {
             "product_id": product_id,
             "product_id_slug": product_slug,
@@ -1231,11 +1235,56 @@ async def create_product(product: ProductCreateRequest, current_user: dict = Dep
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
+async def reorder_featured_products(new_order: int, exclude_product_id: str = None):
+    """
+    Automatically reorder featured products to prevent duplicates.
+    When a product is set to position X, all products at position >= X are shifted up by 1.
+    """
+    try:
+        # Get all featured products
+        products_ref = db.collection("project62").document("products").collection("all")
+        all_products = [doc for doc in products_ref.stream()]
+        
+        # Filter to only featured products, excluding the one being updated
+        featured_products = [
+            (doc.id, doc.to_dict()) 
+            for doc in all_products 
+            if doc.to_dict().get("is_featured") and doc.id != exclude_product_id
+        ]
+        
+        # Shift products at or after the new position
+        for product_id, product_data in featured_products:
+            current_order = product_data.get("featured_order", 999)
+            if current_order >= new_order:
+                new_position = current_order + 1
+                print(f"   Reordering: {product_data.get('name')} from position {current_order} to {new_position}")
+                products_ref.document(product_id).update({
+                    "featured_order": new_position,
+                    "updated_at": datetime.utcnow().isoformat()
+                })
+        
+        print(f"✅ Reordering complete for position {new_order}")
+    except Exception as e:
+        print(f"⚠️  Reordering error: {e}")
+        # Don't fail the main operation if reordering fails
+
 @router.put("/admin/products/{product_id}")
 async def update_product(product_id: str, product: ProductUpdateRequest, current_user: dict = Depends(get_current_admin)):
     """Update product details"""
     try:
         product_ref = db.collection("project62").document("products").collection("all").document(product_id)
+        product_doc = product_ref.get()
+        
+        if not product_doc.exists:
+            raise HTTPException(status_code=404, detail="Product not found")
+        
+        current_product = product_doc.to_dict()
+        
+        # Check if featured_order is changing and product is featured
+        if product.featured_order is not None and product.featured_order != current_product.get("featured_order"):
+            is_featured = product.is_featured if product.is_featured is not None else current_product.get("is_featured", False)
+            if is_featured:
+                await reorder_featured_products(product.featured_order, product_id)
         
         update_data = {"updated_at": datetime.utcnow().isoformat()}
         if product.name is not None:
