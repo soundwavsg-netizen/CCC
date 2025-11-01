@@ -8,6 +8,7 @@ const CustomerDashboard = () => {
   const { user, token, logout, isAuthenticated, isAdmin } = useAuth();
   
   const [dashboardData, setDashboardData] = useState(null);
+  const [subscriptionData, setSubscriptionData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [addressEdit, setAddressEdit] = useState(false);
@@ -18,6 +19,8 @@ const CustomerDashboard = () => {
     phone: ''
   });
   const [updateSuccess, setUpdateSuccess] = useState('');
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [selectedUpgradeWeeks, setSelectedUpgradeWeeks] = useState(null);
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
