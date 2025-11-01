@@ -84,21 +84,24 @@ const Project62Landing = () => {
     }
   };
 
-  // Calculate meal-prep pricing
+  // Calculate meal-prep pricing dynamically from subscription data
   const calculateMealPrepPrice = () => {
-    const pricing = {
-      '1_week': { 1: 12.00, 2: 12.00 },
-      '2_weeks': { 1: 11.50, 2: 11.50 },
-      '4_weeks': { 1: 10.80, 2: 10.80 },
-      '6_weeks': { 1: 10.00, 2: 10.00 }
-    };
+    if (!selectedSubscription) {
+      return {
+        pricePerMeal: '0.00',
+        totalMeals: 0,
+        mealCost: '0.00',
+        deliveryCost: '0.00',
+        totalCost: '0.00'
+      };
+    }
     
-    const durationMap = { '1_week': 1, '2_weeks': 2, '4_weeks': 4, '6_weeks': 6 };
-    const weeks = durationMap[selectedDuration];
-    const pricePerMeal = pricing[selectedDuration][selectedMeals];
-    const totalMeals = weeks * 6 * selectedMeals; // 6 days per week
+    const pricePerMeal = getPricePerMeal();
+    const mealsPerDay = selectedSubscription.meals_per_day;
+    const daysPerWeek = 6;
+    const totalMeals = selectedWeeks * daysPerWeek * mealsPerDay;
     const mealCost = totalMeals * pricePerMeal;
-    const deliveryCost = weeks * 20; // $20 per week
+    const deliveryCost = selectedWeeks * selectedSubscription.delivery_fee;
     const totalCost = mealCost + deliveryCost;
     
     return {
