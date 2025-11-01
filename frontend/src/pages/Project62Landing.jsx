@@ -178,38 +178,39 @@ const Project62Landing = () => {
 
       {/* Digital Guides Section */}
       <section className="digital-guides-section">
-        <h2>Digital Guides & Programs</h2>
+        <h2>Featured Products</h2>
         
         <div className="guides-grid">
-          {featuredProducts
-            .filter(product => product.type === 'digital')
-            .map((product) => (
-              <div 
-                key={product.product_id} 
-                className={`guide-card ${product.price === 0 ? 'free' : ''} ${product.name.toLowerCase().includes('custom') ? 'premium' : ''}`}
+          {featuredProducts.map((product) => (
+            <div 
+              key={product.product_id} 
+              className={`guide-card ${product.price === 0 ? 'free' : ''} ${product.name.toLowerCase().includes('custom') ? 'premium' : ''}`}
+            >
+              {product.price === 0 && <div className="guide-badge">FREE</div>}
+              {product.name.toLowerCase().includes('custom') && <div className="guide-badge">CUSTOM</div>}
+              {product.type && <div className="guide-badge type-badge">{product.type.toUpperCase()}</div>}
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <div className="guide-price">${product.price}</div>
+              <button 
+                className="btn-guide" 
+                onClick={() => {
+                  if (product.price === 0) {
+                    setShowLeadForm(true);
+                  } else if (product.type === 'subscription') {
+                    document.getElementById('meal-prep').scrollIntoView({ behavior: 'smooth' });
+                  } else {
+                    window.location.href = `/project62/checkout/${product.type}/${product.product_id_slug}`;
+                  }
+                }}
               >
-                {product.price === 0 && <div className="guide-badge">FREE</div>}
-                {product.name.toLowerCase().includes('custom') && <div className="guide-badge">CUSTOM</div>}
-                <h3>{product.name}</h3>
-                <p>{product.description}</p>
-                <div className="guide-price">${product.price}</div>
-                <button 
-                  className="btn-guide" 
-                  onClick={() => {
-                    if (product.price === 0) {
-                      setShowLeadForm(true);
-                    } else {
-                      window.location.href = `/project62/checkout/digital/${product.product_id_slug}`;
-                    }
-                  }}
-                >
-                  {product.price === 0 ? 'Download Free Guide' : 'Get Plan'}
-                </button>
-              </div>
-            ))}
+                {product.price === 0 ? 'Download Free Guide' : product.type === 'subscription' ? 'View Plans' : 'Get Now'}
+              </button>
+            </div>
+          ))}
           
-          {/* Fallback if no featured digital products */}
-          {featuredProducts.filter(p => p.type === 'digital').length === 0 && (
+          {/* Fallback if no featured products */}
+          {featuredProducts.length === 0 && (
             <>
               <div className="guide-card free">
                 <div className="guide-badge">FREE</div>
