@@ -241,6 +241,81 @@ async def get_current_admin(credentials: HTTPAuthorizationCredentials = Depends(
     
     return payload
 
+
+# ========================
+# Loyalty Tier System Functions
+# ========================
+
+def calculate_loyalty_tier(total_weeks: int):
+    """
+    Calculate loyalty tier based on continuous weeks subscribed
+    Returns: (tier_name, discount_percentage, free_delivery, priority_dish)
+    """
+    if total_weeks >= 37:
+        return "Platinum", 10, True, True
+    elif total_weeks >= 25:
+        return "Gold", 10, False, False
+    elif total_weeks >= 13:
+        return "Silver", 5, False, False
+    else:
+        return "Bronze", 0, False, False
+
+def apply_loyalty_discount(base_price: float, loyalty_discount: int, free_delivery: bool, delivery_fee: float):
+    """
+    Apply loyalty discount to pricing
+    Returns: (discounted_meal_price, final_delivery_fee)
+    """
+    discounted_price = base_price * (1 - loyalty_discount / 100)
+    final_delivery = 0 if free_delivery else delivery_fee
+    return discounted_price, final_delivery
+
+def update_customer_loyalty_tier(customer_id: str, additional_weeks: int):
+    """
+    Update customer's loyalty tier after a renewal
+    Adds weeks to total_weeks_subscribed and recalculates tier
+    """
+    try:
+        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+        customer_doc = customer_ref.get()
+        
+        if not customer_doc.exists:
+            print(f"⚠️  Customer {customer_id} not found for loyalty update")
+            return
+        
+        customer_data = customer_doc.to_dict()
+        current_weeks = customer_data.get("total_weeks_subscribed", 0)
+        new_total_weeks = current_weeks + additional_weeks
+        
+        # Calculate new tier
+        tier_name, discount, free_delivery, priority_dish = calculate_loyalty_tier(new_total_weeks)
+        
+        # Update customer document
+        customer_ref.update({
+            "total_weeks_subscribed": new_total_weeks,
+            "loyalty_tier": tier_name,
+            "loyalty_discount": discount,
+            "free_delivery": free_delivery,
+            "priority_dish": priority_dish,
+            "updated_at": datetime.utcnow().isoformat()
+        })
+        
+        print(f"✅ Customer {customer_id} loyalty updated:")
+        print(f"   Total weeks: {new_total_weeks}")
+        print(f"   New tier: {tier_name} ({discount}% off)")
+        if free_delivery:
+            print(f"   🎁 Free delivery unlocked!")
+        
+        return {
+            "tier": tier_name,
+            "total_weeks": new_total_weeks,
+            "discount": discount,
+            "free_delivery": free_delivery
+        }
+    except Exception as e:
+        print(f"❌ Error updating loyalty tier: {e}")
+        return None
+
+
 async def send_free_guide_email(name: str, email: str):
     """Send free 6-Day Guide via SendGrid with PDF attachment"""
     try:
