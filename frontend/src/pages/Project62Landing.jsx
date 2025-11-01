@@ -15,8 +15,11 @@ const Project62Landing = () => {
   const [selectedDuration, setSelectedDuration] = useState('4_weeks');
   const [selectedMeals, setSelectedMeals] = useState(1);
   const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [selectedSubscription, setSelectedSubscription] = useState(null);
+  const [selectedWeeks, setSelectedWeeks] = useState(4);
 
-  // Fetch featured products on mount
+  // Fetch featured products and subscriptions on mount
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
@@ -27,7 +30,21 @@ const Project62Landing = () => {
       }
     };
     
+    const fetchSubscriptions = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/project62/subscriptions/active`);
+        const subs = response.data.subscriptions || [];
+        setSubscriptions(subs);
+        // Set default to 1 meal/day plan if available
+        const defaultSub = subs.find(s => s.meals_per_day === 1) || subs[0];
+        setSelectedSubscription(defaultSub);
+      } catch (error) {
+        console.error('Error fetching subscriptions:', error);
+      }
+    };
+    
     fetchFeaturedProducts();
+    fetchSubscriptions();
   }, []);
 
   // Lead form submission
