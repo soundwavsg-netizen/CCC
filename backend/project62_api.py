@@ -1571,8 +1571,8 @@ async def create_subscription(subscription: SubscriptionConfigRequest, current_u
         subscription_data = {
             "subscription_id": subscription_id,
             "plan_name": subscription.plan_name,
-            "weeks_available": subscription.weeks_available,
-            "price_per_meal": float(subscription.price_per_meal),
+            "pricing_tiers": subscription.pricing_tiers,  # Array of {weeks: int, price_per_meal: float}
+            "meals_per_day": subscription.meals_per_day,
             "delivery_fee": float(subscription.delivery_fee),
             "description": subscription.description,
             "is_active": subscription.is_active if subscription.is_active is not None else True,
@@ -1584,8 +1584,8 @@ async def create_subscription(subscription: SubscriptionConfigRequest, current_u
         }
         
         print(f"🍱 Creating subscription plan: {subscription.plan_name}")
-        print(f"   Weeks: {subscription.weeks_available}")
-        print(f"   Price per meal: ${subscription.price_per_meal}")
+        print(f"   Meals per day: {subscription.meals_per_day}")
+        print(f"   Pricing tiers: {subscription.pricing_tiers}")
         print(f"   Delivery fee: ${subscription.delivery_fee}")
         print(f"   Auto-renew: {subscription_data['auto_renew_enabled']}")
         
