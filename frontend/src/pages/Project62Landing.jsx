@@ -79,13 +79,13 @@ const Project62Landing = () => {
 
   return (
     <div className="project62-landing">
-      {/* Floating Login Button */}
+      {/* Floating Login/Dashboard Button */}
       <button 
         className="floating-login-btn" 
-        onClick={() => navigate('/project62/login')}
-        title="Customer Login"
+        onClick={() => navigate(isAuthenticated ? '/project62/dashboard' : '/project62/login')}
+        title={isAuthenticated ? "Go to Dashboard" : "Customer Login"}
       >
-        Login
+        {isAuthenticated ? 'Dashboard' : 'Login'}
       </button>
       
       {/* Hero Section */}
