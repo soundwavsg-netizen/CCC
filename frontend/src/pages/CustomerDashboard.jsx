@@ -143,6 +143,85 @@ const CustomerDashboard = () => {
     }
   };
 
+  const handleUpgrade = async () => {
+    if (!selectedUpgradeWeeks) return;
+    
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/project62/customer/subscription/upgrade`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ new_commitment_weeks: selectedUpgradeWeeks })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to schedule upgrade');
+      }
+
+      const data = await response.json();
+      setUpdateSuccess(data.message);
+      setShowUpgradeModal(false);
+      fetchSubscription();
+      setTimeout(() => setUpdateSuccess(''), 5000);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleCancelRenewal = async () => {
+    if (!window.confirm('Are you sure you want to cancel auto-renewal? Your subscription will end after the current period.')) return;
+    
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/project62/customer/subscription/cancel`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to cancel renewal');
+      }
+
+      const data = await response.json();
+      setUpdateSuccess(data.message);
+      fetchSubscription();
+      setTimeout(() => setUpdateSuccess(''), 5000);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const getTierColor = (tier) => {
+    const colors = {
+      'Bronze': '#cd7f32',
+      'Silver': '#c0c0c0',
+      'Gold': '#ffd700',
+      'Platinum': '#e5e4e2'
+    };
+    return colors[tier] || '#666';
+  };
+
+  const getTierMessage = (tier, discount, freeDelivery) => {
+    const messages = {
+      'Bronze': 'Start your journey — stay consistent to unlock rewards.',
+      'Silver': `Silver Member – ${discount}% off your next renewal.`,
+      'Gold': `Gold Member – ${discount}% off on renewal.`,
+      'Platinum': `Platinum Member – ${discount}% off + free delivery.`
+    };
+    return messages[tier] || '';
+  };
+
+  const getNextTier = (currentWeeks) => {
+    if (currentWeeks < 13) return { name: 'Silver', weeksNeeded: 13 - currentWeeks };
+    if (currentWeeks < 25) return { name: 'Gold', weeksNeeded: 25 - currentWeeks };
+    if (currentWeeks < 37) return { name: 'Platinum', weeksNeeded: 37 - currentWeeks };
+    return null;
+  };
+
+
   const handleLogout = () => {
     logout();
     navigate('/project62');
