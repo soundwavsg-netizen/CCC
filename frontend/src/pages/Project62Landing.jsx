@@ -47,6 +47,24 @@ const Project62Landing = () => {
     fetchSubscriptions();
   }, []);
 
+  // Calculate price per meal based on selected weeks
+  const getPricePerMeal = () => {
+    if (!selectedSubscription) return 0;
+    const tier = selectedSubscription.pricing_tiers.find(t => t.weeks === selectedWeeks);
+    return tier ? tier.price_per_meal : selectedSubscription.pricing_tiers[0].price_per_meal;
+  };
+
+  // Calculate total cost
+  const calculateTotal = () => {
+    if (!selectedSubscription) return 0;
+    const pricePerMeal = getPricePerMeal();
+    const mealsPerDay = selectedSubscription.meals_per_day;
+    const daysPerWeek = 6;
+    const mealsCost = selectedWeeks * mealsPerDay * daysPerWeek * pricePerMeal;
+    const deliveryCost = selectedWeeks * selectedSubscription.delivery_fee;
+    return mealsCost + deliveryCost;
+  };
+
   // Lead form submission
   const handleLeadSubmit = async (e) => {
     e.preventDefault();
