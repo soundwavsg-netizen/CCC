@@ -209,6 +209,12 @@ const AdminDashboard = () => {
         >
           Products & Discounts
         </button>
+        <button 
+          className={activeTab === 'subscriptions' ? 'tab active' : 'tab'}
+          onClick={() => setActiveTab('subscriptions')}
+        >
+          Subscriptions
+        </button>
       </div>
 
       {/* Tab Content */}
