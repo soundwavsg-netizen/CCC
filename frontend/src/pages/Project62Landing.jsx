@@ -286,25 +286,40 @@ const Project62Landing = () => {
       {/* Meal-Prep Subscription Section */}
       <section className="meal-prep-section" id="meal-prep">
         <h2>Meal-Prep Subscription</h2>
-        <p className="meal-prep-subtitle">Weekly delivery (once a week). Delivery fee $20/week.</p>
+        <p className="meal-prep-subtitle">
+          Weekly delivery (once a week). Delivery fee ${selectedSubscription ? selectedSubscription.delivery_fee : 20}/week.
+        </p>
         
         <div className="meal-prep-calculator">
           <div className="calculator-controls">
             <div className="control-group">
-              <label>Duration</label>
-              <select value={selectedDuration} onChange={(e) => setSelectedDuration(e.target.value)}>
-                <option value="1_week">1 Week</option>
-                <option value="2_weeks">2 Weeks</option>
-                <option value="4_weeks">4 Weeks</option>
-                <option value="6_weeks">6 Weeks</option>
+              <label>Plan</label>
+              <select 
+                value={selectedSubscription?.subscription_id || ''} 
+                onChange={(e) => {
+                  const sub = subscriptions.find(s => s.subscription_id === e.target.value);
+                  setSelectedSubscription(sub);
+                }}
+              >
+                {subscriptions.map(sub => (
+                  <option key={sub.subscription_id} value={sub.subscription_id}>
+                    {sub.plan_name}
+                  </option>
+                ))}
               </select>
             </div>
-            
+
             <div className="control-group">
-              <label>Meals Per Day</label>
-              <select value={selectedMeals} onChange={(e) => setSelectedMeals(parseInt(e.target.value))}>
-                <option value="1">1 Meal/Day</option>
-                <option value="2">2 Meals/Day</option>
+              <label>Duration</label>
+              <select 
+                value={selectedWeeks} 
+                onChange={(e) => setSelectedWeeks(parseInt(e.target.value))}
+              >
+                {selectedSubscription && selectedSubscription.pricing_tiers.map(tier => (
+                  <option key={tier.weeks} value={tier.weeks}>
+                    {tier.weeks} Week{tier.weeks > 1 ? 's' : ''}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -328,7 +343,10 @@ const Project62Landing = () => {
             </div>
           </div>
           
-          <button className="btn-subscribe" onClick={() => window.location.href = `/project62/checkout/meal-prep?duration=${selectedDuration}&meals=${selectedMeals}`}>
+          <button 
+            className="btn-subscribe" 
+            onClick={() => window.location.href = `/project62/checkout/meal-prep?duration=${selectedWeeks}_weeks&meals=${selectedSubscription?.meals_per_day || 1}`}
+          >
             Subscribe Now
           </button>
         </div>
