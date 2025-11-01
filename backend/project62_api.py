@@ -1541,6 +1541,173 @@ async def delete_category(category_id: str, current_user: dict = Depends(get_cur
         print(f"Delete category error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
+# ========================
+# Subscription Config Management (Admin)
+# ========================
+
+@router.get("/admin/subscriptions")
+async def get_all_subscriptions(current_user: dict = Depends(get_current_admin)):
+    """Get all meal-prep subscription plans"""
+    try:
+        subscriptions_ref = db.collection("project62").document("subscriptions_config").collection("all")
+        subscriptions = [doc.to_dict() for doc in subscriptions_ref.stream()]
+        subscriptions.sort(key=lambda x: x.get("plan_name", ""))
+        return {"subscriptions": subscriptions, "count": len(subscriptions)}
+    except Exception as e:
+        print(f"Get subscriptions error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/admin/subscriptions")
+async def create_subscription(subscription: SubscriptionConfigRequest, current_user: dict = Depends(get_current_admin)):
+    """Create a new subscription plan"""
+    try:
+        subscription_id = str(uuid.uuid4())
+        
+        subscription_data = {
+            "subscription_id": subscription_id,
+            "plan_name": subscription.plan_name,
+            "weeks_available": subscription.weeks_available,
+            "price_per_meal": float(subscription.price_per_meal),
+            "delivery_fee": float(subscription.delivery_fee),
+            "description": subscription.description,
+            "is_active": subscription.is_active if subscription.is_active is not None else True,
+            "stripe_plan_id": subscription.stripe_plan_id,
+            "image_url": subscription.image_url,
+            "auto_renew_enabled": subscription.auto_renew_enabled if subscription.auto_renew_enabled is not None else False,
+            "created_at": datetime.utcnow().isoformat(),
+            "updated_at": datetime.utcnow().isoformat()
+        }
+        
+        print(f"🍱 Creating subscription plan: {subscription.plan_name}")
+        print(f"   Weeks: {subscription.weeks_available}")
+        print(f"   Price per meal: ${subscription.price_per_meal}")
+        print(f"   Delivery fee: ${subscription.delivery_fee}")
+        print(f"   Auto-renew: {subscription_data['auto_renew_enabled']}")
+        
+        db.collection("project62").document("subscriptions_config").collection("all").document(subscription_id).set(subscription_data)
+        
+        print(f"✅ Subscription plan created successfully: {subscription_id}")
+        
+        return {"status": "success", "subscription_id": subscription_id, "subscription": subscription_data}
+    except Exception as e:
+        print(f"❌ Create subscription error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.put("/admin/subscriptions/{subscription_id}")
+async def update_subscription(subscription_id: str, subscription: SubscriptionConfigUpdateRequest, current_user: dict = Depends(get_current_admin)):
+    """Update subscription plan details"""
+    try:
+        subscription_ref = db.collection("project62").document("subscriptions_config").collection("all").document(subscription_id)
+        subscription_doc = subscription_ref.get()
+        
+        if not subscription_doc.exists:
+            raise HTTPException(status_code=404, detail="Subscription plan not found")
+        
+        update_data = {"updated_at": datetime.utcnow().isoformat()}
+        if subscription.plan_name is not None:
+            update_data["plan_name"] = subscription.plan_name
+        if subscription.weeks_available is not None:
+            update_data["weeks_available"] = subscription.weeks_available
+        if subscription.price_per_meal is not None:
+            update_data["price_per_meal"] = float(subscription.price_per_meal)
+        if subscription.delivery_fee is not None:
+            update_data["delivery_fee"] = float(subscription.delivery_fee)
+        if subscription.description is not None:
+            update_data["description"] = subscription.description
+        if subscription.is_active is not None:
+            update_data["is_active"] = subscription.is_active
+        if subscription.stripe_plan_id is not None:
+            update_data["stripe_plan_id"] = subscription.stripe_plan_id
+        if subscription.image_url is not None:
+            update_data["image_url"] = subscription.image_url
+        if subscription.auto_renew_enabled is not None:
+            update_data["auto_renew_enabled"] = subscription.auto_renew_enabled
+        
+        subscription_ref.update(update_data)
+        
+        return {"status": "success", "message": "Subscription plan updated successfully", "updates": update_data}
+    except Exception as e:
+        print(f"Update subscription error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/admin/subscriptions/{subscription_id}")
+async def delete_subscription(subscription_id: str, current_user: dict = Depends(get_current_admin)):
+    """Delete a subscription plan"""
+    try:
+        db.collection("project62").document("subscriptions_config").collection("all").document(subscription_id).delete()
+        return {"status": "success", "message": "Subscription plan deleted successfully"}
+    except Exception as e:
+        print(f"Delete subscription error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/admin/subscriptions/{subscription_id}/upload-image")
+async def upload_subscription_image(subscription_id: str, request: Request, current_user: dict = Depends(get_current_admin)):
+    """Upload image for subscription plan"""
+    try:
+        from fastapi import File, UploadFile, Form
+        
+        # Get the uploaded file from request
+        form = await request.form()
+        file = form.get("file")
+        
+        if not file:
+            raise HTTPException(status_code=400, detail="No file provided")
+        
+        # Read file content
+        file_content = await file.read()
+        
+        # Upload to Firebase Storage
+        blob = bucket.blob(f"subscriptions/images/{subscription_id}/{file.filename}")
+        blob.upload_from_string(file_content, content_type=file.content_type)
+        blob.make_public()
+        
+        # Update subscription with image URL
+        subscription_ref = db.collection("project62").document("subscriptions_config").collection("all").document(subscription_id)
+        subscription_ref.update({
+            "image_url": blob.public_url,
+            "updated_at": datetime.utcnow().isoformat()
+        })
+        
+        return {"status": "success", "image_url": blob.public_url}
+    except Exception as e:
+        print(f"Upload subscription image error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ========================
+# Public Subscriptions Endpoint (for Landing Page)
+# ========================
+
+@router.get("/subscriptions/active")
+async def get_active_subscriptions():
+    """Get active subscription plans for landing page"""
+    try:
+        subscriptions_ref = db.collection("project62").document("subscriptions_config").collection("all")
+        subscriptions = [doc.to_dict() for doc in subscriptions_ref.stream()]
+        
+        # Filter: only active subscriptions
+        active_subscriptions = [
+            s for s in subscriptions 
+            if s.get("is_active", False)
+        ]
+        
+        # Sort by plan_name
+        active_subscriptions.sort(key=lambda x: x.get("plan_name", ""))
+        
+        print(f"🍱 Active subscriptions found: {len(active_subscriptions)}")
+        for s in active_subscriptions:
+            print(f"   - {s.get('plan_name')}: ${s.get('price_per_meal')}/meal, weeks: {s.get('weeks_available')}")
+        
+        return {"subscriptions": active_subscriptions, "count": len(active_subscriptions)}
+    except Exception as e:
+        print(f"Get active subscriptions error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # ========================
 # Public Products Endpoint (for Shop Page)
 # ========================
