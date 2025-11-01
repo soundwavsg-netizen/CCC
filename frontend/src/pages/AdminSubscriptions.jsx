@@ -54,14 +54,16 @@ const AdminSubscriptions = () => {
       
       const method = editingSubscription ? 'PUT' : 'POST';
       
-      // Parse weeks_available from comma-separated string to array
+      // Filter out empty pricing tiers and parse values
       const payload = {
         ...subscriptionForm,
-        weeks_available: subscriptionForm.weeks_available
-          .split(',')
-          .map(w => parseInt(w.trim()))
-          .filter(w => !isNaN(w)),
-        price_per_meal: parseFloat(subscriptionForm.price_per_meal),
+        pricing_tiers: subscriptionForm.pricing_tiers
+          .filter(tier => tier.weeks && tier.price_per_meal)
+          .map(tier => ({
+            weeks: parseInt(tier.weeks),
+            price_per_meal: parseFloat(tier.price_per_meal)
+          })),
+        meals_per_day: parseInt(subscriptionForm.meals_per_day),
         delivery_fee: parseFloat(subscriptionForm.delivery_fee)
       };
       
@@ -82,7 +84,7 @@ const AdminSubscriptions = () => {
       setSuccess(editingSubscription ? 'Subscription updated!' : 'Subscription created!');
       setShowForm(false);
       resetForm();
-      fetchSubscriptions();
+      await fetchSubscriptions(); // Wait for refresh
     } catch (err) {
       setError(err.message);
     } finally {
