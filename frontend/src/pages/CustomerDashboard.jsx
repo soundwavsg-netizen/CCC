@@ -30,7 +30,25 @@ const CustomerDashboard = () => {
       return;
     }
     fetchDashboardData();
+    fetchSubscription();
   }, [isAuthenticated, navigate]);
+
+  const fetchSubscription = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/project62/customer/subscription`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSubscriptionData(data);
+      }
+    } catch (err) {
+      console.error('Fetch subscription error:', err);
+    }
+  };
 
   const fetchDashboardData = async () => {
     try {
