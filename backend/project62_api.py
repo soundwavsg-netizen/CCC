@@ -153,6 +153,29 @@ class CategoryRequest(BaseModel):
     name: str
     slug: Optional[str] = None
 
+
+class SubscriptionConfigRequest(BaseModel):
+    plan_name: str
+    weeks_available: List[int]  # e.g. [1, 2, 3, 4, 6]
+    price_per_meal: float
+    delivery_fee: float
+    description: str
+    is_active: Optional[bool] = True
+    stripe_plan_id: Optional[str] = None
+    image_url: Optional[str] = None
+    auto_renew_enabled: Optional[bool] = False
+
+class SubscriptionConfigUpdateRequest(BaseModel):
+    plan_name: Optional[str] = None
+    weeks_available: Optional[List[int]] = None
+    price_per_meal: Optional[float] = None
+    delivery_fee: Optional[float] = None
+    description: Optional[str] = None
+    is_active: Optional[bool] = None
+    stripe_plan_id: Optional[str] = None
+    image_url: Optional[str] = None
+    auto_renew_enabled: Optional[bool] = None
+
 class DiscountCodeRequest(BaseModel):
     code: str
     percentage: float  # 10 for 10% off
