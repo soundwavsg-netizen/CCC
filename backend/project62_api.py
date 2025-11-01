@@ -1613,10 +1613,10 @@ async def update_subscription(subscription_id: str, subscription: SubscriptionCo
         update_data = {"updated_at": datetime.utcnow().isoformat()}
         if subscription.plan_name is not None:
             update_data["plan_name"] = subscription.plan_name
-        if subscription.weeks_available is not None:
-            update_data["weeks_available"] = subscription.weeks_available
-        if subscription.price_per_meal is not None:
-            update_data["price_per_meal"] = float(subscription.price_per_meal)
+        if subscription.pricing_tiers is not None:
+            update_data["pricing_tiers"] = subscription.pricing_tiers
+        if subscription.meals_per_day is not None:
+            update_data["meals_per_day"] = subscription.meals_per_day
         if subscription.delivery_fee is not None:
             update_data["delivery_fee"] = float(subscription.delivery_fee)
         if subscription.description is not None:
