@@ -16,6 +16,20 @@ const Project62Landing = () => {
   const [selectedMeals, setSelectedMeals] = useState(1);
   const [featuredProducts, setFeaturedProducts] = useState([]);
 
+  // Fetch featured products on mount
+  useEffect(() => {
+    const fetchFeaturedProducts = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/api/project62/products/featured`);
+        setFeaturedProducts(response.data.products || []);
+      } catch (error) {
+        console.error('Error fetching featured products:', error);
+      }
+    };
+    
+    fetchFeaturedProducts();
+  }, []);
+
   // Lead form submission
   const handleLeadSubmit = async (e) => {
     e.preventDefault();
