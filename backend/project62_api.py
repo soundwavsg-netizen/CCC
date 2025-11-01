@@ -1592,6 +1592,8 @@ async def get_featured_products():
         products_ref = db.collection("project62").document("products").collection("all")
         products = [doc.to_dict() for doc in products_ref.stream()]
         
+        print(f"🔍 Total products in DB: {len(products)}")
+        
         # Filter: only active, featured, public products
         featured_products = [
             p for p in products 
@@ -1599,6 +1601,10 @@ async def get_featured_products():
             and p.get("is_featured", False) 
             and p.get("visibility") == "public"
         ]
+        
+        print(f"🔍 Featured products found: {len(featured_products)}")
+        for p in featured_products:
+            print(f"   - {p.get('name')}: featured={p.get('is_featured')}, order={p.get('featured_order')}, visibility={p.get('visibility')}, active={p.get('active')}")
         
         # Sort by featured_order
         featured_products.sort(key=lambda x: x.get("featured_order", 999))
