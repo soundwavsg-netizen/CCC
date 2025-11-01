@@ -343,33 +343,168 @@ const CustomerDashboard = () => {
           </div>
         </div>
 
-        {/* Active Plan Section */}
-        <div className="dashboard-card">
-          <h2>Active Subscription</h2>
-          {dashboardData?.plan_status ? (
-            <div className="plan-details">
-              <div className="plan-header">
-                <span className="plan-type">{dashboardData.plan_status.product_type || 'Meal Prep'}</span>
-                <span className="plan-status active">Active</span>
+        {/* Subscription & Loyalty Section */}
+        <div className="dashboard-card subscription-card">
+          <h2>Your Subscription & Loyalty Status</h2>
+          
+          {subscriptionData && subscriptionData.status !== 'no_subscription' ? (
+            <>
+              {/* Loyalty Tier Badge */}
+              <div className="loyalty-tier-section">
+                <div 
+                  className="tier-badge" 
+                  style={{ 
+                    backgroundColor: getTierColor(subscriptionData.loyalty.tier),
+                    color: subscriptionData.loyalty.tier === 'Gold' ? '#000' : '#fff'
+                  }}
+                >
+                  <span className="tier-icon">⭐</span>
+                  <span className="tier-name">{subscriptionData.loyalty.tier} Member</span>
+                </div>
+                <p className="tier-message">{getTierMessage(
+                  subscriptionData.loyalty.tier, 
+                  subscriptionData.loyalty.discount,
+                  subscriptionData.loyalty.free_delivery
+                )}</p>
               </div>
-              <div className="plan-info">
-                <p><strong>Duration:</strong> {dashboardData.plan_status.duration || 'N/A'}</p>
-                <p><strong>Meals per day:</strong> {dashboardData.plan_status.meals_per_day || 'N/A'}</p>
-                <p><strong>Start date:</strong> {dashboardData.plan_status.start_date || 'N/A'}</p>
+
+              {/* Progress Bar */}
+              {getNextTier(subscriptionData.loyalty.total_weeks) && (
+                <div className="loyalty-progress">
+                  <div className="progress-info">
+                    <span className="progress-label">
+                      {subscriptionData.loyalty.total_weeks} / {
+                        subscriptionData.loyalty.total_weeks < 13 ? 13 :
+                        subscriptionData.loyalty.total_weeks < 25 ? 25 : 37
+                      } weeks
+                    </span>
+                    <span className="next-tier">
+                      {getNextTier(subscriptionData.loyalty.total_weeks).weeksNeeded} weeks to {getNextTier(subscriptionData.loyalty.total_weeks).name}
+                    </span>
+                  </div>
+                  <div className="progress-bar">
+                    <div 
+                      className="progress-fill" 
+                      style={{ 
+                        width: `${(subscriptionData.loyalty.total_weeks / (
+                          subscriptionData.loyalty.total_weeks < 13 ? 13 :
+                          subscriptionData.loyalty.total_weeks < 25 ? 25 : 37
+                        )) * 100}%`,
+                        backgroundColor: getTierColor(subscriptionData.loyalty.tier)
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Current Subscription Details */}
+              <div className="subscription-details">
+                <h3>Current Plan</h3>
+                <div className="subscription-info">
+                  <div className="info-item">
+                    <span className="label">Plan:</span>
+                    <span className="value">{subscriptionData.subscription.plan_name || 'N/A'}</span>
+                  </div>
+                  <div className="info-item">
+                    <span className="label">Meals per Day:</span>
+                    <span className="value">{subscriptionData.subscription.meals_per_day || 'N/A'}</span>
+                  </div>
+                  <div className="info-item">
+                    <span className="label">Commitment:</span>
+                    <span className="value">{subscriptionData.subscription.commitment_weeks || 'N/A'} weeks</span>
+                  </div>
+                  <div className="info-item">
+                    <span className="label">Price per Meal:</span>
+                    <span className="value">${subscriptionData.subscription.price_per_meal || 'N/A'}</span>
+                  </div>
+                  <div className="info-item">
+                    <span className="label">Next Billing:</span>
+                    <span className="value">{subscriptionData.subscription.next_billing_date || 'N/A'}</span>
+                  </div>
+                  <div className="info-item">
+                    <span className="label">Auto-Renew:</span>
+                    <span className={`value ${subscriptionData.subscription.auto_renew ? 'active-status' : 'inactive-status'}`}>
+                      {subscriptionData.subscription.auto_renew ? '✓ Enabled' : '✗ Disabled'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Pending Upgrade */}
+                {subscriptionData.subscription.pending_upgrade && (
+                  <div className="pending-upgrade-notice">
+                    <strong>⏳ Upgrade Scheduled:</strong> Switching to {subscriptionData.subscription.pending_upgrade.commitment_weeks} weeks 
+                    at ${subscriptionData.subscription.pending_upgrade.price_per_meal}/meal on {subscriptionData.subscription.pending_upgrade.effective_date}
+                  </div>
+                )}
               </div>
-              <div className="plan-actions">
-                <button className="action-btn primary">Renew Plan</button>
-                <button className="action-btn secondary">Upgrade</button>
+
+              {/* Action Buttons */}
+              <div className="subscription-actions">
+                <button 
+                  className="action-btn primary"
+                  onClick={() => setShowUpgradeModal(true)}
+                >
+                  Change Plan
+                </button>
+                {subscriptionData.subscription.auto_renew && (
+                  <button 
+                    className="action-btn secondary"
+                    onClick={handleCancelRenewal}
+                  >
+                    Cancel Auto-Renew
+                  </button>
+                )}
               </div>
-            </div>
+            </>
           ) : (
-            <div className="no-plan">
+            <div className="no-subscription">
               <p>No active subscription</p>
-              <button onClick={() => navigate('/project62')} className="action-btn primary">
-                Browse Plans
+              <button onClick={() => navigate('/project62#meal-prep')} className="action-btn primary">
+                Browse Meal Plans
               </button>
             </div>
           )}
+        </div>
+
+        {/* Upgrade Modal */}
+        {showUpgradeModal && subscriptionData && (
+          <div className="modal-overlay" onClick={() => setShowUpgradeModal(false)}>
+            <div className="modal-content upgrade-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h3>Change Your Plan</h3>
+                <button className="close-btn" onClick={() => setShowUpgradeModal(false)}>×</button>
+              </div>
+              <div className="modal-body">
+                <p>Select a new commitment duration. Changes take effect at your next billing cycle.</p>
+                <div className="week-options">
+                  {/* Show available pricing tiers - would need to fetch from subscriptions config */}
+                  {[1, 2, 3, 4, 6].map(weeks => (
+                    <button
+                      key={weeks}
+                      className={`week-option ${selectedUpgradeWeeks === weeks ? 'selected' : ''}`}
+                      onClick={() => setSelectedUpgradeWeeks(weeks)}
+                    >
+                      <span className="weeks">{weeks} Week{weeks > 1 ? 's' : ''}</span>
+                      <span className="savings">{weeks >= 4 ? 'Best Value' : weeks >= 2 ? 'Save More' : ''}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="modal-actions">
+                  <button className="btn btn-secondary" onClick={() => setShowUpgradeModal(false)}>
+                    Cancel
+                  </button>
+                  <button 
+                    className="btn btn-primary" 
+                    onClick={handleUpgrade}
+                    disabled={!selectedUpgradeWeeks}
+                  >
+                    Schedule Change
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         </div>
 
         {/* Upcoming Deliveries */}
