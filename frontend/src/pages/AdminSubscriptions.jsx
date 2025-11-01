@@ -235,14 +235,15 @@ const AdminSubscriptions = () => {
 
               <div className="form-row">
                 <div className="form-group">
-                  <label>Price per Meal (SGD) *</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    value={subscriptionForm.price_per_meal}
-                    onChange={(e) => setSubscriptionForm({...subscriptionForm, price_per_meal: e.target.value})}
+                  <label>Meals Per Day *</label>
+                  <select
+                    value={subscriptionForm.meals_per_day}
+                    onChange={(e) => setSubscriptionForm({...subscriptionForm, meals_per_day: e.target.value})}
                     required
-                  />
+                  >
+                    <option value={1}>1 Meal/Day</option>
+                    <option value={2}>2 Meals/Day</option>
+                  </select>
                 </div>
                 <div className="form-group">
                   <label>Delivery Fee per Week (SGD) *</label>
@@ -257,15 +258,52 @@ const AdminSubscriptions = () => {
               </div>
 
               <div className="form-group">
-                <label>Weeks Available (comma-separated) *</label>
-                <input
-                  type="text"
-                  value={subscriptionForm.weeks_available}
-                  onChange={(e) => setSubscriptionForm({...subscriptionForm, weeks_available: e.target.value})}
-                  placeholder="e.g., 1,2,3,4,6"
-                  required
-                />
-                <small>Example: 1,2,3,4,6 allows customers to choose 1, 2, 3, 4, or 6 weeks</small>
+                <label>Pricing Tiers (volume discounts) *</label>
+                <small>Set different prices based on number of weeks purchased. More weeks = lower price per meal.</small>
+                
+                <div className="pricing-tiers-container">
+                  {subscriptionForm.pricing_tiers.map((tier, index) => (
+                    <div key={index} className="pricing-tier-row">
+                      <div className="tier-input">
+                        <label>Weeks</label>
+                        <input
+                          type="number"
+                          value={tier.weeks}
+                          onChange={(e) => updatePricingTier(index, 'weeks', e.target.value)}
+                          placeholder="e.g., 1"
+                          required
+                        />
+                      </div>
+                      <div className="tier-input">
+                        <label>Price/Meal (SGD)</label>
+                        <input
+                          type="number"
+                          step="0.01"
+                          value={tier.price_per_meal}
+                          onChange={(e) => updatePricingTier(index, 'price_per_meal', e.target.value)}
+                          placeholder="e.g., 15.00"
+                          required
+                        />
+                      </div>
+                      {subscriptionForm.pricing_tiers.length > 1 && (
+                        <button 
+                          type="button" 
+                          className="btn-remove-tier"
+                          onClick={() => removePricingTier(index)}
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  <button 
+                    type="button" 
+                    className="btn btn-secondary"
+                    onClick={addPricingTier}
+                  >
+                    + Add Week Tier
+                  </button>
+                </div>
               </div>
 
               <div className="form-group">
