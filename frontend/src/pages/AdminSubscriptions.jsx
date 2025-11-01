@@ -367,11 +367,18 @@ const AdminSubscriptions = () => {
               <h3>{subscription.plan_name}</h3>
               <p>{subscription.description}</p>
               <div className="subscription-meta">
-                <span className="price-badge">${subscription.price_per_meal}/meal</span>
+                <span className="meals-badge">{subscription.meals_per_day} Meal{subscription.meals_per_day > 1 ? 's' : ''}/Day</span>
                 <span className="delivery-badge">+${subscription.delivery_fee} delivery/week</span>
               </div>
-              <div className="weeks-available">
-                <strong>Weeks:</strong> {subscription.weeks_available.join(', ')}
+              <div className="pricing-tiers-display">
+                <strong>Pricing Tiers:</strong>
+                <ul>
+                  {subscription.pricing_tiers && subscription.pricing_tiers.map((tier, idx) => (
+                    <li key={idx}>
+                      {tier.weeks} week{tier.weeks > 1 ? 's' : ''}: <strong>${tier.price_per_meal}/meal</strong>
+                    </li>
+                  ))}
+                </ul>
               </div>
               {subscription.auto_renew_enabled && (
                 <div className="renew-badge">🔄 Auto-Renew Enabled</div>
