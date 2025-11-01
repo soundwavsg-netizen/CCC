@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Project62Landing.css';
 import axios from 'axios';
 
@@ -7,11 +8,13 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const Project62Landing = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [showLeadForm, setShowLeadForm] = useState(false);
   const [leadData, setLeadData] = useState({ name: '', email: '', phone: '' });
   const [formStatus, setFormStatus] = useState('');
   const [selectedDuration, setSelectedDuration] = useState('4_weeks');
   const [selectedMeals, setSelectedMeals] = useState(1);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
 
   // Lead form submission
   const handleLeadSubmit = async (e) => {
