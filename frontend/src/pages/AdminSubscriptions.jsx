@@ -140,8 +140,8 @@ const AdminSubscriptions = () => {
   const resetForm = () => {
     setSubscriptionForm({
       plan_name: '',
-      weeks_available: '1,2,3,4,6',
-      price_per_meal: '',
+      meals_per_day: 1,
+      pricing_tiers: [{ weeks: 1, price_per_meal: '' }],
       delivery_fee: '',
       description: '',
       is_active: true,
@@ -155,8 +155,8 @@ const AdminSubscriptions = () => {
     setEditingSubscription(subscription);
     setSubscriptionForm({
       plan_name: subscription.plan_name,
-      weeks_available: subscription.weeks_available.join(','),
-      price_per_meal: subscription.price_per_meal.toString(),
+      meals_per_day: subscription.meals_per_day,
+      pricing_tiers: subscription.pricing_tiers || [{ weeks: 1, price_per_meal: '' }],
       delivery_fee: subscription.delivery_fee.toString(),
       description: subscription.description,
       is_active: subscription.is_active,
@@ -164,6 +164,24 @@ const AdminSubscriptions = () => {
       auto_renew_enabled: subscription.auto_renew_enabled || false
     });
     setShowForm(true);
+  };
+
+  const addPricingTier = () => {
+    setSubscriptionForm({
+      ...subscriptionForm,
+      pricing_tiers: [...subscriptionForm.pricing_tiers, { weeks: '', price_per_meal: '' }]
+    });
+  };
+
+  const removePricingTier = (index) => {
+    const newTiers = subscriptionForm.pricing_tiers.filter((_, i) => i !== index);
+    setSubscriptionForm({ ...subscriptionForm, pricing_tiers: newTiers });
+  };
+
+  const updatePricingTier = (index, field, value) => {
+    const newTiers = [...subscriptionForm.pricing_tiers];
+    newTiers[index][field] = value;
+    setSubscriptionForm({ ...subscriptionForm, pricing_tiers: newTiers });
   };
 
   return (
