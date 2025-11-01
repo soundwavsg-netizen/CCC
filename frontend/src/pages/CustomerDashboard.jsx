@@ -505,7 +505,6 @@ const CustomerDashboard = () => {
             </div>
           </div>
         )}
-        </div>
 
         {/* Upcoming Deliveries */}
         <div className="dashboard-card full-width">
