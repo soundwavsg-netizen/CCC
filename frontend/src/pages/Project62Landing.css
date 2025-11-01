@@ -313,6 +313,15 @@
   background: var(--p62-black);
 }
 
+.guide-badge.type-badge {
+  top: -12px;
+  left: 20px;
+  right: auto;
+  background: #666;
+  font-size: 0.75rem;
+}
+
+
 .guide-card h3 {
   font-size: 1.5rem;
   color: var(--p62-black);
