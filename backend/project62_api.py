@@ -1788,6 +1788,144 @@ async def get_active_subscriptions():
 
 
 # ========================
+# Customer Subscription Management
+# ========================
+
+@router.get("/customer/subscription")
+async def get_customer_subscription(current_user: dict = Depends(get_current_user)):
+    """Get current customer's subscription details with loyalty info"""
+    try:
+        customer_id = current_user["email"].replace("@", "_at_").replace(".", "_")
+        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+        customer_doc = customer_ref.get()
+        
+        if not customer_doc.exists:
+            return {"status": "no_subscription", "subscription": None}
+        
+        customer_data = customer_doc.to_dict()
+        subscription_data = customer_data.get("subscription", {})
+        
+        # Add loyalty information
+        response = {
+            "status": "active" if subscription_data.get("auto_renew") else "inactive",
+            "subscription": subscription_data,
+            "loyalty": {
+                "tier": customer_data.get("loyalty_tier", "Bronze"),
+                "total_weeks": customer_data.get("total_weeks_subscribed", 0),
+                "discount": customer_data.get("loyalty_discount", 0),
+                "free_delivery": customer_data.get("free_delivery", False),
+                "priority_dish": customer_data.get("priority_dish", False)
+            }
+        }
+        
+        return response
+    except Exception as e:
+        print(f"Get customer subscription error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/customer/subscription/upgrade")
+async def upgrade_subscription(
+    new_commitment_weeks: int,
+    current_user: dict = Depends(get_current_user)
+):
+    """
+    Upgrade/downgrade customer subscription
+    Takes effect at next billing cycle
+    """
+    try:
+        customer_id = current_user["email"].replace("@", "_at_").replace(".", "_")
+        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+        customer_doc = customer_ref.get()
+        
+        if not customer_doc.exists:
+            raise HTTPException(status_code=404, detail="Customer not found")
+        
+        customer_data = customer_doc.to_dict()
+        subscription = customer_data.get("subscription", {})
+        
+        if not subscription:
+            raise HTTPException(status_code=400, detail="No active subscription")
+        
+        # Get the subscription plan to find new pricing
+        plan_id = subscription.get("plan_id")
+        plan_ref = db.collection("project62").document("subscriptions_config").collection("all").document(plan_id)
+        plan_doc = plan_ref.get()
+        
+        if not plan_doc.exists:
+            raise HTTPException(status_code=404, detail="Subscription plan not found")
+        
+        plan_data = plan_doc.to_dict()
+        pricing_tiers = plan_data.get("pricing_tiers", [])
+        
+        # Find the price for new commitment
+        new_tier = next((t for t in pricing_tiers if t["weeks"] == new_commitment_weeks), None)
+        if not new_tier:
+            raise HTTPException(status_code=400, detail=f"No pricing tier for {new_commitment_weeks} weeks")
+        
+        # Update subscription for next cycle
+        subscription["pending_upgrade"] = {
+            "commitment_weeks": new_commitment_weeks,
+            "price_per_meal": new_tier["price_per_meal"],
+            "effective_date": subscription.get("next_billing_date")
+        }
+        
+        customer_ref.update({
+            "subscription": subscription,
+            "updated_at": datetime.utcnow().isoformat()
+        })
+        
+        return {
+            "status": "success",
+            "message": f"Upgrade scheduled to {new_commitment_weeks} weeks at next billing",
+            "effective_date": subscription.get("next_billing_date"),
+            "new_price": new_tier["price_per_meal"]
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Upgrade subscription error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/customer/subscription/cancel")
+async def cancel_subscription(current_user: dict = Depends(get_current_user)):
+    """Cancel auto-renewal (subscription continues until end of current period)"""
+    try:
+        customer_id = current_user["email"].replace("@", "_at_").replace(".", "_")
+        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+        customer_doc = customer_ref.get()
+        
+        if not customer_doc.exists:
+            raise HTTPException(status_code=404, detail="Customer not found")
+        
+        customer_data = customer_doc.to_dict()
+        subscription = customer_data.get("subscription", {})
+        
+        if not subscription:
+            raise HTTPException(status_code=400, detail="No active subscription")
+        
+        # Turn off auto-renewal
+        subscription["auto_renew"] = False
+        subscription["cancelled_at"] = datetime.utcnow().isoformat()
+        
+        customer_ref.update({
+            "subscription": subscription,
+            "updated_at": datetime.utcnow().isoformat()
+        })
+        
+        return {
+            "status": "success",
+            "message": "Auto-renewal cancelled. Your subscription will end after the current period.",
+            "end_date": subscription.get("next_billing_date")
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Cancel subscription error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+
+# ========================
 # Public Products Endpoint (for Shop Page)
 # ========================
 
