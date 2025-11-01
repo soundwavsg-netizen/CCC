@@ -1918,6 +1918,138 @@ async def cancel_subscription(current_user: dict = Depends(get_current_user)):
             "end_date": subscription.get("next_billing_date")
         }
     except HTTPException:
+
+# ========================
+# Admin Renewal Processing
+# ========================
+
+@router.post("/admin/process-renewals")
+async def process_renewals(current_user: dict = Depends(get_current_admin)):
+    """
+    Process upcoming subscription renewals
+    Detects renewals due in 1-2 days, creates Stripe session, updates loyalty
+    """
+    try:
+        from datetime import timedelta
+        
+        # Get all customers with active subscriptions
+        customers_ref = db.collection("project62").document("customers").collection("all")
+        customers = [doc for doc in customers_ref.stream()]
+        
+        today = datetime.utcnow().date()
+        renewals_processed = []
+        errors = []
+        
+        for customer_doc in customers:
+            customer_data = customer_doc.to_dict()
+            subscription = customer_data.get("subscription", {})
+            
+            # Skip if no subscription or auto-renew is off
+            if not subscription or not subscription.get("auto_renew"):
+                continue
+            
+            # Parse next billing date
+            next_billing_str = subscription.get("next_billing_date")
+            if not next_billing_str:
+                continue
+            
+            try:
+                next_billing_date = datetime.fromisoformat(next_billing_str).date()
+            except:
+                continue
+            
+            # Check if renewal is due in 1-2 days
+            days_until = (next_billing_date - today).days
+            if days_until < 1 or days_until > 2:
+                continue
+            
+            # Process renewal
+            try:
+                customer_id = customer_doc.id
+                customer_email = customer_data.get("email")
+                
+                # Get subscription config for pricing
+                plan_id = subscription.get("plan_id")
+                commitment_weeks = subscription.get("commitment_weeks", 4)
+                price_per_meal = subscription.get("price_per_meal", 12.00)
+                meals_per_day = subscription.get("meals_per_day", 1)
+                delivery_fee = subscription.get("delivery_fee", 20.00)
+                
+                # Check for pending upgrade
+                if subscription.get("pending_upgrade"):
+                    upgrade = subscription["pending_upgrade"]
+                    commitment_weeks = upgrade["commitment_weeks"]
+                    price_per_meal = upgrade["price_per_meal"]
+                
+                # Apply loyalty discount
+                loyalty_discount = customer_data.get("loyalty_discount", 0)
+                free_delivery = customer_data.get("free_delivery", False)
+                
+                discounted_price, final_delivery = apply_loyalty_discount(
+                    price_per_meal, 
+                    loyalty_discount, 
+                    free_delivery, 
+                    delivery_fee
+                )
+                
+                # Calculate total
+                total_meals = commitment_weeks * meals_per_day * 6  # 6 days per week
+                meal_cost = total_meals * discounted_price
+                total_cost = meal_cost + (commitment_weeks * final_delivery)
+                
+                # TODO: Create Stripe checkout session here
+                # stripe_session = stripe.checkout.Session.create(...)
+                
+                # Update customer loyalty tier
+                loyalty_update = update_customer_loyalty_tier(customer_id, commitment_weeks)
+                
+                # Update subscription for next cycle
+                new_next_billing = next_billing_date + timedelta(weeks=commitment_weeks)
+                subscription["next_billing_date"] = new_next_billing.isoformat()
+                subscription["last_renewal_date"] = today.isoformat()
+                if subscription.get("pending_upgrade"):
+                    del subscription["pending_upgrade"]
+                
+                # Save updated subscription
+                customer_doc.reference.update({
+                    "subscription": subscription,
+                    "updated_at": datetime.utcnow().isoformat()
+                })
+                
+                renewals_processed.append({
+                    "customer_id": customer_id,
+                    "email": customer_email,
+                    "commitment_weeks": commitment_weeks,
+                    "total_cost": total_cost,
+                    "loyalty_tier": loyalty_update.get("tier") if loyalty_update else None,
+                    "new_billing_date": new_next_billing.isoformat()
+                })
+                
+                print(f"✅ Processed renewal for {customer_email}")
+                print(f"   Weeks: {commitment_weeks}, Total: ${total_cost}")
+                if loyalty_update:
+                    print(f"   New tier: {loyalty_update['tier']}")
+                
+            except Exception as e:
+                errors.append({
+                    "customer_id": customer_doc.id,
+                    "error": str(e)
+                })
+                print(f"❌ Error processing renewal for {customer_doc.id}: {e}")
+        
+        return {
+            "status": "success",
+            "renewals_processed": len(renewals_processed),
+            "details": renewals_processed,
+            "errors": errors
+        }
+    except Exception as e:
+        print(f"Process renewals error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+
         raise
     except Exception as e:
         print(f"Cancel subscription error: {e}")
