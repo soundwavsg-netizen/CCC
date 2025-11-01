@@ -181,34 +181,66 @@ const Project62Landing = () => {
         <h2>Digital Guides & Programs</h2>
         
         <div className="guides-grid">
-          <div className="guide-card free">
-            <div className="guide-badge">FREE</div>
-            <h3>6-Day Starter Guide</h3>
-            <p>Simple meal plan + swaps. Free upon sign-up (name & email required).</p>
-            <div className="guide-price">$0</div>
-            <button className="btn-guide" onClick={() => setShowLeadForm(true)}>
-              Download Free Guide
-            </button>
-          </div>
+          {featuredProducts
+            .filter(product => product.type === 'digital')
+            .map((product) => (
+              <div 
+                key={product.product_id} 
+                className={`guide-card ${product.price === 0 ? 'free' : ''} ${product.name.toLowerCase().includes('custom') ? 'premium' : ''}`}
+              >
+                {product.price === 0 && <div className="guide-badge">FREE</div>}
+                {product.name.toLowerCase().includes('custom') && <div className="guide-badge">CUSTOM</div>}
+                <h3>{product.name}</h3>
+                <p>{product.description}</p>
+                <div className="guide-price">${product.price}</div>
+                <button 
+                  className="btn-guide" 
+                  onClick={() => {
+                    if (product.price === 0) {
+                      setShowLeadForm(true);
+                    } else {
+                      window.location.href = `/project62/checkout/digital/${product.product_id_slug}`;
+                    }
+                  }}
+                >
+                  {product.price === 0 ? 'Download Free Guide' : 'Get Plan'}
+                </button>
+              </div>
+            ))}
           
-          <div className="guide-card">
-            <h3>6-Week Transformation Plan</h3>
-            <p>Full plan + grocery guide + recipes.</p>
-            <div className="guide-price">$14.90</div>
-            <button className="btn-guide" onClick={() => window.location.href = '/project62/checkout/digital/starter'}>
-              Get Full Plan
-            </button>
-          </div>
-          
-          <div className="guide-card premium">
-            <div className="guide-badge">CUSTOM</div>
-            <h3>Custom Plan with Ian</h3>
-            <p>Personalised plan + chat consultation.</p>
-            <div className="guide-price">$29.90</div>
-            <button className="btn-guide" onClick={() => window.location.href = '/project62/checkout/digital/custom'}>
-              Build My Plan
-            </button>
-          </div>
+          {/* Fallback if no featured digital products */}
+          {featuredProducts.filter(p => p.type === 'digital').length === 0 && (
+            <>
+              <div className="guide-card free">
+                <div className="guide-badge">FREE</div>
+                <h3>6-Day Starter Guide</h3>
+                <p>Simple meal plan + swaps. Free upon sign-up (name & email required).</p>
+                <div className="guide-price">$0</div>
+                <button className="btn-guide" onClick={() => setShowLeadForm(true)}>
+                  Download Free Guide
+                </button>
+              </div>
+              
+              <div className="guide-card">
+                <h3>6-Week Transformation Plan</h3>
+                <p>Full plan + grocery guide + recipes.</p>
+                <div className="guide-price">$14.90</div>
+                <button className="btn-guide" onClick={() => window.location.href = '/project62/checkout/digital/starter'}>
+                  Get Full Plan
+                </button>
+              </div>
+              
+              <div className="guide-card premium">
+                <div className="guide-badge">CUSTOM</div>
+                <h3>Custom Plan with Ian</h3>
+                <p>Personalised plan + chat consultation.</p>
+                <div className="guide-price">$29.90</div>
+                <button className="btn-guide" onClick={() => window.location.href = '/project62/checkout/digital/custom'}>
+                  Build My Plan
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
