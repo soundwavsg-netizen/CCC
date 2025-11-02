@@ -11,7 +11,7 @@ from typing import Dict, Any
 import time
 
 # Configuration
-BACKEND_URL = "https://project62-app.preview.emergentagent.com"
+BACKEND_URL = "https://mealprep-dash.preview.emergentagent.com"
 PROJECT62_BASE_URL = f"{BACKEND_URL}/api/project62"
 
 # Test user credentials

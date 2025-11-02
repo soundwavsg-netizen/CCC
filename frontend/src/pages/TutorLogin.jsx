@@ -14,7 +14,7 @@ const TutorLogin = () => {
   const [tempToken, setTempToken] = useState('');
 
   const navigate = useNavigate();
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://project62-app.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://mealprep-dash.preview.emergentagent.com';
 
   const handleLogin = async (e) => {
     e.preventDefault();

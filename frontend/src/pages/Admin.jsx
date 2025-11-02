@@ -24,7 +24,7 @@ const Admin = () => {
   const [availableTutors, setAvailableTutors] = useState([]);
   const [isNewTutor, setIsNewTutor] = useState(false);
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://project62-app.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://mealprep-dash.preview.emergentagent.com';
 
   // Subject options based on selected level
   const getSubjectOptions = (level) => {

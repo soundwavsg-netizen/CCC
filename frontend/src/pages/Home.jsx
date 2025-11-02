@@ -70,7 +70,7 @@ export default function Home() {
       description: "We build smart websites, e-commerce platforms, AI chatbots and WhatsApp automation. Singapore digital consultancy helping SMEs grow with modern technology.",
       ogTitle: "Build Smarter Websites. Automate with AI. Engage Customers Instantly.",
       ogDescription: "CCC helps Singapore businesses create modern digital experiences — from responsive websites to AI chatbots and WhatsApp automation.",
-      ogUrl: "https://project62-app.preview.emergentagent.com"
+      ogUrl: "https://mealprep-dash.preview.emergentagent.com"
     });
     
     // Inject schemas
@@ -78,7 +78,7 @@ export default function Home() {
     injectSchema(getWebPageSchema({
       title: "CCC Digital - Smart Websites, AI & Automation",
       description: "Singapore digital consultancy specializing in websites, AI chatbots, and WhatsApp automation",
-      url: "https://project62-app.preview.emergentagent.com"
+      url: "https://mealprep-dash.preview.emergentagent.com"
     }));
   }, []);
 

@@ -96,7 +96,7 @@ try:
     print("2. Go to Products & Discounts")
     print("3. Upload PDFs for each product")
     print("4. Add product photos")
-    print("\n🔗 Admin URL: https://project62-app.preview.emergentagent.com/project62/admin")
+    print("\n🔗 Admin URL: https://mealprep-dash.preview.emergentagent.com/project62/admin")
     
 except Exception as e:
     print(f"❌ Error: {e}")

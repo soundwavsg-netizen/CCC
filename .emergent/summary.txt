@@ -1,92 +1,78 @@
 <analysis>
-The previous AI engineer’s work transitioned from existing Math Results Analysis System and Tuition Centre Chatbot tasks to a comprehensive build-out of Project 62, a new fitness and nutrition micro-brand application. This involved setting up a FastAPI backend with Firebase and a React frontend. The trajectory details the iterative development of Project 62, starting with core MVP features like lead capture, digital product/meal-prep checkouts, and crucial bug fixes for email delivery and payment redirects. Subsequent phases focused on implementing a robust customer login and dashboard with magic link authentication, followed by introducing role-based access control for admin functionalities. The latest efforts concentrated on establishing a dynamic product management system, enabling product creation, editing, physical product support, image uploads, and discount code generation, while continuously addressing and debugging product creation errors.
+The previous AI engineer successfully bootstrapped Project 62, a health and fitness micro-brand application. The initial task involved addressing a critical Firebase API key security leak by updating  files, ensuring  integrity, and verifying secure Firebase initialization. Following this, core e-commerce features were developed, including a scalable product and category management system for digital and physical goods using Firestore and FastAPI, complemented by a React admin dashboard. Key improvements involved dynamic product display on the landing page with automatic reordering and a comprehensive meal-prep subscription module featuring dynamic, week-based pricing tiers and a dedicated admin interface. A loyalty tier system with auto-renewal logic was then integrated, affecting both customer and admin dashboards. Throughout, the engineer iteratively debugged issues, such as login failures, incorrect data rendering, and improved user experience with features like password visibility toggles and specific error messages. The work ended while implementing further UI/UX refinements to the customer dashboard.
 </analysis>
 
 <product_requirements>
-The project focuses on three main products:
-1.  **Tuition Centre Chatbot:** Aims for data accuracy, enhanced intelligence (multi-turn context), UI/UX improvements (mobile responsiveness, enrollment form), and basic admin UI for class data.
-2.  **Math Results Analysis System:** A web-based system for tutors to upload, store, and analyze student math results, including trend tracking, revision plan generation, assessment test creation, personalized tutor dashboard, tutor management, login with first-time password change, and strict data isolation.
-3.  **Project 62 (Health & Fitness Micro-brand):** This new module supports sustainable weight management.
-    *   **Core Functionality:** Transformation story, lead generation (free guide via SendGrid), digital/physical product sales, meal-prep subscriptions, customer login, and admin dashboard (CRM/delivery tracking).
-    *   **Website Structure:** One-page scroll layout, mobile-optimized. Includes sections for Hero, The 62 Journey, Philosophy, Digital Guides & Programs, Meal-Prep Subscription, Testimonials, Contact.
-    *   **Lead Capture:** Name, Email, (optional) Phone form; saves to Firebase, auto-emails PDF, tags lead status.
-    *   **CRM/Backend:** Lead, Order & Delivery management, Customer Login Portal (Firebase Auth: email/password/magic-link), customer address updates, re-order/extend/upgrade plans.
-    *   **Admin Dashboard:** Tabs for Leads, Orders, Deliveries, Customers, Products, Discount Codes.
-    *   **Payment:** Stripe for digital/subscriptions, static PayNow QR (manual).
-    *   **Database:** Firebase Firestore ( root, with , , , , ,  collections).
-    *   **Authentication:** Firebase Auth for customer/admin, JWT based, with  flag for admins.
-    *   **Storage:** Firebase Storage for PDF guides and product images.
-    *   **Design:** Matte Black (#111111), Fresh Green (#00b894), Montserrat/Poppins font.
-    *   **Routing:** .
-    *   **Key Fixes/Improvements:** Email delivery (PDF links, admin notifications), accurate date validations (3-day lead, no Sat/Sun), correct payment redirects, structured address forms (Singapore only), heating instructions,  correction, dynamic product management (upload/update PDFs, add product images), discount code creation by admin, physical product support with delivery charges, and role-based access control for admin functions.
+The Project 62 application is designed for a health & fitness micro-brand, focusing on sustainable weight management. Key features include: lead generation (free guide via SendGrid), sales of digital/physical products, meal-prep subscriptions, customer login, and an admin dashboard for CRM, delivery tracking, product, category, and discount code management. The system utilizes Firebase Firestore for data (products, categories, subscriptions, dishes, leads, orders, deliveries, customers), Firebase Auth for user authentication (email/password/magic link), Stripe for payments, and Firebase Storage for assets. The UI is a mobile-optimized one-page scroll landing page that dynamically displays featured products and meal-prep plans. The admin dashboard provides full CRUD for products, categories, and subscription plans with advanced fields like , , , , and . A loyalty tier system (Bronze, Silver, Gold, Platinum) tracks  to apply discounts and benefits. Recent work includes refining customer dashboard displays for loyalty tiers and subscription management.
 </product_requirements>
 
 <key_technical_concepts>
--   **Full-Stack Development:** FastAPI (Python) backend, React (JavaScript) frontend.
--   **Databases:** Firebase Firestore (Project 62), MongoDB (existing apps).
+-   **Full-Stack:** FastAPI (Python) backend, React (JavaScript) frontend.
+-   **Databases:** Firebase Firestore (Project 62), MongoDB (existing).
 -   **Authentication:** Firebase Auth, JWT (PyJWT).
--   **API Integrations:** Stripe (payments), SendGrid (email), Firebase Storage.
+-   **API Integrations:** Stripe, SendGrid, Firebase Storage, emergentintegrations.
 -   **Deployment:** Kubernetes, supervisorctl.
--   **UI/UX:** React components, React Router, Context API.
+-   **UI/UX:** React components, React Router, Context API (AuthContext).
 </key_technical_concepts>
 
 <code_architecture>
 
--   ****: Main FastAPI entry point.
-    -   Summary: Orchestrates API routers.
-    -   Changes: Integrated  router.
--   ****: Dedicated FastAPI router for Project 62.
-    -   Summary: Handles lead capture, digital/physical product purchases, meal-prep subscriptions, Stripe webhooks, SendGrid emails, Firebase interactions, PayNow QR, product/discount management.
-    -   Changes: Added magic link auth endpoints; implemented  middleware; protected admin endpoints (, , , , , ); added  and  models; created endpoints for product creation/editing, image uploads, and discount code management; integrated  into webhook; added auto-generated  for product creation.
+
+
+-   ****: The core backend router.
+    -   Summary: Orchestrates API endpoints for Project 62.
+    -   Changes: Updated with comprehensive , ,  (with ) models. Implemented CRUD for products, categories, and subscriptions. Added public endpoints for product/subscription listings with filtering/sorting. Integrated smart reordering logic for featured products. Added helper functions for loyalty tier calculation and customer subscription management endpoints (upgrade/cancel). Included a  function. Improved login error messaging.
 -   ****: Backend environment variables.
-    -   Summary: Stores sensitive keys and configurations.
-    -   Changes: Corrected  to ; added  for Firebase credentials.
--   ** (NEW)**: Script to create a test admin user in Firebase Firestore.
-    -   Summary: Seeds a user with  for testing admin dashboard.
--   ** (NEW)**: Script to populate initial digital products on the landing page into Firestore.
-    -   Summary: Adds 6 Days Free Plan, 6 Weeks Transformation, Custom Plan with Ian products.
--   ****: Main React routing.
+    -   Summary: Stores sensitive keys.
+    -   Changes: Updated  and .
+-   ****: Main React router.
     -   Summary: Defines application routes.
-    -   Changes: Added routes for , , , , wrapped Project 62 routes with .
--   ** (NEW)**: React Context for user authentication state.
-    -   Summary: Manages  status,  data (including ), and login/logout functions across the app.
+    -   Changes: Added routes for new admin sections ().
+-   ****: Manages user authentication state.
+    -   Summary: Handles user login/logout.
+    -   Changes: Improved error handling for non-JSON responses during login.
 -   ****: Main landing page.
-    -   Summary: Displays brand story, products, lead capture.
-    -   Changes: Added a floating Login button linking to .
--   ** (NEW)**: Customer login/signup page.
-    -   Summary: Provides UI for email/password and magic link authentication.
--   ** (NEW)**: Customer portal.
-    -   Summary: Allows customers to view their plan, edit personal/address details.
-    -   Changes: Updated address form to match checkout format (line 1, line 2, postal code); conditionally renders Admin Panel button based on user role.
--   ** (NEW)**: Admin panel.
-    -   Summary: Main interface for admins to manage leads, orders, deliveries, customers, products, and discount codes.
-    -   Changes: Added Products and Discount Codes tabs; implemented role-based access check.
--   ** (NEW)**: Admin page for managing products.
-    -   Summary: UI for creating, editing, uploading images, and listing digital/physical products.
-    -   Changes: Implemented product creation/edit form with image upload; displays product type and delivery charges.
--   ****: UI for meal-prep subscriptions.
-    -   Summary: Collects delivery info and payment.
-    -   Changes: Confirmed and served as the standard for address input format (line 1, line 2, postal code).
+    -   Summary: Displays products and meal-prep subscriptions.
+    -   Changes: Dynamically loads featured products and meal-prep plans from API, replacing hardcoded data. Updated login button to show Dashboard when authenticated. Added CSS for product type badges.
+-   ****: Customer login/signup page.
+    -   Summary: UI for email/password and magic link auth.
+    -   Changes: Added password visibility toggle to login/registration forms and accompanying CSS.
+-   ****: Customer portal.
+    -   Summary: Displays customer plan details and personal information.
+    -   Changes: Implemented UI to display Loyalty Tier badge, progress bar, tier-specific messages. Added Upgrade/Downgrade and Cancel Auto-Renew buttons. Conditional rendering for Change Plan vs. Browse Plans based on subscription status. Integrated helper functions for subscription fetching and action handling. Fixed JSX structural errors.
+-   ****: CSS for customer dashboard.
+    -   Summary: Styles the customer dashboard.
+    -   Changes: Added styles for loyalty tier display, progress bars, and new buttons.
+-   ****: Admin panel.
+    -   Summary: Main admin interface.
+    -   Changes: Added Subscriptions tab, integrating .
+-   ** / **: Product management UI.
+    -   Summary: Provides CRUD for products.
+    -   Changes: Replaced with a comprehensive version to support new product model fields and image uploads.
+-   ** (NEW) /  (NEW)**: Subscription plan management UI.
+    -   Summary: Provides CRUD for meal-prep subscription plans.
+    -   Changes: Implemented UI for managing week-based pricing tiers and dynamic list refresh.
+
 </code_architecture>
 
 <pending_tasks>
--   **WhatsApp Bot Connection:** Resolve Connection Failure errors in .
--   **Topic Library Population:** Integrate the master topic file for S1-S4, J1-J2 with real links into the  collection in Firebase.
--   **PayNow Integration:** Further configuration/testing on Stripe side.
--   **Discount Code Application:** Implement functionality for customers to use discount codes at checkout.
--   **Product Creation Error:** Debug and fix the Failed to create product error reported by the user.
--   **Digital Product PDF Upload:** Implement actual PDF upload functionality for products like the 6 Days Free Plan within the Admin Dashboard.
--   **Customer Dashboard Features:** Implement full functionality for customers to renew, re-order, and upgrade plans.
--   **Admin Dashboard Tabs Functionality:** Implement full functionality for Leads, Orders, Deliveries, and Customers tabs.
+-   **Digital Product PDF Upload:** Implement actual PDF upload functionality in Admin Dashboard.
+-   **Customer Subscription Management Logic:** Implement backend logic for upgrade, downgrade, and cancel auto-renewal.
+-   **Admin Dashboard Leads/Orders/Deliveries/Customers Tabs:** Fully integrate with new product/subscription system.
+-   **Hybrid Payment Model:** Activate  billing logic with Stripe.
+-   **Dish Selection UI:** Implement frontend UI for dish selection.
+-   **Discount Code Application:** Implement customer discount code usage at checkout.
 </pending_tasks>
 
 <current_work>
-Immediately before this summary request, the AI engineer was actively working on enhancing the **Project 62** admin product management. The user reported two key issues:
-1.  **Failed to create product error:** The product creation process was failing, preventing new products from being added. The AI attempted to debug this by checking backend logs and directly testing API endpoints, adding auto-generated  and better error logging.
-2.  **Product image upload:** The user requested the ability to add photos to each product. The AI implemented this by updating the  model in  to include  and added a dedicated endpoint for image uploads (). On the frontend,  was updated to include an image upload input field and display product images.
-Additionally, the AI implemented **product editing functionality** on the frontend within , allowing admins to modify existing product details. The current state is that the product creation/edit form is visible and updated on the frontend (including the Edit button on product cards and the + Add Photo button), and all three initially required products are displayed. However, the Failed to create product error persists for new product creation, which the AI was in the process of debugging by re-checking backend logs.
+Immediately before this summary request, the AI engineer was implementing UI/UX improvements on the  page based on user feedback. The user requested:
+1.  Adding a **tier benefits info icon with a tooltip** to explain loyalty tiers.
+2.  Correcting the **Change Plan button logic** to conditionally display Browse Plans if no active subscription exists, and Change Plan otherwise.
+3.  Ensuring that **changing plan durations works** and that the Browse Plans option leads to available products.
+
+The AI engineer modified  to incorporate these changes. This involved updating the subscription display section to include the loyalty tier benefits modal and dynamically rendering the appropriate action buttons (Change Plan or Browse Plans). Corresponding CSS was added to . The last action recorded was restarting the frontend service to apply these latest UI changes. The underlying backend logic for applying plan changes or cancellations still needs to be fully integrated and tested.
 </current_work>
 
 <optional_next_step>
-Investigate and resolve the Failed to create product error by re-examining backend logs and testing the API.
+Verify the Customer Dashboard UI/UX for loyalty tier benefits and conditional plan buttons after the frontend restart.
 </optional_next_step>
