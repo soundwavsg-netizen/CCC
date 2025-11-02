@@ -7,7 +7,9 @@ from typing import Dict, List, Any
 import os
 
 # Initialize Notion client
-NOTION_TOKEN = os.getenv("NOTION_TOKEN", "***REMOVED***")
+NOTION_TOKEN = os.getenv("NOTION_TOKEN")
+if not NOTION_TOKEN:
+    raise ValueError("NOTION_TOKEN environment variable is required but not set")
 notion = Client(auth=NOTION_TOKEN)
 
 # Database IDs (from creation script)
