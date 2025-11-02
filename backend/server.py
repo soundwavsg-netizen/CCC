@@ -16,6 +16,7 @@ from firebase_admin import credentials, firestore
 from math_analysis_api import math_router
 from tutor_auth_api import tutor_router
 from project62_api import router as project62_router
+from firebase_notion_sync import router as sync_router
 
 
 ROOT_DIR = Path(__file__).parent
