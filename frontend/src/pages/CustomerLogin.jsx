@@ -91,7 +91,7 @@ const CustomerLogin = () => {
     
     if (result.success) {
       // Navigation will be handled by the useEffect hook above
-      // No need to manually navigate here
+      setLoading(false);
     } else {
       setError(result.error || 'Registration failed. Please try again.');
       setLoading(false);
