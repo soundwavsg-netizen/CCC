@@ -54,7 +54,10 @@ except Exception as e:
     bucket = None
 
 # Stripe Integration
+import stripe
 STRIPE_API_KEY = os.getenv("STRIPE_API_KEY", "***REMOVED***")
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "***REMOVED***")
+stripe.api_key = STRIPE_API_KEY
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL", "project62@gmail.com")
 JWT_SECRET = os.getenv("PROJECT62_JWT_SECRET", "***REMOVED***")
