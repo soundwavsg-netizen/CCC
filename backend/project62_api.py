@@ -195,6 +195,22 @@ class ValidateDiscountRequest(BaseModel):
     code: str
     amount: float
 
+class DishCreateRequest(BaseModel):
+    dish_name: str
+    description: Optional[str] = None
+    calories: Optional[int] = None
+    week_assigned: Optional[int] = None  # Which week this dish is scheduled for
+    is_available: Optional[bool] = True
+    image_url: Optional[str] = None
+
+class DishUpdateRequest(BaseModel):
+    dish_name: Optional[str] = None
+    description: Optional[str] = None
+    calories: Optional[int] = None
+    week_assigned: Optional[int] = None
+    is_available: Optional[bool] = None
+    image_url: Optional[str] = None
+
 # ========================
 # Helper Functions
 # ========================
