@@ -45,9 +45,32 @@ const CustomerDashboard = () => {
       if (response.ok) {
         const data = await response.json();
         setSubscriptionData(data);
+        
+        // Fetch available durations from subscription config
+        if (data.subscription?.plan_id) {
+          fetchAvailableDurations(data.subscription.plan_id);
+        }
       }
     } catch (err) {
       console.error('Fetch subscription error:', err);
+    }
+  };
+
+  const fetchAvailableDurations = async (planId) => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/project62/subscriptions/${planId}`);
+      if (response.ok) {
+        const data = await response.json();
+        const plan = data.subscription;
+        if (plan && plan.pricing_tiers) {
+          const durations = plan.pricing_tiers.map(tier => tier.weeks).sort((a, b) => a - b);
+          setAvailableDurations(durations);
+        }
+      }
+    } catch (err) {
+      console.error('Fetch available durations error:', err);
+      // Fallback to default durations
+      setAvailableDurations([1, 2, 4, 6]);
     }
   };
 
