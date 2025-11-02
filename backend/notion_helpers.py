@@ -172,10 +172,10 @@ def sync_aisy_analytics(analytics_data: Dict) -> Dict:
 def update_global_analytics(project_name: str, metrics: Dict) -> Dict:
     """Update or create global analytics entry for a project"""
     # Check if entry exists
-    existing = find_page_by_property(DB_IDS["analytics_global"], "Project", project_name)
+    existing = find_page_by_property(DB_IDS["analytics_global"], "Name", project_name)
     
     properties = {
-        "Project": {"title": [{"text": {"content": project_name}}]},
+        "Name": {"title": [{"text": {"content": project_name}}]},
         "ActiveUsers": {"number": metrics.get("active_users", 0)},
         "Revenue": {"number": metrics.get("revenue", 0)},
         "Engagement": {"number": metrics.get("engagement", 0)},
