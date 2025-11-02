@@ -33,9 +33,13 @@ const CustomerLogin = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/project62/dashboard');
+      if (isAdmin) {
+        navigate('/project62/admin');
+      } else {
+        navigate('/project62/dashboard');
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, isAdmin, navigate]);
 
   const handleMagicLinkVerification = async (token) => {
     setLoading(true);
