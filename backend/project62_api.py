@@ -2079,11 +2079,27 @@ async def process_renewals(current_user: dict = Depends(get_current_admin)):
                 })
                 print(f"❌ Error processing renewal for {customer_doc.id}: {e}")
         
+        # Log to Firestore
+        log_id = str(uuid.uuid4())
+        log_data = {
+            "log_id": log_id,
+            "executed_at": datetime.utcnow().isoformat(),
+            "executed_by": current_user["email"],
+            "total_processed": len(renewals_processed),
+            "total_errors": len(errors),
+            "details": renewals_processed,
+            "errors": errors
+        }
+        db.collection("project62").document("ops").collection("renewal_logs").document(log_id).set(log_data)
+        
+        print(f"📝 Renewal log saved: {log_id}")
+        
         return {
             "status": "success",
             "renewals_processed": len(renewals_processed),
             "details": renewals_processed,
-            "errors": errors
+            "errors": errors,
+            "log_id": log_id
         }
     except Exception as e:
         print(f"Process renewals error: {e}")
