@@ -87,17 +87,16 @@ def find_page_by_property(database_id: str, property_name: str, value: str) -> D
 # ============================================
 
 def sync_p62_product(product_data: Dict) -> Dict:
-    """Sync a Project 62 product to Notion"""
-    properties = {
-        "Name": {"title": [{"text": {"content": product_data.get("name", "")[:100]}}]},
-        "Price": {"number": product_data.get("price", 0)},
-        "Type": {"select": {"name": product_data.get("type", "digital").capitalize()}},
-        "Category": {"select": {"name": product_data.get("category", "Digital Guides")}},
-        "Featured": {"checkbox": product_data.get("is_featured", False)},
-        "Visibility": {"select": {"name": product_data.get("visibility", "public").capitalize()}},
-        "Description": {"rich_text": [{"text": {"content": product_data.get("description", "")[:2000]}}]}
-    }
-    return create_page_in_database(DB_IDS["p62_products"], properties)
+    """Sync a Project 62 product to Notion - simplified version with minimal properties"""
+    try:
+        properties = {
+            "Name": {"title": [{"text": {"content": product_data.get("name", "Unknown Product")[:100]}}]},
+            "Price": {"number": product_data.get("price", 0)},
+            "Category": {"select": {"name": product_data.get("category", "Uncategorized")[:100]}}
+        }
+        return create_page_in_database(DB_IDS["p62_products"], properties)
+    except Exception as e:
+        return {"success": False, "error": str(e)}
 
 def sync_p62_plan(plan_data: Dict) -> Dict:
     """Sync a Project 62 subscription plan to Notion"""
