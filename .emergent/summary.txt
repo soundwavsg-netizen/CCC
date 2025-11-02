@@ -1,78 +1,75 @@
 <analysis>
-The previous AI engineer successfully bootstrapped Project 62, a health and fitness micro-brand application. The initial task involved addressing a critical Firebase API key security leak by updating  files, ensuring  integrity, and verifying secure Firebase initialization. Following this, core e-commerce features were developed, including a scalable product and category management system for digital and physical goods using Firestore and FastAPI, complemented by a React admin dashboard. Key improvements involved dynamic product display on the landing page with automatic reordering and a comprehensive meal-prep subscription module featuring dynamic, week-based pricing tiers and a dedicated admin interface. A loyalty tier system with auto-renewal logic was then integrated, affecting both customer and admin dashboards. Throughout, the engineer iteratively debugged issues, such as login failures, incorrect data rendering, and improved user experience with features like password visibility toggles and specific error messages. The work ended while implementing further UI/UX refinements to the customer dashboard.
+The trajectory outlines the evolution of Project 62, a health and fitness micro-brand application. Initially, the AI engineer secured Firebase API keys and built core e-commerce features, including product/category management (Firestore, FastAPI, React), dynamic product display, meal-prep subscriptions, and a loyalty tier system, all with admin and customer dashboards. UI/UX refinements for the customer dashboard were in progress.
+
+A significant phase involved a code export for external review, where the AI engineer successfully redacted secrets and clarified the scope to Project 62 only. Following this, a substantial set of new features and fixes were requested, focusing on making the application truly dynamic: removing hard-coded prices, implementing a comprehensive Shop page with product details, adding a Dishes CRUD module, scheduling daily renewal jobs, implementing a verified Stripe webhook, and refining Firestore rules.
+
+The AI engineer systematically implemented these, starting with backend changes (Stripe webhook, new API endpoints for subscriptions/products/dishes, renewal scheduler, Firestore rules) and then moving to frontend updates (dynamic pricing in checkout/dashboard, Shop/ProductDetail pages, Admin Dishes tab, Run Renewals button, routing). During frontend updates, a parsing error in  was debugged and resolved.
+
+Concurrently, a series of support queries regarding Emergent billing and Notion integration led to clarifications on Universal LLM Key usage and a large-scale Notion workspace setup. After initial token authentication issues, the Notion structure was successfully built, followed by attempts to sync Firebase data to Notion. This sync proved challenging due to Notion API behavior regarding database property creation and property name matching, leading to an ongoing debugging effort where data isn't visibly syncing despite API calls reporting success. The last user message highlights a critical security concern: hardcoded Notion token.
 </analysis>
 
 <product_requirements>
-The Project 62 application is designed for a health & fitness micro-brand, focusing on sustainable weight management. Key features include: lead generation (free guide via SendGrid), sales of digital/physical products, meal-prep subscriptions, customer login, and an admin dashboard for CRM, delivery tracking, product, category, and discount code management. The system utilizes Firebase Firestore for data (products, categories, subscriptions, dishes, leads, orders, deliveries, customers), Firebase Auth for user authentication (email/password/magic link), Stripe for payments, and Firebase Storage for assets. The UI is a mobile-optimized one-page scroll landing page that dynamically displays featured products and meal-prep plans. The admin dashboard provides full CRUD for products, categories, and subscription plans with advanced fields like , , , , and . A loyalty tier system (Bronze, Silver, Gold, Platinum) tracks  to apply discounts and benefits. Recent work includes refining customer dashboard displays for loyalty tiers and subscription management.
+The Project 62 application targets a health & fitness micro-brand for sustainable weight management. It features lead generation, sales of digital/physical products, meal-prep subscriptions with dynamic pricing, customer authentication (Firebase Auth), and an admin dashboard for CRM, delivery, product, category, and discount code management. Firebase Firestore serves as the primary data store (products, categories, subscriptions, dishes, leads, orders, deliveries, customers), with Stripe for payments and Firebase Storage for assets. The UI includes a mobile-optimized landing page with dynamic content, and customer/admin dashboards. A loyalty tier system tracks subscriptions for discounts. Recent work focused on refining customer dashboard displays for loyalty tiers and subscription management. The latest requirements included making all pricing dynamic, implementing a Shop page with product details, a Dishes module (CRUD for admin), a daily scheduled renewal job, a verified Stripe webhook, and updated Firestore security rules. It also involved setting up a comprehensive Notion workspace to centralize documentation and data for various CCC Digital sub-projects (Project 62, Tuition, AISY Math Tutor) with Firebase-Notion data synchronization.
 </product_requirements>
 
 <key_technical_concepts>
 -   **Full-Stack:** FastAPI (Python) backend, React (JavaScript) frontend.
--   **Databases:** Firebase Firestore (Project 62), MongoDB (existing).
+-   **Databases:** Firebase Firestore, MongoDB, Notion API.
 -   **Authentication:** Firebase Auth, JWT (PyJWT).
--   **API Integrations:** Stripe, SendGrid, Firebase Storage, emergentintegrations.
+-   **API Integrations:** Stripe, SendGrid, Firebase Storage, Notion API, emergentintegrations.
 -   **Deployment:** Kubernetes, supervisorctl.
--   **UI/UX:** React components, React Router, Context API (AuthContext).
+-   **Scheduling:** APScheduler (Python).
+-   **UI/UX:** React components, React Router, Context API.
 </key_technical_concepts>
 
 <code_architecture>
 
 
-
--   ****: The core backend router.
-    -   Summary: Orchestrates API endpoints for Project 62.
-    -   Changes: Updated with comprehensive , ,  (with ) models. Implemented CRUD for products, categories, and subscriptions. Added public endpoints for product/subscription listings with filtering/sorting. Integrated smart reordering logic for featured products. Added helper functions for loyalty tier calculation and customer subscription management endpoints (upgrade/cancel). Included a  function. Improved login error messaging.
+-   ****: Lists Python dependencies.
+    -   Changes: Added  and .
+-   ****: FastAPI application entry point.
+    -   Changes: Integrated  for daily renewal tasks and registered the new  router.
 -   ****: Backend environment variables.
-    -   Summary: Stores sensitive keys.
-    -   Changes: Updated  and .
+    -   Changes: Added  and .
+-   ****: Core backend router for Project 62.
+    -   Changes: Implemented a verified Stripe webhook (), added public subscription endpoints (, ), added product detail endpoint (), implemented Dishes CRUD endpoints (), and improved renewal logging in the  function.
+-   ** (NEW)**: Provides helper functions for interacting with the Notion API, including property mapping, creating pages, and managing database IDs for various CCC projects.
+-   ** (NEW)**: Defines API endpoints (, ) to manage and trigger Firebase data synchronization to Notion.
+-   ** (NEW/UPDATED)**: Contains the new Firestore security rules to control data access for public reads, leads, customers, and admin writes.
 -   ****: Main React router.
-    -   Summary: Defines application routes.
-    -   Changes: Added routes for new admin sections ().
--   ****: Manages user authentication state.
-    -   Summary: Handles user login/logout.
-    -   Changes: Improved error handling for non-JSON responses during login.
--   ****: Main landing page.
-    -   Summary: Displays products and meal-prep subscriptions.
-    -   Changes: Dynamically loads featured products and meal-prep plans from API, replacing hardcoded data. Updated login button to show Dashboard when authenticated. Added CSS for product type badges.
--   ****: Customer login/signup page.
-    -   Summary: UI for email/password and magic link auth.
-    -   Changes: Added password visibility toggle to login/registration forms and accompanying CSS.
+    -   Changes: Updated routes to include , , and .
+-   ****: Meal-prep subscription checkout page.
+    -   Changes: Removed hard-coded prices/durations; now fetches subscription plan details dynamically from the backend to compute totals.
 -   ****: Customer portal.
-    -   Summary: Displays customer plan details and personal information.
-    -   Changes: Implemented UI to display Loyalty Tier badge, progress bar, tier-specific messages. Added Upgrade/Downgrade and Cancel Auto-Renew buttons. Conditional rendering for Change Plan vs. Browse Plans based on subscription status. Integrated helper functions for subscription fetching and action handling. Fixed JSX structural errors.
--   ****: CSS for customer dashboard.
-    -   Summary: Styles the customer dashboard.
-    -   Changes: Added styles for loyalty tier display, progress bars, and new buttons.
--   ****: Admin panel.
-    -   Summary: Main admin interface.
-    -   Changes: Added Subscriptions tab, integrating .
--   ** / **: Product management UI.
-    -   Summary: Provides CRUD for products.
-    -   Changes: Replaced with a comprehensive version to support new product model fields and image uploads.
--   ** (NEW) /  (NEW)**: Subscription plan management UI.
-    -   Summary: Provides CRUD for meal-prep subscription plans.
-    -   Changes: Implemented UI for managing week-based pricing tiers and dynamic list refresh.
-
+    -   Changes: Modified the Change Plan modal to fetch and display available durations dynamically from the backend.
+-   ****: Digital product checkout page.
+    -   Changes: Removed hard-coded product data; now fetches product details dynamically using the product slug from the route.
+-   ** (NEW) /  (NEW)**: Implements a new shop page.
+    -   Summary: Displays products with filtering, sorting, and pagination functionalities.
+-   ** (NEW) /  (NEW)**: Implements a new product detail page.
+    -   Summary: Displays detailed product information, images, and a Buy Now button.
+-   ** (NEW) /  (NEW)**: Implements a new admin interface for managing dishes.
+    -   Summary: Provides CRUD operations (create, read, update, delete) for dishes, including image upload.
+-   ****: Main admin interface.
+    -   Changes: Added a new Dishes tab and a Run Renewals Now button that manually triggers the backend renewal process.
+-   ****: CSS for admin dashboard.
+    -   Changes: Added styles for the new Run Renewals Now button.
 </code_architecture>
 
 <pending_tasks>
--   **Digital Product PDF Upload:** Implement actual PDF upload functionality in Admin Dashboard.
--   **Customer Subscription Management Logic:** Implement backend logic for upgrade, downgrade, and cancel auto-renewal.
--   **Admin Dashboard Leads/Orders/Deliveries/Customers Tabs:** Fully integrate with new product/subscription system.
--   **Hybrid Payment Model:** Activate  billing logic with Stripe.
--   **Dish Selection UI:** Implement frontend UI for dish selection.
--   **Discount Code Application:** Implement customer discount code usage at checkout.
+-   **Hardcoded Notion Token:** The Notion API token is currently hardcoded in Python files and needs to be moved to environment variables for security.
+-   **Notion Data Sync Debugging:** The Firebase to Notion data sync endpoint reports success but no data appears in Notion databases; this requires further debugging.
+-   **Admin Dashboard Authentication Fix:** The  check in  causes redirection to the customer dashboard for admin users, preventing access to the admin panel. This needs investigation and a fix.
 </pending_tasks>
 
 <current_work>
-Immediately before this summary request, the AI engineer was implementing UI/UX improvements on the  page based on user feedback. The user requested:
-1.  Adding a **tier benefits info icon with a tooltip** to explain loyalty tiers.
-2.  Correcting the **Change Plan button logic** to conditionally display Browse Plans if no active subscription exists, and Change Plan otherwise.
-3.  Ensuring that **changing plan durations works** and that the Browse Plans option leads to available products.
+Immediately before the last user message, the AI engineer was deep into debugging the Firebase to Notion data synchronization. The comprehensive Notion workspace structure, including 15 databases for CCC Digital, Project 62, Tuition, and AISY Math Tutor, had been successfully created using the Notion API. Backend endpoints (, ) were implemented in , leveraging  for API interactions and property mapping. The  was added to , and  was installed.
 
-The AI engineer modified  to incorporate these changes. This involved updating the subscription display section to include the loyalty tier benefits modal and dynamically rendering the appropriate action buttons (Change Plan or Browse Plans). Corresponding CSS was added to . The last action recorded was restarting the frontend service to apply these latest UI changes. The underlying backend logic for applying plan changes or cancellations still needs to be fully integrated and tested.
+Initial sync attempts failed because Notion databases created programmatically lacked proper property schemas. The AI engineer resolved this by performing direct PATCH requests to the Notion API () to add all required properties (e.g., Name, Price, Calories, Category for products). Further issues arose due to incorrect mapping of Firebase field names to Notion's auto-generated Name title property, which was addressed by updating .
+
+Despite these fixes and the API endpoint reporting , the user reported that no data was visible in Notion. Manual testing confirmed that individual entries *could* be added to a Notion database via the API, indicating the database itself was functional. However, the automated sync process was not populating the databases. The current work involves tracing the sync function and API endpoint to understand why data is not persisting, even after reported success, and the user has just raised a critical security concern about the hardcoded Notion token.
 </current_work>
 
 <optional_next_step>
-Verify the Customer Dashboard UI/UX for loyalty tier benefits and conditional plan buttons after the frontend restart.
+Address the hardcoded Notion token by moving it to an environment variable in the backend.
 </optional_next_step>
