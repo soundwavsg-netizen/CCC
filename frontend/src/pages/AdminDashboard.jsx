@@ -250,6 +250,12 @@ const AdminDashboard = () => {
         >
           Subscriptions
         </button>
+        <button 
+          className={activeTab === 'dishes' ? 'tab active' : 'tab'}
+          onClick={() => setActiveTab('dishes')}
+        >
+          Dishes
+        </button>
       </div>
 
       {/* Tab Content */}
