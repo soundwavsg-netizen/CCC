@@ -24,6 +24,8 @@ import MathAnalysis from './pages/MathAnalysis';
 import TutorAdmin from './pages/TutorAdmin';
 import TutorLogin from './pages/TutorLogin';
 import Project62Landing from './pages/Project62Landing';
+import Shop from './pages/Shop';
+import ProductDetail from './pages/ProductDetail';
 import DigitalCheckout from './pages/DigitalCheckout';
 import MealPrepCheckout from './pages/MealPrepCheckout';
 import PaymentSuccess from './pages/PaymentSuccess';
