@@ -67,7 +67,8 @@ const CustomerLogin = () => {
     const result = await login(formData.email, formData.password);
     
     if (result.success) {
-      navigate('/project62/dashboard');
+      // Navigation will be handled by the useEffect hook above
+      // No need to manually navigate here
     } else {
       setError(result.error || 'Login failed. Please check your credentials.');
       setLoading(false);
