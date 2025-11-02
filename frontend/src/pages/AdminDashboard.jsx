@@ -446,6 +446,13 @@ const AdminDashboard = () => {
             <AdminSubscriptions />
           </div>
         )}
+
+        {/* Dishes Tab */}
+        {activeTab === 'dishes' && (
+          <div className="content-section dishes-tab">
+            <AdminDishes />
+          </div>
+        )}
       </div>
     </div>
   );
