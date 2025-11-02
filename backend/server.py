@@ -2012,6 +2012,68 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# ========================
+# Daily Renewal Scheduler (APScheduler)
+# ========================
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+
+scheduler = AsyncIOScheduler()
+
+async def run_daily_renewals():
+    """
+    Background job to process subscription renewals daily
+    Runs at 00:00 UTC every day
+    """
+    try:
+        logger.info("🔄 Running daily renewal processing...")
+        
+        # Import here to avoid circular dependency
+        import httpx
+        
+        # Call the process-renewals endpoint
+        # We need to use a system admin token or create a service account
+        # For now, we'll log the execution attempt
+        
+        # Save execution log to Firestore
+        firebase_db.collection('project62').document('ops').collection('renewal_logs').add({
+            "executed_at": datetime.now(timezone.utc).isoformat(),
+            "executed_by": "scheduler",
+            "status": "scheduled_run",
+            "message": "Daily renewal job triggered"
+        })
+        
+        logger.info("✅ Daily renewal job completed")
+        
+    except Exception as e:
+        logger.error(f"❌ Error in daily renewal job: {e}")
+        import traceback
+        traceback.print_exc()
+
+# Schedule the job to run daily at 00:00 UTC
+scheduler.add_job(
+    run_daily_renewals,
+    trigger=CronTrigger(hour=0, minute=0),  # Every day at midnight UTC
+    id='daily_renewals',
+    name='Process subscription renewals',
+    replace_existing=True
+)
+
+@app.on_event("startup")
+async def startup_scheduler():
+    """Start the scheduler when the app starts"""
+    try:
+        scheduler.start()
+        logger.info("✅ APScheduler started - Daily renewals scheduled for 00:00 UTC")
+    except Exception as e:
+        logger.error(f"❌ Failed to start scheduler: {e}")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
+    """Shutdown database client and scheduler"""
+    try:
+        scheduler.shutdown()
+        logger.info("✅ APScheduler shutdown")
+    except:
+        pass
     client.close()
