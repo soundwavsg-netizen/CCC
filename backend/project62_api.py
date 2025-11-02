@@ -2483,6 +2483,225 @@ async def handle_stripe_webhook(request: Request):
         print(f"Webhook error: {e}")
         raise HTTPException(status_code=400, detail=str(e))
 
+# ========================
+# Public Subscriptions API (Dynamic Frontend Data)
+# ========================
+
+@router.get("/subscriptions/public")
+async def get_public_subscriptions():
+    """Get all active subscription plans for shop/checkout pages"""
+    try:
+        subscriptions_ref = db.collection("project62").document("subscriptions_config").collection("all")
+        subscriptions = [doc.to_dict() for doc in subscriptions_ref.stream()]
+        
+        # Filter: only active subscriptions
+        active_subscriptions = [
+            s for s in subscriptions 
+            if s.get("is_active", False)
+        ]
+        
+        # Sort by plan_name
+        active_subscriptions.sort(key=lambda x: x.get("plan_name", ""))
+        
+        return {"subscriptions": active_subscriptions, "count": len(active_subscriptions)}
+    except Exception as e:
+        print(f"Get public subscriptions error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/subscriptions/{plan_id}")
+async def get_subscription_by_id(plan_id: str):
+    """Get single subscription plan by ID"""
+    try:
+        subscription_ref = db.collection("project62").document("subscriptions_config").collection("all").document(plan_id)
+        subscription_doc = subscription_ref.get()
+        
+        if not subscription_doc.exists:
+            raise HTTPException(status_code=404, detail="Subscription plan not found")
+        
+        subscription_data = subscription_doc.to_dict()
+        
+        if not subscription_data.get("is_active", False):
+            raise HTTPException(status_code=404, detail="Subscription plan not available")
+        
+        return {"subscription": subscription_data}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Get subscription error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ========================
+# Product Detail API (Dynamic Frontend Data)
+# ========================
+
+@router.get("/products/{product_slug}")
+async def get_product_by_slug(product_slug: str):
+    """Get single product by slug for product detail page"""
+    try:
+        products_ref = db.collection("project62").document("products").collection("all")
+        products = [doc for doc in products_ref.stream()]
+        
+        # Find product by slug
+        product_doc = None
+        for doc in products:
+            if doc.to_dict().get("product_id_slug") == product_slug:
+                product_doc = doc
+                break
+        
+        if not product_doc:
+            raise HTTPException(status_code=404, detail="Product not found")
+        
+        product_data = product_doc.to_dict()
+        
+        # Check if product is available
+        if not product_data.get("active", True) or product_data.get("visibility") == "hidden":
+            raise HTTPException(status_code=404, detail="Product not available")
+        
+        return {"product": product_data}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Get product error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ========================
+# Dishes Management (Admin CRUD)
+# ========================
+
+@router.get("/admin/dishes")
+async def get_all_dishes(current_user: dict = Depends(get_current_admin)):
+    """Get all dishes for admin dashboard"""
+    try:
+        dishes_ref = db.collection("project62").document("dishes").collection("all")
+        dishes = [doc.to_dict() for doc in dishes_ref.stream()]
+        dishes.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+        return {"dishes": dishes, "count": len(dishes)}
+    except Exception as e:
+        print(f"Get dishes error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/admin/dishes")
+async def create_dish(dish: DishCreateRequest, current_user: dict = Depends(get_current_admin)):
+    """Create a new dish"""
+    try:
+        dish_id = str(uuid.uuid4())
+        
+        dish_data = {
+            "dish_id": dish_id,
+            "dish_name": dish.dish_name,
+            "description": dish.description or "",
+            "calories": dish.calories,
+            "week_assigned": dish.week_assigned,
+            "is_available": dish.is_available,
+            "image_url": dish.image_url,
+            "created_at": datetime.utcnow().isoformat(),
+            "updated_at": datetime.utcnow().isoformat()
+        }
+        
+        db.collection("project62").document("dishes").collection("all").document(dish_id).set(dish_data)
+        
+        print(f"✅ Dish created: {dish.dish_name} (ID: {dish_id})")
+        
+        return {"status": "success", "dish_id": dish_id, "dish": dish_data}
+    except Exception as e:
+        print(f"Create dish error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.put("/admin/dishes/{dish_id}")
+async def update_dish(dish_id: str, dish: DishUpdateRequest, current_user: dict = Depends(get_current_admin)):
+    """Update dish details"""
+    try:
+        dish_ref = db.collection("project62").document("dishes").collection("all").document(dish_id)
+        dish_doc = dish_ref.get()
+        
+        if not dish_doc.exists:
+            raise HTTPException(status_code=404, detail="Dish not found")
+        
+        update_data = {"updated_at": datetime.utcnow().isoformat()}
+        if dish.dish_name is not None:
+            update_data["dish_name"] = dish.dish_name
+        if dish.description is not None:
+            update_data["description"] = dish.description
+        if dish.calories is not None:
+            update_data["calories"] = dish.calories
+        if dish.week_assigned is not None:
+            update_data["week_assigned"] = dish.week_assigned
+        if dish.is_available is not None:
+            update_data["is_available"] = dish.is_available
+        if dish.image_url is not None:
+            update_data["image_url"] = dish.image_url
+        
+        dish_ref.update(update_data)
+        
+        return {"status": "success", "message": "Dish updated successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Update dish error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.delete("/admin/dishes/{dish_id}")
+async def delete_dish(dish_id: str, current_user: dict = Depends(get_current_admin)):
+    """Delete a dish"""
+    try:
+        db.collection("project62").document("dishes").collection("all").document(dish_id).delete()
+        return {"status": "success", "message": "Dish deleted successfully"}
+    except Exception as e:
+        print(f"Delete dish error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/admin/dishes/{dish_id}/upload-image")
+async def upload_dish_image(dish_id: str, request: Request, current_user: dict = Depends(get_current_admin)):
+    """Upload image for a dish"""
+    try:
+        from fastapi import File, UploadFile, Form
+        
+        # Get the uploaded file from request
+        form = await request.form()
+        file = form.get("file")
+        
+        if not file:
+            raise HTTPException(status_code=400, detail="No file provided")
+        
+        # Read file content
+        file_content = await file.read()
+        
+        # Upload to Firebase Storage
+        blob = bucket.blob(f"dishes/{dish_id}/{file.filename}")
+        blob.upload_from_string(file_content, content_type=file.content_type)
+        blob.make_public()
+        
+        # Update dish with image URL
+        dish_ref = db.collection("project62").document("dishes").collection("all").document(dish_id)
+        dish_ref.update({
+            "image_url": blob.public_url,
+            "updated_at": datetime.utcnow().isoformat()
+        })
+        
+        return {"status": "success", "image_url": blob.public_url}
+    except Exception as e:
+        print(f"Upload dish image error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+# ========================
+# Renewal Logs (for Admin Dashboard)
+# ========================
+
+@router.get("/admin/renewal-logs")
+async def get_renewal_logs(current_user: dict = Depends(get_current_admin), limit: int = 10):
+    """Get recent renewal processing logs"""
+    try:
+        logs_ref = db.collection("project62").document("ops").collection("renewal_logs")
+        logs = [doc.to_dict() for doc in logs_ref.stream()]
+        logs.sort(key=lambda x: x.get("executed_at", ""), reverse=True)
+        logs = logs[:limit]
+        return {"logs": logs, "count": len(logs)}
+    except Exception as e:
+        print(f"Get renewal logs error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 # Serve PayNow QR Code Image
 @router.get("/assets/paynow-qr")
 async def get_paynow_qr():
