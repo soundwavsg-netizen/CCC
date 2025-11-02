@@ -5,21 +5,15 @@ import './MealPrepCheckout.css';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-const MEAL_PREP_PRICING = {
-  '1_week': { 1: 12.00, 2: 12.00 },
-  '2_weeks': { 1: 11.50, 2: 11.50 },
-  '4_weeks': { 1: 10.80, 2: 10.80 },
-  '6_weeks': { 1: 10.00, 2: 10.00 }
-};
-
-const DELIVERY_FEE = 20.00;
-
 const MealPrepCheckout = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   
-  const [duration, setDuration] = useState(searchParams.get('duration') || '4_weeks');
+  const [subscriptionPlans, setSubscriptionPlans] = useState([]);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [duration, setDuration] = useState(searchParams.get('duration') || '4');
   const [mealsPerDay, setMealsPerDay] = useState(parseInt(searchParams.get('meals')) || 1);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,16 +24,52 @@ const MealPrepCheckout = () => {
     country: 'Singapore',
     startDate: ''
   });
-  const [loading, setLoading] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Fetch subscription plans on mount
+  useEffect(() => {
+    fetchSubscriptionPlans();
+  }, []);
+
+  const fetchSubscriptionPlans = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`${BACKEND_URL}/api/project62/subscriptions/public`);
+      const plans = response.data.subscriptions || [];
+      setSubscriptionPlans(plans);
+      
+      // Find the meal-prep plan (assuming there's one)
+      const mealPrepPlan = plans.find(p => p.plan_name && p.plan_name.toLowerCase().includes('meal'));
+      if (mealPrepPlan) {
+        setSelectedPlan(mealPrepPlan);
+      }
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching subscription plans:', err);
+      setError('Failed to load subscription plans. Please refresh the page.');
+      setLoading(false);
+    }
+  };
+
   const calculatePricing = () => {
-    const durationMap = { '1_week': 1, '2_weeks': 2, '4_weeks': 4, '6_weeks': 6 };
-    const weeks = durationMap[duration];
-    const pricePerMeal = MEAL_PREP_PRICING[duration][mealsPerDay];
-    const totalMeals = weeks * 6 * mealsPerDay;
+    if (!selectedPlan || !selectedPlan.pricing_tiers) {
+      return null;
+    }
+
+    // Find the pricing tier for selected duration
+    const weeks = parseInt(duration);
+    const tier = selectedPlan.pricing_tiers.find(t => t.weeks === weeks);
+    
+    if (!tier) {
+      return null;
+    }
+
+    const pricePerMeal = tier.price_per_meal;
+    const deliveryFee = selectedPlan.delivery_fee || 20.00;
+    const totalMeals = weeks * 6 * mealsPerDay; // 6 days per week
     const mealCost = totalMeals * pricePerMeal;
-    const deliveryCost = weeks * DELIVERY_FEE;
+    const deliveryCost = weeks * deliveryFee;
     const totalCost = mealCost + deliveryCost;
     
     return {
@@ -59,14 +89,12 @@ const MealPrepCheckout = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Check if a date is Saturday or Sunday
   const isWeekend = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDay();
-    return day === 0 || day === 6; // 0 = Sunday, 6 = Saturday
+    return day === 0 || day === 6;
   };
 
-  // Check if date is within minimum 3 business days
   const isDateTooSoon = (dateString) => {
     const selectedDate = new Date(dateString);
     const minDateObj = new Date(getMinimumDate());
@@ -76,58 +104,51 @@ const MealPrepCheckout = () => {
   const handleDateChange = (e) => {
     const selectedDate = e.target.value;
     
-    // Validate: not too soon
     if (isDateTooSoon(selectedDate)) {
       setError('Please select a date at least 3 business days from today.');
       return;
     }
     
-    // Validate: not weekend
     if (isWeekend(selectedDate)) {
       setError('Delivery is not available on Saturdays and Sundays. Please select a weekday.');
       setFormData(prev => ({ ...prev, startDate: '' }));
       return;
     }
     
-    // Valid date
     setError('');
     setFormData(prev => ({ ...prev, startDate: selectedDate }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setCheckoutLoading(true);
     setError('');
 
-    // Validate Singapore delivery only
     if (formData.country !== 'Singapore') {
-      setError('We currently only deliver within Singapore. Please ensure your delivery address is in Singapore.');
-      setLoading(false);
+      setError('We currently only deliver within Singapore.');
+      setCheckoutLoading(false);
       return;
     }
 
-    // Validate postal code (Singapore format: 6 digits)
     const postalCodeRegex = /^\d{6}$/;
     if (!postalCodeRegex.test(formData.postalCode)) {
       setError('Please enter a valid 6-digit Singapore postal code.');
-      setLoading(false);
+      setCheckoutLoading(false);
       return;
     }
 
-    // Validate start date (no weekends)
     if (isWeekend(formData.startDate)) {
-      setError('Delivery is not available on Saturdays and Sundays. Please select a weekday.');
-      setLoading(false);
+      setError('Delivery is not available on Saturdays and Sundays.');
+      setCheckoutLoading(false);
       return;
     }
 
-    // Construct full address
     const fullAddress = `${formData.addressLine1}${formData.addressLine2 ? ', ' + formData.addressLine2 : ''}, Singapore ${formData.postalCode}`;
 
     try {
       const originUrl = window.location.origin;
       const response = await axios.post(`${BACKEND_URL}/api/project62/checkout/meal-prep`, {
-        duration: duration,
+        duration: `${duration}_week${duration > 1 ? 's' : ''}`,
         meals_per_day: mealsPerDay,
         origin_url: originUrl,
         name: formData.name,
@@ -137,18 +158,16 @@ const MealPrepCheckout = () => {
         start_date: formData.startDate
       });
 
-      // Redirect to Stripe checkout
       if (response.data.checkout_url) {
         window.location.href = response.data.checkout_url;
       }
     } catch (err) {
       console.error('Checkout error:', err);
       setError('Failed to create checkout session. Please try again.');
-      setLoading(false);
+      setCheckoutLoading(false);
     }
   };
 
-  // Set minimum date to 3 business days from now (excluding weekends)
   const getMinimumDate = () => {
     const today = new Date();
     let daysAdded = 0;
@@ -157,7 +176,6 @@ const MealPrepCheckout = () => {
     while (daysAdded < 3) {
       minDate.setDate(minDate.getDate() + 1);
       const dayOfWeek = minDate.getDay();
-      // Skip weekends
       if (dayOfWeek !== 0 && dayOfWeek !== 6) {
         daysAdded++;
       }
@@ -168,29 +186,53 @@ const MealPrepCheckout = () => {
 
   const minDate = getMinimumDate();
 
+  // Get available durations from selected plan
+  const availableDurations = selectedPlan?.pricing_tiers?.map(t => t.weeks) || [1, 2, 4, 6];
+
+  if (loading) {
+    return (
+      <div className="meal-prep-checkout-page">
+        <div className="checkout-container">
+          <div className="loading-state">Loading subscription plans...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!selectedPlan || !pricing) {
+    return (
+      <div className="meal-prep-checkout-page">
+        <div className="checkout-container">
+          <div className="error-state">
+            <p>Unable to load subscription plans. Please try again later.</p>
+            <button onClick={() => navigate('/project62')}>Back to Home</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="meal-prep-checkout-page">
       <div className="checkout-container">
         <div className="checkout-header">
-          <button className="back-button" onClick={() => navigate('/project62')}>
-            ← Back to Project 62
-          </button>
+          <button className="back-button" onClick={() => navigate('/project62')}>← Back to Project 62</button>
           <h1>Meal-Prep Subscription Checkout</h1>
           <p className="subtitle">Get your meals delivered fresh every week</p>
         </div>
 
         <div className="checkout-content">
-          {/* Plan Configuration */}
           <div className="plan-configuration">
             <h2>Configure Your Plan</h2>
             
             <div className="config-group">
               <label>Duration</label>
               <select value={duration} onChange={(e) => setDuration(e.target.value)}>
-                <option value="1_week">1 Week</option>
-                <option value="2_weeks">2 Weeks</option>
-                <option value="4_weeks">4 Weeks</option>
-                <option value="6_weeks">6 Weeks</option>
+                {availableDurations.sort((a, b) => a - b).map(weeks => (
+                  <option key={weeks} value={weeks}>
+                    {weeks} Week{weeks > 1 ? 's' : ''}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -201,167 +243,80 @@ const MealPrepCheckout = () => {
                 <option value="2">2 Meals/Day</option>
               </select>
             </div>
+          </div>
 
-            <div className="pricing-breakdown">
-              <h3>Pricing Breakdown</h3>
-              <div className="breakdown-row">
-                <span>Price per meal:</span>
-                <span>${pricing.pricePerMeal}</span>
-              </div>
-              <div className="breakdown-row">
-                <span>Total meals ({pricing.totalMeals}):</span>
-                <span>${pricing.mealCost}</span>
-              </div>
-              <div className="breakdown-row">
-                <span>Delivery ({pricing.weeks} weeks × $20):</span>
-                <span>${pricing.deliveryCost}</span>
-              </div>
-              <div className="breakdown-row total">
-                <span>Total:</span>
-                <span>${pricing.totalCost} SGD</span>
-              </div>
+          <div className="pricing-summary">
+            <h2>Order Summary</h2>
+            <div className="pricing-row">
+              <span>Price per Meal:</span>
+              <span>${pricing.pricePerMeal}</span>
+            </div>
+            <div className="pricing-row">
+              <span>Total Meals ({pricing.totalMeals}):</span>
+              <span>${pricing.mealCost}</span>
+            </div>
+            <div className="pricing-row">
+              <span>Delivery ({pricing.weeks} weeks):</span>
+              <span>${pricing.deliveryCost}</span>
+            </div>
+            <div className="pricing-row total">
+              <span><strong>Total:</strong></span>
+              <span><strong>${pricing.totalCost} SGD</strong></span>
             </div>
           </div>
 
-          {/* Delivery Information Form */}
-          <div className="delivery-form">
+          <form className="checkout-form" onSubmit={handleSubmit}>
             <h2>Delivery Information</h2>
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Full Name *</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Enter your full name"
-                />
-              </div>
 
-              <div className="form-group">
-                <label>Email *</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="your@email.com"
-                />
-              </div>
+            {error && <div className="error-message">{error}</div>}
 
-              <div className="form-group">
-                <label>Phone Number *</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="+65 XXXX XXXX"
-                />
-              </div>
+            <div className="form-group">
+              <label>Full Name *</label>
+              <input type="text" name="name" value={formData.name} onChange={handleInputChange} required />
+            </div>
 
-              <div className="form-group">
-                <label>Address Line 1 *</label>
-                <input
-                  type="text"
-                  name="addressLine1"
-                  value={formData.addressLine1}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Street address, building name, unit number"
-                />
-              </div>
+            <div className="form-group">
+              <label>Email *</label>
+              <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
+            </div>
 
-              <div className="form-group">
-                <label>Address Line 2 (Optional)</label>
-                <input
-                  type="text"
-                  name="addressLine2"
-                  value={formData.addressLine2}
-                  onChange={handleInputChange}
-                  placeholder="Additional address information"
-                />
-              </div>
+            <div className="form-group">
+              <label>Phone Number *</label>
+              <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required />
+            </div>
 
+            <div className="form-group">
+              <label>Address Line 1 *</label>
+              <input type="text" name="addressLine1" value={formData.addressLine1} onChange={handleInputChange} placeholder="Block and street name" required />
+            </div>
+
+            <div className="form-group">
+              <label>Address Line 2</label>
+              <input type="text" name="addressLine2" value={formData.addressLine2} onChange={handleInputChange} placeholder="Unit number (optional)" />
+            </div>
+
+            <div className="form-row">
               <div className="form-group">
                 <label>Postal Code *</label>
-                <input
-                  type="text"
-                  name="postalCode"
-                  value={formData.postalCode}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="6-digit postal code"
-                  maxLength="6"
-                  pattern="\d{6}"
-                />
-                <small>Singapore postal code only (6 digits)</small>
+                <input type="text" name="postalCode" value={formData.postalCode} onChange={handleInputChange} placeholder="6 digits" maxLength="6" required />
               </div>
 
               <div className="form-group">
                 <label>Country</label>
-                <input
-                  type="text"
-                  name="country"
-                  value="Singapore"
-                  disabled
-                  style={{ background: '#f5f5f5', cursor: 'not-allowed' }}
-                />
-                <small>We currently deliver within Singapore only</small>
+                <input type="text" name="country" value={formData.country} readOnly disabled />
               </div>
+            </div>
 
-              <div className="form-group">
-                <label>Preferred Start Date *</label>
-                <input
-                  type="date"
-                  name="startDate"
-                  value={formData.startDate}
-                  onChange={handleDateChange}
-                  required
-                  min={minDate}
-                />
-                <small>Earliest delivery: 3 business days from today (No Saturday/Sunday delivery)</small>
-              </div>
+            <div className="form-group">
+              <label>Delivery Start Date *</label>
+              <input type="date" name="startDate" value={formData.startDate} onChange={handleDateChange} min={minDate} required />
+              <small>Deliveries are Monday to Friday only. Minimum 3 business days notice required.</small>
+            </div>
 
-              {error && (
-                <div className="error-message">
-                  {error}
-                </div>
-              )}
-
-              <button 
-                type="submit" 
-                className="checkout-button"
-                disabled={loading}
-              >
-                {loading ? 'Processing...' : `Proceed to Payment - $${pricing.totalCost} SGD`}
-              </button>
-
-              <div className="secure-checkout">
-                <span className="lock-icon">🔒</span>
-                <span>Secure checkout powered by Stripe</span>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        {/* Important Information */}
-        <div className="important-info">
-          <h3>📦 Delivery Information</h3>
-          <ul>
-            <li>Meals are delivered once a week on your scheduled day</li>
-            <li>Each delivery contains meals for 6 days (one rest day per week)</li>
-            <li>All meals are freshly prepared and properly packaged for freshness</li>
-            <li>Storage and heating-up instructions included with each delivery</li>
-            <li>Deliveries available Monday-Friday only (No weekend delivery)</li>
-            <li>Minimum 3 business days' notice required for first delivery</li>
-          </ul>
-          <p style={{ marginTop: '20px', padding: '15px', background: '#f0fff9', borderLeft: '4px solid #00b894', borderRadius: '8px' }}>
-            <strong>Note:</strong> Need to pause or modify your subscription? Contact us at <a href="mailto:project62@gmail.com" style={{ color: '#00b894' }}>project62@gmail.com</a> at least 2 days before your next delivery.
-          </p>
+            <button type="submit" className="checkout-button" disabled={checkoutLoading}>
+              {checkoutLoading ? 'Processing...' : `Proceed to Payment - $${pricing.totalCost}`}
+            </button>
+          </form>
         </div>
       </div>
     </div>
