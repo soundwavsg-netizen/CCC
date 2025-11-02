@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import AdminProducts from './AdminProducts';
 import AdminSubscriptions from './AdminSubscriptions';
+import AdminDishes from './AdminDishes';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
