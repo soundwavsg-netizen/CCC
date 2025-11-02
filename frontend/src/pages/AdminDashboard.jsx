@@ -19,6 +19,8 @@ const AdminDashboard = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [renewalsLoading, setRenewalsLoading] = useState(false);
+  const [renewalsResult, setRenewalsResult] = useState(null);
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
