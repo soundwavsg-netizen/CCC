@@ -6,7 +6,7 @@ import './CustomerLogin.css';
 const CustomerLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, register, sendMagicLink, verifyMagicLink, isAuthenticated } = useAuth();
+  const { login, register, sendMagicLink, verifyMagicLink, isAuthenticated, isAdmin } = useAuth();
 
   const [mode, setMode] = useState('login'); // 'login', 'register', 'magic'
   const [formData, setFormData] = useState({
