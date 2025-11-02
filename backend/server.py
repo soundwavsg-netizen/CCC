@@ -1997,6 +1997,7 @@ app.include_router(api_router)
 app.include_router(math_router)
 app.include_router(tutor_router)
 app.include_router(project62_router)
+app.include_router(sync_router)
 
 app.add_middleware(
     CORSMiddleware,
