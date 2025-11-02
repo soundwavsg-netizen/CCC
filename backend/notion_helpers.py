@@ -16,16 +16,16 @@ DB_IDS = {
     "projects": "6f0ba0f9-b6c4-440f-9e46-8600a3a36950",
     "credits": "b8ef904f-1753-4831-b5ba-540adf5ee3ac",
     "integrations": "e854642c-19d9-462b-a058-23a7950e57f5",
-    "p62_products": "9527b155-9d71-4ac5-a95f-c7795ec82b67",
-    "p62_plans": "703b9181-d1c8-4250-9f50-f1b36e54e9ae",
-    "p62_orders": "005d531a-3218-4695-b989-4c6dc39de028",
+    "p62_products": "59aa4cc3-f146-4fcc-9029-5f653c177671",
+    "p62_plans": "4276b655-623b-4ecf-9409-327dc5c27921",
+    "p62_orders": "4247b50e-baca-41f9-bef5-2aa04d6571d2",
     "rmss_topics": "72835d14-f0d3-4517-90cd-e41a9cf2b135",
     "rmss_kb": "66f223de-894d-47c7-ad20-f406553954f7",
     "aisy_topics": "8bd5273c-bf4c-4440-a8da-edba169d4fc1",
     "aisy_prompts": "133abad0-297b-47e2-b8b1-ba5d98ce75aa",
     "aisy_resources": "fb893860-f5ac-4bec-82c8-cfcd629c2abe",
     "aisy_analytics": "ac64f297-f2cd-40f8-83ca-f633dfd550cd",
-    "analytics_global": "cd26b18d-7783-4606-8290-0bb8239c2306"
+    "analytics_global": "c66cc8dc-2272-49a6-bec8-ff3ae735b4ac"
 }
 
 def create_page_in_database(database_id: str, properties: Dict[str, Any]) -> Dict:
