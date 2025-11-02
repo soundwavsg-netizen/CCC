@@ -2107,14 +2107,6 @@ async def process_renewals(current_user: dict = Depends(get_current_admin)):
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
-
-        raise
-    except Exception as e:
-        print(f"Cancel subscription error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-
 # ========================
 # Public Products Endpoint (for Shop Page)
 # ========================
