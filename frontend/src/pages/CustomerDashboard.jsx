@@ -372,7 +372,16 @@ const CustomerDashboard = () => {
 
         {/* Subscription & Loyalty Section */}
         <div className="dashboard-card subscription-card">
-          <h2>Your Subscription & Loyalty Status</h2>
+          <div className="card-header-with-info">
+            <h2>Your Subscription & Loyalty Status</h2>
+            <button 
+              className="info-icon-btn"
+              onClick={() => setShowTierInfo(true)}
+              title="View tier benefits"
+            >
+              ℹ️ Tier Benefits
+            </button>
+          </div>
           
           {subscriptionData && subscriptionData.status !== 'no_subscription' ? (
             <>
@@ -471,7 +480,7 @@ const CustomerDashboard = () => {
                   className="action-btn primary"
                   onClick={() => setShowUpgradeModal(true)}
                 >
-                  Change Plan
+                  Change Plan Duration
                 </button>
                 {subscriptionData.subscription.auto_renew && (
                   <button 
@@ -481,17 +490,81 @@ const CustomerDashboard = () => {
                     Cancel Auto-Renew
                   </button>
                 )}
+                <button 
+                  className="action-btn tertiary"
+                  onClick={() => navigate('/project62/shop')}
+                >
+                  Browse Products
+                </button>
               </div>
             </>
           ) : (
             <div className="no-subscription">
-              <p>No active subscription</p>
-              <button onClick={() => navigate('/project62#meal-prep')} className="action-btn primary">
-                Browse Meal Plans
-              </button>
+              <div className="loyalty-tier-section">
+                <div 
+                  className="tier-badge" 
+                  style={{ backgroundColor: '#cd7f32', color: '#fff' }}
+                >
+                  <span className="tier-icon">⭐</span>
+                  <span className="tier-name">Bronze Member</span>
+                </div>
+                <p className="tier-message">Start your journey — subscribe to unlock rewards and track your progress!</p>
+              </div>
+              
+              <p className="no-sub-message">No active meal-prep subscription yet. Choose a plan to start your fitness journey!</p>
+              
+              <div className="subscription-actions">
+                <button 
+                  onClick={() => navigate('/project62#meal-prep')} 
+                  className="action-btn primary"
+                >
+                  Browse Meal Plans
+                </button>
+                <button 
+                  className="action-btn tertiary"
+                  onClick={() => navigate('/project62/shop')}
+                >
+                  Browse Products
+                </button>
+              </div>
             </div>
           )}
         </div>
+
+        {/* Tier Benefits Info Modal */}
+        {showTierInfo && (
+          <div className="modal-overlay" onClick={() => setShowTierInfo(false)}>
+            <div className="modal-content tier-info-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h3>Loyalty Tier Benefits</h3>
+                <button className="close-btn" onClick={() => setShowTierInfo(false)}>×</button>
+              </div>
+              <div className="modal-body">
+                <p className="tier-explanation">Stay consistent with your meal-prep subscriptions to unlock amazing rewards!</p>
+                
+                <div className="tiers-list">
+                  {Object.entries(getTierBenefits()).map(([key, tier]) => (
+                    <div key={key} className="tier-info-card" style={{ borderLeftColor: getTierColor(tier.name) }}>
+                      <div className="tier-info-header">
+                        <h4 style={{ color: getTierColor(tier.name) }}>{tier.name}</h4>
+                        <span className="tier-requirements">{tier.requirements}</span>
+                      </div>
+                      <ul className="benefits-list">
+                        {tier.benefits.map((benefit, idx) => (
+                          <li key={idx}>✓ {benefit}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+                
+                <p className="tier-note">
+                  <strong>Note:</strong> If you pause your subscription for more than 2 weeks, your progress resets.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Upgrade Modal */}
         {showUpgradeModal && subscriptionData && (
