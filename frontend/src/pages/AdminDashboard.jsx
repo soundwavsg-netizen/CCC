@@ -121,6 +121,30 @@ const AdminDashboard = () => {
     navigate('/project62');
   };
 
+  const handleRunRenewals = async () => {
+    if (!window.confirm('Are you sure you want to process renewals now?')) return;
+    
+    setRenewalsLoading(true);
+    setRenewalsResult(null);
+    
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/project62/admin/process-renewals`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const data = await response.json();
+      setRenewalsResult(data);
+      alert(`Renewals processed!\nSuccessful: ${data.renewals_processed}\nErrors: ${data.errors?.length || 0}`);
+    } catch (err) {
+      alert(`Failed to process renewals: ${err.message}`);
+    } finally {
+      setRenewalsLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="admin-container">
