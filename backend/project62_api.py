@@ -2343,46 +2343,140 @@ async def apply_discount_code(code_id: str):
         return {"status": "error", "message": str(e)}
 
 # ========================
-# Stripe Webhook Handler
+# Stripe Webhook Handler (Verified with Signature)
 # ========================
 
 @router.post("/webhook/stripe")
 async def handle_stripe_webhook(request: Request):
-    """Handle Stripe webhooks for payment confirmations"""
+    """
+    Handle Stripe webhooks with signature verification and idempotency
+    Events: checkout.session.completed, invoice.payment_succeeded, 
+            invoice.payment_failed, customer.subscription.deleted
+    """
     try:
-        body = await request.body()
-        signature = request.headers.get("Stripe-Signature")
+        payload = await request.body()
+        sig_header = request.headers.get("stripe-signature")
         
-        origin_url = str(request.base_url)
-        webhook_url = f"{origin_url}api/webhook/stripe"
-        stripe_checkout = StripeCheckout(api_key=STRIPE_API_KEY, webhook_url=webhook_url)
+        # Verify webhook signature
+        try:
+            event = stripe.Webhook.construct_event(
+                payload, sig_header, STRIPE_WEBHOOK_SECRET
+            )
+        except ValueError:
+            print("❌ Invalid webhook payload")
+            raise HTTPException(status_code=400, detail="Invalid payload")
+        except stripe.error.SignatureVerificationError:
+            print("❌ Invalid webhook signature")
+            raise HTTPException(status_code=400, detail="Invalid signature")
         
-        webhook_response = await stripe_checkout.handle_webhook(body, signature)
+        event_type = event["type"]
+        event_id = event["id"]
+        data = event["data"]["object"]
         
-        print(f"✅ Webhook received: {webhook_response.event_type} - Session: {webhook_response.session_id}")
+        print(f"🎯 Webhook received: {event_type} (ID: {event_id})")
         
-        # Update transaction status
-        if webhook_response.payment_status == "paid":
-            transaction_ref = db.collection("project62").document("payment_transactions").collection("all").document(webhook_response.session_id)
+        # ✅ Ensure idempotency using event_id
+        event_ref = db.collection("project62").document("ops").collection("stripe_events").document(event_id)
+        event_doc = event_ref.get()
+        
+        if event_doc.exists:
+            print(f"⚠️  Duplicate event {event_id} - already processed")
+            return {"status": "duplicate", "event_id": event_id}
+        
+        # Log the event
+        event_ref.set({
+            "event_id": event_id,
+            "type": event_type,
+            "created_at": datetime.utcnow().isoformat(),
+            "processed": False,
+            "data_summary": {
+                "id": data.get("id"),
+                "amount_total": data.get("amount_total"),
+                "currency": data.get("currency"),
+                "payment_status": data.get("payment_status")
+            }
+        })
+        
+        # Handle different event types
+        if event_type == "checkout.session.completed":
+            # Payment completed - process order
+            session_id = data.get("id")
+            payment_status = data.get("payment_status")
+            
+            print(f"💳 Checkout completed: {session_id} - Status: {payment_status}")
+            
+            # Get transaction from Firestore
+            transaction_ref = db.collection("project62").document("payment_transactions").collection("all").document(session_id)
             transaction_doc = transaction_ref.get()
             
             if transaction_doc.exists:
                 transaction_data = transaction_doc.to_dict()
+                
+                # Update transaction status
                 transaction_ref.update({
                     "payment_status": "paid",
                     "webhook_received": True,
+                    "webhook_event_id": event_id,
                     "updated_at": datetime.utcnow().isoformat()
                 })
                 
                 # Process digital product order
                 if transaction_data.get("product_type") == "digital" and not transaction_data.get("order_processed"):
-                    await process_digital_product_order(transaction_data, webhook_response.session_id)
+                    await process_digital_product_order(transaction_data, session_id)
                     transaction_ref.update({"order_processed": True})
+                    print(f"✅ Digital product order processed for session {session_id}")
                 
-                # Process meal-prep order if not already processed
+                # Process meal-prep order
                 if transaction_data.get("product_type") == "meal_prep" and not transaction_data.get("order_processed"):
-                    await process_meal_prep_order(transaction_data, webhook_response.session_id)
+                    await process_meal_prep_order(transaction_data, session_id)
                     transaction_ref.update({"order_processed": True})
+                    print(f"✅ Meal-prep order processed for session {session_id}")
+        
+        elif event_type == "invoice.payment_succeeded":
+            # Subscription payment succeeded - extend subscription
+            invoice_id = data.get("id")
+            customer_id = data.get("customer")
+            subscription_id = data.get("subscription")
+            
+            print(f"💰 Invoice paid: {invoice_id} for subscription {subscription_id}")
+            
+            # TODO: Implement subscription extension and loyalty tier update
+            # This would involve:
+            # 1. Find customer by Stripe customer_id
+            # 2. Update their subscription next_billing_date
+            # 3. Increment total_weeks_subscribed
+            # 4. Update loyalty tier
+        
+        elif event_type == "invoice.payment_failed":
+            # Subscription payment failed - alert customer
+            invoice_id = data.get("id")
+            customer_email = data.get("customer_email")
+            
+            print(f"⚠️  Payment failed: {invoice_id} for {customer_email}")
+            
+            # TODO: Send notification email to customer about payment failure
+        
+        elif event_type == "customer.subscription.deleted":
+            # Subscription cancelled
+            subscription_id = data.get("id")
+            customer_id = data.get("customer")
+            
+            print(f"🚫 Subscription cancelled: {subscription_id}")
+            
+            # TODO: Update customer subscription status to cancelled
+        
+        # Mark event as processed
+        event_ref.update({"processed": True, "processed_at": datetime.utcnow().isoformat()})
+        
+        return {"status": "success", "event_id": event_id, "type": event_type}
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ Webhook error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=400, detail=str(e))
         
         return {"status": "success"}
     except Exception as e:
