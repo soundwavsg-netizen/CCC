@@ -958,7 +958,24 @@ async def login_customer(req: CustomerLoginRequest):
         }, headers=headers)
         
         if response.status_code != 200:
-            raise HTTPException(status_code=401, detail="Invalid email or password")
+            # Parse Firebase error for specific message
+            try:
+                error_data = response.json()
+                error_message = error_data.get("error", {}).get("message", "")
+                
+                # Translate Firebase errors to user-friendly messages
+                if "EMAIL_NOT_FOUND" in error_message:
+                    raise HTTPException(status_code=401, detail="No account found with this email address")
+                elif "INVALID_PASSWORD" in error_message:
+                    raise HTTPException(status_code=401, detail="Incorrect password")
+                elif "USER_DISABLED" in error_message:
+                    raise HTTPException(status_code=403, detail="This account has been disabled")
+                elif "TOO_MANY_ATTEMPTS_TRY_LATER" in error_message:
+                    raise HTTPException(status_code=429, detail="Too many failed attempts. Please try again later")
+                else:
+                    raise HTTPException(status_code=401, detail="Invalid email or password")
+            except (ValueError, KeyError):
+                raise HTTPException(status_code=401, detail="Invalid email or password")
         
         auth_data = response.json()
         
@@ -968,7 +985,7 @@ async def login_customer(req: CustomerLoginRequest):
         customer_doc = customer_ref.get()
         
         if not customer_doc.exists:
-            raise HTTPException(status_code=404, detail="Customer not found")
+            raise HTTPException(status_code=404, detail="Account exists but profile not found. Please contact support.")
         
         customer_data = customer_doc.to_dict()
         
@@ -989,7 +1006,9 @@ async def login_customer(req: CustomerLoginRequest):
         raise
     except Exception as e:
         print(f"Login error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Login failed: {str(e)}")
 
 @router.get("/auth/verify")
 async def verify_token(current_user: dict = Depends(get_current_user)):
