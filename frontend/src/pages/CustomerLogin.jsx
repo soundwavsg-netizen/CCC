@@ -18,6 +18,7 @@ const CustomerLogin = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Check for magic link token in URL
   useEffect(() => {
