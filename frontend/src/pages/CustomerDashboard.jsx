@@ -601,8 +601,7 @@ const CustomerDashboard = () => {
               <div className="modal-body">
                 <p>Select a new commitment duration. Changes take effect at your next billing cycle.</p>
                 <div className="week-options">
-                  {/* Show available pricing tiers - would need to fetch from subscriptions config */}
-                  {[1, 2, 3, 4, 6].map(weeks => (
+                  {(availableDurations.length > 0 ? availableDurations : [1, 2, 4, 6]).map(weeks => (
                     <button
                       key={weeks}
                       className={`week-option ${selectedUpgradeWeeks === weeks ? 'selected' : ''}`}
