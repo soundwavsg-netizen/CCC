@@ -1937,6 +1937,10 @@ async def cancel_subscription(current_user: dict = Depends(get_current_user)):
             "end_date": subscription.get("next_billing_date")
         }
     except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Cancel subscription error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 # ========================
 # Admin Renewal Processing
