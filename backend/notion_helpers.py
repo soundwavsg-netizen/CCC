@@ -89,11 +89,13 @@ def find_page_by_property(database_id: str, property_name: str, value: str) -> D
 def sync_p62_product(product_data: Dict) -> Dict:
     """Sync a Project 62 product to Notion"""
     properties = {
-        "Name": {"title": [{"text": {"content": product_data.get("name", "")}}]},
-        "Calories": {"number": product_data.get("calories", 0)},
+        "Name": {"title": [{"text": {"content": product_data.get("name", "")[:100]}}]},
         "Price": {"number": product_data.get("price", 0)},
-        "Category": {"select": {"name": product_data.get("category", "Main")}},
-        "Active": {"checkbox": product_data.get("active", True)}
+        "Type": {"select": {"name": product_data.get("type", "digital").capitalize()}},
+        "Category": {"select": {"name": product_data.get("category", "Digital Guides")}},
+        "Featured": {"checkbox": product_data.get("is_featured", False)},
+        "Visibility": {"select": {"name": product_data.get("visibility", "public").capitalize()}},
+        "Description": {"rich_text": [{"text": {"content": product_data.get("description", "")[:2000]}}]}
     }
     return create_page_in_database(DB_IDS["p62_products"], properties)
 
