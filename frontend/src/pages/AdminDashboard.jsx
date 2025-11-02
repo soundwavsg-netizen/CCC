@@ -164,6 +164,13 @@ const AdminDashboard = () => {
           <p className="header-subtitle">Manage leads, orders, deliveries & customers</p>
         </div>
         <div className="header-actions">
+          <button 
+            onClick={handleRunRenewals} 
+            className="renewals-btn"
+            disabled={renewalsLoading}
+          >
+            {renewalsLoading ? 'Processing...' : '🔄 Run Renewals Now'}
+          </button>
           <button onClick={() => navigate('/project62/dashboard')} className="customer-link-btn">
             Customer View
           </button>
