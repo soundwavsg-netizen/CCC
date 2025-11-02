@@ -89,7 +89,8 @@ const CustomerLogin = () => {
     const result = await register(formData.email, formData.password, formData.name, formData.phone);
     
     if (result.success) {
-      navigate('/project62/dashboard');
+      // Navigation will be handled by the useEffect hook above
+      // No need to manually navigate here
     } else {
       setError(result.error || 'Registration failed. Please try again.');
       setLoading(false);
