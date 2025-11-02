@@ -50,10 +50,12 @@ async def sync_project62_products(current_user: dict = Depends(get_current_admin
         for product in products:
             product_data = {
                 "name": product.get("name", ""),
-                "calories": product.get("calories", 0),
                 "price": float(product.get("price", 0)),
-                "category": product.get("category", "Main"),
-                "active": product.get("active", True)
+                "type": product.get("type", "digital"),
+                "category": product.get("category", "Digital Guides"),
+                "is_featured": product.get("is_featured", False),
+                "visibility": product.get("visibility", "public"),
+                "description": product.get("description", "")
             }
             
             result = sync_p62_product(product_data)
