@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Project 62 Collection
+    match /project62/{document=**} {
+      // Allow public read for products and subscriptions
+      allow read: if resource.data.visibility == 'public';
+      
+      // Allow authenticated users to read their own data
+      allow read: if request.auth != null && 
+                     resource.data.customer_id == request.auth.uid;
+      
+      // Allow admin full access (check role in customer document)
+      allow read, write: if request.auth != null && 
+                           get(/databases/$(database)/documents/project62/customers/all/$(request.auth.uid)).data.role == 'admin';
+      
+      // Specific rules for leads (write-only for public)
+      match /leads/all/{leadId} {
+        allow create: if true; // Anyone can submit a lead
+        allow read, update, delete: if request.auth != null && 
+                                       get(/databases/$(database)/documents/project62/customers/all/$(request.auth.uid)).data.role == 'admin';
+      }
+      
+      // Customers can update their own data
+      match /customers/all/{customerId} {
+        allow read, update: if request.auth != null && customerId == request.auth.uid;
+      }
+    }
+  }
+}
