@@ -98,7 +98,7 @@ def sync_p62_product(product_data: Dict) -> Dict:
 def sync_p62_plan(plan_data: Dict) -> Dict:
     """Sync a Project 62 subscription plan to Notion"""
     properties = {
-        "PlanName": {"title": [{"text": {"content": plan_data.get("plan_name", "")}}]},
+        "Name": {"title": [{"text": {"content": plan_data.get("plan_name", "")}}]},
         "Duration": {"rich_text": [{"text": {"content": plan_data.get("duration", "")}}]},
         "Price": {"number": plan_data.get("price", 0)},
         "Inclusions": {"rich_text": [{"text": {"content": plan_data.get("inclusions", "")}}]}
@@ -108,7 +108,7 @@ def sync_p62_plan(plan_data: Dict) -> Dict:
 def sync_p62_order(order_data: Dict) -> Dict:
     """Sync a Project 62 order to Notion"""
     properties = {
-        "OrderID": {"title": [{"text": {"content": order_data.get("order_id", "")}}]},
+        "Name": {"title": [{"text": {"content": order_data.get("order_id", "")}}]},
         "Customer": {"rich_text": [{"text": {"content": order_data.get("customer", "")}}]},
         "Plan": {"rich_text": [{"text": {"content": order_data.get("plan", "")}}]},
         "StartDate": {"date": {"start": order_data.get("start_date", "")}},
