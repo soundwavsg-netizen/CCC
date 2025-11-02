@@ -1,0 +1,86 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null 
+        && exists(/databases/$(database)/documents/project62/customers/all/$(request.auth.uid))
+        && get(/databases/$(database)/documents/project62/customers/all/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Project 62 Collection Rules
+    match /project62/{document} {
+      
+      // Products - Public read for active & public products
+      match /products/all/{productId} {
+        allow read: if resource.data.visibility == 'public' && resource.data.get('active', true) == true;
+        allow read: if isAuthenticated() && resource.data.visibility in ['public', 'member-only'];
+        allow write: if isAdmin();
+      }
+      
+      // Categories - Public read
+      match /categories/all/{categoryId} {
+        allow read: if true;
+        allow write: if isAdmin();
+      }
+      
+      // Subscription Plans - Public read for active plans
+      match /subscriptions_config/all/{planId} {
+        allow read: if resource.data.get('is_active', false) == true;
+        allow write: if isAdmin();
+      }
+      
+      // Dishes - Admin only
+      match /dishes/all/{dishId} {
+        allow read: if isAdmin();
+        allow write: if isAdmin();
+      }
+      
+      // Leads - Anyone can create, only admin can read
+      match /leads/all/{leadId} {
+        allow create: if true;
+        allow read, update, delete: if isAdmin();
+      }
+      
+      // Customers - Users can read/update their own data
+      match /customers/all/{customerId} {
+        allow read, update: if isAuthenticated() && request.auth.uid == customerId;
+        allow read, write: if isAdmin();
+      }
+      
+      // Orders - Admin read/write, customers read their own
+      match /orders/all/{orderId} {
+        allow read: if isAuthenticated() && resource.data.customer_email == request.auth.token.email;
+        allow read, write: if isAdmin();
+      }
+      
+      // Deliveries - Admin read/write, customers read their own
+      match /deliveries/all/{deliveryId} {
+        allow read: if isAuthenticated() && resource.data.get('customer_id', '') == request.auth.uid;
+        allow read, write: if isAdmin();
+      }
+      
+      // Payment Transactions - System managed (no direct access)
+      match /payment_transactions/all/{transactionId} {
+        allow read, write: if false;  // Backend only
+      }
+      
+      // Discount Codes - Admin only
+      match /discount_codes/all/{codeId} {
+        allow read: if isAdmin();
+        allow write: if isAdmin();
+      }
+      
+      // Ops (logs, events) - Admin only
+      match /ops/{opDoc=**} {
+        allow read, write: if isAdmin();
+      }
+    }
+  }
+}
