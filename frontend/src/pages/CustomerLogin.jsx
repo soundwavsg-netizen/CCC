@@ -154,14 +154,24 @@ const CustomerLogin = () => {
             </div>
             <div className="form-group">
               <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                placeholder="••••••••"
-                required
-              />
+              <div className="password-input-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  placeholder="••••••••"
+                  required
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  title={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? '👁️' : '👁️‍🗨️'}
+                </button>
+              </div>
             </div>
             <button type="submit" className="submit-btn" disabled={loading}>
               {loading ? 'Logging in...' : 'Log In'}
