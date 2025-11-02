@@ -381,3 +381,26 @@
     padding: 12px 8px;
   }
 }
+
+/* Renewals Button */
+.renewals-btn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-right: 10px;
+}
+
+.renewals-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+}
+
+.renewals-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
