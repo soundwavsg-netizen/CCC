@@ -98,7 +98,10 @@ export default function App() {
               <Route path="/project62/auth/verify" element={<CustomerLogin />} />
               <Route path="/project62/dashboard" element={<CustomerDashboard />} />
               <Route path="/project62/admin" element={<AdminDashboard />} />
+              <Route path="/project62/shop" element={<Shop />} />
+              <Route path="/project62/product/:slug" element={<ProductDetail />} />
               <Route path="/project62/checkout/digital/:productId" element={<DigitalCheckout />} />
+              <Route path="/project62/checkout/digital" element={<DigitalCheckout />} />
               <Route path="/project62/checkout/meal-prep" element={<MealPrepCheckout />} />
               <Route path="/project62/checkout/success" element={<PaymentSuccess />} />
               <Route path="/project62/checkout/cancel" element={<PaymentCancel />} />
