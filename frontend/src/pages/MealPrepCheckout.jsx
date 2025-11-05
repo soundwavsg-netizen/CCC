@@ -36,6 +36,23 @@ const MealPrepCheckout = () => {
     fetchSubscriptionPlans();
   }, []);
 
+  // Update duration when selected plan changes to ensure it's valid
+  useEffect(() => {
+    if (selectedPlan && selectedPlan.pricing_tiers) {
+      const availableDurations = selectedPlan.pricing_tiers.map(t => t.weeks);
+      const currentDuration = parseInt(duration);
+      
+      // If current duration is not available, set to the first available or closest option
+      if (!availableDurations.includes(currentDuration)) {
+        const closestDuration = availableDurations.reduce((prev, curr) => 
+          Math.abs(curr - currentDuration) < Math.abs(prev - currentDuration) ? curr : prev
+        );
+        console.log(`Duration ${currentDuration} not available, setting to ${closestDuration}`);
+        setDuration(closestDuration.toString());
+      }
+    }
+  }, [selectedPlan]);
+
   const fetchSubscriptionPlans = async () => {
     try {
       setLoading(true);
