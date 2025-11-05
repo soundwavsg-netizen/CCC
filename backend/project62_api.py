@@ -1074,6 +1074,13 @@ async def login_customer(req: CustomerLoginRequest):
         
         customer_data = customer_doc.to_dict()
         
+        # Check if email is verified
+        if not customer_data.get("email_verified", False):
+            raise HTTPException(
+                status_code=403, 
+                detail="Please verify your email address before logging in. Check your inbox for the verification link."
+            )
+        
         # Generate JWT token
         token = generate_jwt_token(auth_data["localId"], req.email)
         
