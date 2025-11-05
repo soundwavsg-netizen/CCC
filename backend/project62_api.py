@@ -1007,13 +1007,12 @@ async def register_customer(req: CustomerRegisterRequest):
         
         return {
             "status": "success",
-            "message": "Registration successful",
-            "token": token,
+            "message": "Registration successful! Please check your email to verify your account.",
+            "email_sent": email_sent,
             "user": {
-                "uid": user.uid,
                 "email": req.email,
                 "name": req.name,
-                "role": "customer"
+                "email_verified": False
             }
         }
     except firebase_auth.EmailAlreadyExistsError:
