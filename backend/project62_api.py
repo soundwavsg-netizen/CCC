@@ -1239,6 +1239,43 @@ async def verify_token(current_user: dict = Depends(get_current_user)):
         print(f"Token verification error: {e}")
         raise HTTPException(status_code=401, detail="Invalid token")
 
+@router.get("/customer/profile")
+async def get_customer_profile(current_user: dict = Depends(get_current_user)):
+    """Get customer profile with saved delivery information"""
+    try:
+        customer_id = current_user["email"].replace("@", "_at_").replace(".", "_")
+        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+        customer_doc = customer_ref.get()
+        
+        if not customer_doc.exists:
+            raise HTTPException(status_code=404, detail="Customer profile not found")
+        
+        customer_data = customer_doc.to_dict()
+        
+        # Get subscription info if exists
+        subscription_ref = db.collection("project62").document("subscriptions").collection("active").document(customer_id)
+        subscription_doc = subscription_ref.get()
+        subscription_data = subscription_doc.to_dict() if subscription_doc.exists else None
+        
+        return {
+            "customer_id": customer_data.get("customer_id"),
+            "name": customer_data.get("name", ""),
+            "email": customer_data.get("email", ""),
+            "phone": customer_data.get("phone", ""),
+            "delivery_address": customer_data.get("delivery_address", {}),
+            "postal_code": customer_data.get("postal_code", ""),
+            "country": customer_data.get("country", "Singapore"),
+            "role": customer_data.get("role", "customer"),
+            "email_verified": customer_data.get("email_verified", False),
+            "has_active_subscription": subscription_data is not None,
+            "loyalty_tier": customer_data.get("loyalty_tier", "bronze")
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Profile fetch error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch profile")
+
 @router.post("/auth/magic-link")
 async def send_magic_link(req: MagicLinkRequest):
     """Send magic link for passwordless login"""
