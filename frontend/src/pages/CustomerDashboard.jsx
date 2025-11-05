@@ -500,12 +500,14 @@ const CustomerDashboard = () => {
 
               {/* Action Buttons */}
               <div className="subscription-actions">
-                <button 
-                  className="action-btn primary"
-                  onClick={() => setShowUpgradeModal(true)}
-                >
-                  Change Plan Duration
-                </button>
+                {subscriptionData && subscriptionData.subscription && subscriptionData.subscription.plan_id && (
+                  <button 
+                    className="action-btn primary"
+                    onClick={() => setShowUpgradeModal(true)}
+                  >
+                    Change Plan Duration
+                  </button>
+                )}
                 {subscriptionData.subscription.auto_renew && (
                   <button 
                     className="action-btn secondary"
