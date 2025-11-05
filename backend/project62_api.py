@@ -1102,6 +1102,113 @@ async def login_customer(req: CustomerLoginRequest):
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Login failed: {str(e)}")
 
+@router.get("/auth/verify-email")
+async def verify_email(token: str):
+    """Verify user email address via token"""
+    try:
+        # Decode and verify token
+        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        
+        # Check if token is for email verification
+        if payload.get("purpose") != "email_verification":
+            raise HTTPException(status_code=400, detail="Invalid verification token")
+        
+        email = payload.get("email")
+        if not email:
+            raise HTTPException(status_code=400, detail="Invalid verification token")
+        
+        # Update customer record in Firestore
+        customer_id = email.replace("@", "_at_").replace(".", "_")
+        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+        customer_doc = customer_ref.get()
+        
+        if not customer_doc.exists:
+            raise HTTPException(status_code=404, detail="Account not found")
+        
+        # Check if already verified
+        customer_data = customer_doc.to_dict()
+        if customer_data.get("email_verified", False):
+            return {
+                "status": "success",
+                "message": "Email already verified! You can now log in.",
+                "already_verified": True
+            }
+        
+        # Update verification status
+        customer_ref.update({
+            "email_verified": True,
+            "verified_at": datetime.utcnow().isoformat()
+        })
+        
+        # Also update Firebase Auth
+        try:
+            user = firebase_auth.get_user_by_email(email, app=project62_app)
+            firebase_auth.update_user(
+                user.uid,
+                email_verified=True,
+                app=project62_app
+            )
+        except Exception as e:
+            print(f"Warning: Could not update Firebase Auth verification status: {e}")
+        
+        return {
+            "status": "success",
+            "message": "Email verified successfully! You can now log in.",
+            "email": email
+        }
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=400, detail="Verification link has expired. Please request a new one.")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=400, detail="Invalid verification token")
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Email verification error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail="Email verification failed")
+
+@router.post("/auth/resend-verification")
+async def resend_verification_email(email: str = Body(..., embed=True)):
+    """Resend verification email to user"""
+    try:
+        # Get customer data from Firestore
+        customer_id = email.replace("@", "_at_").replace(".", "_")
+        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+        customer_doc = customer_ref.get()
+        
+        if not customer_doc.exists:
+            raise HTTPException(status_code=404, detail="Account not found")
+        
+        customer_data = customer_doc.to_dict()
+        
+        # Check if already verified
+        if customer_data.get("email_verified", False):
+            raise HTTPException(status_code=400, detail="Email is already verified")
+        
+        # Generate new verification token
+        verification_token = generate_verification_token(email)
+        
+        # Send verification email
+        email_sent = await send_verification_email(
+            email, 
+            customer_data.get("name", "User"),
+            verification_token
+        )
+        
+        if not email_sent:
+            raise HTTPException(status_code=500, detail="Failed to send verification email")
+        
+        return {
+            "status": "success",
+            "message": "Verification email sent! Please check your inbox."
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Resend verification error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to resend verification email")
+
 @router.get("/auth/verify")
 async def verify_token(current_user: dict = Depends(get_current_user)):
     """Verify JWT token and return user info"""
