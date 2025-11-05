@@ -93,10 +93,16 @@ const Shop = () => {
         <div className="header-top">
           <button 
             className="back-btn"
-            onClick={() => navigate('/project62/dashboard')}
-            title="Back to Dashboard"
+            onClick={() => {
+              if (isAuthenticated) {
+                navigate('/project62/dashboard');
+              } else {
+                navigate('/project62');
+              }
+            }}
+            title={isAuthenticated ? "Back to Dashboard" : "Back to Home"}
           >
-            ← Back to Dashboard
+            ← {isAuthenticated ? "Back to Dashboard" : "Back to Home"}
           </button>
         </div>
         <h1>Project 62 Shop</h1>
