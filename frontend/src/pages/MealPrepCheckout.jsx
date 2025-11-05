@@ -11,8 +11,12 @@ const MealPrepCheckout = () => {
   
   const [subscriptionPlans, setSubscriptionPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const [duration, setDuration] = useState(searchParams.get('duration') || '4');
-  const [mealsPerDay, setMealsPerDay] = useState(parseInt(searchParams.get('meals')) || 1);
+  const [duration, setDuration] = useState(searchParams.get('weeks') || searchParams.get('duration') || '4');
+  const [mealsPerDay, setMealsPerDay] = useState(
+    searchParams.get('plan') === '2meal' ? 2 : 
+    searchParams.get('plan') === '1meal' ? 1 : 
+    parseInt(searchParams.get('meals')) || 1
+  );
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
