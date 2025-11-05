@@ -1169,9 +1169,13 @@ async def verify_email(token: str):
         raise HTTPException(status_code=500, detail="Email verification failed")
 
 @router.post("/auth/resend-verification")
-async def resend_verification_email(email: str = Body(..., embed=True)):
+async def resend_verification_email(req: dict):
     """Resend verification email to user"""
     try:
+        email = req.get("email")
+        if not email:
+            raise HTTPException(status_code=400, detail="Email is required")
+        
         # Get customer data from Firestore
         customer_id = email.replace("@", "_at_").replace(".", "_")
         customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
