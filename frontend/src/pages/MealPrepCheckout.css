@@ -94,11 +94,28 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
+@media (max-width: 768px) {
+  .plan-configuration,
+  .delivery-form,
+  .checkout-form {
+    padding: 25px 20px;
+  }
+}
+
 .plan-configuration h2,
 .delivery-form h2 {
   font-size: 1.5rem;
   color: #111111;
   margin-bottom: 25px;
+}
+
+@media (max-width: 768px) {
+  .plan-configuration h2,
+  .delivery-form h2,
+  .checkout-form h2 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
 }
 
 .config-group {
