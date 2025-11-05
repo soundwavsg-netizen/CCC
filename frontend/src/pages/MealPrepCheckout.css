@@ -144,6 +144,37 @@
   border-radius: 8px;
 }
 
+.pricing-summary {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  height: fit-content;
+}
+
+.pricing-summary h2 {
+  font-size: 1.5rem;
+  color: #111111;
+  margin-bottom: 25px;
+}
+
+.pricing-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.pricing-row.total {
+  border-top: 2px solid #ddd;
+  margin-top: 15px;
+  padding-top: 20px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #00b894;
+}
+
 .pricing-breakdown h3 {
   font-size: 1.2rem;
   color: #111111;
