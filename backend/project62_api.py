@@ -217,14 +217,70 @@ class DishUpdateRequest(BaseModel):
 # Helper Functions
 # ========================
 
-def generate_jwt_token(user_id: str, email: str) -> str:
-    """Generate JWT token for authenticated users"""
+def generate_jwt_token(user_id: str, email: str, expires_delta: timedelta = timedelta(days=30)):
+    """Generate JWT token for authentication"""
     payload = {
         "user_id": user_id,
         "email": email,
-        "exp": datetime.utcnow() + timedelta(days=30)
+        "exp": datetime.utcnow() + expires_delta
     }
     return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
+
+def generate_verification_token(email: str):
+    """Generate email verification token"""
+    payload = {
+        "email": email,
+        "purpose": "email_verification",
+        "exp": datetime.utcnow() + timedelta(hours=24)  # Token expires in 24 hours
+    }
+    return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
+
+async def send_verification_email(email: str, name: str, verification_token: str):
+    """Send email verification link to new user"""
+    try:
+        verification_link = f"{FRONTEND_URL}/project62/verify-email?token={verification_token}"
+        
+        message = Mail(
+            from_email=SENDGRID_FROM_EMAIL,
+            to_emails=email,
+            subject="Verify Your Project 62 Account",
+            html_content=f"""
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #00b894;">Welcome to Project 62, {name}!</h2>
+                <p>Thank you for signing up. Please verify your email address to complete your registration.</p>
+                <p>Click the button below to verify your account:</p>
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="{verification_link}" 
+                       style="background-color: #00b894; color: white; padding: 14px 28px; 
+                              text-decoration: none; border-radius: 5px; display: inline-block;">
+                        Verify Email Address
+                    </a>
+                </div>
+                <p>Or copy and paste this link into your browser:</p>
+                <p style="color: #666; font-size: 14px; word-break: break-all;">{verification_link}</p>
+                <p style="color: #999; font-size: 12px; margin-top: 30px;">
+                    This link will expire in 24 hours. If you didn't create an account with Project 62, 
+                    you can safely ignore this email.
+                </p>
+                <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
+                <p style="color: #666; font-size: 12px;">
+                    Best regards,<br>
+                    Project 62 Team<br>
+                    <a href="mailto:{SENDGRID_REPLY_TO_EMAIL}">{SENDGRID_REPLY_TO_EMAIL}</a>
+                </p>
+            </div>
+            """
+        )
+        
+        message.reply_to = SENDGRID_REPLY_TO_EMAIL
+        
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        response = sg.send(message)
+        print(f"Verification email sent to {email}: {response.status_code}")
+        return True
+    except Exception as e:
+        print(f"Error sending verification email: {e}")
+        return False
 
 def verify_jwt_token(token: str) -> dict:
     """Verify JWT token and return payload"""
