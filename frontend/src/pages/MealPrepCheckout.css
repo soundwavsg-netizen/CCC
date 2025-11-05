@@ -116,6 +116,20 @@
   margin-top: 15px;
 }
 
+@media (max-width: 768px) {
+  .duration-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .duration-options {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
 .duration-card {
   background: white;
   border: 2px solid #e0e0e0;
@@ -125,6 +139,12 @@
   transition: all 0.3s ease;
   text-align: center;
   position: relative;
+}
+
+@media (max-width: 768px) {
+  .duration-card {
+    padding: 16px 12px;
+  }
 }
 
 .duration-card:hover {
