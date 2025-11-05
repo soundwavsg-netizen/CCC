@@ -80,6 +80,7 @@ const CustomerLogin = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setSuccess('');
 
     if (!formData.name || !formData.phone) {
       setError('Please fill in all fields');
@@ -90,8 +91,16 @@ const CustomerLogin = () => {
     const result = await register(formData.email, formData.password, formData.name, formData.phone);
     
     if (result.success) {
-      // Navigation will be handled by the useEffect hook above
+      // Show success message for email verification
+      setSuccess(result.message || 'Registration successful! Please check your email to verify your account.');
       setLoading(false);
+      // Clear form
+      setFormData({
+        email: '',
+        password: '',
+        name: '',
+        phone: ''
+      });
     } else {
       setError(result.error || 'Registration failed. Please try again.');
       setLoading(false);
