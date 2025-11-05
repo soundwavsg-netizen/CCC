@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import './MealPrepCheckout.css';
 
@@ -8,6 +9,7 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const MealPrepCheckout = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { user, token } = useAuth();
   
   const [subscriptionPlans, setSubscriptionPlans] = useState([]);
   const [selectedPlan, setSelectedPlan] = useState(null);
