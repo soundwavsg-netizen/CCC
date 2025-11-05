@@ -23,10 +23,47 @@
 }
 
 .checkout-content {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  display: flex;
+  flex-direction: column;
   gap: 30px;
   margin-bottom: 40px;
+}
+
+/* Desktop: Side-by-side layout for plan config and summary */
+@media (min-width: 1024px) {
+  .checkout-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+  
+  .checkout-form {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile: Stack everything vertically */
+@media (max-width: 1023px) {
+  .checkout-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Order for mobile */
+  .plan-configuration {
+    order: 1;
+  }
+  
+  .pricing-summary {
+    order: 2;
+    position: sticky;
+    top: 20px;
+    z-index: 10;
+  }
+  
+  .checkout-form {
+    order: 3;
+  }
 }
 
 .plan-configuration,
