@@ -51,8 +51,9 @@
 .config-group label {
   display: block;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   color: #111111;
+  font-size: 1.1rem;
 }
 
 .config-group select {
@@ -68,6 +69,72 @@
 .config-group select:focus {
   outline: none;
   border-color: #00b894;
+}
+
+/* Duration Cards */
+.duration-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.duration-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+}
+
+.duration-card:hover {
+  border-color: #00b894;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 184, 148, 0.2);
+}
+
+.duration-card.selected {
+  border-color: #00b894;
+  background: #e8f8f5;
+  box-shadow: 0 4px 16px rgba(0, 184, 148, 0.3);
+}
+
+.duration-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.duration-header strong {
+  font-size: 1.1rem;
+  color: #111;
+}
+
+.duration-header .badge {
+  background: #ffd700;
+  color: #111;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.duration-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00b894;
+  margin: 10px 0;
+}
+
+.duration-details {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 8px;
 }
 
 .pricing-breakdown {
