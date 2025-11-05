@@ -246,7 +246,15 @@ const MealPrepCheckout = () => {
 
             <div className="config-group">
               <label>Meals Per Day</label>
-              <select value={mealsPerDay} onChange={(e) => setMealsPerDay(parseInt(e.target.value))}>
+              <select value={mealsPerDay} onChange={(e) => {
+                const newMealsPerDay = parseInt(e.target.value);
+                setMealsPerDay(newMealsPerDay);
+                // Update selected plan when meals per day changes
+                const newPlan = subscriptionPlans.find(p => p.meals_per_day === newMealsPerDay);
+                if (newPlan) {
+                  setSelectedPlan(newPlan);
+                }
+              }}>
                 <option value="1">1 Meal/Day</option>
                 <option value="2">2 Meals/Day</option>
               </select>
