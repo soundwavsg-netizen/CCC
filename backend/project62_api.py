@@ -996,8 +996,14 @@ async def register_customer(req: CustomerRegisterRequest):
         }
         db.collection("project62").document("customers").collection("all").document(customer_id).set(customer_data)
         
-        # Generate JWT token
-        token = generate_jwt_token(user.uid, req.email)
+        # Generate verification token
+        verification_token = generate_verification_token(req.email)
+        
+        # Send verification email
+        email_sent = await send_verification_email(req.email, req.name, verification_token)
+        
+        if not email_sent:
+            print(f"Warning: Verification email failed to send to {req.email}")
         
         return {
             "status": "success",
