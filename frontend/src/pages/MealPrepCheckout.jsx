@@ -38,6 +38,42 @@ const MealPrepCheckout = () => {
     fetchSubscriptionPlans();
   }, []);
 
+  // Fetch and populate user data if logged in
+  useEffect(() => {
+    if (user && token) {
+      fetchUserProfile();
+    }
+  }, [user, token]);
+
+  const fetchUserProfile = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/project62/customer/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const profile = response.data;
+      
+      // Auto-fill form with user's saved data
+      setFormData(prev => ({
+        ...prev,
+        name: profile.name || prev.name,
+        email: profile.email || prev.email,
+        phone: profile.phone || prev.phone,
+        addressLine1: profile.delivery_address?.line1 || profile.address?.line1 || prev.addressLine1,
+        addressLine2: profile.delivery_address?.line2 || profile.address?.line2 || prev.addressLine2,
+        postalCode: profile.delivery_address?.postal_code || profile.postal_code || prev.postalCode,
+        country: profile.delivery_address?.country || profile.country || prev.country
+      }));
+      
+      console.log('✅ User profile loaded and form auto-filled');
+    } catch (error) {
+      console.log('ℹ️ Could not load user profile (user may not be logged in):', error.message);
+      // Don't show error to user - they can still fill the form manually
+    }
+  };
+
   // Update duration when selected plan changes to ensure it's valid
   useEffect(() => {
     if (selectedPlan && selectedPlan.pricing_tiers) {
