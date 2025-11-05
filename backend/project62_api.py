@@ -3,7 +3,7 @@ Project 62 - Backend API
 Handles leads, digital products, meal-prep subscriptions, customer auth, and admin dashboard
 """
 
-from fastapi import APIRouter, HTTPException, Depends, Request, Header
+from fastapi import APIRouter, HTTPException, Depends, Request, Header, Body
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, EmailStr
 from typing import Optional, List, Dict
