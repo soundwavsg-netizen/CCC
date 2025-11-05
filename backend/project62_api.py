@@ -972,11 +972,13 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
 async def register_customer(req: CustomerRegisterRequest):
     """Register new customer with Firebase Auth and send verification email"""
     try:
-        # Create Firebase user
+        # Create Firebase user (disabled until email verification)
         user = firebase_auth.create_user(
             email=req.email,
             password=req.password,
             display_name=req.name,
+            email_verified=False,
+            disabled=False,  # Keep enabled but block login via our backend logic
             app=project62_app
         )
         
