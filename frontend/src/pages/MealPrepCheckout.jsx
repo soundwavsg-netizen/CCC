@@ -362,6 +362,12 @@ const MealPrepCheckout = () => {
           <form className="checkout-form" onSubmit={handleSubmit}>
             <h2>Delivery Information</h2>
 
+            {user && formData.name && (
+              <div className="info-message">
+                ✓ Using your saved profile information. You can edit any field below.
+              </div>
+            )}
+
             {error && <div className="error-message">{error}</div>}
 
             <div className="form-group">
