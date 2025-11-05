@@ -607,7 +607,11 @@ const CustomerDashboard = () => {
                     <button
                       key={weeks}
                       className={`week-option ${selectedUpgradeWeeks === weeks ? 'selected' : ''}`}
-                      onClick={() => setSelectedUpgradeWeeks(weeks)}
+                      onClick={() => {
+                        setSelectedUpgradeWeeks(weeks);
+                        // Navigate to meal-prep signup page with selected weeks
+                        navigate(`/project62/meal-prep-checkout?weeks=${weeks}`);
+                      }}
                     >
                       <span className="weeks">{weeks} Week{weeks > 1 ? 's' : ''}</span>
                       <span className="savings">{weeks >= 4 ? 'Best Value' : weeks >= 2 ? 'Save More' : ''}</span>
@@ -617,13 +621,6 @@ const CustomerDashboard = () => {
                 <div className="modal-actions">
                   <button className="btn btn-secondary" onClick={() => setShowUpgradeModal(false)}>
                     Cancel
-                  </button>
-                  <button 
-                    className="btn btn-primary" 
-                    onClick={handleUpgrade}
-                    disabled={!selectedUpgradeWeeks}
-                  >
-                    Schedule Change
                   </button>
                 </div>
               </div>
