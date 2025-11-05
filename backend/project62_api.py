@@ -970,7 +970,7 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
 
 @router.post("/auth/register")
 async def register_customer(req: CustomerRegisterRequest):
-    """Register new customer with Firebase Auth"""
+    """Register new customer with Firebase Auth and send verification email"""
     try:
         # Create Firebase user
         user = firebase_auth.create_user(
