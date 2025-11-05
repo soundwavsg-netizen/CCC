@@ -43,10 +43,14 @@ const MealPrepCheckout = () => {
       const plans = response.data.subscriptions || [];
       setSubscriptionPlans(plans);
       
-      // Find the meal-prep plan (assuming there's one)
-      const mealPrepPlan = plans.find(p => p.plan_name && p.plan_name.toLowerCase().includes('meal'));
-      if (mealPrepPlan) {
-        setSelectedPlan(mealPrepPlan);
+      // Find the correct plan based on meals per day
+      const targetPlan = plans.find(p => p.meals_per_day === mealsPerDay);
+      
+      if (targetPlan) {
+        setSelectedPlan(targetPlan);
+      } else {
+        // Fallback to first available plan
+        setSelectedPlan(plans[0]);
       }
       setLoading(false);
     } catch (err) {
