@@ -30,15 +30,17 @@ const Shop = () => {
   const productsPerPage = 12;
 
   useEffect(() => {
-    fetchProducts();
+    fetchAllItems();
   }, [filters]);
 
-  const fetchProducts = async () => {
+  const fetchAllItems = async () => {
     try {
       setLoading(true);
-      const params = {
+      
+      // Fetch regular products
+      const productsParams = {
         category: filters.category || undefined,
-        type: filters.type || undefined,
+        type: filters.type === 'subscription' ? undefined : filters.type || undefined,
         search: filters.search || undefined,
         sort_by: filters.sortBy,
         limit: productsPerPage,
@@ -46,14 +48,67 @@ const Shop = () => {
       };
 
       // Remove undefined values
-      Object.keys(params).forEach(key => params[key] === undefined && delete params[key]);
+      Object.keys(productsParams).forEach(key => productsParams[key] === undefined && delete productsParams[key]);
 
-      const response = await axios.get(`${BACKEND_URL}/api/project62/products`, { params });
-      setProducts(response.data.products || []);
-      setTotalProducts(response.data.total || 0);
+      const [productsResponse, subscriptionsResponse] = await Promise.all([
+        axios.get(`${BACKEND_URL}/api/project62/products`, { params: productsParams }),
+        axios.get(`${BACKEND_URL}/api/project62/subscriptions/public`)
+      ]);
+
+      const fetchedProducts = productsResponse.data.products || [];
+      const fetchedSubscriptions = subscriptionsResponse.data.subscriptions || [];
+
+      // Transform subscriptions to match product format
+      const transformedSubscriptions = fetchedSubscriptions.map(sub => ({
+        product_id: sub.subscription_id,
+        product_id_slug: `meal-prep-${sub.plan_name.toLowerCase().replace(/\s+/g, '-')}`,
+        name: sub.plan_name,
+        description: sub.description,
+        price: sub.pricing_tiers && sub.pricing_tiers.length > 0 ? sub.pricing_tiers[0].price_per_meal : 0,
+        type: 'subscription',
+        category: 'Meal Prep Subscriptions',
+        image_url: sub.image_url || '',
+        is_featured: false,
+        tags: ['meal-prep', 'subscription'],
+        link_override: '/project62/meal-prep-checkout'
+      }));
+
+      // Combine and filter based on type filter
+      let combined = [];
+      if (!filters.type || filters.type === '') {
+        // Show both products and subscriptions
+        combined = [...fetchedProducts, ...transformedSubscriptions];
+      } else if (filters.type === 'subscription') {
+        // Show only subscriptions
+        combined = transformedSubscriptions;
+      } else {
+        // Show only products of specified type
+        combined = fetchedProducts;
+      }
+
+      // Apply search filter to combined items
+      if (filters.search) {
+        const searchLower = filters.search.toLowerCase();
+        combined = combined.filter(item => 
+          item.name.toLowerCase().includes(searchLower) || 
+          item.description.toLowerCase().includes(searchLower)
+        );
+      }
+
+      // Apply sorting
+      if (filters.sortBy === 'price_low') {
+        combined.sort((a, b) => a.price - b.price);
+      } else if (filters.sortBy === 'price_high') {
+        combined.sort((a, b) => b.price - a.price);
+      } else if (filters.sortBy === 'name') {
+        combined.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      setAllItems(combined);
+      setTotalProducts(combined.length);
       setLoading(false);
     } catch (err) {
-      console.error('Error fetching products:', err);
+      console.error('Error fetching items:', err);
       setError('Failed to load products. Please try again.');
       setLoading(false);
     }
