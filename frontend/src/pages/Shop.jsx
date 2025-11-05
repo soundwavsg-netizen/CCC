@@ -88,6 +88,15 @@ const Shop = () => {
   return (
     <div className="shop-page">
       <div className="shop-header">
+        <div className="header-top">
+          <button 
+            className="back-btn"
+            onClick={() => navigate('/project62/dashboard')}
+            title="Back to Dashboard"
+          >
+            ← Back to Dashboard
+          </button>
+        </div>
         <h1>Project 62 Shop</h1>
         <p>Discover our range of transformation plans and meal-prep subscriptions</p>
       </div>
