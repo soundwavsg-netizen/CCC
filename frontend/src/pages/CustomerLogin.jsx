@@ -62,20 +62,15 @@ const CustomerLogin = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('🚀 handleLogin called');
     setLoading(true);
     setError('');
 
-    console.log('📧 Attempting login with:', formData.email);
     const result = await login(formData.email, formData.password);
-    console.log('📊 Login result:', result);
     
     if (result.success) {
       // Navigation will be handled by the useEffect hook above
-      console.log('✅ Login successful, setting loading to false');
       setLoading(false);
     } else {
-      console.log('❌ Login failed:', result.error);
       setError(result.error || 'Login failed. Please check your credentials.');
       setLoading(false);
     }
