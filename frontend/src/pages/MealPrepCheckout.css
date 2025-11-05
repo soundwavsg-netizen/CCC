@@ -423,13 +423,6 @@
     padding-bottom: 80px; /* Space for sticky button */
   }
 }
-  border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-}
 
 .checkout-button:hover:not(:disabled) {
   background: #00a077;
