@@ -98,6 +98,7 @@ export default function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/project62" element={<Project62Landing />} />
               <Route path="/project62/login" element={<CustomerLogin />} />
+              <Route path="/project62/verify-email" element={<EmailVerification />} />
               <Route path="/project62/auth/verify" element={<CustomerLogin />} />
               <Route path="/project62/dashboard" element={<CustomerDashboard />} />
               <Route path="/project62/admin" element={<AdminDashboard />} />
