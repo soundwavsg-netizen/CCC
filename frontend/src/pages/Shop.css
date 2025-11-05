@@ -7,6 +7,37 @@
 .shop-header {
   text-align: center;
   margin-bottom: 40px;
+  position: relative;
+}
+
+.shop-header .header-top {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.shop-header .back-btn {
+  background: #fff;
+  color: #16a085;
+  border: 2px solid #16a085;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shop-header .back-btn:hover {
+  background: #16a085;
+  color: #fff;
+  transform: translateX(-4px);
 }
 
 .shop-header h1 {
