@@ -223,7 +223,7 @@ const Shop = () => {
             <div className="loading-state">Loading products...</div>
           ) : error ? (
             <div className="error-state">{error}</div>
-          ) : products.length === 0 ? (
+          ) : allItems.length === 0 ? (
             <div className="empty-state">
               <p>No products found matching your criteria.</p>
               <button onClick={() => {
@@ -236,7 +236,7 @@ const Shop = () => {
           ) : (
             <>
               <div className="products-grid">
-                {products.map((product) => (
+                {allItems.map((product) => (
                   <div key={product.product_id} className="product-card" onClick={() => handleProductClick(product)}>
                     {product.image_url && (
                       <div className="product-image">
