@@ -39,7 +39,9 @@ const MealPrepCheckout = () => {
   const fetchSubscriptionPlans = async () => {
     try {
       setLoading(true);
+      console.log('Fetching subscription plans from:', `${BACKEND_URL}/api/project62/subscriptions/public`);
       const response = await axios.get(`${BACKEND_URL}/api/project62/subscriptions/public`);
+      console.log('Subscription plans response:', response.data);
       const plans = response.data.subscriptions || [];
       setSubscriptionPlans(plans);
       
@@ -47,14 +49,17 @@ const MealPrepCheckout = () => {
       const targetPlan = plans.find(p => p.meals_per_day === mealsPerDay);
       
       if (targetPlan) {
+        console.log('Selected plan:', targetPlan.plan_name);
         setSelectedPlan(targetPlan);
       } else {
+        console.log('Fallback to first plan');
         // Fallback to first available plan
         setSelectedPlan(plans[0]);
       }
       setLoading(false);
     } catch (err) {
       console.error('Error fetching subscription plans:', err);
+      console.error('Error details:', err.response?.data || err.message);
       setError('Failed to load subscription plans. Please refresh the page.');
       setLoading(false);
     }
