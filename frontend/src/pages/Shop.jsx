@@ -70,7 +70,8 @@ const Shop = () => {
         image_url: sub.image_url || '',
         is_featured: false,
         tags: ['meal-prep', 'subscription'],
-        link_override: '/project62/meal-prep-checkout'
+        meals_per_day: sub.meals_per_day,
+        link_override: `/project62/meal-prep-checkout?plan=${sub.meals_per_day}meal`
       }));
 
       // Combine and filter based on type filter
