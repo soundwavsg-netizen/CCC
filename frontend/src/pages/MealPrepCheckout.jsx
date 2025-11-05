@@ -234,17 +234,6 @@ const MealPrepCheckout = () => {
             <h2>Configure Your Plan</h2>
             
             <div className="config-group">
-              <label>Duration</label>
-              <select value={duration} onChange={(e) => setDuration(e.target.value)}>
-                {availableDurations.sort((a, b) => a - b).map(weeks => (
-                  <option key={weeks} value={weeks}>
-                    {weeks} Week{weeks > 1 ? 's' : ''}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="config-group">
               <label>Meals Per Day</label>
               <select value={mealsPerDay} onChange={(e) => {
                 const newMealsPerDay = parseInt(e.target.value);
@@ -258,6 +247,35 @@ const MealPrepCheckout = () => {
                 <option value="1">1 Meal/Day</option>
                 <option value="2">2 Meals/Day</option>
               </select>
+            </div>
+
+            <div className="config-group">
+              <label>Select Commitment Duration</label>
+              <div className="duration-options">
+                {availableDurations.sort((a, b) => a - b).map(weeks => {
+                  const tier = selectedPlan?.pricing_tiers?.find(t => t.weeks === weeks);
+                  const isSelected = parseInt(duration) === weeks;
+                  return (
+                    <button
+                      key={weeks}
+                      type="button"
+                      className={`duration-card ${isSelected ? 'selected' : ''}`}
+                      onClick={() => setDuration(weeks.toString())}
+                    >
+                      <div className="duration-header">
+                        <strong>{weeks} Week{weeks > 1 ? 's' : ''}</strong>
+                        {weeks >= 4 && <span className="badge">Best Value</span>}
+                      </div>
+                      <div className="duration-price">
+                        ${tier?.price_per_meal || 0}/meal
+                      </div>
+                      <div className="duration-details">
+                        {weeks * 6 * mealsPerDay} total meals
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
