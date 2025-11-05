@@ -12,6 +12,8 @@ const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   
   const [products, setProducts] = useState([]);
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [allItems, setAllItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   
