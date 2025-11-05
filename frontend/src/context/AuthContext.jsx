@@ -103,10 +103,11 @@ export const AuthProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      localStorage.setItem('project62_token', data.token);
-      setToken(data.token);
-      setUser(data.user);
-      return { success: true };
+      // Don't auto-login anymore - user needs to verify email first
+      return { 
+        success: true, 
+        message: data.message || 'Registration successful! Please check your email to verify your account.' 
+      };
     } catch (error) {
       return { success: false, error: error.message };
     }
