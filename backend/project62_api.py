@@ -982,7 +982,7 @@ async def register_customer(req: CustomerRegisterRequest):
             app=project62_app
         )
         
-        # Create customer record in Firestore
+        # Create customer record in Firestore with email_verified flag
         customer_id = req.email.replace("@", "_at_").replace(".", "_")
         customer_data = {
             "customer_id": customer_id,
@@ -991,6 +991,7 @@ async def register_customer(req: CustomerRegisterRequest):
             "name": req.name,
             "phone": req.phone,
             "role": "customer",
+            "email_verified": False,
             "created_at": datetime.utcnow().isoformat()
         }
         db.collection("project62").document("customers").collection("all").document(customer_id).set(customer_data)
