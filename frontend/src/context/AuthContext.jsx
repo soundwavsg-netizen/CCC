@@ -56,7 +56,6 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      console.log('🔐 Login attempt:', { email, backendUrl: BACKEND_URL });
       const response = await fetch(`${BACKEND_URL}/api/project62/auth/login`, {
         method: 'POST',
         headers: {
@@ -64,8 +63,6 @@ export const AuthProvider = ({ children }) => {
         },
         body: JSON.stringify({ email, password })
       });
-
-      console.log('📡 Login response status:', response.status);
 
       if (!response.ok) {
         let errorMessage = 'Login failed';
@@ -80,13 +77,12 @@ export const AuthProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      console.log('✅ Login successful:', { role: data.user?.role });
       localStorage.setItem('project62_token', data.token);
       setToken(data.token);
       setUser(data.user);
       return { success: true };
     } catch (error) {
-      console.error('❌ Login error:', error);
+      console.error('Login error:', error);
       return { success: false, error: error.message };
     }
   };
