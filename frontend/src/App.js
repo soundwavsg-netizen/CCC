@@ -31,6 +31,7 @@ import MealPrepCheckout from './pages/MealPrepCheckout';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
 import CustomerLogin from './pages/CustomerLogin';
+import EmailVerification from './pages/EmailVerification';
 import CustomerDashboard from './pages/CustomerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import TuitionCentreDemo from './components/demos/TuitionCentreDemo';
