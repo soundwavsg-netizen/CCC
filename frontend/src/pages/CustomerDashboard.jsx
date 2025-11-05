@@ -610,7 +610,7 @@ const CustomerDashboard = () => {
                       onClick={() => {
                         setSelectedUpgradeWeeks(weeks);
                         // Navigate to meal-prep signup page with selected weeks
-                        navigate(`/project62/meal-prep-checkout?weeks=${weeks}`);
+                        navigate(`/project62/checkout/meal-prep?weeks=${weeks}`);
                       }}
                     >
                       <span className="weeks">{weeks} Week{weeks > 1 ? 's' : ''}</span>
