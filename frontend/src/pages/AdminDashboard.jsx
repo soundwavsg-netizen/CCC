@@ -359,7 +359,8 @@ const AdminDashboard = () => {
                 <thead>
                   <tr>
                     <th>Delivery ID</th>
-                    <th>Customer</th>
+                    <th>Customer Name</th>
+                    <th>Customer ID</th>
                     <th>Address</th>
                     <th>Date</th>
                     <th>Week</th>
@@ -371,10 +372,11 @@ const AdminDashboard = () => {
                   {data.deliveries.map((delivery, idx) => (
                     <tr key={idx}>
                       <td className="delivery-id">{delivery.delivery_id?.substring(0, 12)}...</td>
+                      <td><strong>{delivery.customer_name || 'N/A'}</strong></td>
                       <td>{delivery.customer_id}</td>
-                      <td>{delivery.address}</td>
-                      <td>{delivery.delivery_date || 'TBD'}</td>
-                      <td>Week {delivery.week}</td>
+                      <td>{delivery.address || delivery.delivery_address || 'N/A'}</td>
+                      <td>{delivery.delivery_date ? new Date(delivery.delivery_date).toLocaleDateString() : 'TBD'}</td>
+                      <td>Week {delivery.week_number || delivery.week || 'N/A'}</td>
                       <td><span className={`status-badge ${delivery.status}`}>{delivery.status}</span></td>
                       <td>
                         {delivery.status === 'pending' && (
