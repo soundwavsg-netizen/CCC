@@ -475,34 +475,54 @@ const CustomerDashboard = () => {
                 )}</p>
               </div>
 
-              {/* Progress Bar */}
-              {getNextTier(subscriptionData.loyalty.total_weeks) && (
-                <div className="loyalty-progress">
-                  <div className="progress-info">
-                    <span className="progress-label">
-                      {subscriptionData.loyalty.total_weeks} / {
-                        subscriptionData.loyalty.total_weeks < 13 ? 13 :
-                        subscriptionData.loyalty.total_weeks < 25 ? 25 : 37
-                      } weeks
-                    </span>
-                    <span className="next-tier">
-                      {getNextTier(subscriptionData.loyalty.total_weeks).weeksNeeded} weeks to {getNextTier(subscriptionData.loyalty.total_weeks).name}
-                    </span>
-                  </div>
-                  <div className="progress-bar">
-                    <div 
-                      className="progress-fill" 
-                      style={{ 
-                        width: `${(subscriptionData.loyalty.total_weeks / (
-                          subscriptionData.loyalty.total_weeks < 13 ? 13 :
-                          subscriptionData.loyalty.total_weeks < 25 ? 25 : 37
-                        )) * 100}%`,
-                        backgroundColor: getTierColor(subscriptionData.loyalty.tier)
-                      }}
-                    />
-                  </div>
+              {/* Tier Progress */}
+              <div className="tier-progress">
+                <h3>
+                  Loyalty Tier Progress 
+                  <span 
+                    className="info-icon" 
+                    title="Loyalty Points System"
+                    style={{ 
+                      marginLeft: '8px', 
+                      cursor: 'pointer', 
+                      fontSize: '16px',
+                      color: '#666',
+                      border: '1px solid #666',
+                      borderRadius: '50%',
+                      width: '20px',
+                      height: '20px',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                    onClick={() => alert(
+                      '🎯 Loyalty Points System\n\n' +
+                      'Earn points based on your subscription:\n' +
+                      '• 1 meal/day = 1 point per week\n' +
+                      '• 2 meals/day = 2 points per week\n\n' +
+                      'Tier Benefits:\n' +
+                      '🥉 Bronze (0-5 pts): Basic membership\n' +
+                      '🥈 Silver (6-11 pts): 10% discount\n' +
+                      '🥇 Gold (12-23 pts): 15% discount + Free delivery + Flexible delivery dates\n' +
+                      '💎 Platinum (24+ pts): 20% discount + Free delivery + Flexible delivery dates'
+                    )}
+                  >
+                    ℹ️
+                  </span>
+                </h3>
+                <div className="progress-bar">
+                  <div 
+                    className="progress-fill" 
+                    style={{ 
+                      width: `${Math.min((subscriptionData.loyalty.total_points / 24) * 100, 100)}%`,
+                      background: getTierColor(subscriptionData.loyalty.tier)
+                    }}
+                  ></div>
                 </div>
-              )}
+                <p className="tier-label">
+                  {subscriptionData.loyalty.total_points || 0} / 24 points to Platinum
+                </p>
+              </div>
 
               {/* Current Subscription Details */}
               <div className="subscription-details">
