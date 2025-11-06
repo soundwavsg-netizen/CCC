@@ -221,6 +221,10 @@ class DishUpdateRequest(BaseModel):
     is_available: Optional[bool] = None
     image_url: Optional[str] = None
 
+class ChangeDeliveryDateRequest(BaseModel):
+    delivery_id: str
+    new_date: str  # ISO format date
+
 # ========================
 # Helper Functions
 # ========================
