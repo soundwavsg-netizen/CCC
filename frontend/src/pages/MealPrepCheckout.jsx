@@ -191,16 +191,38 @@ const MealPrepCheckout = () => {
     const pricePerMeal = tier.price_per_meal;
     const deliveryFee = selectedPlan.delivery_fee || 20.00;
     const totalMeals = weeks * 6 * mealsPerDay; // 6 days per week
-    const mealCost = totalMeals * pricePerMeal;
+    let mealCost = totalMeals * pricePerMeal;
     const deliveryCost = weeks * deliveryFee;
+    
+    // Calculate loyalty discount (applies to meal cost only)
+    let loyaltyDiscountAmount = 0;
+    if (loyaltyDiscount && loyaltyDiscount.discount > 0) {
+      loyaltyDiscountAmount = mealCost * (loyaltyDiscount.discount / 100);
+      mealCost = mealCost - loyaltyDiscountAmount;
+    }
+    
+    // Calculate coupon discount
+    let couponDiscountAmount = 0;
+    if (appliedCoupon) {
+      if (appliedCoupon.type === 'percentage') {
+        couponDiscountAmount = mealCost * (appliedCoupon.value / 100);
+      } else if (appliedCoupon.type === 'fixed') {
+        couponDiscountAmount = appliedCoupon.value;
+      }
+      mealCost = Math.max(0, mealCost - couponDiscountAmount);
+    }
+    
     const totalCost = mealCost + deliveryCost;
     
     return {
       pricePerMeal: pricePerMeal.toFixed(2),
       totalMeals,
       weeks,
+      originalMealCost: (totalMeals * pricePerMeal).toFixed(2),
       mealCost: mealCost.toFixed(2),
       deliveryCost: deliveryCost.toFixed(2),
+      loyaltyDiscountAmount: loyaltyDiscountAmount.toFixed(2),
+      couponDiscountAmount: couponDiscountAmount.toFixed(2),
       totalCost: totalCost.toFixed(2)
     };
   };
