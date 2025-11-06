@@ -330,8 +330,8 @@ const AdminDashboard = () => {
                     <tr key={idx}>
                       <td className="order-id">{order.session_id?.substring(0, 20)}...</td>
                       <td>{order.product_type}</td>
-                      <td>{order.email || 'N/A'}</td>
-                      <td>${order.amount?.toFixed(2)}</td>
+                      <td>{order.customer_name || order.email || 'N/A'}</td>
+                      <td>${order.amount?.toFixed(2) || order.total_amount?.toFixed(2) || '0.00'}</td>
                       <td><span className={`status-badge ${order.payment_status}`}>{order.payment_status}</span></td>
                       <td>{new Date(order.created_at).toLocaleDateString()}</td>
                     </tr>
