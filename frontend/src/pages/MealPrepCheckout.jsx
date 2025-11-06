@@ -303,6 +303,13 @@ const MealPrepCheckout = () => {
     setCheckoutLoading(true);
     setError('');
 
+    // Validate email confirmation
+    if (formData.email !== formData.emailConfirm) {
+      setError('Email addresses do not match. Please check and try again.');
+      setCheckoutLoading(false);
+      return;
+    }
+
     if (formData.country !== 'Singapore') {
       setError('We currently only deliver within Singapore.');
       setCheckoutLoading(false);
