@@ -675,7 +675,7 @@ const CustomerDashboard = () => {
                     className="action-btn primary"
                     onClick={() => setShowUpgradeModal(true)}
                   >
-                    Change Plan Duration
+                    Add Subscriptions
                   </button>
                 )}
                 {subscriptionData.subscription.auto_renew && (
