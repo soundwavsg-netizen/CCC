@@ -1257,12 +1257,15 @@ async def get_customer_profile(current_user: dict = Depends(get_current_user)):
         subscription_doc = subscription_ref.get()
         subscription_data = subscription_doc.to_dict() if subscription_doc.exists else None
         
+        # Parse the address string if it exists
+        address_str = customer_data.get("address", "")
+        
         return {
             "customer_id": customer_data.get("customer_id"),
             "name": customer_data.get("name", ""),
             "email": customer_data.get("email", ""),
             "phone": customer_data.get("phone", ""),
-            "delivery_address": customer_data.get("delivery_address", {}),
+            "address": address_str,  # Full address string
             "postal_code": customer_data.get("postal_code", ""),
             "country": customer_data.get("country", "Singapore"),
             "role": customer_data.get("role", "customer"),
