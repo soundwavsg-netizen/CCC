@@ -32,6 +32,10 @@ const MealPrepCheckout = () => {
   });
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [error, setError] = useState('');
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponError, setCouponError] = useState('');
+  const [loyaltyDiscount, setLoyaltyDiscount] = useState(null);
 
   // Fetch subscription plans on mount
   useEffect(() => {
