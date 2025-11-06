@@ -936,20 +936,31 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
         }
         db.collection("project62").document("orders").collection("all").document(order_id).set(order_data)
         
-        # Create/Update subscription for the customer
+        # Create subscription with unique ID (not overwriting existing ones)
         start_date = datetime.fromisoformat(transaction_data["start_date"])
         end_date = start_date + timedelta(weeks=transaction_data["weeks"])
         
-        # Find the subscription plan
+        # Find the subscription plan to get price per meal
         plans_ref = db.collection("project62").document("subscriptions_config").collection("all")
         plans = [doc.to_dict() for doc in plans_ref.stream()]
         target_plan = None
+        price_per_meal = 0
+        
         for plan in plans:
             if plan.get("meals_per_day") == transaction_data["meals_per_day"]:
                 target_plan = plan
+                # Find the pricing tier for this duration
+                pricing_tiers = plan.get("pricing_tiers", [])
+                for tier in pricing_tiers:
+                    if tier.get("weeks") == transaction_data["weeks"]:
+                        price_per_meal = tier.get("price_per_meal", 0)
+                        break
                 break
         
+        # Create NEW subscription with unique subscription_id
+        subscription_id = str(uuid.uuid4())
         subscription_data = {
+            "subscription_id": subscription_id,
             "customer_id": customer_id,
             "customer_email": customer_email,
             "customer_name": transaction_data["customer_name"],
@@ -957,32 +968,54 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
             "plan_name": target_plan.get("plan_name") if target_plan else f"{transaction_data['meals_per_day']} Meal/Day Plan",
             "meals_per_day": transaction_data["meals_per_day"],
             "duration_weeks": transaction_data["weeks"],
+            "commitment_weeks": transaction_data["weeks"],
+            "price_per_meal": price_per_meal,
             "start_date": transaction_data["start_date"],
             "end_date": end_date.isoformat(),
             "status": "active",
-            "auto_renew": False,  # Default to no auto-renew
+            "auto_renew": False,
             "delivery_address": transaction_data["delivery_address"],
+            "order_id": order_id,
             "created_at": datetime.utcnow().isoformat(),
-            "last_payment_date": datetime.utcnow().isoformat(),
-            "last_payment_amount": transaction_data["total_amount"],
-            "total_weeks_subscribed": transaction_data["weeks"]
+            "payment_date": datetime.utcnow().isoformat(),
+            "payment_amount": transaction_data["total_amount"]
         }
         
-        # Check if customer already has a subscription
-        subscription_ref = db.collection("project62").document("subscriptions").collection("active").document(customer_id)
-        existing_sub = subscription_ref.get()
+        # Store subscription with unique subscription_id (NOT customer_id)
+        subscription_ref = db.collection("project62").document("subscriptions").collection("active").document(subscription_id)
+        subscription_ref.set(subscription_data)
         
-        if existing_sub.exists:
-            # Update existing subscription
-            existing_data = existing_sub.to_dict()
-            total_weeks = existing_data.get("total_weeks_subscribed", 0) + transaction_data["weeks"]
-            subscription_data["total_weeks_subscribed"] = total_weeks
-            subscription_ref.update(subscription_data)
+        print(f"✅ Subscription {subscription_id} created for customer {customer_id}")
+        
+        # Update customer record with total weeks
+        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+        customer_doc = customer_ref.get()
+        
+        if customer_doc.exists:
+            # Calculate total weeks from all subscriptions
+            all_subs = db.collection("project62").document("subscriptions").collection("active").where("customer_email", "==", customer_email).stream()
+            total_weeks = sum(sub.to_dict().get("duration_weeks", 0) for sub in all_subs)
+            
+            # Append order to existing customer
+            customer_ref.update({
+                "orders": firestore.ArrayUnion([order_id]),
+                "last_order_date": datetime.utcnow().isoformat(),
+                "address": transaction_data["delivery_address"],
+                "total_weeks_subscribed": total_weeks
+            })
         else:
-            # Create new subscription
-            subscription_ref.set(subscription_data)
-        
-        print(f"✅ Subscription created/updated for customer {customer_id}")
+            # Create new customer
+            customer_data = {
+                "customer_id": customer_id,
+                "email": customer_email,
+                "name": transaction_data["customer_name"],
+                "phone": transaction_data["customer_phone"],
+                "address": transaction_data["delivery_address"],
+                "orders": [order_id],
+                "last_order_date": datetime.utcnow().isoformat(),
+                "total_weeks_subscribed": transaction_data["weeks"]
+            }
+            customer_ref.set(customer_data)
         
         # Send notification email to admin
         try:
@@ -991,14 +1024,17 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
                 <body style="font-family: Arial, sans-serif;">
                     <h2>🎉 New Meal-Prep Subscription Order!</h2>
                     <p><strong>Order ID:</strong> {order_id}</p>
+                    <p><strong>Subscription ID:</strong> {subscription_id}</p>
                     <p><strong>Customer:</strong> {transaction_data["customer_name"]}</p>
                     <p><strong>Email:</strong> {customer_email}</p>
                     <p><strong>Phone:</strong> {transaction_data["customer_phone"]}</p>
                     <p><strong>Delivery Address:</strong> {transaction_data["delivery_address"]}</p>
-                    <p><strong>Duration:</strong> {transaction_data["duration"].replace('_', ' ').title()}</p>
+                    <p><strong>Duration:</strong> {transaction_data["weeks"]} weeks</p>
                     <p><strong>Meals per Day:</strong> {transaction_data["meals_per_day"]}</p>
+                    <p><strong>Price per Meal:</strong> ${price_per_meal}</p>
                     <p><strong>Total Amount:</strong> ${transaction_data["total_amount"]} SGD</p>
                     <p><strong>Start Date:</strong> {transaction_data["start_date"]}</p>
+                    <p><strong>End Date:</strong> {end_date.date()}</p>
                     <hr>
                     <p>Please prepare the meal deliveries accordingly.</p>
                 </body>
@@ -1020,46 +1056,28 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
         except Exception as e:
             print(f"❌ Admin email error: {e}")
         
-        # Update customer record
-        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
-        if customer_ref.get().exists:
-            # Append order to existing customer
-            customer_ref.update({
-                "orders": firestore.ArrayUnion([order_id]),
-                "last_order_date": datetime.utcnow().isoformat(),
-                "address": transaction_data["delivery_address"]
-            })
-        else:
-            # Create new customer
-            customer_data = {
-                "customer_id": customer_id,
-                "email": customer_email,
-                "name": transaction_data["customer_name"],
-                "phone": transaction_data["customer_phone"],
-                "address": transaction_data["delivery_address"],
-                "orders": [order_id],
-                "last_order_date": datetime.utcnow().isoformat()
-            }
-            customer_ref.set(customer_data)
-        
-        # Create delivery schedule
+        # Create delivery schedule linked to subscription_id
         for week_num in range(1, transaction_data["weeks"] + 1):
             delivery_date = start_date + timedelta(weeks=week_num - 1)
-            delivery_id = f"{order_id}_week_{week_num}"
+            delivery_id = f"{subscription_id}_week_{week_num}"
             
             delivery_data = {
                 "delivery_id": delivery_id,
+                "subscription_id": subscription_id,
                 "order_id": order_id,
                 "customer_id": customer_id,
+                "customer_email": customer_email,
+                "customer_name": transaction_data["customer_name"],
                 "week_number": week_num,
                 "delivery_date": delivery_date.isoformat(),
                 "delivery_address": transaction_data["delivery_address"],
+                "meals_per_day": transaction_data["meals_per_day"],
                 "status": "pending",
                 "created_at": datetime.utcnow().isoformat()
             }
             db.collection("project62").document("deliveries").collection("all").document(delivery_id).set(delivery_data)
         
-        print(f"✅ Order {order_id} processed successfully")
+        print(f"✅ Order {order_id} processed successfully with {transaction_data['weeks']} deliveries")
     except Exception as e:
         print(f"❌ Order processing error: {e}")
         import traceback
