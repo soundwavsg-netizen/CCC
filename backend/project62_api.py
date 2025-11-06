@@ -1601,10 +1601,26 @@ async def get_all_orders(current_user: dict = Depends(get_current_admin)):
 
 @router.get("/admin/deliveries")
 async def get_all_deliveries(current_user: dict = Depends(get_current_admin)):
-    """Get all deliveries for admin dashboard"""
+    """Get all deliveries for admin dashboard with customer addresses"""
     try:
         deliveries_ref = db.collection("project62").document("deliveries").collection("all")
-        deliveries = [doc.to_dict() for doc in deliveries_ref.stream()]
+        deliveries = []
+        
+        for doc in deliveries_ref.stream():
+            delivery_data = doc.to_dict()
+            
+            # Get customer address if not already in delivery data
+            if "address" not in delivery_data and "customer_id" in delivery_data:
+                customer_ref = db.collection("project62").document("customers").collection("all").document(delivery_data["customer_id"])
+                customer_doc = customer_ref.get()
+                if customer_doc.exists:
+                    customer_data = customer_doc.to_dict()
+                    delivery_data["address"] = customer_data.get("address", delivery_data.get("delivery_address", "N/A"))
+            elif "delivery_address" in delivery_data and "address" not in delivery_data:
+                delivery_data["address"] = delivery_data["delivery_address"]
+            
+            deliveries.append(delivery_data)
+        
         deliveries.sort(key=lambda x: x.get("delivery_date", ""))
         return {"deliveries": deliveries}
     except Exception as e:
