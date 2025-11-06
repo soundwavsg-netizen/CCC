@@ -109,6 +109,7 @@ class MealPrepCheckoutRequest(BaseModel):
     phone: str
     address: str
     start_date: str
+    password: Optional[str] = None  # Optional password for account creation
 
 class CustomerLoginRequest(BaseModel):
     email: EmailStr
