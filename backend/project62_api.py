@@ -2255,6 +2255,10 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
         orders = [order.to_dict() for order in orders_query]
         orders.sort(key=lambda x: x.get("created_at", ""), reverse=True)
         
+        print(f"  📦 Found {len(orders)} orders for customer")
+        for order in orders:
+            print(f"     - Order {order.get('order_id')}: Type={order.get('product_type')}, Amount=${order.get('total_amount')}, Status={order.get('payment_status')}")
+        
         response = {
             "status": "active" if len(subscriptions) > 0 else "no_subscription",
             "subscription": subscriptions[0] if len(subscriptions) > 0 else None,  # Keep backward compatibility
