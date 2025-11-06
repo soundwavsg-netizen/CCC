@@ -687,7 +687,9 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
                 "email": checkout_req.email,
                 "phone": checkout_req.phone,
                 "address": checkout_req.address,
-                "start_date": checkout_req.start_date
+                "start_date": checkout_req.start_date,
+                "loyalty_tier": loyalty_tier,
+                "loyalty_discount_percent": str(loyalty_discount_percent)
             }
         )
         
