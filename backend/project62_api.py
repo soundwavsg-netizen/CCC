@@ -2209,6 +2209,8 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
         customer_id = current_user["email"].replace("@", "_at_").replace(".", "_")
         customer_email = current_user["email"]
         
+        print(f"🔍 Fetching subscriptions for customer_email: {customer_email}")
+        
         # Get ALL subscriptions for this customer
         subscriptions_ref = db.collection("project62").document("subscriptions").collection("active")
         subscriptions_query = subscriptions_ref.where("customer_email", "==", customer_email).stream()
@@ -2218,8 +2220,12 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
         
         for sub_doc in subscriptions_query:
             sub_data = sub_doc.to_dict()
-            total_weeks += sub_data.get("duration_weeks", 0)
+            weeks = sub_data.get("duration_weeks", 0)
+            total_weeks += weeks
             subscriptions.append(sub_data)
+            print(f"  ✅ Found subscription: {sub_data.get('subscription_id')} - {weeks} weeks, Plan: {sub_data.get('plan_name')}")
+        
+        print(f"  📊 Total subscriptions found: {len(subscriptions)}, Total weeks: {total_weeks}")
         
         # Sort by start_date
         subscriptions.sort(key=lambda x: x.get("start_date", ""))
