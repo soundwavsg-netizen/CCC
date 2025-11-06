@@ -775,9 +775,9 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
             "payment_status": "pending",
             "created_at": datetime.utcnow().isoformat()
         }
-        db.collection("project62").document("payment_transactions").collection("all").document(session.session_id).set(transaction_data)
+        db.collection("project62").document("payment_transactions").collection("all").document(session_response.session_id).set(transaction_data)
         
-        return {"checkout_url": session.url, "session_id": session.session_id}
+        return {"checkout_url": session_response.url, "session_id": session_response.session_id}
     
     except HTTPException:
         raise
