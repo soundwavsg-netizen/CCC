@@ -612,8 +612,57 @@ const MealPrepCheckout = () => {
               <small>Deliveries are Monday to Friday only. Minimum 3 business days notice required.</small>
             </div>
 
-            <button type="submit" className="checkout-button" disabled={checkoutLoading}>
-              {checkoutLoading ? 'Processing...' : `Proceed to Payment - $${pricing.totalCost}`}
+            {/* Order Summary Before Payment Button */}
+            <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '10px', border: '2px solid #00b894' }}>
+              <h3 style={{ marginTop: 0, marginBottom: '15px', color: '#333' }}>📋 Order Summary</h3>
+              
+              {/* Meal Details */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '14px', color: '#666' }}>
+                <span>{pricing.totalMeals} meals × ${pricing.pricePerMeal}</span>
+                <span>${pricing.originalMealCost}</span>
+              </div>
+              
+              {/* Loyalty Discount */}
+              {loyaltyDiscount && loyaltyDiscount.discount > 0 && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '14px', color: '#00b894' }}>
+                  <span>🎯 {loyaltyDiscount.tier} Discount ({loyaltyDiscount.discount}%)</span>
+                  <span>-${pricing.loyaltyDiscountAmount}</span>
+                </div>
+              )}
+              
+              {/* Coupon Discount */}
+              {appliedCoupon && parseFloat(pricing.couponDiscountAmount) > 0 && (
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '14px', color: '#00b894' }}>
+                  <span>🎁 {appliedCoupon.code} ({appliedCoupon.type === 'percentage' ? `${appliedCoupon.value}%` : `$${appliedCoupon.value}`})</span>
+                  <span>-${pricing.couponDiscountAmount}</span>
+                </div>
+              )}
+              
+              <div style={{ borderTop: '1px dashed #ccc', margin: '10px 0' }}></div>
+              
+              {/* Subtotal */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '14px' }}>
+                <span>Meal Subtotal:</span>
+                <span>${pricing.mealCost}</span>
+              </div>
+              
+              {/* Delivery */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '14px' }}>
+                <span>Delivery ({pricing.weeks} weeks):</span>
+                <span>${pricing.deliveryCost}</span>
+              </div>
+              
+              <div style={{ borderTop: '2px solid #333', margin: '15px 0' }}></div>
+              
+              {/* Total */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '20px', fontWeight: 'bold' }}>
+                <span>Total:</span>
+                <span style={{ color: '#00b894' }}>${pricing.totalCost} SGD</span>
+              </div>
+            </div>
+
+            <button type="submit" className="checkout-button" disabled={checkoutLoading} style={{ marginTop: '20px', width: '100%' }}>
+              {checkoutLoading ? 'Processing...' : `Proceed to Checkout - $${pricing.totalCost}`}
             </button>
           </form>
         </div>
