@@ -2345,7 +2345,7 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
             free_delivery = True
         elif total_points >= 6:
             loyalty_tier = "Silver"
-            loyalty_discount = 10
+            loyalty_discount = 5  # Silver tier gets 5% off meal prices
             free_delivery = False
         
         # Get orders for this customer
