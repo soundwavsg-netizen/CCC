@@ -1581,6 +1581,80 @@ async def update_customer_address(req: UpdateAddressRequest, current_user: dict 
         print(f"Address update error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.put("/customer/delivery/change-date")
+async def change_delivery_date(req: ChangeDeliveryDateRequest, current_user: dict = Depends(get_current_user)):
+    """Change delivery date for Gold/Platinum tier customers (within 3 business days)"""
+    try:
+        customer_id = current_user["email"].replace("@", "_at_").replace(".", "_")
+        customer_email = current_user["email"]
+        
+        # Get customer to check loyalty tier
+        customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+        customer_doc = customer_ref.get()
+        
+        if not customer_doc.exists:
+            raise HTTPException(status_code=404, detail="Customer not found")
+        
+        customer_data = customer_doc.to_dict()
+        total_weeks = customer_data.get("total_weeks_subscribed", 0)
+        
+        # Calculate loyalty tier
+        if total_weeks >= 24:
+            tier = "Platinum"
+        elif total_weeks >= 12:
+            tier = "Gold"
+        else:
+            raise HTTPException(status_code=403, detail="Only Gold and Platinum tier customers can change delivery dates")
+        
+        # Get the delivery
+        delivery_ref = db.collection("project62").document("deliveries").collection("all").document(req.delivery_id)
+        delivery_doc = delivery_ref.get()
+        
+        if not delivery_doc.exists:
+            raise HTTPException(status_code=404, detail="Delivery not found")
+        
+        delivery_data = delivery_doc.to_dict()
+        
+        # Verify this delivery belongs to the customer
+        if delivery_data.get("customer_email") != customer_email:
+            raise HTTPException(status_code=403, detail="This delivery does not belong to you")
+        
+        # Verify delivery is still pending
+        if delivery_data.get("status") != "pending":
+            raise HTTPException(status_code=400, detail="Cannot change date for completed or cancelled deliveries")
+        
+        # Validate new date is within 3 business days from original date
+        from datetime import datetime, timedelta
+        original_date = datetime.fromisoformat(delivery_data.get("delivery_date").replace('Z', '+00:00') if 'Z' in delivery_data.get("delivery_date", "") else delivery_data.get("delivery_date"))
+        new_date = datetime.fromisoformat(req.new_date.replace('Z', '+00:00') if 'Z' in req.new_date else req.new_date)
+        
+        # Calculate business days difference
+        days_diff = abs((new_date - original_date).days)
+        if days_diff > 3:
+            raise HTTPException(status_code=400, detail="New date must be within 3 business days of the original delivery date")
+        
+        # Update delivery date
+        delivery_ref.update({
+            "delivery_date": new_date.isoformat(),
+            "date_changed": True,
+            "date_changed_at": datetime.utcnow().isoformat(),
+            "original_delivery_date": original_date.isoformat()
+        })
+        
+        return {
+            "status": "success",
+            "message": "Delivery date updated successfully",
+            "new_date": new_date.isoformat(),
+            "tier": tier
+        }
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print(f"Change delivery date error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
 # ========================
 # Admin Dashboard Endpoints
 # ========================
