@@ -33,6 +33,7 @@ const MealPrepCheckout = () => {
     startDate: ''
   });
   const [emailMatchError, setEmailMatchError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [error, setError] = useState('');
   const [couponCode, setCouponCode] = useState('');
