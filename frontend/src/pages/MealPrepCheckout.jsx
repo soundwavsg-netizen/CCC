@@ -23,6 +23,8 @@ const MealPrepCheckout = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    emailConfirm: '',
+    password: '',
     phone: '',
     addressLine1: '',
     addressLine2: '',
@@ -30,6 +32,7 @@ const MealPrepCheckout = () => {
     country: 'Singapore',
     startDate: ''
   });
+  const [emailMatchError, setEmailMatchError] = useState('');
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [error, setError] = useState('');
   const [couponCode, setCouponCode] = useState('');
