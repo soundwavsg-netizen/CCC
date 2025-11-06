@@ -54,10 +54,16 @@ except Exception as e:
     bucket = None
 
 # Stripe Integration
-STRIPE_API_KEY = os.getenv("STRIPE_API_KEY", "***REMOVED***")
+STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
+if not STRIPE_API_KEY:
+    raise ValueError("STRIPE_API_KEY environment variable is required but not set")
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
-SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL", "project62@gmail.com")
-JWT_SECRET = os.getenv("PROJECT62_JWT_SECRET", "***REMOVED***")
+if not SENDGRID_API_KEY:
+    raise ValueError("SENDGRID_API_KEY environment variable is required but not set")
+SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL", "project62@cccdigital.sg")
+JWT_SECRET = os.getenv("PROJECT62_JWT_SECRET")
+if not JWT_SECRET:
+    raise ValueError("PROJECT62_JWT_SECRET environment variable is required but not set")
 
 # Pricing Configuration (Server-side only - security best practice)
 DIGITAL_PRODUCTS = {
