@@ -486,24 +486,20 @@ const CustomerDashboard = () => {
                     const currentPoints = subscriptionData.loyalty.total_points || 0;
                     let nextTier = '';
                     let pointsNeeded = 0;
-                    let nextDiscount = 0;
                     let nextBenefits = '';
                     
                     if (subscriptionData.loyalty.tier === 'Bronze') {
                       nextTier = 'Silver';
-                      pointsNeeded = 6 - currentPoints;
-                      nextDiscount = 5;
+                      pointsNeeded = 7 - currentPoints;
                       nextBenefits = '5% off meal prices';
                     } else if (subscriptionData.loyalty.tier === 'Silver') {
                       nextTier = 'Gold';
-                      pointsNeeded = 12 - currentPoints;
-                      nextDiscount = 15;
-                      nextBenefits = '15% off meal prices + Free delivery + Flexible delivery dates';
+                      pointsNeeded = 25 - currentPoints;
+                      nextBenefits = '10% off meal prices + Free delivery + Flexible delivery dates';
                     } else if (subscriptionData.loyalty.tier === 'Gold') {
                       nextTier = 'Platinum';
-                      pointsNeeded = 24 - currentPoints;
-                      nextDiscount = 20;
-                      nextBenefits = '20% off meal prices + Free delivery + Flexible delivery dates';
+                      pointsNeeded = 49 - currentPoints;
+                      nextBenefits = '10% off meal prices + Free delivery + Flexible delivery dates + Priority support';
                     }
                     
                     return (
