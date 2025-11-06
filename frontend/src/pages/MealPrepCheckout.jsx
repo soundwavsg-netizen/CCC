@@ -55,16 +55,50 @@ const MealPrepCheckout = () => {
 
       const profile = response.data;
       
+      // Parse the full address string
+      // Example format: "33 Jervois Road, Petit Jervois, North Block #04-03, Singapore 247657"
+      const addressStr = profile.address || '';
+      let addressLine1 = '';
+      let addressLine2 = '';
+      let postalCode = '';
+      
+      if (addressStr) {
+        // Try to extract postal code (6 digits at the end)
+        const postalMatch = addressStr.match(/\b(\d{6})\b/);
+        if (postalMatch) {
+          postalCode = postalMatch[1];
+          // Remove postal code and "Singapore" from address
+          const withoutPostal = addressStr.replace(/,?\s*Singapore\s*\d{6}$/i, '').trim();
+          
+          // Split remaining address by comma
+          const parts = withoutPostal.split(',').map(p => p.trim());
+          
+          if (parts.length === 1) {
+            // Single line address
+            addressLine1 = parts[0];
+          } else if (parts.length >= 2) {
+            // Multiple parts - first part goes to line1, rest to line2
+            addressLine1 = parts[0];
+            addressLine2 = parts.slice(1).join(', ');
+          }
+        } else {
+          // No postal code found, just use the address as is
+          const parts = addressStr.split(',').map(p => p.trim());
+          addressLine1 = parts[0] || '';
+          addressLine2 = parts.slice(1).join(', ');
+        }
+      }
+      
       // Auto-fill form with user's saved data
       setFormData(prev => ({
         ...prev,
         name: profile.name || prev.name,
         email: profile.email || prev.email,
         phone: profile.phone || prev.phone,
-        addressLine1: profile.delivery_address?.line1 || profile.address?.line1 || prev.addressLine1,
-        addressLine2: profile.delivery_address?.line2 || profile.address?.line2 || prev.addressLine2,
-        postalCode: profile.delivery_address?.postal_code || profile.postal_code || prev.postalCode,
-        country: profile.delivery_address?.country || profile.country || prev.country
+        addressLine1: addressLine1 || prev.addressLine1,
+        addressLine2: addressLine2 || prev.addressLine2,
+        postalCode: postalCode || prev.postalCode,
+        country: profile.country || prev.country
       }));
       
       console.log('✅ User profile loaded and form auto-filled');
