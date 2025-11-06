@@ -1099,6 +1099,33 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
         
         print(f"✅ Subscription {subscription_id} created for customer {customer_id}")
         
+        # Create Firebase Auth account if password was provided
+        password = transaction_data.get("password")
+        account_created = False
+        
+        if password:
+            try:
+                # Check if user already exists in Firebase Auth
+                try:
+                    firebase_admin.auth.get_user_by_email(customer_email, app=project62_app)
+                    print(f"ℹ️ Firebase Auth account already exists for {customer_email}")
+                    account_created = True
+                except firebase_admin.auth.UserNotFoundError:
+                    # Create new Firebase Auth user
+                    user = firebase_admin.auth.create_user(
+                        email=customer_email,
+                        password=password,
+                        display_name=transaction_data["customer_name"],
+                        email_verified=True,
+                        app=project62_app
+                    )
+                    print(f"✅ Firebase Auth account created for {customer_email}")
+                    account_created = True
+            except Exception as auth_error:
+                print(f"❌ Firebase Auth creation error: {auth_error}")
+        else:
+            print(f"ℹ️ No password provided, customer will need to set password via email link")
+        
         # Update customer record with total weeks
         customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
         customer_doc = customer_ref.get()
