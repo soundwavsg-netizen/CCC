@@ -1595,8 +1595,6 @@ async def change_delivery_date(req: ChangeDeliveryDateRequest, current_user: dic
         if not customer_doc.exists:
             raise HTTPException(status_code=404, detail="Customer not found")
         
-        customer_data = customer_doc.to_dict()
-        
         # Calculate total points from all subscriptions
         subscriptions_ref = db.collection("project62").document("subscriptions").collection("active")
         subscriptions_query = subscriptions_ref.where("customer_email", "==", customer_email).stream()
