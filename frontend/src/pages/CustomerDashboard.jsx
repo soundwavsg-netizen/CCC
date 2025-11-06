@@ -551,13 +551,13 @@ const CustomerDashboard = () => {
                   <div 
                     className="progress-fill" 
                     style={{ 
-                      width: `${Math.min((subscriptionData.loyalty.total_points / 24) * 100, 100)}%`,
+                      width: `${Math.min((subscriptionData.loyalty.total_points / 49) * 100, 100)}%`,
                       background: getTierColor(subscriptionData.loyalty.tier)
                     }}
                   ></div>
                 </div>
                 <p className="tier-label">
-                  {subscriptionData.loyalty.total_points || 0} / 24 points to Platinum
+                  {subscriptionData.loyalty.total_points || 0} / 49 points to Platinum
                 </p>
               </div>
 
