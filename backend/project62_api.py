@@ -1137,12 +1137,16 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
             total_weeks = sum(sub.to_dict().get("duration_weeks", 0) for sub in all_subs)
             
             # Append order to existing customer
-            customer_ref.update({
+            update_data = {
                 "orders": firestore.ArrayUnion([order_id]),
                 "last_order_date": datetime.utcnow().isoformat(),
                 "address": transaction_data["delivery_address"],
                 "total_weeks_subscribed": total_weeks
-            })
+            }
+            # If account was just created, mark email as verified
+            if account_created:
+                update_data["email_verified"] = True
+            customer_ref.update(update_data)
         else:
             # Create new customer
             customer_data = {
@@ -1153,7 +1157,8 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
                 "address": transaction_data["delivery_address"],
                 "orders": [order_id],
                 "last_order_date": datetime.utcnow().isoformat(),
-                "total_weeks_subscribed": transaction_data["weeks"]
+                "total_weeks_subscribed": transaction_data["weeks"],
+                "email_verified": account_created  # True if account was created with password
             }
             customer_ref.set(customer_data)
         
