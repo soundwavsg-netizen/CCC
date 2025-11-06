@@ -1129,6 +1129,83 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
             }
             customer_ref.set(customer_data)
         
+        # Send welcome email to customer
+        try:
+            customer_welcome_html = f"""
+            <html>
+                <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                    <div style="background: linear-gradient(135deg, #00b894 0%, #00d2d3 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+                        <h1 style="color: white; margin: 0;">🎉 Welcome to Project 62!</h1>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px;">
+                        <p style="font-size: 18px; color: #333;">Hi {transaction_data["customer_name"]},</p>
+                        
+                        <p style="color: #666; line-height: 1.6;">
+                            Thank you for subscribing to our meal-prep service! Your journey to better health starts now. 🌱
+                        </p>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #00b894;">
+                            <h3 style="margin-top: 0; color: #00b894;">📦 Your Subscription Details</h3>
+                            <p style="margin: 5px 0;"><strong>Duration:</strong> {transaction_data["weeks"]} weeks</p>
+                            <p style="margin: 5px 0;"><strong>Meals per Day:</strong> {transaction_data["meals_per_day"]}</p>
+                            <p style="margin: 5px 0;"><strong>Start Date:</strong> {transaction_data["start_date"]}</p>
+                            <p style="margin: 5px 0;"><strong>Total Amount:</strong> ${transaction_data["total_amount"]} SGD</p>
+                            <p style="margin: 5px 0;"><strong>Delivery Address:</strong> {transaction_data["delivery_address"]}</p>
+                        </div>
+                        
+                        <div style="background: #e6fff9; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <h3 style="margin-top: 0; color: #00b894;">🔐 Access Your Dashboard</h3>
+                            <p style="color: #666;">
+                                {'You can now log in to your customer dashboard to track deliveries, view your loyalty points, and manage your subscription.' if transaction_data.get('password') else 'Check your email for instructions to set up your account and access your customer dashboard.'}
+                            </p>
+                            <div style="text-align: center; margin: 20px 0;">
+                                <a href="{FRONTEND_URL}/project62/login" style="background: #00b894; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">
+                                    Go to Dashboard →
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                            <h3 style="margin-top: 0; color: #333;">📅 What Happens Next?</h3>
+                            <ul style="color: #666; line-height: 1.8;">
+                                <li>Your first delivery is scheduled for <strong>{transaction_data["start_date"]}</strong></li>
+                                <li>You'll receive fresh, pre-made meals every week</li>
+                                <li>Track your deliveries in your customer dashboard</li>
+                                <li>Earn loyalty points with each purchase</li>
+                            </ul>
+                        </div>
+                        
+                        <p style="color: #666; margin-top: 30px;">
+                            Questions? Reply to this email or contact us at <a href="mailto:{SENDGRID_REPLY_TO_EMAIL}">{SENDGRID_REPLY_TO_EMAIL}</a>
+                        </p>
+                        
+                        <p style="color: #666; margin-top: 20px;">
+                            Best regards,<br>
+                            <strong>The Project 62 Team</strong>
+                        </p>
+                    </div>
+                </body>
+            </html>
+            """
+            
+            customer_message = Mail(
+                from_email=SENDGRID_FROM_EMAIL,
+                to_emails=customer_email,
+                subject='🎉 Welcome to Project 62 - Your Subscription is Confirmed!',
+                html_content=customer_welcome_html
+            )
+            
+            customer_message.reply_to = SENDGRID_REPLY_TO_EMAIL
+            
+            sg = SendGridAPIClient(SENDGRID_API_KEY)
+            customer_response = sg.send(customer_message)
+            print(f"✅ Welcome email sent to {customer_email} - Status: {customer_response.status_code}")
+        except Exception as e:
+            print(f"❌ Customer welcome email error: {e}")
+            import traceback
+            traceback.print_exc()
+        
         # Send notification email to admin
         try:
             admin_email_content = f"""
