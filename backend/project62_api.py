@@ -560,25 +560,45 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
     Create Stripe checkout session for meal-prep subscription
     """
     try:
-        # Validate duration
-        if checkout_req.duration not in MEAL_PREP_PRICING:
-            raise HTTPException(status_code=400, detail="Invalid duration")
+        # Fetch subscription plans dynamically to get pricing
+        plans_ref = db.collection("project62").document("subscriptions_config").collection("plans")
+        plans = [doc.to_dict() for doc in plans_ref.stream()]
         
-        # Validate meals per day
-        if checkout_req.meals_per_day not in [1, 2]:
-            raise HTTPException(status_code=400, detail="Meals per day must be 1 or 2")
+        # Find the correct plan based on meals_per_day
+        target_plan = None
+        for plan in plans:
+            if plan.get("meals_per_day") == checkout_req.meals_per_day:
+                target_plan = plan
+                break
         
-        # Calculate pricing
-        price_per_meal = MEAL_PREP_PRICING[checkout_req.duration][f"{checkout_req.meals_per_day}_meal{'s' if checkout_req.meals_per_day == 2 else ''}"]
+        if not target_plan:
+            raise HTTPException(status_code=400, detail="Invalid meal plan")
         
-        # Calculate total meals
-        duration_map = {"1_week": 1, "2_weeks": 2, "4_weeks": 4, "6_weeks": 6}
-        weeks = duration_map[checkout_req.duration]
+        # Extract weeks from duration string (e.g., "3_weeks" -> 3)
+        try:
+            weeks = int(checkout_req.duration.split('_')[0])
+        except:
+            raise HTTPException(status_code=400, detail="Invalid duration format")
+        
+        # Find the pricing tier for the selected duration
+        pricing_tiers = target_plan.get("pricing_tiers", [])
+        pricing_tier = None
+        for tier in pricing_tiers:
+            if tier.get("weeks") == weeks:
+                pricing_tier = tier
+                break
+        
+        if not pricing_tier:
+            raise HTTPException(status_code=400, detail=f"No pricing available for {weeks} weeks")
+        
+        # Calculate pricing from the tier
+        price_per_meal = pricing_tier.get("price_per_meal", 0)
+        delivery_fee = target_plan.get("delivery_fee", 20.00)
+        
+        # Calculate total meals and costs
         total_meals = weeks * 6 * checkout_req.meals_per_day  # 6 days per week
-        
-        # Calculate total
         meal_cost = total_meals * price_per_meal
-        delivery_cost = weeks * DELIVERY_FEE
+        delivery_cost = weeks * delivery_fee
         total_amount = meal_cost + delivery_cost
         
         # Initialize Stripe checkout
@@ -598,6 +618,7 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
             metadata={
                 "product_type": "meal_prep",
                 "duration": checkout_req.duration,
+                "weeks": str(weeks),
                 "meals_per_day": str(checkout_req.meals_per_day),
                 "name": checkout_req.name,
                 "email": checkout_req.email,
@@ -633,8 +654,12 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
         
         return {"checkout_url": session.url, "session_id": session.session_id}
     
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"Meal-prep checkout error: {e}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 # ========================
