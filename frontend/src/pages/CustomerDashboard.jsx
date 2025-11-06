@@ -654,14 +654,14 @@ const CustomerDashboard = () => {
                 <div key={idx} className="delivery-item">
                   <div className="delivery-date">
                     <span className="date-label">Delivery Date</span>
-                    <span className="date-value">{delivery.delivery_date || 'TBD'}</span>
+                    <span className="date-value">{delivery.delivery_date ? new Date(delivery.delivery_date).toLocaleDateString() : 'TBD'}</span>
                   </div>
                   <div className="delivery-details">
-                    <p><strong>Week:</strong> {delivery.week || 'N/A'}</p>
+                    <p><strong>Week:</strong> Week {delivery.week_number || delivery.week || 'N/A'}</p>
                     <p><strong>Status:</strong> <span className={`status-badge ${delivery.status}`}>{delivery.status || 'Pending'}</span></p>
                   </div>
                   <div className="delivery-address">
-                    <p>{delivery.address || dashboardData.customer?.address || 'Address not set'}</p>
+                    <p>{delivery.delivery_address || delivery.address || dashboardData.customer?.address || 'Address not set'}</p>
                   </div>
                 </div>
               ))}
