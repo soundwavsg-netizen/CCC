@@ -975,6 +975,9 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
                         break
                 break
         
+        # Calculate loyalty points: weeks × meals_per_day
+        loyalty_points = transaction_data["weeks"] * transaction_data["meals_per_day"]
+        
         # Create NEW subscription with unique subscription_id
         subscription_id = str(uuid.uuid4())
         subscription_data = {
@@ -988,6 +991,7 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
             "duration_weeks": transaction_data["weeks"],
             "commitment_weeks": transaction_data["weeks"],
             "price_per_meal": price_per_meal,
+            "loyalty_points": loyalty_points,
             "start_date": transaction_data["start_date"],
             "end_date": end_date.isoformat(),
             "status": "active",
