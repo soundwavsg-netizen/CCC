@@ -579,8 +579,54 @@ const MealPrepCheckout = () => {
 
             <div className="form-group">
               <label>Email *</label>
-              <input type="email" name="email" value={formData.email} onChange={handleInputChange} required />
+              <input 
+                type="email" 
+                name="email" 
+                value={formData.email} 
+                onChange={(e) => {
+                  handleInputChange(e);
+                  setEmailMatchError('');
+                }} 
+                required 
+              />
             </div>
+
+            <div className="form-group">
+              <label>Confirm Email *</label>
+              <input 
+                type="email" 
+                name="emailConfirm" 
+                value={formData.emailConfirm} 
+                onChange={(e) => {
+                  handleInputChange(e);
+                  if (e.target.value && formData.email && e.target.value !== formData.email) {
+                    setEmailMatchError('Emails do not match');
+                  } else {
+                    setEmailMatchError('');
+                  }
+                }} 
+                required 
+              />
+              {emailMatchError && <small style={{color: 'red'}}>{emailMatchError}</small>}
+            </div>
+
+            {!user && (
+              <div className="form-group" style={{backgroundColor: '#f0f9ff', padding: '15px', borderRadius: '8px', border: '1px solid #00b894'}}>
+                <label>Create Password (Optional but Recommended)</label>
+                <input 
+                  type="password" 
+                  name="password" 
+                  value={formData.password} 
+                  onChange={handleInputChange} 
+                  placeholder="Create a password to access your account"
+                  minLength="6"
+                />
+                <small style={{display: 'block', marginTop: '5px', color: '#666'}}>
+                  💡 Set a password now to instantly access your customer dashboard after purchase. 
+                  If skipped, we'll email you instructions to set up your account.
+                </small>
+              </div>
+            )}
 
             <div className="form-group">
               <label>Phone Number *</label>
