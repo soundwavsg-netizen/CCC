@@ -448,19 +448,111 @@ const MealPrepCheckout = () => {
 
           <div className="pricing-summary">
             <h2>Order Summary</h2>
-            <div className="pricing-row">
-              <span>Price per Meal:</span>
-              <span>${pricing.pricePerMeal}</span>
+            
+            {/* Meal Details */}
+            <div className="pricing-row" style={{ color: '#666', fontSize: '14px', marginBottom: '10px' }}>
+              <span>{pricing.totalMeals} meals × ${pricing.pricePerMeal}</span>
+              <span>${pricing.originalMealCost}</span>
             </div>
-            <div className="pricing-row">
-              <span>Total Meals ({pricing.totalMeals}):</span>
+            
+            {/* Loyalty Discount */}
+            {loyaltyDiscount && loyaltyDiscount.discount > 0 && (
+              <div className="pricing-row" style={{ color: '#00b894', fontSize: '14px' }}>
+                <span>🎯 {loyaltyDiscount.tier} Member Discount ({loyaltyDiscount.discount}%)</span>
+                <span>-${pricing.loyaltyDiscountAmount}</span>
+              </div>
+            )}
+            
+            {/* Coupon Section */}
+            <div style={{ margin: '15px 0', padding: '15px', backgroundColor: '#f8f9fa', borderRadius: '8px' }}>
+              <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold', fontSize: '14px' }}>
+                Have a coupon code?
+              </label>
+              {!appliedCoupon ? (
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={(e) => {
+                      setCouponCode(e.target.value.toUpperCase());
+                      setCouponError('');
+                    }}
+                    placeholder="Enter code"
+                    style={{
+                      flex: 1,
+                      padding: '8px',
+                      border: '1px solid #ddd',
+                      borderRadius: '5px',
+                      textTransform: 'uppercase'
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleApplyCoupon}
+                    style={{
+                      padding: '8px 16px',
+                      backgroundColor: '#00b894',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    Apply
+                  </button>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#00b894', fontWeight: 'bold' }}>
+                    ✓ {appliedCoupon.code} Applied
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleRemoveCoupon}
+                    style={{
+                      padding: '4px 12px',
+                      backgroundColor: '#e74c3c',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      fontSize: '12px'
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
+              {couponError && (
+                <div style={{ color: '#e74c3c', fontSize: '12px', marginTop: '5px' }}>
+                  {couponError}
+                </div>
+              )}
+            </div>
+            
+            {/* Coupon Discount */}
+            {appliedCoupon && parseFloat(pricing.couponDiscountAmount) > 0 && (
+              <div className="pricing-row" style={{ color: '#00b894', fontSize: '14px' }}>
+                <span>🎁 Coupon Discount ({appliedCoupon.type === 'percentage' ? `${appliedCoupon.value}%` : `$${appliedCoupon.value}`})</span>
+                <span>-${pricing.couponDiscountAmount}</span>
+              </div>
+            )}
+            
+            {/* Subtotal after discounts */}
+            <div className="pricing-row" style={{ borderTop: '1px dashed #ddd', paddingTop: '10px', marginTop: '10px' }}>
+              <span>Meal Subtotal:</span>
               <span>${pricing.mealCost}</span>
             </div>
+            
+            {/* Delivery Cost */}
             <div className="pricing-row">
               <span>Delivery ({pricing.weeks} weeks):</span>
               <span>${pricing.deliveryCost}</span>
             </div>
-            <div className="pricing-row total">
+            
+            {/* Final Total */}
+            <div className="pricing-row total" style={{ borderTop: '2px solid #333', paddingTop: '10px', marginTop: '10px', fontSize: '18px' }}>
               <span><strong>Total:</strong></span>
               <span><strong>${pricing.totalCost} SGD</strong></span>
             </div>
