@@ -1552,7 +1552,7 @@ async def get_customer_dashboard(current_user: dict = Depends(get_current_user))
         return {
             "customer": customer_data,
             "orders": orders,
-            "deliveries": deliveries[:5],  # Next 5 deliveries
+            "deliveries": deliveries,  # All upcoming deliveries
             "plan_status": orders[0] if orders else None
         }
     except Exception as e:
