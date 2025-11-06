@@ -760,29 +760,36 @@ const CustomerDashboard = () => {
                 
                 return (
                   <div key={idx} className="delivery-item">
-                    <div className="delivery-date">
-                      <span className="date-label">Delivery Date</span>
-                      <span className="date-value">{delivery.delivery_date ? new Date(delivery.delivery_date).toLocaleDateString() : 'TBD'}</span>
+                    <div className="delivery-date" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+                      <div>
+                        <span className="date-label" style={{ display: 'block', fontSize: '12px', color: '#666' }}>Delivery Date</span>
+                        <span className="date-value" style={{ display: 'block', fontWeight: 'bold', fontSize: '14px' }}>
+                          {delivery.delivery_date ? new Date(delivery.delivery_date).toLocaleDateString() : 'TBD'}
+                        </span>
+                      </div>
                       <button 
                         className={`change-date-btn ${!canChangeDate ? 'disabled' : ''}`}
                         onClick={() => {
                           if (canChangeDate) {
                             handleChangeDateClick(delivery);
                           } else {
-                            alert(`🔒 Flexible Delivery\n\nThis feature is only available for Gold and Platinum tier members.\n\nYour current tier: ${currentTier}\n\nUpgrade to Gold (12+ points) or Platinum (24+ points) to unlock flexible delivery dates!`);
+                            alert(`🔒 Flexible Delivery\n\nThis feature is only available for Gold and Platinum tier members.\n\nYour current tier: ${currentTier}\n\nUpgrade to Gold (25+ points) or Platinum (49+ points) to unlock flexible delivery dates!`);
                           }
                         }}
                         style={{ 
-                          marginLeft: '10px', 
-                          padding: '5px 10px', 
+                          padding: '8px 12px', 
                           fontSize: '12px', 
                           cursor: canChangeDate ? 'pointer' : 'not-allowed',
                           opacity: canChangeDate ? 1 : 0.5,
-                          backgroundColor: canChangeDate ? '#00b894' : '#95a5a6'
+                          backgroundColor: canChangeDate ? '#00b894' : '#95a5a6',
+                          border: 'none',
+                          borderRadius: '5px',
+                          color: 'white',
+                          whiteSpace: 'nowrap'
                         }}
                         title={!canChangeDate ? 'Available for Gold & Platinum members only' : 'Change delivery date'}
                       >
-                        Change Date {!canChangeDate && '🔒'}
+                        {canChangeDate ? 'Change Date' : 'Change Date 🔒'}
                       </button>
                     </div>
                     <div className="delivery-details">
