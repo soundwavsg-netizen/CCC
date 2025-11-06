@@ -561,28 +561,39 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
     Create Stripe checkout session for meal-prep subscription
     """
     try:
+        print(f"Meal-prep checkout request: duration={checkout_req.duration}, meals_per_day={checkout_req.meals_per_day}")
+        
         # Fetch subscription plans dynamically to get pricing
         plans_ref = db.collection("project62").document("subscriptions_config").collection("plans")
         plans = [doc.to_dict() for doc in plans_ref.stream()]
+        print(f"Found {len(plans)} subscription plans")
         
         # Find the correct plan based on meals_per_day
         target_plan = None
         for plan in plans:
+            print(f"Plan: {plan.get('plan_name')}, meals_per_day={plan.get('meals_per_day')}")
             if plan.get("meals_per_day") == checkout_req.meals_per_day:
                 target_plan = plan
                 break
         
         if not target_plan:
+            print(f"ERROR: No plan found for meals_per_day={checkout_req.meals_per_day}")
             raise HTTPException(status_code=400, detail="Invalid meal plan")
+        
+        print(f"Selected plan: {target_plan.get('plan_name')}")
         
         # Extract weeks from duration string (e.g., "3_weeks" -> 3)
         try:
             weeks = int(checkout_req.duration.split('_')[0])
-        except:
+            print(f"Extracted weeks: {weeks}")
+        except Exception as e:
+            print(f"ERROR: Could not parse duration '{checkout_req.duration}': {e}")
             raise HTTPException(status_code=400, detail="Invalid duration format")
         
         # Find the pricing tier for the selected duration
         pricing_tiers = target_plan.get("pricing_tiers", [])
+        print(f"Available pricing tiers: {[t.get('weeks') for t in pricing_tiers]}")
+        
         pricing_tier = None
         for tier in pricing_tiers:
             if tier.get("weeks") == weeks:
@@ -590,7 +601,10 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
                 break
         
         if not pricing_tier:
+            print(f"ERROR: No pricing tier found for {weeks} weeks in plan {target_plan.get('plan_name')}")
             raise HTTPException(status_code=400, detail=f"No pricing available for {weeks} weeks")
+        
+        print(f"Selected pricing tier: {pricing_tier}")
         
         # Calculate pricing from the tier
         price_per_meal = pricing_tier.get("price_per_meal", 0)
@@ -601,6 +615,8 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
         meal_cost = total_meals * price_per_meal
         delivery_cost = weeks * delivery_fee
         total_amount = meal_cost + delivery_cost
+        
+        print(f"Pricing: {total_meals} meals × ${price_per_meal} + {weeks} weeks × ${delivery_fee} = ${total_amount}")
         
         # Initialize Stripe checkout
         webhook_url = f"{checkout_req.origin_url}/api/webhook/stripe"
@@ -631,6 +647,8 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
         )
         
         session: CheckoutSessionResponse = await stripe_checkout.create_checkout_session(checkout_request)
+        
+        print(f"Stripe session created: {session.session_id}")
         
         # Save transaction to Firestore
         transaction_data = {
