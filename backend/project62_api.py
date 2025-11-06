@@ -3081,6 +3081,52 @@ async def get_public_subscriptions():
         print(f"Get public subscriptions error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.post("/validate-coupon")
+async def validate_coupon(req: ValidateCouponRequest):
+    """Validate coupon code (no auth required for checkout)"""
+    try:
+        coupon_code = req.code.upper()
+        
+        # Check if coupon exists in Firestore
+        coupons_ref = db.collection("project62").document("coupons").collection("active")
+        coupon_doc = coupons_ref.document(coupon_code).get()
+        
+        if not coupon_doc.exists:
+            return {"valid": False, "message": "Invalid coupon code"}
+        
+        coupon_data = coupon_doc.to_dict()
+        
+        # Check if coupon is active
+        if not coupon_data.get("active", False):
+            return {"valid": False, "message": "This coupon is no longer active"}
+        
+        # Check expiry date
+        expiry_date = coupon_data.get("expiry_date")
+        if expiry_date:
+            from datetime import datetime
+            expiry = datetime.fromisoformat(expiry_date.replace('Z', '+00:00') if 'Z' in expiry_date else expiry_date)
+            if datetime.utcnow() > expiry:
+                return {"valid": False, "message": "This coupon has expired"}
+        
+        # Check usage limit
+        usage_limit = coupon_data.get("usage_limit")
+        times_used = coupon_data.get("times_used", 0)
+        if usage_limit and times_used >= usage_limit:
+            return {"valid": False, "message": "This coupon has reached its usage limit"}
+        
+        return {
+            "valid": True,
+            "coupon": {
+                "code": coupon_code,
+                "type": coupon_data.get("type", "percentage"),  # percentage or fixed
+                "value": coupon_data.get("value", 0),
+                "description": coupon_data.get("description", "")
+            }
+        }
+    except Exception as e:
+        print(f"Coupon validation error: {e}")
+        return {"valid": False, "message": "Error validating coupon"}
+
 @router.get("/subscriptions/{plan_id}")
 async def get_subscription_by_id(plan_id: str):
     """Get single subscription plan by ID"""
