@@ -718,22 +718,35 @@ const CustomerDashboard = () => {
           {dashboardData?.deliveries && dashboardData.deliveries.length > 0 ? (
             <div className="deliveries-list">
               {dashboardData.deliveries.map((delivery, idx) => {
-                const canChangeDate = subscriptionData && (subscriptionData.loyalty_tier === 'Gold' || subscriptionData.loyalty_tier === 'Platinum');
+                const canChangeDate = subscriptionData && (subscriptionData.loyalty.tier === 'Gold' || subscriptionData.loyalty.tier === 'Platinum');
+                const currentTier = subscriptionData?.loyalty?.tier || 'Bronze';
                 
                 return (
                   <div key={idx} className="delivery-item">
                     <div className="delivery-date">
                       <span className="date-label">Delivery Date</span>
                       <span className="date-value">{delivery.delivery_date ? new Date(delivery.delivery_date).toLocaleDateString() : 'TBD'}</span>
-                      {canChangeDate && (
-                        <button 
-                          className="change-date-btn"
-                          onClick={() => handleChangeDateClick(delivery)}
-                          style={{ marginLeft: '10px', padding: '5px 10px', fontSize: '12px', cursor: 'pointer' }}
-                        >
-                          Change Date
-                        </button>
-                      )}
+                      <button 
+                        className={`change-date-btn ${!canChangeDate ? 'disabled' : ''}`}
+                        onClick={() => {
+                          if (canChangeDate) {
+                            handleChangeDateClick(delivery);
+                          } else {
+                            alert(`🔒 Flexible Delivery\n\nThis feature is only available for Gold and Platinum tier members.\n\nYour current tier: ${currentTier}\n\nUpgrade to Gold (12+ points) or Platinum (24+ points) to unlock flexible delivery dates!`);
+                          }
+                        }}
+                        style={{ 
+                          marginLeft: '10px', 
+                          padding: '5px 10px', 
+                          fontSize: '12px', 
+                          cursor: canChangeDate ? 'pointer' : 'not-allowed',
+                          opacity: canChangeDate ? 1 : 0.5,
+                          backgroundColor: canChangeDate ? '#00b894' : '#95a5a6'
+                        }}
+                        title={!canChangeDate ? 'Available for Gold & Platinum members only' : 'Change delivery date'}
+                      >
+                        Change Date {!canChangeDate && '🔒'}
+                      </button>
                     </div>
                     <div className="delivery-details">
                       <p><strong>Week:</strong> Week {delivery.week_number || delivery.week || 'N/A'}</p>
