@@ -2356,9 +2356,10 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
             "loyalty": {
                 "tier": loyalty_tier,
                 "total_weeks": total_weeks,
+                "total_points": total_points,
                 "discount": loyalty_discount,
                 "free_delivery": free_delivery,
-                "priority_dish": loyalty_tier == "Gold"
+                "priority_dish": loyalty_tier in ["Gold", "Platinum"]
             }
         }
         
