@@ -767,13 +767,13 @@ const CustomerDashboard = () => {
           <div className="modal-overlay" onClick={() => setShowUpgradeModal(false)}>
             <div className="modal-content upgrade-modal" onClick={(e) => e.stopPropagation()}>
               <div className="modal-header">
-                <h3>Change Your Plan</h3>
+                <h3>Add Subscriptions</h3>
                 <button className="close-btn" onClick={() => setShowUpgradeModal(false)}>×</button>
               </div>
               <div className="modal-body">
-                <p>Select a new commitment duration. Changes take effect at your next billing cycle.</p>
+                <p>Select your subscription duration:</p>
                 <div className="week-options">
-                  {(availableDurations.length > 0 ? availableDurations : [1, 2, 4, 6]).map(weeks => (
+                  {[1, 2, 3, 4, 5, 6].map(weeks => (
                     <button
                       key={weeks}
                       className={`week-option ${selectedUpgradeWeeks === weeks ? 'selected' : ''}`}
