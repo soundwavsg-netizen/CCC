@@ -769,6 +769,7 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
             "start_date": checkout_req.start_date,
             "loyalty_tier": loyalty_tier,
             "loyalty_discount_percent": loyalty_discount_percent,
+            "password": checkout_req.password,  # Store password temporarily for account creation
             "payment_status": "pending",
             "created_at": datetime.utcnow().isoformat()
         }
