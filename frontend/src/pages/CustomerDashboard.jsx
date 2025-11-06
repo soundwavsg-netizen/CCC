@@ -543,9 +543,9 @@ const CustomerDashboard = () => {
                       '• 2 meals/day = 2 points per week\n\n' +
                       'Tier Benefits:\n' +
                       '🥉 Bronze (0-5 pts): Basic membership\n' +
-                      '🥈 Silver (6-11 pts): 10% discount\n' +
-                      '🥇 Gold (12-23 pts): 15% discount + Free delivery + Flexible delivery dates\n' +
-                      '💎 Platinum (24+ pts): 20% discount + Free delivery + Flexible delivery dates'
+                      '🥈 Silver (6-11 pts): 5% off meal prices\n' +
+                      '🥇 Gold (12-23 pts): 15% off meal prices + Free delivery + Flexible delivery dates\n' +
+                      '💎 Platinum (24+ pts): 20% off meal prices + Free delivery + Flexible delivery dates'
                     )}
                   >
                     ℹ️
