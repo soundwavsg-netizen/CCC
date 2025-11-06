@@ -2174,26 +2174,32 @@ async def get_active_subscriptions():
 
 @router.get("/customer/subscription")
 async def get_customer_subscription(current_user: dict = Depends(get_current_user)):
-    """Get current customer's subscription details with loyalty info"""
+    """Get ALL customer subscriptions with loyalty info"""
     try:
         customer_id = current_user["email"].replace("@", "_at_").replace(".", "_")
+        customer_email = current_user["email"]
         
-        # Get subscription from subscriptions/active collection
-        subscription_ref = db.collection("project62").document("subscriptions").collection("active").document(customer_id)
-        subscription_doc = subscription_ref.get()
+        # Get ALL subscriptions for this customer
+        subscriptions_ref = db.collection("project62").document("subscriptions").collection("active")
+        subscriptions_query = subscriptions_ref.where("customer_email", "==", customer_email).stream()
         
-        # Get customer data for loyalty info
+        subscriptions = []
+        total_weeks = 0
+        
+        for sub_doc in subscriptions_query:
+            sub_data = sub_doc.to_dict()
+            total_weeks += sub_data.get("duration_weeks", 0)
+            subscriptions.append(sub_data)
+        
+        # Sort by start_date
+        subscriptions.sort(key=lambda x: x.get("start_date", ""))
+        
+        # Get customer data for order history
         customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
         customer_doc = customer_ref.get()
-        
-        if not subscription_doc.exists:
-            return {"status": "no_subscription", "subscription": None, "customer": customer_doc.to_dict() if customer_doc.exists else {}}
-        
-        subscription_data = subscription_doc.to_dict()
         customer_data = customer_doc.to_dict() if customer_doc.exists else {}
         
-        # Add loyalty information
-        total_weeks = subscription_data.get("total_weeks_subscribed", 0)
+        # Calculate loyalty tier based on total weeks
         loyalty_tier = "Bronze"
         loyalty_discount = 0
         free_delivery = False
@@ -2207,10 +2213,18 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
             loyalty_discount = 10
             free_delivery = False
         
+        # Get orders for this customer
+        orders_ref = db.collection("project62").document("orders").collection("all")
+        orders_query = orders_ref.where("customer_email", "==", customer_email).stream()
+        orders = [order.to_dict() for order in orders_query]
+        orders.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+        
         response = {
-            "status": "active" if subscription_data.get("status") == "active" else "inactive",
-            "subscription": subscription_data,
+            "status": "active" if len(subscriptions) > 0 else "no_subscription",
+            "subscriptions": subscriptions,  # Return ALL subscriptions (not just one)
+            "subscription_count": len(subscriptions),
             "customer": customer_data,
+            "orders": orders,
             "loyalty": {
                 "tier": loyalty_tier,
                 "total_weeks": total_weeks,
