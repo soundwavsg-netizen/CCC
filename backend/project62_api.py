@@ -1648,9 +1648,9 @@ async def change_delivery_date(req: ChangeDeliveryDateRequest, current_user: dic
             total_points += weeks * meals_per_day
         
         # Calculate loyalty tier based on points
-        if total_points >= 24:
+        if total_points >= 49:
             tier = "Platinum"
-        elif total_points >= 12:
+        elif total_points >= 25:
             tier = "Gold"
         else:
             raise HTTPException(status_code=403, detail="Only Gold and Platinum tier customers can change delivery dates")
