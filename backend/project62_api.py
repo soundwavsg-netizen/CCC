@@ -225,6 +225,9 @@ class ChangeDeliveryDateRequest(BaseModel):
     delivery_id: str
     new_date: str  # ISO format date
 
+class ValidateCouponRequest(BaseModel):
+    code: str
+
 # ========================
 # Helper Functions
 # ========================
