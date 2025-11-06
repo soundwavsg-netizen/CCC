@@ -641,13 +641,13 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
                     loyalty_points = customer_data.get("loyalty_points", 0)
                     
                     # Determine tier and discount based on points
-                    if loyalty_points >= 24:
+                    if loyalty_points >= 49:
                         loyalty_tier = "Platinum"
-                        loyalty_discount_percent = 20
-                    elif loyalty_points >= 12:
+                        loyalty_discount_percent = 10
+                    elif loyalty_points >= 25:
                         loyalty_tier = "Gold"
-                        loyalty_discount_percent = 15
-                    elif loyalty_points >= 6:
+                        loyalty_discount_percent = 10
+                    elif loyalty_points >= 7:
                         loyalty_tier = "Silver"
                         loyalty_discount_percent = 5
                     
