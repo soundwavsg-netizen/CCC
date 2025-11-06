@@ -549,9 +549,12 @@ const CustomerDashboard = () => {
                     }}
                     onClick={() => alert(
                       '🎯 Loyalty Points System\n\n' +
-                      'Earn points based on your subscription:\n' +
-                      '• 1 meal/day = 1 point per week\n' +
-                      '• 2 meals/day = 2 points per week\n\n' +
+                      'Earn points when you purchase subscriptions:\n' +
+                      '• 1 meal/day plan: 1 point for each week purchased\n' +
+                      '• 2 meals/day plan: 2 points for each week purchased\n\n' +
+                      'Example:\n' +
+                      '• Buy 3 weeks of 1 meal/day = 3 points\n' +
+                      '• Buy 3 weeks of 2 meals/day = 6 points\n\n' +
                       'Tier Benefits:\n' +
                       '🥉 Bronze (0-6 pts): Basic membership\n' +
                       '🥈 Silver (7-24 pts): 5% off meal prices\n' +
