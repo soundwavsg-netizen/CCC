@@ -55,14 +55,22 @@ except Exception as e:
 
 # Stripe Integration
 import stripe
-STRIPE_API_KEY = os.getenv("STRIPE_API_KEY", "***REMOVED***")
-STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "***REMOVED***")
+STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
+if not STRIPE_API_KEY:
+    raise ValueError("STRIPE_API_KEY environment variable is required but not set")
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
+if not STRIPE_WEBHOOK_SECRET:
+    raise ValueError("STRIPE_WEBHOOK_SECRET environment variable is required but not set")
 stripe.api_key = STRIPE_API_KEY
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+if not SENDGRID_API_KEY:
+    raise ValueError("SENDGRID_API_KEY environment variable is required but not set")
 SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL", "project62@cccdigital.sg")
 SENDGRID_REPLY_TO_EMAIL = os.getenv("SENDGRID_REPLY_TO_EMAIL", "project62sg@gmail.com")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "https://meal-management-1.preview.emergentagent.com")
-JWT_SECRET = os.getenv("PROJECT62_JWT_SECRET", "***REMOVED***")
+JWT_SECRET = os.getenv("PROJECT62_JWT_SECRET")
+if not JWT_SECRET:
+    raise ValueError("PROJECT62_JWT_SECRET environment variable is required but not set")
 
 # Pricing Configuration (Server-side only - security best practice)
 DIGITAL_PRODUCTS = {
