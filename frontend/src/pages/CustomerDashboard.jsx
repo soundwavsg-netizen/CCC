@@ -561,13 +561,44 @@ const CustomerDashboard = () => {
                   <div 
                     className="progress-fill" 
                     style={{ 
-                      width: `${Math.min((subscriptionData.loyalty.total_points / 49) * 100, 100)}%`,
-                      background: getTierColor(subscriptionData.loyalty.tier)
+                      width: `${(() => {
+                        const currentPoints = subscriptionData.loyalty.total_points || 0;
+                        const currentTier = subscriptionData.loyalty.tier;
+                        let targetPoints = 49;
+                        
+                        if (currentTier === 'Bronze') targetPoints = 7;
+                        else if (currentTier === 'Silver') targetPoints = 25;
+                        else if (currentTier === 'Gold') targetPoints = 49;
+                        else targetPoints = 49;
+                        
+                        return Math.min((currentPoints / targetPoints) * 100, 100);
+                      })()}%`,
+                      background: getTierGradient(subscriptionData.loyalty.tier)
                     }}
                   ></div>
                 </div>
                 <p className="tier-label">
-                  {subscriptionData.loyalty.total_points || 0} / 49 points to Platinum
+                  {(() => {
+                    const currentPoints = subscriptionData.loyalty.total_points || 0;
+                    const currentTier = subscriptionData.loyalty.tier;
+                    let targetPoints = 49;
+                    let targetTier = 'Platinum';
+                    
+                    if (currentTier === 'Bronze') {
+                      targetPoints = 7;
+                      targetTier = 'Silver';
+                    } else if (currentTier === 'Silver') {
+                      targetPoints = 25;
+                      targetTier = 'Gold';
+                    } else if (currentTier === 'Gold') {
+                      targetPoints = 49;
+                      targetTier = 'Platinum';
+                    } else {
+                      return `${currentPoints} points - Platinum Member!`;
+                    }
+                    
+                    return `${currentPoints} / ${targetPoints} points to ${targetTier}`;
+                  })()}
                 </p>
               </div>
 
