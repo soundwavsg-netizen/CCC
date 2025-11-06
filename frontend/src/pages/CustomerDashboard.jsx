@@ -778,6 +778,46 @@ const CustomerDashboard = () => {
             </div>
           )}
         </div>
+
+        {/* Date Change Modal */}
+        {showDateChangeModal && (
+          <div className="modal-overlay" onClick={() => setShowDateChangeModal(false)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h3>Change Delivery Date</h3>
+              <p style={{ fontSize: '14px', color: '#666', marginBottom: '15px' }}>
+                You can change the delivery date within 3 business days of the original date.
+              </p>
+              <div style={{ marginBottom: '15px' }}>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+                  Original Date: {selectedDelivery?.delivery_date ? new Date(selectedDelivery.delivery_date).toLocaleDateString() : 'N/A'}
+                </label>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+                  New Delivery Date:
+                </label>
+                <input
+                  type="date"
+                  value={newDeliveryDate}
+                  onChange={(e) => setNewDeliveryDate(e.target.value)}
+                  style={{ width: '100%', padding: '10px', fontSize: '14px', borderRadius: '5px', border: '1px solid #ddd' }}
+                />
+              </div>
+              <div className="modal-actions">
+                <button 
+                  className="btn-cancel"
+                  onClick={() => setShowDateChangeModal(false)}
+                >
+                  Cancel
+                </button>
+                <button 
+                  className="btn-confirm"
+                  onClick={handleDateChange}
+                >
+                  Confirm Change
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
