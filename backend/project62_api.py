@@ -683,8 +683,8 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
             "price_data": {
                 "currency": "sgd",
                 "product_data": {
-                    "name": f"{mealsPerDay} Meal/Day Plan - {weeks} Weeks",
-                    "description": f"{total_meals} meals total ({weeks} weeks × 6 days × {mealsPerDay} meals/day)"
+                    "name": f"{checkout_req.meals_per_day} Meal/Day Plan - {weeks} Weeks",
+                    "description": f"{total_meals} meals total ({weeks} weeks × 6 days × {checkout_req.meals_per_day} meals/day)"
                 },
                 "unit_amount": int(meal_cost * 100)  # Convert to cents
             },
