@@ -234,6 +234,36 @@ const MealPrepCheckout = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      setCouponError('Please enter a coupon code');
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/project62/validate-coupon`, {
+        code: couponCode.trim().toUpperCase()
+      });
+
+      if (response.data.valid) {
+        setAppliedCoupon(response.data.coupon);
+        setCouponError('');
+      } else {
+        setCouponError(response.data.message || 'Invalid coupon code');
+        setAppliedCoupon(null);
+      }
+    } catch (err) {
+      setCouponError('Invalid coupon code');
+      setAppliedCoupon(null);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode('');
+    setCouponError('');
+  };
+
   const isWeekend = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDay();
