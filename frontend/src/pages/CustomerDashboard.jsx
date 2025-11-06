@@ -510,11 +510,11 @@ const CustomerDashboard = () => {
                     } else if (subscriptionData.loyalty.tier === 'Silver') {
                       nextTier = 'Gold';
                       pointsNeeded = 25 - currentPoints;
-                      nextBenefits = '10% off meal prices + Free delivery + Flexible delivery dates';
+                      nextBenefits = '10% off meal prices + Flexible delivery dates';
                     } else if (subscriptionData.loyalty.tier === 'Gold') {
                       nextTier = 'Platinum';
                       pointsNeeded = 49 - currentPoints;
-                      nextBenefits = '10% off meal prices + Free delivery + Flexible delivery dates + Priority support';
+                      nextBenefits = '10% off meal prices + FREE delivery + Flexible delivery dates + Priority support';
                     }
                     
                     return (
