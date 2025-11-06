@@ -613,14 +613,35 @@ const MealPrepCheckout = () => {
             {!user && (
               <div className="form-group" style={{backgroundColor: '#f0f9ff', padding: '15px', borderRadius: '8px', border: '1px solid #00b894'}}>
                 <label>Create Password (Optional but Recommended)</label>
-                <input 
-                  type="password" 
-                  name="password" 
-                  value={formData.password} 
-                  onChange={handleInputChange} 
-                  placeholder="Create a password to access your account"
-                  minLength="6"
-                />
+                <div style={{position: 'relative'}}>
+                  <input 
+                    type={showPassword ? "text" : "password"}
+                    name="password" 
+                    value={formData.password} 
+                    onChange={handleInputChange} 
+                    placeholder="Create a password to access your account"
+                    minLength="6"
+                    style={{paddingRight: '40px'}}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                      position: 'absolute',
+                      right: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '18px',
+                      padding: '5px'
+                    }}
+                    title={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? '👁️' : '👁️‍🗨️'}
+                  </button>
+                </div>
                 <small style={{display: 'block', marginTop: '5px', color: '#666'}}>
                   💡 Set a password now to instantly access your customer dashboard after purchase. 
                   If skipped, we'll email you instructions to set up your account.
