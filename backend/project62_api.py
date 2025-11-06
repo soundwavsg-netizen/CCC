@@ -564,7 +564,7 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
         print(f"Meal-prep checkout request: duration={checkout_req.duration}, meals_per_day={checkout_req.meals_per_day}")
         
         # Fetch subscription plans dynamically to get pricing
-        plans_ref = db.collection("project62").document("subscriptions_config").collection("plans")
+        plans_ref = db.collection("project62").document("subscriptions_config").collection("all")
         plans = [doc.to_dict() for doc in plans_ref.stream()]
         print(f"Found {len(plans)} subscription plans")
         
