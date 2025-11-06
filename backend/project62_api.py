@@ -912,24 +912,77 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
     """Process meal-prep order after successful payment"""
     try:
         order_id = str(uuid.uuid4())
+        customer_email = transaction_data["customer_email"]
+        customer_id = customer_email.replace("@", "_at_").replace(".", "_")
         
         # Create order
         order_data = {
             "order_id": order_id,
             "session_id": session_id,
             "customer_name": transaction_data["customer_name"],
-            "customer_email": transaction_data["customer_email"],
+            "customer_email": customer_email,
             "customer_phone": transaction_data["customer_phone"],
             "delivery_address": transaction_data["delivery_address"],
             "duration": transaction_data["duration"],
             "meals_per_day": transaction_data["meals_per_day"],
             "weeks": transaction_data["weeks"],
             "total_amount": transaction_data["total_amount"],
+            "meal_cost": transaction_data.get("meal_cost", 0),
+            "delivery_cost": transaction_data.get("delivery_cost", 0),
+            "total_meals": transaction_data.get("total_meals", 0),
             "start_date": transaction_data["start_date"],
             "status": "active",
             "created_at": datetime.utcnow().isoformat()
         }
         db.collection("project62").document("orders").collection("all").document(order_id).set(order_data)
+        
+        # Create/Update subscription for the customer
+        start_date = datetime.fromisoformat(transaction_data["start_date"])
+        end_date = start_date + timedelta(weeks=transaction_data["weeks"])
+        
+        # Find the subscription plan
+        plans_ref = db.collection("project62").document("subscriptions_config").collection("all")
+        plans = [doc.to_dict() for doc in plans_ref.stream()]
+        target_plan = None
+        for plan in plans:
+            if plan.get("meals_per_day") == transaction_data["meals_per_day"]:
+                target_plan = plan
+                break
+        
+        subscription_data = {
+            "customer_id": customer_id,
+            "customer_email": customer_email,
+            "customer_name": transaction_data["customer_name"],
+            "plan_id": target_plan.get("subscription_id") if target_plan else "meal_prep",
+            "plan_name": target_plan.get("plan_name") if target_plan else f"{transaction_data['meals_per_day']} Meal/Day Plan",
+            "meals_per_day": transaction_data["meals_per_day"],
+            "duration_weeks": transaction_data["weeks"],
+            "start_date": transaction_data["start_date"],
+            "end_date": end_date.isoformat(),
+            "status": "active",
+            "auto_renew": False,  # Default to no auto-renew
+            "delivery_address": transaction_data["delivery_address"],
+            "created_at": datetime.utcnow().isoformat(),
+            "last_payment_date": datetime.utcnow().isoformat(),
+            "last_payment_amount": transaction_data["total_amount"],
+            "total_weeks_subscribed": transaction_data["weeks"]
+        }
+        
+        # Check if customer already has a subscription
+        subscription_ref = db.collection("project62").document("subscriptions").collection("active").document(customer_id)
+        existing_sub = subscription_ref.get()
+        
+        if existing_sub.exists:
+            # Update existing subscription
+            existing_data = existing_sub.to_dict()
+            total_weeks = existing_data.get("total_weeks_subscribed", 0) + transaction_data["weeks"]
+            subscription_data["total_weeks_subscribed"] = total_weeks
+            subscription_ref.update(subscription_data)
+        else:
+            # Create new subscription
+            subscription_ref.set(subscription_data)
+        
+        print(f"✅ Subscription created/updated for customer {customer_id}")
         
         # Send notification email to admin
         try:
@@ -939,7 +992,7 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
                     <h2>🎉 New Meal-Prep Subscription Order!</h2>
                     <p><strong>Order ID:</strong> {order_id}</p>
                     <p><strong>Customer:</strong> {transaction_data["customer_name"]}</p>
-                    <p><strong>Email:</strong> {transaction_data["customer_email"]}</p>
+                    <p><strong>Email:</strong> {customer_email}</p>
                     <p><strong>Phone:</strong> {transaction_data["customer_phone"]}</p>
                     <p><strong>Delivery Address:</strong> {transaction_data["delivery_address"]}</p>
                     <p><strong>Duration:</strong> {transaction_data["duration"].replace('_', ' ').title()}</p>
@@ -959,36 +1012,37 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
                 html_content=admin_email_content
             )
             
+            admin_message.reply_to = SENDGRID_REPLY_TO_EMAIL
+            
             sg = SendGridAPIClient(SENDGRID_API_KEY)
             sg.send(admin_message)
             print(f"✅ Admin notification sent for order {order_id}")
         except Exception as e:
             print(f"❌ Admin email error: {e}")
         
-        # Create customer record (or update if exists)
-        customer_id = transaction_data["customer_email"].replace("@", "_at_").replace(".", "_")
-        customer_data = {
-            "customer_id": customer_id,
-            "email": transaction_data["customer_email"],
-            "name": transaction_data["customer_name"],
-            "phone": transaction_data["customer_phone"],
-            "address": transaction_data["delivery_address"],
-            "orders": [order_id],
-            "last_order_date": datetime.utcnow().isoformat()
-        }
-        
+        # Update customer record
         customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
         if customer_ref.get().exists:
             # Append order to existing customer
             customer_ref.update({
                 "orders": firestore.ArrayUnion([order_id]),
-                "last_order_date": datetime.utcnow().isoformat()
+                "last_order_date": datetime.utcnow().isoformat(),
+                "address": transaction_data["delivery_address"]
             })
         else:
+            # Create new customer
+            customer_data = {
+                "customer_id": customer_id,
+                "email": customer_email,
+                "name": transaction_data["customer_name"],
+                "phone": transaction_data["customer_phone"],
+                "address": transaction_data["delivery_address"],
+                "orders": [order_id],
+                "last_order_date": datetime.utcnow().isoformat()
+            }
             customer_ref.set(customer_data)
         
         # Create delivery schedule
-        start_date = datetime.fromisoformat(transaction_data["start_date"])
         for week_num in range(1, transaction_data["weeks"] + 1):
             delivery_date = start_date + timedelta(weeks=week_num - 1)
             delivery_id = f"{order_id}_week_{week_num}"
@@ -1008,6 +1062,8 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
         print(f"✅ Order {order_id} processed successfully")
     except Exception as e:
         print(f"❌ Order processing error: {e}")
+        import traceback
+        traceback.print_exc()
 
 # ========================
 # Customer Authentication
