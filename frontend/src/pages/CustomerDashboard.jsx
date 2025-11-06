@@ -469,16 +469,21 @@ const CustomerDashboard = () => {
               {/* Current Tier Badge */}
               <div className="current-tier">
                 <span className="tier-badge" style={{ 
-                  background: `linear-gradient(135deg, ${getTierColor(subscriptionData.loyalty.tier)}, ${getTierColor(subscriptionData.loyalty.tier)}dd)`,
-                  color: 'white',
+                  background: getTierGradient(subscriptionData.loyalty.tier),
+                  color: subscriptionData.loyalty.tier === 'Gold' ? '#000' : '#fff',
                   padding: '10px 20px',
                   borderRadius: '25px',
                   fontSize: '18px',
                   fontWeight: 'bold',
                   display: 'inline-block',
-                  marginBottom: '15px'
+                  marginBottom: '15px',
+                  textShadow: subscriptionData.loyalty.tier === 'Gold' ? '0 1px 2px rgba(0,0,0,0.2)' : '0 1px 2px rgba(0,0,0,0.3)'
                 }}>
-                  ⭐ {subscriptionData.loyalty.tier}
+                  {subscriptionData.loyalty.tier === 'Bronze' && '🥉'}
+                  {subscriptionData.loyalty.tier === 'Silver' && '🥈'}
+                  {subscriptionData.loyalty.tier === 'Gold' && '🥇'}
+                  {subscriptionData.loyalty.tier === 'Platinum' && '💎'}
+                  {' '}{subscriptionData.loyalty.tier}
                 </span>
                 <div style={{ fontSize: '14px', color: '#666', margin: '10px 0' }}>
                   {subscriptionData.loyalty.discount > 0 && (
