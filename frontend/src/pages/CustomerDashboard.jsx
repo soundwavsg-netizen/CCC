@@ -650,21 +650,34 @@ const CustomerDashboard = () => {
           <h2>Upcoming Deliveries</h2>
           {dashboardData?.deliveries && dashboardData.deliveries.length > 0 ? (
             <div className="deliveries-list">
-              {dashboardData.deliveries.map((delivery, idx) => (
-                <div key={idx} className="delivery-item">
-                  <div className="delivery-date">
-                    <span className="date-label">Delivery Date</span>
-                    <span className="date-value">{delivery.delivery_date ? new Date(delivery.delivery_date).toLocaleDateString() : 'TBD'}</span>
+              {dashboardData.deliveries.map((delivery, idx) => {
+                const canChangeDate = subscriptionData && (subscriptionData.loyalty_tier === 'Gold' || subscriptionData.loyalty_tier === 'Platinum');
+                
+                return (
+                  <div key={idx} className="delivery-item">
+                    <div className="delivery-date">
+                      <span className="date-label">Delivery Date</span>
+                      <span className="date-value">{delivery.delivery_date ? new Date(delivery.delivery_date).toLocaleDateString() : 'TBD'}</span>
+                      {canChangeDate && (
+                        <button 
+                          className="change-date-btn"
+                          onClick={() => handleChangeDateClick(delivery)}
+                          style={{ marginLeft: '10px', padding: '5px 10px', fontSize: '12px', cursor: 'pointer' }}
+                        >
+                          Change Date
+                        </button>
+                      )}
+                    </div>
+                    <div className="delivery-details">
+                      <p><strong>Week:</strong> Week {delivery.week_number || delivery.week || 'N/A'}</p>
+                      <p><strong>Status:</strong> <span className={`status-badge ${delivery.status}`}>{delivery.status || 'Pending'}</span></p>
+                    </div>
+                    <div className="delivery-address">
+                      <p>{delivery.delivery_address || delivery.address || dashboardData.customer?.address || 'Address not set'}</p>
+                    </div>
                   </div>
-                  <div className="delivery-details">
-                    <p><strong>Week:</strong> Week {delivery.week_number || delivery.week || 'N/A'}</p>
-                    <p><strong>Status:</strong> <span className={`status-badge ${delivery.status}`}>{delivery.status || 'Pending'}</span></p>
-                  </div>
-                  <div className="delivery-address">
-                    <p>{delivery.delivery_address || delivery.address || dashboardData.customer?.address || 'Address not set'}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="no-deliveries">
