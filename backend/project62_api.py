@@ -2159,31 +2159,54 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
     """Get current customer's subscription details with loyalty info"""
     try:
         customer_id = current_user["email"].replace("@", "_at_").replace(".", "_")
+        
+        # Get subscription from subscriptions/active collection
+        subscription_ref = db.collection("project62").document("subscriptions").collection("active").document(customer_id)
+        subscription_doc = subscription_ref.get()
+        
+        # Get customer data for loyalty info
         customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
         customer_doc = customer_ref.get()
         
-        if not customer_doc.exists:
-            return {"status": "no_subscription", "subscription": None}
+        if not subscription_doc.exists:
+            return {"status": "no_subscription", "subscription": None, "customer": customer_doc.to_dict() if customer_doc.exists else {}}
         
-        customer_data = customer_doc.to_dict()
-        subscription_data = customer_data.get("subscription", {})
+        subscription_data = subscription_doc.to_dict()
+        customer_data = customer_doc.to_dict() if customer_doc.exists else {}
         
         # Add loyalty information
+        total_weeks = subscription_data.get("total_weeks_subscribed", 0)
+        loyalty_tier = "Bronze"
+        loyalty_discount = 0
+        free_delivery = False
+        
+        if total_weeks >= 12:
+            loyalty_tier = "Gold"
+            loyalty_discount = 15
+            free_delivery = True
+        elif total_weeks >= 6:
+            loyalty_tier = "Silver"
+            loyalty_discount = 10
+            free_delivery = False
+        
         response = {
-            "status": "active" if subscription_data.get("auto_renew") else "inactive",
+            "status": "active" if subscription_data.get("status") == "active" else "inactive",
             "subscription": subscription_data,
+            "customer": customer_data,
             "loyalty": {
-                "tier": customer_data.get("loyalty_tier", "Bronze"),
-                "total_weeks": customer_data.get("total_weeks_subscribed", 0),
-                "discount": customer_data.get("loyalty_discount", 0),
-                "free_delivery": customer_data.get("free_delivery", False),
-                "priority_dish": customer_data.get("priority_dish", False)
+                "tier": loyalty_tier,
+                "total_weeks": total_weeks,
+                "discount": loyalty_discount,
+                "free_delivery": free_delivery,
+                "priority_dish": loyalty_tier == "Gold"
             }
         }
         
         return response
     except Exception as e:
         print(f"Get customer subscription error: {e}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/customer/subscription/upgrade")
