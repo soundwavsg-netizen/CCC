@@ -676,7 +676,7 @@ const CustomerDashboard = () => {
         {/* Order History */}
         <div className="dashboard-card full-width">
           <h2>Order History</h2>
-          {dashboardData?.orders && dashboardData.orders.length > 0 ? (
+          {subscriptionData?.orders && subscriptionData.orders.length > 0 ? (
             <div className="orders-list">
               <table className="orders-table">
                 <thead>
@@ -688,14 +688,27 @@ const CustomerDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dashboardData.orders.map((order, idx) => (
-                    <tr key={idx}>
-                      <td>{new Date(order.created_at).toLocaleDateString()}</td>
-                      <td>{order.product_type || 'N/A'}</td>
-                      <td>${order.amount?.toFixed(2) || '0.00'}</td>
-                      <td><span className={`status-badge ${order.payment_status}`}>{order.payment_status || 'Pending'}</span></td>
-                    </tr>
-                  ))}
+                  {subscriptionData.orders.map((order, idx) => {
+                    // Determine order type and details
+                    const orderType = order.product_type === 'meal_prep' 
+                      ? `${order.duration_weeks || order.weeks || 'N/A'} weeks subscription, ${order.frequency || 'once/week'}` 
+                      : order.product_type || 'N/A';
+                    
+                    // Calculate amount from order data
+                    const amount = order.total_amount || order.amount || 0;
+                    
+                    // Determine status - if we have a transaction, it's completed
+                    const status = order.payment_status || (order.stripe_session_id ? 'completed' : 'pending');
+                    
+                    return (
+                      <tr key={idx}>
+                        <td>{new Date(order.created_at).toLocaleDateString()}</td>
+                        <td>{orderType}</td>
+                        <td>${amount.toFixed(2)}</td>
+                        <td><span className={`status-badge ${status}`}>{status}</span></td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
