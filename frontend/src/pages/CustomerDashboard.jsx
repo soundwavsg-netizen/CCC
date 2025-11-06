@@ -261,17 +261,17 @@ const CustomerDashboard = () => {
       'Silver': {
         name: '🥈 Silver',
         requirements: '7-24 points',
-        benefits: ['5% off meal prices', 'All Bronze benefits']
+        benefits: ['5% off meal prices']
       },
       'Gold': {
         name: '🥇 Gold',
         requirements: '25-48 points',
-        benefits: ['10% off meal prices', 'FREE delivery', 'Flexible delivery dates', 'All Silver benefits']
+        benefits: ['10% off meal prices', 'Flexible delivery dates']
       },
       'Platinum': {
         name: '💎 Platinum',
         requirements: '49+ points',
-        benefits: ['10% off meal prices', 'FREE delivery', 'Flexible delivery dates', 'Priority support', 'All Gold benefits']
+        benefits: ['10% off meal prices', 'FREE delivery', 'Flexible delivery dates', 'Priority support']
       }
     };
   };
