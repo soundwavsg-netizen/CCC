@@ -1184,11 +1184,12 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
                         <div style="background: #e6fff9; padding: 20px; border-radius: 8px; margin: 20px 0;">
                             <h3 style="margin-top: 0; color: #00b894;">🔐 Access Your Dashboard</h3>
                             <p style="color: #666;">
-                                {'You can now log in to your customer dashboard to track deliveries, view your loyalty points, and manage your subscription.' if transaction_data.get('password') else 'Check your email for instructions to set up your account and access your customer dashboard.'}
+                                {'Your account is ready! Log in with your email and the password you created during checkout.' if account_created else 'We will send you a separate email with instructions to set up your account password.'}
                             </p>
+                            {'<p style="color: #666; margin-top: 10px;"><strong>Email:</strong> ' + customer_email + '</p>' if account_created else ''}
                             <div style="text-align: center; margin: 20px 0;">
                                 <a href="{FRONTEND_URL}/project62/login" style="background: #00b894; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">
-                                    Go to Dashboard →
+                                    {'Login to Dashboard →' if account_created else 'View Login Page →'}
                                 </a>
                             </div>
                         </div>
