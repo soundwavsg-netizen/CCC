@@ -751,11 +751,11 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
             print(f"Stripe session creation error: {stripe_error}")
             raise HTTPException(status_code=500, detail=f"Failed to create checkout session: {str(stripe_error)}")
         
-        print(f"Stripe session created: {session.session_id}")
+        print(f"Stripe session created: {session_response.session_id}")
         
         # Save transaction to Firestore
         transaction_data = {
-            "session_id": session.session_id,
+            "session_id": session_response.session_id,
             "product_type": "meal_prep",
             "duration": checkout_req.duration,
             "meals_per_day": checkout_req.meals_per_day,
