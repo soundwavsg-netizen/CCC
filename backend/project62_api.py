@@ -513,7 +513,8 @@ async def create_digital_checkout(checkout_req: DigitalCheckoutRequest):
         stripe_checkout = StripeCheckout(api_key=STRIPE_API_KEY, webhook_url=webhook_url)
         
         # Create success/cancel URLs
-        success_url = f"{checkout_req.origin_url}/project62/checkout/success?session_id={{{{CHECKOUT_SESSION_ID}}}}"
+        # Note: Stripe replaces {CHECKOUT_SESSION_ID} with actual session ID
+        success_url = f"{checkout_req.origin_url}/project62/checkout/success?session_id={{CHECKOUT_SESSION_ID}}"
         cancel_url = f"{checkout_req.origin_url}/project62/checkout/cancel"
         
         # Create checkout session
