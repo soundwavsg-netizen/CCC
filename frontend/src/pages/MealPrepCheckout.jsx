@@ -46,8 +46,25 @@ const MealPrepCheckout = () => {
   useEffect(() => {
     if (user && token) {
       fetchUserProfile();
+      fetchLoyaltyDiscount();
     }
   }, [user, token]);
+
+  const fetchLoyaltyDiscount = async () => {
+    try {
+      const response = await axios.get(`${BACKEND_URL}/api/project62/customer/subscription`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (response.data && response.data.loyalty) {
+        setLoyaltyDiscount({
+          tier: response.data.loyalty.tier,
+          discount: response.data.loyalty.discount || 0
+        });
+      }
+    } catch (err) {
+      console.log('Could not fetch loyalty discount:', err);
+    }
+  };
 
   const fetchUserProfile = async () => {
     try {
