@@ -555,8 +555,8 @@ const CustomerDashboard = () => {
                       'Tier Benefits:\n' +
                       '🥉 Bronze (0-6 pts): Basic membership\n' +
                       '🥈 Silver (7-24 pts): 5% off meal prices\n' +
-                      '🥇 Gold (25-48 pts): 10% off meal prices + Free delivery + Flexible delivery dates\n' +
-                      '💎 Platinum (49+ pts): 10% off meal prices + Free delivery + Flexible delivery dates + Priority support'
+                      '🥇 Gold (25-48 pts): 10% off meal prices + Flexible delivery dates\n' +
+                      '💎 Platinum (49+ pts): 10% off meal prices + FREE delivery + Flexible delivery dates + Priority support'
                     )}
                   >
                     ℹ️
