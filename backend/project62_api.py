@@ -1596,12 +1596,22 @@ async def change_delivery_date(req: ChangeDeliveryDateRequest, current_user: dic
             raise HTTPException(status_code=404, detail="Customer not found")
         
         customer_data = customer_doc.to_dict()
-        total_weeks = customer_data.get("total_weeks_subscribed", 0)
         
-        # Calculate loyalty tier
-        if total_weeks >= 24:
+        # Calculate total points from all subscriptions
+        subscriptions_ref = db.collection("project62").document("subscriptions").collection("active")
+        subscriptions_query = subscriptions_ref.where("customer_email", "==", customer_email).stream()
+        
+        total_points = 0
+        for sub_doc in subscriptions_query:
+            sub_data = sub_doc.to_dict()
+            weeks = sub_data.get("duration_weeks", 0)
+            meals_per_day = sub_data.get("meals_per_day", 1)
+            total_points += weeks * meals_per_day
+        
+        # Calculate loyalty tier based on points
+        if total_points >= 24:
             tier = "Platinum"
-        elif total_weeks >= 12:
+        elif total_points >= 12:
             tier = "Gold"
         else:
             raise HTTPException(status_code=403, detail="Only Gold and Platinum tier customers can change delivery dates")
