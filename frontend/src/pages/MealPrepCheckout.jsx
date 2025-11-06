@@ -334,7 +334,8 @@ const MealPrepCheckout = () => {
         email: formData.email,
         phone: formData.phone,
         address: fullAddress,
-        start_date: formData.startDate
+        start_date: formData.startDate,
+        password: formData.password || null
       });
 
       if (response.data.checkout_url) {
