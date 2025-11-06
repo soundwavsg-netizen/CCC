@@ -244,24 +244,24 @@ const CustomerDashboard = () => {
   const getTierBenefits = () => {
     return {
       'Bronze': {
-        name: 'Bronze',
-        requirements: '0-12 weeks',
+        name: '🥉 Bronze',
+        requirements: '0-6 points',
         benefits: ['Base pricing', 'Weekly meal delivery', 'Access to all plans']
       },
       'Silver': {
-        name: 'Silver',
-        requirements: '13-24 weeks',
-        benefits: ['5% off meal prices', 'Priority support', 'Early access to new dishes']
+        name: '🥈 Silver',
+        requirements: '7-24 points',
+        benefits: ['5% off meal prices', 'All Bronze benefits']
       },
       'Gold': {
-        name: 'Gold',
-        requirements: '25-36 weeks',
-        benefits: ['10% off meal prices', 'Priority support', 'Exclusive recipes', 'Flexible delivery schedule']
+        name: '🥇 Gold',
+        requirements: '25-48 points',
+        benefits: ['10% off meal prices', 'FREE delivery', 'Flexible delivery dates', 'All Silver benefits']
       },
       'Platinum': {
-        name: 'Platinum',
-        requirements: '37+ weeks',
-        benefits: ['10% off meal prices', 'FREE delivery', 'Priority dish selection', 'VIP support', 'Exclusive member events']
+        name: '💎 Platinum',
+        requirements: '49+ points',
+        benefits: ['10% off meal prices', 'FREE delivery', 'Flexible delivery dates', 'Priority support', 'All Gold benefits']
       }
     };
   };
