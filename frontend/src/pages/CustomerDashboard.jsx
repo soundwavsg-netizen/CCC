@@ -281,6 +281,50 @@ const CustomerDashboard = () => {
     navigate('/project62');
   };
 
+  const handleChangeDateClick = (delivery) => {
+    setSelectedDelivery(delivery);
+    // Set default to current delivery date
+    const currentDate = delivery.delivery_date ? delivery.delivery_date.split('T')[0] : '';
+    setNewDeliveryDate(currentDate);
+    setShowDateChangeModal(true);
+  };
+
+  const handleDateChange = async () => {
+    if (!selectedDelivery || !newDeliveryDate) {
+      alert('Please select a valid date');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/project62/customer/delivery/change-date`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          delivery_id: selectedDelivery.delivery_id,
+          new_date: newDeliveryDate
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUpdateSuccess('Delivery date updated successfully!');
+        setShowDateChangeModal(false);
+        // Refresh dashboard data
+        fetchDashboardData();
+        setTimeout(() => setUpdateSuccess(''), 3000);
+      } else {
+        alert(data.detail || 'Failed to update delivery date');
+      }
+    } catch (err) {
+      console.error('Date change error:', err);
+      alert('Error updating delivery date');
+    }
+  };
+
   if (loading) {
     return (
       <div className="dashboard-container">
