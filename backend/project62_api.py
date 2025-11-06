@@ -675,28 +675,81 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
         success_url = f"{checkout_req.origin_url}/project62/checkout/success?session_id={{CHECKOUT_SESSION_ID}}"
         cancel_url = f"{checkout_req.origin_url}/project62/checkout/cancel"
         
-        # Create checkout session
-        checkout_request = CheckoutSessionRequest(
-            amount=total_amount,
-            currency="sgd",
-            success_url=success_url,
-            cancel_url=cancel_url,
-            metadata={
-                "product_type": "meal_prep",
-                "duration": checkout_req.duration,
-                "weeks": str(weeks),
-                "meals_per_day": str(checkout_req.meals_per_day),
-                "name": checkout_req.name,
-                "email": checkout_req.email,
-                "phone": checkout_req.phone,
-                "address": checkout_req.address,
-                "start_date": checkout_req.start_date,
-                "loyalty_tier": loyalty_tier,
-                "loyalty_discount_percent": str(loyalty_discount_percent)
-            }
-        )
+        # Create line items for Stripe checkout (shows in Stripe UI)
+        line_items = []
         
-        session: CheckoutSessionResponse = await stripe_checkout.create_checkout_session(checkout_request)
+        # Meal item
+        line_items.append({
+            "price_data": {
+                "currency": "sgd",
+                "product_data": {
+                    "name": f"{mealsPerDay} Meal/Day Plan - {weeks} Weeks",
+                    "description": f"{total_meals} meals total ({weeks} weeks × 6 days × {mealsPerDay} meals/day)"
+                },
+                "unit_amount": int(meal_cost * 100)  # Convert to cents
+            },
+            "quantity": 1
+        })
+        
+        # Delivery item
+        line_items.append({
+            "price_data": {
+                "currency": "sgd",
+                "product_data": {
+                    "name": f"Delivery Service",
+                    "description": f"{weeks} weeks of delivery"
+                },
+                "unit_amount": int(delivery_cost * 100)
+            },
+            "quantity": 1
+        })
+        
+        # Add loyalty discount as a separate line item (negative amount)
+        if loyalty_discount_percent > 0:
+            discount_amount = (total_meals * price_per_meal) * (loyalty_discount_percent / 100)
+            line_items.append({
+                "price_data": {
+                    "currency": "sgd",
+                    "product_data": {
+                        "name": f"🎯 {loyalty_tier} Member Discount",
+                        "description": f"{loyalty_discount_percent}% off meal prices"
+                    },
+                    "unit_amount": -int(discount_amount * 100)
+                },
+                "quantity": 1
+            })
+        
+        # Create checkout session with line items
+        try:
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card', 'paynow'],
+                line_items=line_items,
+                mode='payment',
+                success_url=success_url,
+                cancel_url=cancel_url,
+                metadata={
+                    "product_type": "meal_prep",
+                    "duration": checkout_req.duration,
+                    "weeks": str(weeks),
+                    "meals_per_day": str(checkout_req.meals_per_day),
+                    "name": checkout_req.name,
+                    "email": checkout_req.email,
+                    "phone": checkout_req.phone,
+                    "address": checkout_req.address,
+                    "start_date": checkout_req.start_date,
+                    "loyalty_tier": loyalty_tier,
+                    "loyalty_discount_percent": str(loyalty_discount_percent)
+                }
+            )
+            
+            # Convert to CheckoutSessionResponse format
+            session_response = CheckoutSessionResponse(
+                session_id=session.id,
+                url=session.url
+            )
+        except Exception as stripe_error:
+            print(f"Stripe session creation error: {stripe_error}")
+            raise HTTPException(status_code=500, detail=f"Failed to create checkout session: {str(stripe_error)}")
         
         print(f"Stripe session created: {session.session_id}")
         
