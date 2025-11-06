@@ -22,6 +22,9 @@ const CustomerDashboard = () => {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [selectedUpgradeWeeks, setSelectedUpgradeWeeks] = useState(null);
   const [availableDurations, setAvailableDurations] = useState([]);
+  const [showDateChangeModal, setShowDateChangeModal] = useState(false);
+  const [selectedDelivery, setSelectedDelivery] = useState(null);
+  const [newDeliveryDate, setNewDeliveryDate] = useState('');
 
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
