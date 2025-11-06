@@ -714,6 +714,8 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
             "customer_phone": checkout_req.phone,
             "delivery_address": checkout_req.address,
             "start_date": checkout_req.start_date,
+            "loyalty_tier": loyalty_tier,
+            "loyalty_discount_percent": loyalty_discount_percent,
             "payment_status": "pending",
             "created_at": datetime.utcnow().isoformat()
         }
