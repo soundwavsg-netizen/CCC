@@ -223,12 +223,22 @@ const CustomerDashboard = () => {
 
   const getTierColor = (tier) => {
     const colors = {
-      'Bronze': '#cd7f32',
-      'Silver': '#c0c0c0',
-      'Gold': '#ffd700',
-      'Platinum': '#e5e4e2'
+      'Bronze': '#8B6F47',  // Dull bronze
+      'Silver': '#B8B8D1',  // Better silver (not grey)
+      'Gold': '#FFD700',    // Very gold
+      'Platinum': '#E0E7FF' // Nice platinum/blink color
     };
     return colors[tier] || '#666';
+  };
+  
+  const getTierGradient = (tier) => {
+    const gradients = {
+      'Bronze': 'linear-gradient(135deg, #8B6F47 0%, #A0826D 100%)',
+      'Silver': 'linear-gradient(135deg, #B8B8D1 0%, #D3D3E7 100%)',
+      'Gold': 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+      'Platinum': 'linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 50%, #A5B4FC 100%)'
+    };
+    return gradients[tier] || '#666';
   };
 
   const getTierMessage = (tier, discount, freeDelivery) => {
