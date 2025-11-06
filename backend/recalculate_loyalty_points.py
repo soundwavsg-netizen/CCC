@@ -70,13 +70,13 @@ print(f"📊 TOTAL LOYALTY POINTS: {total_points}")
 print(f"{'='*80}")
 
 # Determine tier based on points
-if total_points >= 24:
+if total_points >= 49:
     tier = "Platinum"
     tier_emoji = "💎"
-elif total_points >= 12:
+elif total_points >= 25:
     tier = "Gold"
     tier_emoji = "🥇"
-elif total_points >= 6:
+elif total_points >= 7:
     tier = "Silver"
     tier_emoji = "🥈"
 else:
@@ -84,10 +84,10 @@ else:
     tier_emoji = "🥉"
 
 print(f"\n{tier_emoji} Loyalty Tier: {tier}")
-print(f"   Bronze:   0-5 points")
-print(f"   Silver:   6-11 points")
-print(f"   Gold:     12-23 points (✓ Flexible delivery)")
-print(f"   Platinum: 24+ points (✓ Flexible delivery)")
+print(f"   Bronze:   0-6 points")
+print(f"   Silver:   7-24 points (5% off meal prices)")
+print(f"   Gold:     25-48 points (10% off meal prices + Free delivery + Flexible delivery)")
+print(f"   Platinum: 49+ points (10% off meal prices + Free delivery + Flexible delivery)")
 
 # Update customer record
 customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
