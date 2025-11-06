@@ -2368,21 +2368,25 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
         customer_data = customer_doc.to_dict() if customer_doc.exists else {}
         
         # Calculate loyalty tier based on POINTS (weeks × meals_per_day)
+        # Bronze: 0-6 points
+        # Silver: 7-24 points (5% off meal price)
+        # Gold: 25-48 points (10% off meal price + free delivery + flexible delivery)
+        # Platinum: 49+ points (10% off meal price + free delivery + flexible delivery)
         loyalty_tier = "Bronze"
         loyalty_discount = 0
         free_delivery = False
         
-        if total_points >= 24:
+        if total_points >= 49:
             loyalty_tier = "Platinum"
-            loyalty_discount = 20
+            loyalty_discount = 10
             free_delivery = True
-        elif total_points >= 12:
+        elif total_points >= 25:
             loyalty_tier = "Gold"
-            loyalty_discount = 15
+            loyalty_discount = 10
             free_delivery = True
-        elif total_points >= 6:
+        elif total_points >= 7:
             loyalty_tier = "Silver"
-            loyalty_discount = 5  # Silver tier gets 5% off meal prices
+            loyalty_discount = 5
             free_delivery = False
         
         # Get orders for this customer
