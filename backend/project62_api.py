@@ -678,15 +678,26 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
         # Create line items for Stripe checkout (shows in Stripe UI)
         line_items = []
         
-        # Meal item
+        # Build product name with discount info if applicable
+        meal_product_name = f"{checkout_req.meals_per_day} Meal/Day Plan - {weeks} Weeks"
+        meal_description = f"{total_meals} meals total"
+        
+        if loyalty_discount_percent > 0:
+            original_meal_cost = total_meals * price_per_meal
+            meal_product_name += f" (🎯 {loyalty_tier} {loyalty_discount_percent}% discount applied)"
+            meal_description = f"{total_meals} meals × ${price_per_meal} - {loyalty_discount_percent}% discount = ${meal_cost:.2f}"
+        else:
+            meal_description = f"{total_meals} meals × ${price_per_meal}"
+        
+        # Meal item (with discount already applied to price)
         line_items.append({
             "price_data": {
                 "currency": "sgd",
                 "product_data": {
-                    "name": f"{checkout_req.meals_per_day} Meal/Day Plan - {weeks} Weeks",
-                    "description": f"{total_meals} meals total ({weeks} weeks × 6 days × {checkout_req.meals_per_day} meals/day)"
+                    "name": meal_product_name,
+                    "description": meal_description
                 },
-                "unit_amount": int(meal_cost * 100)  # Convert to cents
+                "unit_amount": int(round(meal_cost * 100))  # Convert to cents, rounded
             },
             "quantity": 1
         })
@@ -697,27 +708,12 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
                 "currency": "sgd",
                 "product_data": {
                     "name": f"Delivery Service",
-                    "description": f"{weeks} weeks of delivery"
+                    "description": f"{weeks} weeks of delivery (${delivery_cost:.2f})"
                 },
-                "unit_amount": int(delivery_cost * 100)
+                "unit_amount": int(round(delivery_cost * 100))
             },
             "quantity": 1
         })
-        
-        # Add loyalty discount as a separate line item (negative amount)
-        if loyalty_discount_percent > 0:
-            discount_amount = (total_meals * price_per_meal) * (loyalty_discount_percent / 100)
-            line_items.append({
-                "price_data": {
-                    "currency": "sgd",
-                    "product_data": {
-                        "name": f"🎯 {loyalty_tier} Member Discount",
-                        "description": f"{loyalty_discount_percent}% off meal prices"
-                    },
-                    "unit_amount": -int(discount_amount * 100)
-                },
-                "quantity": 1
-            })
         
         # Create checkout session with line items
         try:
