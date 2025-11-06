@@ -625,10 +625,43 @@ async def create_meal_prep_checkout(checkout_req: MealPrepCheckoutRequest):
         # Calculate total meals and costs
         total_meals = weeks * 6 * checkout_req.meals_per_day  # 6 days per week
         meal_cost = total_meals * price_per_meal
+        
+        # Check for loyalty discount (only applies to meal costs, not delivery)
+        loyalty_discount_percent = 0
+        loyalty_tier = "None"
+        
+        if checkout_req.email:
+            try:
+                customer_id = checkout_req.email.replace("@", "_at_").replace(".", "_")
+                customer_ref = db.collection("project62").document("customers").collection("all").document(customer_id)
+                customer_doc = customer_ref.get()
+                
+                if customer_doc.exists:
+                    customer_data = customer_doc.to_dict()
+                    loyalty_points = customer_data.get("loyalty_points", 0)
+                    
+                    # Determine tier and discount based on points
+                    if loyalty_points >= 24:
+                        loyalty_tier = "Platinum"
+                        loyalty_discount_percent = 20
+                    elif loyalty_points >= 12:
+                        loyalty_tier = "Gold"
+                        loyalty_discount_percent = 15
+                    elif loyalty_points >= 6:
+                        loyalty_tier = "Silver"
+                        loyalty_discount_percent = 5
+                    
+                    if loyalty_discount_percent > 0:
+                        discount_amount = meal_cost * (loyalty_discount_percent / 100)
+                        meal_cost = meal_cost - discount_amount
+                        print(f"🎯 Loyalty Discount Applied: {loyalty_tier} tier - {loyalty_discount_percent}% off = ${discount_amount:.2f} discount")
+            except Exception as e:
+                print(f"Could not check loyalty status: {e}")
+        
         delivery_cost = weeks * delivery_fee
         total_amount = meal_cost + delivery_cost
         
-        print(f"Pricing: {total_meals} meals × ${price_per_meal} + {weeks} weeks × ${delivery_fee} = ${total_amount}")
+        print(f"Pricing: {total_meals} meals × ${price_per_meal} - {loyalty_discount_percent}% loyalty discount + {weeks} weeks × ${delivery_fee} = ${total_amount}")
         
         # Initialize Stripe checkout
         webhook_url = f"{checkout_req.origin_url}/api/webhook/stripe"
