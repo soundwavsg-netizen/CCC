@@ -2221,6 +2221,7 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
         
         response = {
             "status": "active" if len(subscriptions) > 0 else "no_subscription",
+            "subscription": subscriptions[0] if len(subscriptions) > 0 else None,  # Keep backward compatibility
             "subscriptions": subscriptions,  # Return ALL subscriptions (not just one)
             "subscription_count": len(subscriptions),
             "customer": customer_data,
