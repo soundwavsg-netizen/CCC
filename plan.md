@@ -14,7 +14,7 @@ User Requirements:
 3) Analytics: GA4 + Meta Pixel placeholders initially
 4) Priority: Build full site (7 pages) first, then integrate AI chat routing
 
-Preview URL: https://fitness-portal-18.preview.emergentagent.com
+Preview URL: https://meal-management-1.preview.emergentagent.com
 
 Notes:
 - Implement within current stack (React + FastAPI + Mongo) with exportable design for future Next.js/Vercel deployment.

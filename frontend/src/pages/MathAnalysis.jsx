@@ -47,7 +47,7 @@ const MathAnalysis = () => {
   const [tutorInfo, setTutorInfo] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://fitness-portal-18.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://meal-management-1.preview.emergentagent.com';
 
   // Manual entry form state
   const [manualForm, setManualForm] = useState({

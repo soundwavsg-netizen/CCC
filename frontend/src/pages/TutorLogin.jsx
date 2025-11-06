@@ -14,7 +14,7 @@ const TutorLogin = () => {
   const [tempToken, setTempToken] = useState('');
 
   const navigate = useNavigate();
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://fitness-portal-18.preview.emergentagent.com';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://meal-management-1.preview.emergentagent.com';
 
   const handleLogin = async (e) => {
     e.preventDefault();

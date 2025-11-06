@@ -1,75 +1,81 @@
 <analysis>
-The trajectory outlines the evolution of Project 62, a health and fitness micro-brand application. Initially, the AI engineer secured Firebase API keys and built core e-commerce features, including product/category management (Firestore, FastAPI, React), dynamic product display, meal-prep subscriptions, and a loyalty tier system, all with admin and customer dashboards. UI/UX refinements for the customer dashboard were in progress.
-
-A significant phase involved a code export for external review, where the AI engineer successfully redacted secrets and clarified the scope to Project 62 only. Following this, a substantial set of new features and fixes were requested, focusing on making the application truly dynamic: removing hard-coded prices, implementing a comprehensive Shop page with product details, adding a Dishes CRUD module, scheduling daily renewal jobs, implementing a verified Stripe webhook, and refining Firestore rules.
-
-The AI engineer systematically implemented these, starting with backend changes (Stripe webhook, new API endpoints for subscriptions/products/dishes, renewal scheduler, Firestore rules) and then moving to frontend updates (dynamic pricing in checkout/dashboard, Shop/ProductDetail pages, Admin Dishes tab, Run Renewals button, routing). During frontend updates, a parsing error in  was debugged and resolved.
-
-Concurrently, a series of support queries regarding Emergent billing and Notion integration led to clarifications on Universal LLM Key usage and a large-scale Notion workspace setup. After initial token authentication issues, the Notion structure was successfully built, followed by attempts to sync Firebase data to Notion. This sync proved challenging due to Notion API behavior regarding database property creation and property name matching, leading to an ongoing debugging effort where data isn't visibly syncing despite API calls reporting success. The last user message highlights a critical security concern: hardcoded Notion token.
+The AI engineer successfully progressed Project 62 from foundational e-commerce to a dynamic, feature-rich application. Initial efforts involved securing Firebase keys and building core functionalities like product/category management, subscriptions, and a loyalty system, followed by a code export. A significant portion of the work addressed user requests for dynamic pricing, a comprehensive Shop page, Dishes CRUD, daily renewal jobs, a verified Stripe webhook, and refined Firestore rules, systematically implementing backend then frontend components. Debugging of  and various UI/UX refinements were completed. Concurrently, extensive work on Notion integration, including workspace creation and Firebase data sync, faced challenges with property mapping and data persistence, despite API success reports. Critical fixes included resolving a hardcoded Notion token and complex admin authentication issues. Further work focused on improving the customer experience: enhancing the Shop page to include meal-prep plans, optimizing the meal-prep checkout flow for mobile, implementing email verification, auto-filling user profile data in checkout, and debugging persistent Stripe payment and dashboard update issues, which led to significant backend logic adjustments for handling multiple subscriptions and dynamic pricing. The latest interaction indicates an ongoing issue with hardcoded secret keys preventing GitHub saves.
 </analysis>
 
 <product_requirements>
-The Project 62 application targets a health & fitness micro-brand for sustainable weight management. It features lead generation, sales of digital/physical products, meal-prep subscriptions with dynamic pricing, customer authentication (Firebase Auth), and an admin dashboard for CRM, delivery, product, category, and discount code management. Firebase Firestore serves as the primary data store (products, categories, subscriptions, dishes, leads, orders, deliveries, customers), with Stripe for payments and Firebase Storage for assets. The UI includes a mobile-optimized landing page with dynamic content, and customer/admin dashboards. A loyalty tier system tracks subscriptions for discounts. Recent work focused on refining customer dashboard displays for loyalty tiers and subscription management. The latest requirements included making all pricing dynamic, implementing a Shop page with product details, a Dishes module (CRUD for admin), a daily scheduled renewal job, a verified Stripe webhook, and updated Firestore security rules. It also involved setting up a comprehensive Notion workspace to centralize documentation and data for various CCC Digital sub-projects (Project 62, Tuition, AISY Math Tutor) with Firebase-Notion data synchronization.
+The Project 62 application is a health & fitness micro-brand platform for sustainable weight management. It includes lead generation, sales of digital/physical products, and meal-prep subscriptions with dynamic pricing. Key features are Firebase Auth, admin and customer dashboards for CRM, delivery, product, category, and discount code management. Firestore stores data (products, categories, subscriptions, dishes, leads, orders, deliveries, customers). Stripe handles payments, and Firebase Storage manages assets. The UI is mobile-optimized. A loyalty tier system tracks subscriptions for discounts. Recent enhancements focused on dynamic pricing, a Shop page with product details, a Dishes CRUD module, a daily scheduled renewal job, a verified Stripe webhook, updated Firestore security rules, and a Notion workspace for data synchronization across CCC Digital projects. The goal is a seamless user experience, including email verification and automated profile data pre-fill.
 </product_requirements>
 
 <key_technical_concepts>
--   **Full-Stack:** FastAPI (Python) backend, React (JavaScript) frontend.
--   **Databases:** Firebase Firestore, MongoDB, Notion API.
--   **Authentication:** Firebase Auth, JWT (PyJWT).
--   **API Integrations:** Stripe, SendGrid, Firebase Storage, Notion API, emergentintegrations.
--   **Deployment:** Kubernetes, supervisorctl.
--   **Scheduling:** APScheduler (Python).
--   **UI/UX:** React components, React Router, Context API.
+- **Full-Stack:** FastAPI (Python) backend, React (JavaScript) frontend.
+- **Databases:** Firebase Firestore, MongoDB, Notion API.
+- **Authentication:** Firebase Auth, JWT.
+- **API Integrations:** Stripe, SendGrid, Firebase Storage, Notion API, emergentintegrations.
+- **Deployment:** Kubernetes, supervisorctl.
+- **Scheduling:** APScheduler (Python).
+- **UI/UX:** React components, React Router, Context API.
 </key_technical_concepts>
 
 <code_architecture>
 
 
--   ****: Lists Python dependencies.
-    -   Changes: Added  and .
--   ****: FastAPI application entry point.
-    -   Changes: Integrated  for daily renewal tasks and registered the new  router.
--   ****: Backend environment variables.
-    -   Changes: Added  and .
--   ****: Core backend router for Project 62.
-    -   Changes: Implemented a verified Stripe webhook (), added public subscription endpoints (, ), added product detail endpoint (), implemented Dishes CRUD endpoints (), and improved renewal logging in the  function.
--   ** (NEW)**: Provides helper functions for interacting with the Notion API, including property mapping, creating pages, and managing database IDs for various CCC projects.
--   ** (NEW)**: Defines API endpoints (, ) to manage and trigger Firebase data synchronization to Notion.
--   ** (NEW/UPDATED)**: Contains the new Firestore security rules to control data access for public reads, leads, customers, and admin writes.
--   ****: Main React router.
-    -   Changes: Updated routes to include , , and .
--   ****: Meal-prep subscription checkout page.
-    -   Changes: Removed hard-coded prices/durations; now fetches subscription plan details dynamically from the backend to compute totals.
--   ****: Customer portal.
-    -   Changes: Modified the Change Plan modal to fetch and display available durations dynamically from the backend.
--   ****: Digital product checkout page.
-    -   Changes: Removed hard-coded product data; now fetches product details dynamically using the product slug from the route.
--   ** (NEW) /  (NEW)**: Implements a new shop page.
-    -   Summary: Displays products with filtering, sorting, and pagination functionalities.
--   ** (NEW) /  (NEW)**: Implements a new product detail page.
-    -   Summary: Displays detailed product information, images, and a Buy Now button.
--   ** (NEW) /  (NEW)**: Implements a new admin interface for managing dishes.
-    -   Summary: Provides CRUD operations (create, read, update, delete) for dishes, including image upload.
--   ****: Main admin interface.
-    -   Changes: Added a new Dishes tab and a Run Renewals Now button that manually triggers the backend renewal process.
--   ****: CSS for admin dashboard.
-    -   Changes: Added styles for the new Run Renewals Now button.
+- ****: Python dependencies. Updated with  and .
+- ****: FastAPI entry. Integrated  for daily renewal and  router.
+- ****: Backend environment variables.  and  added.  updated.
+- ****: Core backend.
+    - Implemented Stripe webhook, public subscription/product endpoints, Dishes CRUD.
+    - Added new  endpoint to fetch customer details.
+    - Implemented email verification logic: token generation, email sending on registration, verification endpoint (), and login check for verified status.
+    - Corrected Stripe checkout success URL placeholder.
+    - Modified meal-prep checkout to dynamically fetch pricing from subscription plans.
+    - Updated  to create active subscriptions for purchases, supporting multiple subscriptions.
+    - Fixed  endpoint to query  collection for all user subscriptions.
+- ****: Notion API helpers. Hardcoded Notion token removed. Updated for product schema mapping.
+- ****: Notion sync endpoints. Registers sync routes.
+- ****: Firestore security rules. New rules implemented for data access control.
+- ****: React router. Updated routes for Shop, ProductDetail, AdminDishes, and .
+- ****: Authentication context. Updated  function to not auto-login and handle email verification messaging.
+- ****: Customer login. Fixed admin redirection issue, removed auto-navigation post-registration, updated for email verification flow.
+- ****: Customer portal. Logic to hide Change Plan Duration button for no active subscription. Needs further updates for multiple subscription display. Updated Change Plan modal navigation.
+- ****: Meal-prep checkout.
+    - Removed hardcoded prices, now fetches dynamically.
+    - Enhanced with pricing tier selector (duration cards).
+    - Logic for auto-filling customer profile (name, email, phone, address) and displaying a confirmation message.
+    - Corrected navigation path from Shop and Customer Dashboard.
+    - Mobile-first CSS for reordered layout.
+- ****: Digital product checkout. Fetches product details dynamically.
+- ****: Shop page.
+    - Displays products with filters. Now fetches and displays both digital products and meal prep subscriptions.
+    - Added a back button.
+    - Passes  parameter to .
+- ****: CSS for shop page. Styles for back button.
+- ****: Product detail page. Has a back button.
+- ****: Admin dashboard. Added Dishes tab and Run Renewals Now button. Fixed admin login redirection.
+- ****: Admin dishes CRUD interface.
+- ** (NEW) /  (NEW)**: New pages for handling email verification.
+- ** (NEW)**: Document for email setup.
+- ** (NEW)**: Detailed guide for SendGrid DNS records.
 </code_architecture>
 
 <pending_tasks>
--   **Hardcoded Notion Token:** The Notion API token is currently hardcoded in Python files and needs to be moved to environment variables for security.
--   **Notion Data Sync Debugging:** The Firebase to Notion data sync endpoint reports success but no data appears in Notion databases; this requires further debugging.
--   **Admin Dashboard Authentication Fix:** The  check in  causes redirection to the customer dashboard for admin users, preventing access to the admin panel. This needs investigation and a fix.
+- **Hardcoded Secret Keys:** Currently, secret keys are detected, preventing GitHub saves. A comprehensive scan and removal/externalization of all hardcoded secrets are required.
+- **Notion Data Sync Debugging:** The Firebase to Notion data sync reports success but data isn't fully visible in Notion. This needs further debugging to resolve property mapping and persistence issues.
+- **Customer Dashboard Multi-Subscription Display:** The customer dashboard () needs to be updated to correctly display multiple active subscriptions, their pricing details, and an accurate loyalty tier meter.
+- **Order History Pricing:** The order history in the customer dashboard and admin orders page still shows /bin/bash for some orders, and needs to correctly display the amount, status, and type.
 </pending_tasks>
 
 <current_work>
-Immediately before the last user message, the AI engineer was deep into debugging the Firebase to Notion data synchronization. The comprehensive Notion workspace structure, including 15 databases for CCC Digital, Project 62, Tuition, and AISY Math Tutor, had been successfully created using the Notion API. Backend endpoints (, ) were implemented in , leveraging  for API interactions and property mapping. The  was added to , and  was installed.
+Immediately before this summary request, the AI engineer was addressing a critical security and development workflow issue: the inability to save changes to GitHub due to the detection of hardcoded secret keys in the codebase. The user explicitly stated: Can’t save to GitHub. Detected secret key again. Can check through. And can stop hardcoding any secret key given to you? The AI engineer initiated a scan for hardcoded secrets, as indicated by the last message: Let me scan for all types of hardcoded secrets in the codebase. This is the immediate preceding action, and the scan is likely ongoing or about to commence.
 
-Initial sync attempts failed because Notion databases created programmatically lacked proper property schemas. The AI engineer resolved this by performing direct PATCH requests to the Notion API () to add all required properties (e.g., Name, Price, Calories, Category for products). Further issues arose due to incorrect mapping of Firebase field names to Notion's auto-generated Name title property, which was addressed by updating .
+This issue arose after significant progress on several features:
+1.  **Email Verification:** Full implementation for new users, including backend logic, frontend pages, and detailed user guidance for SendGrid DNS setup.
+2.  **Mobile Checkout Flow:** Optimized layout for meal-prep subscriptions to enhance mobile user experience.
+3.  **Auto-fill Delivery Details:** Functionality to pre-populate delivery forms with saved user profile information, including intelligent parsing of a single address string into separate fields.
+4.  **Stripe Payment & Subscription Management:** Extensive debugging and fixes for Stripe checkout failures, dynamic pricing integration, and modifying the subscription system to correctly handle and store multiple active subscriptions for a customer.
 
-Despite these fixes and the API endpoint reporting , the user reported that no data was visible in Notion. Manual testing confirmed that individual entries *could* be added to a Notion database via the API, indicating the database itself was functional. However, the automated sync process was not populating the databases. The current work involves tracing the sync function and API endpoint to understand why data is not persisting, even after reported success, and the user has just raised a critical security concern about the hardcoded Notion token.
+Despite these fixes, there are still known issues with the customer dashboard display, specifically regarding multiple subscriptions, loyalty tier calculations, and correct order history pricing, which were outlined in an  file but not yet implemented. The immediate priority, however, shifted to the critical hardcoded secret key problem.
 </current_work>
 
 <optional_next_step>
-Address the hardcoded Notion token by moving it to an environment variable in the backend.
+Continue scanning the codebase for all types of hardcoded secret keys and then move them to environment variables.
 </optional_next_step>

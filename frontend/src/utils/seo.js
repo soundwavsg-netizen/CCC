@@ -7,8 +7,8 @@ export const getOrganizationSchema = () => ({
   "@type": "Organization",
   "name": "Cognition & Competence Consultancy Pte Ltd",
   "alternateName": "CCC",
-  "url": "https://fitness-portal-18.preview.emergentagent.com",
-  "logo": "https://fitness-portal-18.preview.emergentagent.com/logo.png",
+  "url": "https://meal-management-1.preview.emergentagent.com",
+  "logo": "https://meal-management-1.preview.emergentagent.com/logo.png",
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "Customer Service",
@@ -79,7 +79,7 @@ export const getWebPageSchema = (pageData) => ({
   "isPartOf": {
     "@type": "WebSite",
     "name": "Cognition & Competence Consultancy",
-    "url": "https://fitness-portal-18.preview.emergentagent.com"
+    "url": "https://meal-management-1.preview.emergentagent.com"
   },
   "author": {
     "@type": "Organization",
@@ -169,35 +169,35 @@ export const pageMetaData = {
     description: "We design and build AI-powered websites/web apps and help you apply for up to 50% EDG funding. Chat with our AI consultant.",
     ogTitle: "Build Your Website or App with up to 50% EDG Funding",
     ogDescription: "We design, build, and handle the EDG paperwork—so you get results in weeks, not months.",
-    ogUrl: "https://fitness-portal-18.preview.emergentagent.com"
+    ogUrl: "https://meal-management-1.preview.emergentagent.com"
   },
   edg: {
     title: "EDG Funding for Digital Projects | CCC Singapore",
     description: "Get up to 50% EDG funding for your custom website, e-commerce platform, or web app. Complete support from application to delivery.",
     ogTitle: "Get Up to 50% EDG Funding for Your Digital Project",
     ogDescription: "Transform your business with a custom website, e-commerce platform, or web app. We handle both the development and the EDG paperwork.",
-    ogUrl: "https://fitness-portal-18.preview.emergentagent.com/edg"
+    ogUrl: "https://meal-management-1.preview.emergentagent.com/edg"
   },
   services: {
     title: "Digital Services & Solutions | CCC Singapore",
     description: "Complete digital solutions: AI-powered websites, e-commerce platforms, Progressive Web Apps, and AI automation for Singapore SMEs.",
     ogTitle: "Complete Digital Solutions for Your Business",
     ogDescription: "From websites to AI automation, CCC delivers tailored solutions that help Singapore SMEs grow and succeed.",
-    ogUrl: "https://fitness-portal-18.preview.emergentagent.com/services-solutions"
+    ogUrl: "https://meal-management-1.preview.emergentagent.com/services-solutions"
   },
   grants: {
     title: "EDG Grant Support | CCC Singapore",
     description: "Expert guidance for Enterprise Development Grant applications. Maximize your funding potential for digital transformation projects.",
     ogTitle: "EDG Grant Support",
     ogDescription: "Access up to 50% funding support from Enterprise Singapore with professional grant application assistance.",
-    ogUrl: "https://fitness-portal-18.preview.emergentagent.com/grants"
+    ogUrl: "https://meal-management-1.preview.emergentagent.com/grants"
   },
   contact: {
     title: "Contact CCC | Digital Transformation Consultancy Singapore",
     description: "Get in touch with Singapore's leading digital transformation consultancy. Free consultation for your web development and AI automation needs.",
     ogTitle: "Contact CCC for Digital Transformation",
     ogDescription: "Ready to transform your business? Let's discuss your digital project and government grant opportunities.",
-    ogUrl: "https://fitness-portal-18.preview.emergentagent.com/contact"
+    ogUrl: "https://meal-management-1.preview.emergentagent.com/contact"
   }
 };
 
