@@ -459,41 +459,58 @@ const CustomerDashboard = () => {
 
               {/* Current Subscription Details */}
               <div className="subscription-details">
-                <h3>Current Plan</h3>
-                <div className="subscription-info">
-                  <div className="info-item">
-                    <span className="label">Plan:</span>
-                    <span className="value">{subscriptionData.subscription.plan_name || 'N/A'}</span>
-                  </div>
-                  <div className="info-item">
-                    <span className="label">Meals per Day:</span>
-                    <span className="value">{subscriptionData.subscription.meals_per_day || 'N/A'}</span>
-                  </div>
-                  <div className="info-item">
-                    <span className="label">Commitment:</span>
-                    <span className="value">{subscriptionData.subscription.commitment_weeks || 'N/A'} weeks</span>
-                  </div>
-                  <div className="info-item">
-                    <span className="label">Price per Meal:</span>
-                    <span className="value">${subscriptionData.subscription.price_per_meal || 'N/A'}</span>
-                  </div>
-                  <div className="info-item">
-                    <span className="label">Next Billing:</span>
-                    <span className="value">{subscriptionData.subscription.next_billing_date || 'N/A'}</span>
-                  </div>
-                  <div className="info-item">
-                    <span className="label">Auto-Renew:</span>
-                    <span className={`value ${subscriptionData.subscription.auto_renew ? 'active-status' : 'inactive-status'}`}>
-                      {subscriptionData.subscription.auto_renew ? '✓ Enabled' : '✗ Disabled'}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Pending Upgrade */}
-                {subscriptionData.subscription.pending_upgrade && (
-                  <div className="pending-upgrade-notice">
-                    <strong>⏳ Upgrade Scheduled:</strong> Switching to {subscriptionData.subscription.pending_upgrade.commitment_weeks} weeks 
-                    at ${subscriptionData.subscription.pending_upgrade.price_per_meal}/meal on {subscriptionData.subscription.pending_upgrade.effective_date}
+                <h3>Active Subscriptions ({subscriptionData.subscription_count || 0})</h3>
+                
+                {subscriptionData.subscriptions && subscriptionData.subscriptions.length > 0 ? (
+                  subscriptionData.subscriptions.map((sub, index) => (
+                    <div key={index} className="subscription-card" style={{ marginBottom: '15px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
+                      <h4 style={{ marginTop: 0, color: '#00b894' }}>Subscription {index + 1}</h4>
+                      <div className="subscription-info">
+                        <div className="info-item">
+                          <span className="label">Plan:</span>
+                          <span className="value">{sub.plan_name || 'Meal Prep Subscription'}</span>
+                        </div>
+                        <div className="info-item">
+                          <span className="label">Duration:</span>
+                          <span className="value">{sub.duration_weeks || 'N/A'} weeks</span>
+                        </div>
+                        <div className="info-item">
+                          <span className="label">Meals per Day:</span>
+                          <span className="value">{sub.meals_per_day || 'N/A'}</span>
+                        </div>
+                        <div className="info-item">
+                          <span className="label">Price per Meal:</span>
+                          <span className="value">${sub.price_per_meal || 'N/A'}</span>
+                        </div>
+                        <div className="info-item">
+                          <span className="label">Start Date:</span>
+                          <span className="value">{sub.start_date ? new Date(sub.start_date).toLocaleDateString() : 'N/A'}</span>
+                        </div>
+                        <div className="info-item">
+                          <span className="label">Status:</span>
+                          <span className="value active-status">✓ Active</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="subscription-info">
+                    <div className="info-item">
+                      <span className="label">Plan:</span>
+                      <span className="value">{subscriptionData.subscription?.plan_name || 'N/A'}</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="label">Meals per Day:</span>
+                      <span className="value">{subscriptionData.subscription?.meals_per_day || 'N/A'}</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="label">Commitment:</span>
+                      <span className="value">{subscriptionData.subscription?.commitment_weeks || 'N/A'} weeks</span>
+                    </div>
+                    <div className="info-item">
+                      <span className="label">Price per Meal:</span>
+                      <span className="value">${subscriptionData.subscription?.price_per_meal || 'N/A'}</span>
+                    </div>
                   </div>
                 )}
               </div>
