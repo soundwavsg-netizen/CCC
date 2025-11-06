@@ -456,23 +456,64 @@ const CustomerDashboard = () => {
           
           {subscriptionData && subscriptionData.status !== 'no_subscription' ? (
             <>
-              {/* Loyalty Tier Badge */}
-              <div className="loyalty-tier-section">
-                <div 
-                  className="tier-badge" 
-                  style={{ 
-                    backgroundColor: getTierColor(subscriptionData.loyalty.tier),
-                    color: subscriptionData.loyalty.tier === 'Gold' ? '#000' : '#fff'
-                  }}
-                >
-                  <span className="tier-icon">⭐</span>
-                  <span className="tier-name">{subscriptionData.loyalty.tier} Member</span>
+              {/* Current Tier Badge */}
+              <div className="current-tier">
+                <span className="tier-badge" style={{ 
+                  background: `linear-gradient(135deg, ${getTierColor(subscriptionData.loyalty.tier)}, ${getTierColor(subscriptionData.loyalty.tier)}dd)`,
+                  color: 'white',
+                  padding: '10px 20px',
+                  borderRadius: '25px',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  display: 'inline-block',
+                  marginBottom: '15px'
+                }}>
+                  ⭐ {subscriptionData.loyalty.tier}
+                </span>
+                <div style={{ fontSize: '14px', color: '#666', margin: '10px 0' }}>
+                  {subscriptionData.loyalty.discount > 0 && (
+                    <p style={{ margin: '5px 0', fontWeight: 'bold', color: '#00b894' }}>
+                      ✨ {subscriptionData.loyalty.discount}% off meal prices
+                    </p>
+                  )}
+                  {subscriptionData.loyalty.free_delivery && (
+                    <p style={{ margin: '5px 0' }}>🚚 Free Delivery</p>
+                  )}
+                  {subscriptionData.loyalty.priority_dish && (
+                    <p style={{ margin: '5px 0' }}>🍽️ Priority Dish Selection</p>
+                  )}
+                  {subscriptionData.loyalty.tier !== 'Platinum' && (() => {
+                    const currentPoints = subscriptionData.loyalty.total_points || 0;
+                    let nextTier = '';
+                    let pointsNeeded = 0;
+                    let nextDiscount = 0;
+                    let nextBenefits = '';
+                    
+                    if (subscriptionData.loyalty.tier === 'Bronze') {
+                      nextTier = 'Silver';
+                      pointsNeeded = 6 - currentPoints;
+                      nextDiscount = 5;
+                      nextBenefits = '5% off meal prices';
+                    } else if (subscriptionData.loyalty.tier === 'Silver') {
+                      nextTier = 'Gold';
+                      pointsNeeded = 12 - currentPoints;
+                      nextDiscount = 15;
+                      nextBenefits = '15% off meal prices + Free delivery + Flexible delivery dates';
+                    } else if (subscriptionData.loyalty.tier === 'Gold') {
+                      nextTier = 'Platinum';
+                      pointsNeeded = 24 - currentPoints;
+                      nextDiscount = 20;
+                      nextBenefits = '20% off meal prices + Free delivery + Flexible delivery dates';
+                    }
+                    
+                    return (
+                      <p style={{ margin: '10px 0', padding: '10px', backgroundColor: '#f0f9ff', borderRadius: '5px', fontSize: '13px' }}>
+                        🎯 <strong>Next Tier Preview:</strong><br/>
+                        Accumulate <strong>{pointsNeeded} more point{pointsNeeded > 1 ? 's' : ''}</strong> to advance to <strong>{nextTier}</strong> and get {nextBenefits}
+                      </p>
+                    );
+                  })()}
                 </div>
-                <p className="tier-message">{getTierMessage(
-                  subscriptionData.loyalty.tier, 
-                  subscriptionData.loyalty.discount,
-                  subscriptionData.loyalty.free_delivery
-                )}</p>
               </div>
 
               {/* Tier Progress */}
