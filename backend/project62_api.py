@@ -2295,15 +2295,20 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
         
         subscriptions = []
         total_weeks = 0
+        total_points = 0
         
         for sub_doc in subscriptions_query:
             sub_data = sub_doc.to_dict()
             weeks = sub_data.get("duration_weeks", 0)
+            meals_per_day = sub_data.get("meals_per_day", 1)
+            points = weeks * meals_per_day
+            
             total_weeks += weeks
+            total_points += points
             subscriptions.append(sub_data)
-            print(f"  ✅ Found subscription: {sub_data.get('subscription_id')} - {weeks} weeks, Plan: {sub_data.get('plan_name')}")
+            print(f"  ✅ Found subscription: {sub_data.get('subscription_id')} - {weeks} weeks × {meals_per_day} meals/day = {points} points")
         
-        print(f"  📊 Total subscriptions found: {len(subscriptions)}, Total weeks: {total_weeks}")
+        print(f"  📊 Total subscriptions: {len(subscriptions)}, Total weeks: {total_weeks}, Total points: {total_points}")
         
         # Sort by start_date
         subscriptions.sort(key=lambda x: x.get("start_date", ""))
@@ -2313,16 +2318,20 @@ async def get_customer_subscription(current_user: dict = Depends(get_current_use
         customer_doc = customer_ref.get()
         customer_data = customer_doc.to_dict() if customer_doc.exists else {}
         
-        # Calculate loyalty tier based on total weeks
+        # Calculate loyalty tier based on POINTS (weeks × meals_per_day)
         loyalty_tier = "Bronze"
         loyalty_discount = 0
         free_delivery = False
         
-        if total_weeks >= 12:
+        if total_points >= 24:
+            loyalty_tier = "Platinum"
+            loyalty_discount = 20
+            free_delivery = True
+        elif total_points >= 12:
             loyalty_tier = "Gold"
             loyalty_discount = 15
             free_delivery = True
-        elif total_weeks >= 6:
+        elif total_points >= 6:
             loyalty_tier = "Silver"
             loyalty_discount = 10
             free_delivery = False
