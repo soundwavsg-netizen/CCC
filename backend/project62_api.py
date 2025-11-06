@@ -927,19 +927,25 @@ async def process_meal_prep_order(transaction_data: dict, session_id: str):
         order_data = {
             "order_id": order_id,
             "session_id": session_id,
+            "stripe_session_id": session_id,
             "customer_name": transaction_data["customer_name"],
             "customer_email": customer_email,
             "customer_phone": transaction_data["customer_phone"],
             "delivery_address": transaction_data["delivery_address"],
             "duration": transaction_data["duration"],
+            "duration_weeks": transaction_data["weeks"],
             "meals_per_day": transaction_data["meals_per_day"],
             "weeks": transaction_data["weeks"],
             "total_amount": transaction_data["total_amount"],
+            "amount": transaction_data["total_amount"],
             "meal_cost": transaction_data.get("meal_cost", 0),
             "delivery_cost": transaction_data.get("delivery_cost", 0),
             "total_meals": transaction_data.get("total_meals", 0),
             "start_date": transaction_data["start_date"],
             "status": "active",
+            "payment_status": "completed",
+            "product_type": "meal_prep",
+            "frequency": "once/week",
             "created_at": datetime.utcnow().isoformat()
         }
         db.collection("project62").document("orders").collection("all").document(order_id).set(order_data)
